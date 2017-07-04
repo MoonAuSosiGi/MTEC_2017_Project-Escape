@@ -1,0 +1,543 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player : MonoBehaviour {
+
+    public Transform PlayerTransform;
+    public Transform ModelTransform;
+
+    public float MoveSpeed;
+    public float RunSpeed;
+
+    public KeyCode Foward;
+    public KeyCode Back;
+    public KeyCode Left;
+    public KeyCode Right;
+    public KeyCode Run;
+    public KeyCode Jump;
+    public KeyCode Gun_Shot;
+    public KeyCode GetKey;
+    public KeyCode ThrowKey;
+
+    public PlayerMove.MoveState PrevState;
+    public PlayerMove.MoveState NowState;
+
+    public float JumpH;
+    public float JumpT;
+
+    public GameObject WeaponAnchor;
+    public GameObject Weapon = null;
+    public Animator PlayerAnim;
+
+    public float LastAttackTime;
+
+    public GameObject NearWeapon = null;
+
+    public bool IsMoveable = true;
+    public bool IsJumpable = true;
+
+    public Transform FirePoint;
+
+    public GameObject EquipEffect;
+
+    float deltaTime = 0.0f;
+
+    public int HP = 10;
+
+    public AnimationCurve JumpCurve;
+
+    public bool NearWeaponPick;
+
+    private Vector3 m_prevPos = Vector3.zero;
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        PrevState = NowState;
+        m_prevPos = transform.position;
+        if (IsMoveable)
+        {
+            Move();
+        }
+
+
+        if (Weapon != null)
+        {
+            AttackAnim();
+            ThrowWeapon();
+        }
+        else
+        {
+            GetWeapon();
+        }
+
+        if (NearWeaponPick)
+        {
+            NearWeaponPickCheck();
+        }
+
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+    }
+
+    private void NearWeaponPickCheck()
+    {
+        if (NearWeapon.transform.parent != null)
+        {
+            NearWeapon = null;
+            EquipEffect.SetActive(false);
+            NearWeaponPick = false;
+        }
+    }
+
+
+    void OnGUI()
+    {
+        int w = Screen.width, h = Screen.height;
+
+        GUIStyle style = new GUIStyle();
+
+        Rect rect = new Rect(0 , 0 , w , h * 2 / 100);
+        style.alignment = TextAnchor.UpperLeft;
+        style.fontSize = h * 2 / 100;
+        style.normal.textColor = new Color(0.0f , 0.0f , 0.5f , 1.0f);
+        float msec = deltaTime * 1000.0f;
+        float fps = 1.0f / deltaTime;
+        string text = string.Format("{0:0.0} ms ({1:0.} fps)" , msec , fps);
+        GUI.Label(rect , text , style);
+    }
+
+
+
+    public void GetWeapon()
+    {
+        if (Input.GetKeyDown(GetKey) && Weapon == null)
+        {
+            NearWeapon.transform.parent = WeaponAnchor.transform;
+            NearWeapon.transform.localPosition = NearWeapon.GetComponent<Weapon>().LocalSetPos;
+            NearWeapon.transform.localRotation = Quaternion.Euler(NearWeapon.GetComponent<Weapon>().LocalSetRot);
+            NearWeapon.transform.localScale = NearWeapon.GetComponent<Weapon>().LocalSetScale;
+            
+            Weapon = NearWeapon;
+            Weapon.GetComponent<Weapon>().FirePoint = FirePoint;
+
+            PlayerAnim.gameObject.GetComponent<AttackEvent>().Weapon = NearWeapon;
+            Weapon.GetComponent<SphereCollider>().enabled = false;
+
+            EquipEffect.SetActive(false);
+            NearWeaponPick = false;
+
+            // 
+            Weapon w = Weapon.GetComponent<Weapon>();
+
+            NetworkManager.Instance().C2SRequestEquipItem(w.CID , w.WeaponID);
+        }
+    }
+
+    public void ThrowWeapon()
+    {
+        if (Input.GetKeyDown(ThrowKey) && Weapon != null)
+        {
+            RaycastHit ThrowPos;
+            Physics.Raycast(ModelTransform.position + (ModelTransform.rotation * (Vector3.up + Vector3.forward) * 1) , (ModelTransform.position - AnchorPlanet.Planet.position).normalized * -3 , out ThrowPos , 10f);
+
+
+            if (ThrowPos.point == Vector3.zero || ThrowPos.collider.gameObject.CompareTag("NonSpone"))
+            {
+
+                Debug.Log(ThrowPos.point);
+                return;
+
+            }
+
+            Debug.Log(ThrowPos.normal);
+
+            Weapon.transform.parent = null;
+            Weapon.transform.position = ThrowPos.point;
+
+
+            Vector3 SponeRot = (Weapon.transform.position - AnchorPlanet.PlanetAnchor.position).normalized;
+
+            Quaternion targetRotation = Quaternion.FromToRotation(Weapon.transform.up , SponeRot) * Weapon.transform.rotation;
+
+            Weapon.transform.rotation = targetRotation;
+
+            Weapon.transform.Rotate(Weapon.GetComponent<Weapon>().SponeRot);
+
+            Weapon.transform.Translate(Vector3.right * 0.15f);
+
+
+            Weapon.transform.localScale = NearWeapon.GetComponent<Weapon>().ThrowSetScale;
+
+
+
+            Weapon.GetComponent<Weapon>().FirePoint = null;
+
+            PlayerAnim.gameObject.GetComponent<AttackEvent>().Weapon = null;
+            Weapon.GetComponent<SphereCollider>().enabled = true;
+
+
+            // TODO WEAPON
+            //his.GetComponent<TestStram>().SenddataCall("012/" + Weapon.GetComponent<Weapon>().WeaponID + "/" + Weapon.transform.position.x + "/" + Weapon.transform.position.y + "/" + Weapon.transform.position.z + "/" + Weapon.transform.rotation.x + "/" + Weapon.transform.rotation.y + "/" + Weapon.transform.rotation.z + "/" + Weapon.transform.rotation.w + "/" + Weapon.transform.localScale.x + "/" + Weapon.transform.localScale.y + "/" + Weapon.transform.localScale.z);
+
+            Weapon w = Weapon.GetComponent<Weapon>();
+
+            NetworkManager.Instance().C2SRequestUnEquipItem(w.CID , w.WeaponID , Weapon.transform.position , Weapon.transform.eulerAngles);
+
+            Weapon = null;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Weapon") && Weapon == null)
+        {
+            EquipEffect.transform.GetChild(0).GetChild(0).rotation = this.transform.rotation;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Weapon") && Weapon == null)
+        {
+            NearWeapon = other.gameObject;
+
+            EquipEffect.transform.position = NearWeapon.transform.GetChild(0).position;
+
+            EquipEffect.transform.parent = NearWeapon.transform;
+            EquipEffect.transform.rotation = NearWeapon.transform.rotation;
+            EquipEffect.transform.Rotate(0 , 0 , -90f);
+
+            EquipEffect.SetActive(true);
+            NearWeaponPick = true;
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Weapon"))
+        {
+            NearWeapon = null;
+            EquipEffect.SetActive(false);
+            NearWeaponPick = false;
+        }
+    }
+
+    public void AttackAnimPlay(string AnimationName , int AnimLayer)
+    {
+        
+        if (PlayerMove.CheckAnim(PlayerAnim , AnimationName))
+        {
+            AnimationSettingAndSend("AttackState" , 1);
+          //  PlayerAnim.Play(AnimationName , AnimLayer);
+        }
+
+    }
+    private bool AttackCoolTimeCheck(float CoolTime)
+    {
+        if (Time.time - LastAttackTime >= CoolTime)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    private void AttackAnim()
+    {
+        if (Input.GetKey(Gun_Shot) && AttackCoolTimeCheck(Weapon.GetComponent<Weapon>().AttackCoolTime) && IsJumpable)
+        {
+            AttackAnimPlay(Weapon.GetComponent<Weapon>().AttackAnimName , 0);
+
+
+            // TODO WEAPON
+            // this.GetComponent<TestStram>().SenddataCall("02/" + 0 + "/" + Weapon.GetComponent<Weapon>().FirePoint.position.x + "/" + Weapon.GetComponent<Weapon>().FirePoint.position.y + "/" + Weapon.GetComponent<Weapon>().FirePoint.position.z + "/" + this.transform.rotation.x + "/" + this.transform.rotation.y + "/" + this.transform.rotation.z + "/" + this.transform.rotation.w + "/" + PhotonNetwork.time.ToString());
+            LastAttackTime = Time.time;
+        }
+        else
+        {
+            AnimationSettingAndSend("AttackState" , 0);
+        }
+
+    }
+
+    IEnumerator JumpCall(Transform Character , float H , float T , PlayerMove.MoveState LastState)
+    {
+
+        float StartTime = Time.time;
+        float Dur = Time.fixedDeltaTime / T;
+
+
+        AnchorPlanet.Planet.GetComponent<Gravity>().Power = 0;
+        //AnchorPlanet.MainCam.GetComponent<CamRotate>().RotateNow = false;
+
+        while (Time.time - StartTime < T)
+        {
+            float NowT = (Time.time - StartTime) / T;
+
+            Character.Translate(Vector3.up * (H * (JumpCurve.Evaluate(NowT + Time.fixedDeltaTime) - JumpCurve.Evaluate(NowT))));
+
+            Debug.Log(NowT);
+
+            float Speed;
+
+            if ((int)LastState >= 9)
+            {
+                Speed = RunSpeed;
+            }
+            else
+            {
+                Speed = MoveSpeed;
+            }
+
+            PlayerMove.MoveCode(PlayerTransform , LastState , Speed,GameManager.Instance().PLAYER.m_name);
+
+
+            yield return new WaitForFixedUpdate();
+
+        }
+
+        //while (Time.time - StartTime < (T / (float)2.0f))
+        //{
+        //    Character.Translate(Vector3.up * (H * Dur));
+
+
+        //    PlayerMove.MoveCode(PlayerTransform, LastState, MoveSpeed);
+
+
+        //    yield return new WaitForFixedUpdate();
+
+
+        //}
+
+        //while (Time.time - StartTime < T)
+        //{
+        //    Character.Translate(Vector3.down * (H * Dur));
+
+        //    PlayerMove.MoveCode(PlayerTransform, LastState, MoveSpeed);
+
+        //    RaycastHit Ground;
+        //    Physics.Raycast(this.transform.position, Vector3.down, out Ground, 0.07f);
+
+        //    if (Ground.point != Vector3.zero)
+        //    {
+        //        if (!Ground.transform.CompareTag("Bullet") && !Ground.transform.CompareTag("Weapon"))
+        //        {
+        //            PlayerAnim.SetInteger("JumpState", 0);
+        //            break;
+
+        //        }
+        //    }
+
+        //    yield return new WaitForFixedUpdate();
+
+
+        //}
+
+        AnchorPlanet.Planet.GetComponent<Gravity>().Power = 100;
+        //AnchorPlanet.MainCam.GetComponent<CamRotate>().RotateNow = true;
+
+        AnimationSettingAndSend("JumpState" , 0);
+        // PlayerAnim.speed = 1;
+        //yield return new WaitForSeconds(0.05f);
+
+
+        IsJumpable = true;
+
+        IsMoveable = true;
+
+
+
+    }
+
+    #region Player Move
+    private void Move()
+    {
+        #region MoveLogic
+        if (Input.GetKeyDown(Jump) && IsJumpable)
+        {
+            StartCoroutine(JumpCall(this.transform , JumpH , JumpT , NowState));
+
+            if (PlayerMove.CheckAnim(PlayerAnim , "Jump"))
+            {
+                //PlayerAnim.speed = 0.533f / JumpT;
+                AnimationSettingAndSend("JumpState" , 1);
+                // TargetAnim.CrossFade("Idle", 0.2f, 0);
+            }
+
+            IsJumpable = false;
+            IsMoveable = false;
+        }
+
+        if (Input.GetKey(Run))
+        {
+            if (Input.GetKey(Foward) && !Input.GetKey(Back) && !Input.GetKey(Left) && !Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunFoward , RunSpeed,GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunFoward;
+            }
+            else if (Input.GetKey(Foward) && Input.GetKey(Back))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunFoward , RunSpeed, GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunFoward;
+            }
+            else if (Input.GetKey(Foward) && Input.GetKey(Left))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunFoward_Left , RunSpeed, GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunFoward_Left;
+
+            }
+            else if (Input.GetKey(Foward) && Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunFoward_Right , RunSpeed, GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunFoward_Right;
+
+            }
+            else if (Input.GetKey(Back) && !Input.GetKey(Foward) && !Input.GetKey(Left) && !Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunBack , RunSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunBack;
+            }
+            else if (Input.GetKey(Back) && Input.GetKey(Left))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunBack_Left , RunSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunBack_Left;
+            }
+            else if (Input.GetKey(Back) && Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunBack_Right , RunSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunBack_Right;
+
+            }
+            else if (Input.GetKey(Left) && !Input.GetKey(Back) && !Input.GetKey(Foward) && !Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunLeft , RunSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunLeft;
+            }
+            else if (Input.GetKey(Left) && Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunLeft , RunSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunLeft;
+            }
+            else if (Input.GetKey(Right) && !Input.GetKey(Back) && !Input.GetKey(Left) && !Input.GetKey(Foward))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.RunRight , RunSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.RunRight;
+            }
+            else
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.Idle , RunSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.Idle;
+            }
+        }
+        else
+        {
+            if (Input.GetKey(Foward) && !Input.GetKey(Back) && !Input.GetKey(Left) && !Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkFoward , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkFoward;
+            }
+            else if (Input.GetKey(Foward) && Input.GetKey(Back))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkFoward , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkFoward;
+            }
+            else if (Input.GetKey(Foward) && Input.GetKey(Left))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkFoward_Left , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkFoward_Left;
+
+            }
+            else if (Input.GetKey(Foward) && Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkFoward_Right , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkFoward_Right;
+
+            }
+            else if (Input.GetKey(Back) && !Input.GetKey(Foward) && !Input.GetKey(Left) && !Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkBack , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkBack;
+            }
+            else if (Input.GetKey(Back) && Input.GetKey(Left))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkBack_Left , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkBack_Left;
+            }
+            else if (Input.GetKey(Back) && Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkBack_Right , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkBack_Right;
+
+            }
+            else if (Input.GetKey(Left) && !Input.GetKey(Back) && !Input.GetKey(Foward) && !Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkLeft , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkLeft;
+            }
+            else if (Input.GetKey(Left) && Input.GetKey(Right))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkLeft , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkLeft;
+            }
+            else if (Input.GetKey(Right) && !Input.GetKey(Back) && !Input.GetKey(Left) && !Input.GetKey(Foward))
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.WalkRight , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.WalkRight;
+            }
+            else
+            {
+                PlayerMove.MoveCode(PlayerTransform , PlayerMove.MoveState.Idle , MoveSpeed , GameManager.Instance().PLAYER.m_name);
+
+                NowState = PlayerMove.MoveState.Idle;
+            }
+        }
+        #endregion
+
+        Vector3 velo = (transform.position - m_prevPos) / Time.deltaTime;
+
+      //  if (PrevState != NowState)
+            NetworkManager.Instance().C2SRequestPlayerMove(name ,
+                transform.position , velo ,
+                transform.localRotation.eulerAngles,
+                transform.GetChild(0).localRotation.eulerAngles);
+
+
+    }
+    #endregion
+
+    #region NetworkMessage
+    public void AnimationSettingAndSend(string aniName,int aniValue)
+    {
+        PlayerAnim.SetInteger(aniName , aniValue);
+        NetworkManager.Instance().C2SRequestPlayerAnimation(
+            GameManager.Instance().PLAYER.m_name , aniName , aniValue);
+    }
+    #endregion
+}

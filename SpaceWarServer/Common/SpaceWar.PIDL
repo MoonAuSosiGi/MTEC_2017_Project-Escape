@@ -1,0 +1,86 @@
+rename cs(std::string, System.String);
+rename cs(Proud::Vector3, UnityEngine.Vector3);
+using(cs) Nettention.Proud;
+
+
+/*
+
+[임시코드]
+첫번째 클라에서 생성 요청 ( 아이템 코드도 같이 보냄 ) -> 서버에서 수락
+-> 다른 클라에게 샌드 
+
+[정식 코드]
+클라에서 생성 요청 (생성 안함) -> 서버에서 좌표, 회전 계산 후 아이디까지
+클라에게 샌드
+*/
+
+[marshaler(cs)=SP_Marshaler]
+global SpaceWar 3141
+{
+	//C2S -------------------------------------------------------------
+
+	// Connect
+	RequestServerConnect([in]string id);
+
+	// Start Send
+	RequestClientJoin([in]int hostID,[in]string name,[in]float x,[in]float y,[in]float z);
+	
+	// 월드에 아이템 생성 요청 //
+	RequestWorldCreateItem([in]int hostID,[in]int itemCID,[in]int itemID,[in] Proud::Vector3 pos,[in]Proud::Vector3 rot);
+
+	
+
+
+	//S2C -------------------------------------------------------------
+	NotifyLoginSuccess([in]int hostID);
+	NotifyLoginFailed([in]string reason);
+
+	// Other Player join
+	NotifyOtherClientJoin([in]int hostID,[in]string name,[in]float x,[in]float y,[in]float z);
+
+	// 플레이어가 나갔다
+	NotifyPlayerLost([in]int hostID);
+
+	// 플레이어가 움직임
+	NotifyPlayerMove([in]int hostID,[in]string name,[in]float curX,[in]float curY,[in]float curZ,
+	[in]float velocityX,[in]float velocityY,[in]float velocityZ,
+	[in]float crx,[in]float cry,[in]float crz,
+	[in]float rx,[in]float ry, [in]float rz);
+
+	// 월드 아이템 삭제
+	NotifyDeleteItem([in]int itemID);
+
+	// 아이템 생성하는 명령
+	NotifyCreateItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
+	////NotifyCreateItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]float x,[in]float y,[in]float z,[in]float rx,[in]float ry,[in]float rz);
+
+	// 플레이어가 아이템을 먹었다. // 임시로 없음
+
+	// 플레이어가 아이템을 장비했다.
+	NotifyPlayerEquipItem([in]int hostID,[in]int itemCID,[in]int itemID);
+
+	// 플레이어가 아이템을 해제했다.
+	NotifyPlayerUnEquipItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
+	////NotifyPlayerUnEquipItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]float x,[in]float y,[in]float z,[in]float rx,[in]float ry,[in]float rz);
+
+	// 플레이어의 총알 생성
+	NotifyPlayerBulletCreate([in]int sendHostID,[in]string bulletType,[in]string bulletID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
+
+	// 플레이어의 총알 동기화
+	NotifyPlayerBulletMove([in]int sendHostID,[in]string bulletID,[in]Proud::Vector3 pos,[in]Proud::Vector3 velocity,[in]Proud::Vector3 rot);
+
+
+	// 플레이어의 애니메이션 재생 // 누가 보냈는지 / 해당 플레이어 이름 /  애니메이션 이름 / 애니메이션 값
+	NotifyPlayerAnimation([in]int hostID,[in]string name,[in]string animationName,[in]int aniValue);
+
+	// 플레이어가 맞았다
+	NotifyPlayerDamage([in]int sendHostID,[in]int recvHostID,[in]string name,[in]string weaponName,[in]float damage);
+
+	// 체력 변동 이벤트 (데미지는 여기서 처리되지 않는다.)
+	NotifyPlayerChangeHP([in]int sendHostID,[in]string name,[in]float hp);
+
+	// 산소 변동 이벤트
+	NotifyPlayerChangeOxygen([in]int sendHostID,[in]string name,[in]float oxygen);
+
+
+}
