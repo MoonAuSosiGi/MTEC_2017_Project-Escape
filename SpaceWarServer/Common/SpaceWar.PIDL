@@ -29,7 +29,11 @@ global SpaceWar 3141
 	RequestWorldCreateItem([in]int hostID,[in]int itemCID,[in]int itemID,[in] Proud::Vector3 pos,[in]Proud::Vector3 rot);
 
 	
+	// 플레이어가 맞았다
+	RequestPlayerDamage([in]int sendHostID,[in]int targetHostID,[in]string name,[in]string weaponName,[in]float damage);
 
+	// 플레이어가 숨을쉬었다.
+	RequestPlayerUseOxy([in]int sendHostID,[in]string name,[in]float useOxy);
 
 	//S2C -------------------------------------------------------------
 	NotifyLoginSuccess([in]int hostID);
@@ -69,18 +73,17 @@ global SpaceWar 3141
 	// 플레이어의 총알 동기화
 	NotifyPlayerBulletMove([in]int sendHostID,[in]string bulletID,[in]Proud::Vector3 pos,[in]Proud::Vector3 velocity,[in]Proud::Vector3 rot);
 
+	// 플레이어의 총알 삭제 ( 어딘가에 부딪힘 플레이어도 포함 )
+	NotifyPlayerBulletDelete([in]int sendHostID,[in]string bulletID);
 
 	// 플레이어의 애니메이션 재생 // 누가 보냈는지 / 해당 플레이어 이름 /  애니메이션 이름 / 애니메이션 값
 	NotifyPlayerAnimation([in]int hostID,[in]string name,[in]string animationName,[in]int aniValue);
 
-	// 플레이어가 맞았다
-	NotifyPlayerDamage([in]int sendHostID,[in]int recvHostID,[in]string name,[in]string weaponName,[in]float damage);
-
 	// 체력 변동 이벤트 (데미지는 여기서 처리되지 않는다.)
-	NotifyPlayerChangeHP([in]int sendHostID,[in]string name,[in]float hp);
+	NotifyPlayerChangeHP([in]int sendHostID,[in]string name,[in]float hp,[in]float prevhp,[in]float maxhp);
 
 	// 산소 변동 이벤트
-	NotifyPlayerChangeOxygen([in]int sendHostID,[in]string name,[in]float oxygen);
+	NotifyPlayerChangeOxygen([in]int sendHostID,[in]string name,[in]float oxygen,[in]float prevoxy,[in]float maxoxy);
 
 
 }

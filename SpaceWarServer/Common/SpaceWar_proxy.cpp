@@ -112,6 +112,74 @@ __msg << rot;
 			RmiName_RequestWorldCreateItem, (::Proud::RmiID)Rmi_RequestWorldCreateItem);
 	}
         
+	bool Proxy::RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestPlayerDamage;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << targetHostID;
+__msg << name;
+__msg << weaponName;
+__msg << damage;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestPlayerDamage, (::Proud::RmiID)Rmi_RequestPlayerDamage);
+	}
+
+	bool Proxy::RequestPlayerDamage ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestPlayerDamage;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << targetHostID;
+__msg << name;
+__msg << weaponName;
+__msg << damage;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestPlayerDamage, (::Proud::RmiID)Rmi_RequestPlayerDamage);
+	}
+        
+	bool Proxy::RequestPlayerUseOxy ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & useOxy)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestPlayerUseOxy;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << name;
+__msg << useOxy;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestPlayerUseOxy, (::Proud::RmiID)Rmi_RequestPlayerUseOxy);
+	}
+
+	bool Proxy::RequestPlayerUseOxy ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & useOxy)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestPlayerUseOxy;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << name;
+__msg << useOxy;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestPlayerUseOxy, (::Proud::RmiID)Rmi_RequestPlayerUseOxy);
+	}
+        
 	bool Proxy::NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -490,6 +558,36 @@ __msg << rot;
 			RmiName_NotifyPlayerBulletMove, (::Proud::RmiID)Rmi_NotifyPlayerBulletMove);
 	}
         
+	bool Proxy::NotifyPlayerBulletDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & bulletID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyPlayerBulletDelete;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << bulletID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyPlayerBulletDelete, (::Proud::RmiID)Rmi_NotifyPlayerBulletDelete);
+	}
+
+	bool Proxy::NotifyPlayerBulletDelete ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & bulletID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyPlayerBulletDelete;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << bulletID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyPlayerBulletDelete, (::Proud::RmiID)Rmi_NotifyPlayerBulletDelete);
+	}
+        
 	bool Proxy::NotifyPlayerAnimation ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & name,  const string & animationName,  const int & aniValue)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -524,43 +622,7 @@ __msg << aniValue;
 			RmiName_NotifyPlayerAnimation, (::Proud::RmiID)Rmi_NotifyPlayerAnimation);
 	}
         
-	bool Proxy::NotifyPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & recvHostID,  const string & name,  const string & weaponName,  const float & damage)	{
-		::Proud::CMessage __msg;
-__msg.UseInternalBuffer();
-__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
-
-::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyPlayerDamage;
-__msg.Write(__msgid); 
-	
-__msg << sendHostID;
-__msg << recvHostID;
-__msg << name;
-__msg << weaponName;
-__msg << damage;
-		
-		return RmiSend(&remote,1,rmiContext,__msg,
-			RmiName_NotifyPlayerDamage, (::Proud::RmiID)Rmi_NotifyPlayerDamage);
-	}
-
-	bool Proxy::NotifyPlayerDamage ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & recvHostID,  const string & name,  const string & weaponName,  const float & damage)  	{
-		::Proud::CMessage __msg;
-__msg.UseInternalBuffer();
-__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
-
-::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyPlayerDamage;
-__msg.Write(__msgid); 
-	
-__msg << sendHostID;
-__msg << recvHostID;
-__msg << name;
-__msg << weaponName;
-__msg << damage;
-		
-		return RmiSend(remotes,remoteCount,rmiContext,__msg,
-			RmiName_NotifyPlayerDamage, (::Proud::RmiID)Rmi_NotifyPlayerDamage);
-	}
-        
-	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp)	{
+	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -571,12 +633,14 @@ __msg.Write(__msgid);
 __msg << sendHostID;
 __msg << name;
 __msg << hp;
+__msg << prevhp;
+__msg << maxhp;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyPlayerChangeHP, (::Proud::RmiID)Rmi_NotifyPlayerChangeHP);
 	}
 
-	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & hp)  	{
+	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -587,12 +651,14 @@ __msg.Write(__msgid);
 __msg << sendHostID;
 __msg << name;
 __msg << hp;
+__msg << prevhp;
+__msg << maxhp;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyPlayerChangeHP, (::Proud::RmiID)Rmi_NotifyPlayerChangeHP);
 	}
         
-	bool Proxy::NotifyPlayerChangeOxygen ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & oxygen)	{
+	bool Proxy::NotifyPlayerChangeOxygen ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & oxygen,  const float & prevoxy,  const float & maxoxy)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -603,12 +669,14 @@ __msg.Write(__msgid);
 __msg << sendHostID;
 __msg << name;
 __msg << oxygen;
+__msg << prevoxy;
+__msg << maxoxy;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyPlayerChangeOxygen, (::Proud::RmiID)Rmi_NotifyPlayerChangeOxygen);
 	}
 
-	bool Proxy::NotifyPlayerChangeOxygen ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & oxygen)  	{
+	bool Proxy::NotifyPlayerChangeOxygen ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & oxygen,  const float & prevoxy,  const float & maxoxy)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -619,6 +687,8 @@ __msg.Write(__msgid);
 __msg << sendHostID;
 __msg << name;
 __msg << oxygen;
+__msg << prevoxy;
+__msg << maxoxy;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyPlayerChangeOxygen, (::Proud::RmiID)Rmi_NotifyPlayerChangeOxygen);
@@ -637,6 +707,16 @@ const PNTCHAR* Proxy::RmiName_RequestClientJoin =_PNT("");
 const PNTCHAR* Proxy::RmiName_RequestWorldCreateItem =_PNT("RequestWorldCreateItem");
 #else
 const PNTCHAR* Proxy::RmiName_RequestWorldCreateItem =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestPlayerDamage =_PNT("RequestPlayerDamage");
+#else
+const PNTCHAR* Proxy::RmiName_RequestPlayerDamage =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestPlayerUseOxy =_PNT("RequestPlayerUseOxy");
+#else
+const PNTCHAR* Proxy::RmiName_RequestPlayerUseOxy =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyLoginSuccess =_PNT("NotifyLoginSuccess");
@@ -694,14 +774,14 @@ const PNTCHAR* Proxy::RmiName_NotifyPlayerBulletMove =_PNT("NotifyPlayerBulletMo
 const PNTCHAR* Proxy::RmiName_NotifyPlayerBulletMove =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyPlayerBulletDelete =_PNT("NotifyPlayerBulletDelete");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyPlayerBulletDelete =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyPlayerAnimation =_PNT("NotifyPlayerAnimation");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyPlayerAnimation =_PNT("");
-#endif
-#ifdef USE_RMI_NAME_STRING
-const PNTCHAR* Proxy::RmiName_NotifyPlayerDamage =_PNT("NotifyPlayerDamage");
-#else
-const PNTCHAR* Proxy::RmiName_NotifyPlayerDamage =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyPlayerChangeHP =_PNT("NotifyPlayerChangeHP");

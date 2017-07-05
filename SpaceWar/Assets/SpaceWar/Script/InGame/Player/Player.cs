@@ -43,7 +43,6 @@ public class Player : MonoBehaviour {
 
     float deltaTime = 0.0f;
 
-    public int HP = 10;
 
     public AnimationCurve JumpCurve;
 
@@ -51,6 +50,27 @@ public class Player : MonoBehaviour {
 
     private Vector3 m_prevPos = Vector3.zero;
 
+    // TEST CODE
+    void MoveSend()
+    {
+        if (!NetworkManager.Instance().LOGIN_STATE)
+            return;
+        Vector3 velo = GetComponent<Rigidbody>().velocity; //(transform.position - m_prevPos) / Time.deltaTime;
+
+        //  if (PrevState != NowState)
+        NetworkManager.Instance().C2SRequestPlayerMove(name ,
+            transform.position , velo ,
+            transform.localRotation.eulerAngles ,
+            transform.GetChild(0).localRotation.eulerAngles);
+
+    }
+
+    void Start()
+    {
+        InvokeRepeating("UseOxy" , 2.0f , 2.0f);
+    }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -79,6 +99,13 @@ public class Player : MonoBehaviour {
         }
 
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+        
+    }
+
+    void UseOxy()
+    {
+        if(NetworkManager.Instance().LOGIN_STATE)
+            NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , Random.Range(0.1f , 10.0f));
     }
 
     private void NearWeaponPickCheck()
@@ -520,14 +547,7 @@ public class Player : MonoBehaviour {
         }
         #endregion
 
-        Vector3 velo = (transform.position - m_prevPos) / Time.deltaTime;
-
-      //  if (PrevState != NowState)
-            NetworkManager.Instance().C2SRequestPlayerMove(name ,
-                transform.position , velo ,
-                transform.localRotation.eulerAngles,
-                transform.GetChild(0).localRotation.eulerAngles);
-
+        MoveSend();
 
     }
     #endregion

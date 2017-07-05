@@ -266,6 +266,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 b.enabled = true;
                 b.transform.position = pos;
                 b.transform.eulerAngles = rot;
+                b.NETWORK_BULLET = true;
             }
             else
             {
@@ -299,6 +300,38 @@ public class NetworkManager : Singletone<NetworkManager> {
             {
                 b.NetworkMoveRecv(pos , velocity , rot);
             }
+            return true;
+        };
+
+        // 총알 부딪혀서 삭제해라
+        m_s2cStub.NotifyPlayerBulletDelete = (HostID remote , RmiContext rmiContext , int sendHostID , string bulletID) =>
+        {
+            Gun01Bullet b = GetNetworkBullet(bulletID);
+
+            if (b == null)
+                NetworkLog("ERROR bulletID 미등록");
+            else
+                b.NetworkRemoveEvent();
+            return true;
+        };
+
+        // hp 업데이트 이벤트
+        m_s2cStub.NotifyPlayerChangeHP = (HostID remote,RmiContext rmiContext, 
+            int targetHostID, string name, float hp, float prevhp, float maxhp) =>
+        {
+            NetworkLog("damage host " + (int)m_hostID + " target " + targetHostID);
+            if ((int)m_hostID == targetHostID)
+                GameManager.Instance().ChangeHP(hp , prevhp , maxhp);
+            return true;
+        };
+
+        // oxy 업데이트 이벤트
+        m_s2cStub.NotifyPlayerChangeOxygen = (HostID remote , RmiContext rmiContext , 
+            int targetHostID , string name , float oxygen , float prevoxy , float maxoxy) =>
+        {
+          //  NetworkLog("use oxy host " + (int)m_hostID + " target " + targetHostID);
+            if ((int)m_hostID == targetHostID)
+                GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);
             return true;
         };
 
@@ -433,8 +466,7 @@ public class NetworkManager : Singletone<NetworkManager> {
     public void C2SRequestEquipItem(int itemCID,int itemID)
     {
         var sendOption = new RmiContext(); // (2)
-        sendOption.reliability = MessageReliability.MessageReliability_Reliable;
-        sendOption.maxDirectP2PMulticastCount = 30;
+        sendOption.reliability = MessageReliability.MessageReliability_Reliable;    
         sendOption.enableLoopback = false;
         m_c2sProxy.NotifyPlayerEquipItem(m_p2pID , sendOption , (int)m_hostID , itemCID , itemID);
     }
@@ -444,7 +476,6 @@ public class NetworkManager : Singletone<NetworkManager> {
     {
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
-        sendOption.maxDirectP2PMulticastCount = 30;
         sendOption.enableLoopback = false;
         m_c2sProxy.NotifyPlayerUnEquipItem(m_p2pID , sendOption , (int)m_hostID , itemCID , itemID , pos , rot);
     }
@@ -463,10 +494,34 @@ public class NetworkManager : Singletone<NetworkManager> {
     public void C2SRequestBulletMove(string bulletID,UnityEngine.Vector3 pos,UnityEngine.Vector3 velocity,UnityEngine.Vector3 rot)
     {
         var sendOption = new RmiContext(); // (2)
-        sendOption.reliability = MessageReliability.MessageReliability_Reliable;
-        sendOption.maxDirectP2PMulticastCount = 30;
+        sendOption.reliability = MessageReliability.MessageReliability_Unreliable;
+     //   sendOption.maxDirectP2PMulticastCount = 30;
         sendOption.enableLoopback = false;
         m_c2sProxy.NotifyPlayerBulletMove(m_p2pID , sendOption , (int)m_hostID , bulletID , pos , velocity , rot);
+    }
+    
+    // bullet delete
+    public void C2SRequestBulletRemove(string bulletID)
+    {
+        var sendOption = new RmiContext(); // (2)
+        sendOption.reliability = MessageReliability.MessageReliability_Unreliable;
+        //   sendOption.maxDirectP2PMulticastCount = 30;
+        sendOption.enableLoopback = false;
+
+        m_c2sProxy.NotifyPlayerBulletDelete(m_p2pID , sendOption , (int)m_hostID , bulletID);
+    }
+
+    // damage
+    public void C2SRequestPlayerDamage(int targetHostID,string name,string weaponName,float damage)
+    {
+        m_c2sProxy.RequestPlayerDamage(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID ,
+            targetHostID , name , weaponName , damage);
+    }
+
+    // use Oxy
+    public void C2SRequestPlayerUseOxy(string name,float useOxy)
+    {
+        m_c2sProxy.RequestPlayerUseOxy(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID , name , useOxy);
     }
 
     #endregion

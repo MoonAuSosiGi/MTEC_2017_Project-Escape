@@ -109,6 +109,70 @@ SP_Marshaler.Write(__msg, rot);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_RequestWorldCreateItem, Common.RequestWorldCreateItem);
 }
+public bool RequestPlayerDamage(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.RequestPlayerDamage;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, sendHostID);
+		SP_Marshaler.Write(__msg, targetHostID);
+		SP_Marshaler.Write(__msg, name);
+		SP_Marshaler.Write(__msg, weaponName);
+		SP_Marshaler.Write(__msg, damage);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_RequestPlayerDamage, Common.RequestPlayerDamage);
+}
+
+public bool RequestPlayerDamage(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.RequestPlayerDamage;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, sendHostID);
+SP_Marshaler.Write(__msg, targetHostID);
+SP_Marshaler.Write(__msg, name);
+SP_Marshaler.Write(__msg, weaponName);
+SP_Marshaler.Write(__msg, damage);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_RequestPlayerDamage, Common.RequestPlayerDamage);
+}
+public bool RequestPlayerUseOxy(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float useOxy)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.RequestPlayerUseOxy;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, sendHostID);
+		SP_Marshaler.Write(__msg, name);
+		SP_Marshaler.Write(__msg, useOxy);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_RequestPlayerUseOxy, Common.RequestPlayerUseOxy);
+}
+
+public bool RequestPlayerUseOxy(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float useOxy)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.RequestPlayerUseOxy;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, sendHostID);
+SP_Marshaler.Write(__msg, name);
+SP_Marshaler.Write(__msg, useOxy);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_RequestPlayerUseOxy, Common.RequestPlayerUseOxy);
+}
 public bool NotifyLoginSuccess(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
@@ -465,6 +529,34 @@ SP_Marshaler.Write(__msg, rot);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerBulletMove, Common.NotifyPlayerBulletMove);
 }
+public bool NotifyPlayerBulletDelete(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.NotifyPlayerBulletDelete;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, sendHostID);
+		SP_Marshaler.Write(__msg, bulletID);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_NotifyPlayerBulletDelete, Common.NotifyPlayerBulletDelete);
+}
+
+public bool NotifyPlayerBulletDelete(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.NotifyPlayerBulletDelete;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, sendHostID);
+SP_Marshaler.Write(__msg, bulletID);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_NotifyPlayerBulletDelete, Common.NotifyPlayerBulletDelete);
+}
 public bool NotifyPlayerAnimation(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string name, string animationName, int aniValue)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
@@ -497,41 +589,7 @@ SP_Marshaler.Write(__msg, aniValue);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerAnimation, Common.NotifyPlayerAnimation);
 }
-public bool NotifyPlayerDamage(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int recvHostID, string name, string weaponName, float damage)
-{
-	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
-		__msg.SimplePacketMode = core.IsSimplePacketMode();
-		Nettention.Proud.RmiID __msgid= Common.NotifyPlayerDamage;
-		__msg.Write(__msgid);
-		SP_Marshaler.Write(__msg, sendHostID);
-		SP_Marshaler.Write(__msg, recvHostID);
-		SP_Marshaler.Write(__msg, name);
-		SP_Marshaler.Write(__msg, weaponName);
-		SP_Marshaler.Write(__msg, damage);
-		
-	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
-	__list[0] = remote;
-		
-	return RmiSend(__list,rmiContext,__msg,
-		RmiName_NotifyPlayerDamage, Common.NotifyPlayerDamage);
-}
-
-public bool NotifyPlayerDamage(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, int recvHostID, string name, string weaponName, float damage)
-{
-	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
-__msg.SimplePacketMode = core.IsSimplePacketMode();
-Nettention.Proud.RmiID __msgid= Common.NotifyPlayerDamage;
-__msg.Write(__msgid);
-SP_Marshaler.Write(__msg, sendHostID);
-SP_Marshaler.Write(__msg, recvHostID);
-SP_Marshaler.Write(__msg, name);
-SP_Marshaler.Write(__msg, weaponName);
-SP_Marshaler.Write(__msg, damage);
-		
-	return RmiSend(remotes,rmiContext,__msg,
-		RmiName_NotifyPlayerDamage, Common.NotifyPlayerDamage);
-}
-public bool NotifyPlayerChangeHP(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp)
+public bool NotifyPlayerChangeHP(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -540,6 +598,8 @@ public bool NotifyPlayerChangeHP(Nettention.Proud.HostID remote,Nettention.Proud
 		SP_Marshaler.Write(__msg, sendHostID);
 		SP_Marshaler.Write(__msg, name);
 		SP_Marshaler.Write(__msg, hp);
+		SP_Marshaler.Write(__msg, prevhp);
+		SP_Marshaler.Write(__msg, maxhp);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -548,7 +608,7 @@ public bool NotifyPlayerChangeHP(Nettention.Proud.HostID remote,Nettention.Proud
 		RmiName_NotifyPlayerChangeHP, Common.NotifyPlayerChangeHP);
 }
 
-public bool NotifyPlayerChangeHP(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp)
+public bool NotifyPlayerChangeHP(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -557,11 +617,13 @@ __msg.Write(__msgid);
 SP_Marshaler.Write(__msg, sendHostID);
 SP_Marshaler.Write(__msg, name);
 SP_Marshaler.Write(__msg, hp);
+SP_Marshaler.Write(__msg, prevhp);
+SP_Marshaler.Write(__msg, maxhp);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerChangeHP, Common.NotifyPlayerChangeHP);
 }
-public bool NotifyPlayerChangeOxygen(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float oxygen)
+public bool NotifyPlayerChangeOxygen(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float oxygen, float prevoxy, float maxoxy)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -570,6 +632,8 @@ public bool NotifyPlayerChangeOxygen(Nettention.Proud.HostID remote,Nettention.P
 		SP_Marshaler.Write(__msg, sendHostID);
 		SP_Marshaler.Write(__msg, name);
 		SP_Marshaler.Write(__msg, oxygen);
+		SP_Marshaler.Write(__msg, prevoxy);
+		SP_Marshaler.Write(__msg, maxoxy);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -578,7 +642,7 @@ public bool NotifyPlayerChangeOxygen(Nettention.Proud.HostID remote,Nettention.P
 		RmiName_NotifyPlayerChangeOxygen, Common.NotifyPlayerChangeOxygen);
 }
 
-public bool NotifyPlayerChangeOxygen(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float oxygen)
+public bool NotifyPlayerChangeOxygen(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float oxygen, float prevoxy, float maxoxy)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -587,6 +651,8 @@ __msg.Write(__msgid);
 SP_Marshaler.Write(__msg, sendHostID);
 SP_Marshaler.Write(__msg, name);
 SP_Marshaler.Write(__msg, oxygen);
+SP_Marshaler.Write(__msg, prevoxy);
+SP_Marshaler.Write(__msg, maxoxy);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerChangeOxygen, Common.NotifyPlayerChangeOxygen);
@@ -597,6 +663,8 @@ SP_Marshaler.Write(__msg, oxygen);
 const string RmiName_RequestServerConnect="RequestServerConnect";
 const string RmiName_RequestClientJoin="RequestClientJoin";
 const string RmiName_RequestWorldCreateItem="RequestWorldCreateItem";
+const string RmiName_RequestPlayerDamage="RequestPlayerDamage";
+const string RmiName_RequestPlayerUseOxy="RequestPlayerUseOxy";
 const string RmiName_NotifyLoginSuccess="NotifyLoginSuccess";
 const string RmiName_NotifyLoginFailed="NotifyLoginFailed";
 const string RmiName_NotifyOtherClientJoin="NotifyOtherClientJoin";
@@ -608,8 +676,8 @@ const string RmiName_NotifyPlayerEquipItem="NotifyPlayerEquipItem";
 const string RmiName_NotifyPlayerUnEquipItem="NotifyPlayerUnEquipItem";
 const string RmiName_NotifyPlayerBulletCreate="NotifyPlayerBulletCreate";
 const string RmiName_NotifyPlayerBulletMove="NotifyPlayerBulletMove";
+const string RmiName_NotifyPlayerBulletDelete="NotifyPlayerBulletDelete";
 const string RmiName_NotifyPlayerAnimation="NotifyPlayerAnimation";
-const string RmiName_NotifyPlayerDamage="NotifyPlayerDamage";
 const string RmiName_NotifyPlayerChangeHP="NotifyPlayerChangeHP";
 const string RmiName_NotifyPlayerChangeOxygen="NotifyPlayerChangeOxygen";
        
@@ -620,6 +688,8 @@ const string RmiName_First = RmiName_RequestServerConnect;
 const string RmiName_RequestServerConnect="";
 const string RmiName_RequestClientJoin="";
 const string RmiName_RequestWorldCreateItem="";
+const string RmiName_RequestPlayerDamage="";
+const string RmiName_RequestPlayerUseOxy="";
 const string RmiName_NotifyLoginSuccess="";
 const string RmiName_NotifyLoginFailed="";
 const string RmiName_NotifyOtherClientJoin="";
@@ -631,8 +701,8 @@ const string RmiName_NotifyPlayerEquipItem="";
 const string RmiName_NotifyPlayerUnEquipItem="";
 const string RmiName_NotifyPlayerBulletCreate="";
 const string RmiName_NotifyPlayerBulletMove="";
+const string RmiName_NotifyPlayerBulletDelete="";
 const string RmiName_NotifyPlayerAnimation="";
-const string RmiName_NotifyPlayerDamage="";
 const string RmiName_NotifyPlayerChangeHP="";
 const string RmiName_NotifyPlayerChangeOxygen="";
        

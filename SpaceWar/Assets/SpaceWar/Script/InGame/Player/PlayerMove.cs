@@ -51,6 +51,7 @@ public static class PlayerMove {
 
         Player p = MoveTarget.GetComponent<Player>();
         Animator TargetAnim = MoveTarget.GetChild(0).GetComponent<Animator>();
+        Rigidbody rigdbody = MoveTarget.GetComponent<Rigidbody>();
         float RotateSpeed = 0.23f;
 
         Vector3 prevPos = MoveTarget.position;
@@ -74,7 +75,7 @@ public static class PlayerMove {
 
             case MoveState.WalkFoward:
                 MoveTarget.Translate(0, 0, Speed);
-
+                //rigdbody.AddForce(0 , 0 , Speed);
                 if (CheckAnim(TargetAnim, "Dash_1"))
                 {
                     p.AnimationSettingAndSend("WalkState", 1);
@@ -88,7 +89,7 @@ public static class PlayerMove {
 
             case MoveState.WalkBack:
                 MoveTarget.Translate(0, 0, -Speed);
-
+                //rigdbody.AddForce(0 , 0 , -Speed);
                 if (CheckAnim(TargetAnim, "Dash_1"))
                 {
                     p.AnimationSettingAndSend("WalkState", 1);
@@ -102,7 +103,7 @@ public static class PlayerMove {
 
             case MoveState.WalkLeft:
                 MoveTarget.Translate(-Speed, 0, 0);
-
+               // rigdbody.AddForce(-Speed , 0 , 0);
                 if (CheckAnim(TargetAnim, "Dash_1"))
                 {
                     p.AnimationSettingAndSend("WalkState", 1);
@@ -116,7 +117,7 @@ public static class PlayerMove {
 
             case MoveState.WalkRight:
                 MoveTarget.Translate(Speed, 0, 0);
-
+                //rigdbody.AddForce(Speed , 0 , 0);
                 if (CheckAnim(TargetAnim, "Dash_1"))
                 {
                     p.AnimationSettingAndSend("WalkState", 1);
@@ -130,7 +131,7 @@ public static class PlayerMove {
                 break;
             case MoveState.WalkFoward_Left:
                 MoveTarget.Translate(Mathf.Cos(135 * Mathf.Deg2Rad) * Speed, 0, Mathf.Sin(135 * Mathf.Deg2Rad) * Speed);
-
+                //rigdbody.AddForce(Mathf.Cos(135 * Mathf.Deg2Rad) * Speed , 0 , Mathf.Sin(135 * Mathf.Deg2Rad) * Speed);
                 if (CheckAnim(TargetAnim, "Dash_1"))
                 {
                     p.AnimationSettingAndSend("WalkState", 1);
@@ -145,7 +146,7 @@ public static class PlayerMove {
 
             case MoveState.WalkFoward_Right:
                 MoveTarget.Translate(Mathf.Cos(45 * Mathf.Deg2Rad) * Speed, 0, Mathf.Sin(45 * Mathf.Deg2Rad) * Speed);
-
+                //rigdbody.AddForce(Mathf.Cos(45 * Mathf.Deg2Rad) * Speed , 0 , Mathf.Sin(45 * Mathf.Deg2Rad) * Speed);
                 if (CheckAnim(TargetAnim, "Dash_1"))
                 {
                     p.AnimationSettingAndSend("WalkState", 1);
@@ -160,7 +161,7 @@ public static class PlayerMove {
 
             case MoveState.WalkBack_Left:
                 MoveTarget.Translate(Mathf.Cos(225 * Mathf.Deg2Rad) * Speed, 0, Mathf.Sin(225 * Mathf.Deg2Rad) * Speed);
-
+                //rigdbody.AddForce(Mathf.Cos(225 * Mathf.Deg2Rad) * Speed , 0 , Mathf.Sin(225 * Mathf.Deg2Rad) * Speed);
                 if (CheckAnim(TargetAnim, "Dash_1"))
                 {
                     p.AnimationSettingAndSend("WalkState", 1);
@@ -175,7 +176,7 @@ public static class PlayerMove {
 
             case MoveState.WalkBack_Right:
                 MoveTarget.Translate(Mathf.Cos(315 * Mathf.Deg2Rad) * Speed, 0, Mathf.Sin(315 * Mathf.Deg2Rad) * Speed);
-
+                //rigdbody.AddForce(Mathf.Cos(315 * Mathf.Deg2Rad) * Speed , 0 , Mathf.Sin(315 * Mathf.Deg2Rad) * Speed);
                 if (CheckAnim(TargetAnim, "Dash_1"))
                 {
                     p.AnimationSettingAndSend("WalkState", 1);
@@ -190,7 +191,7 @@ public static class PlayerMove {
 
             case MoveState.RunFoward:
                 MoveTarget.Translate(0, 0, Speed);
-
+                //rigdbody.AddForce(0 , 0 , Speed);
                 if (CheckAnim(TargetAnim, "Dash_2"))
                 {
                     if (!TargetAnim.GetCurrentAnimatorStateInfo(0).IsName("Dash_2"))
@@ -209,7 +210,7 @@ public static class PlayerMove {
 
             case MoveState.RunBack:
                 MoveTarget.Translate(0, 0, -Speed);
-
+                //rigdbody.AddForce(0 , 0 , -Speed);
 
                 if (CheckAnim(TargetAnim, "Dash_2"))
                 {
@@ -225,7 +226,7 @@ public static class PlayerMove {
 
             case MoveState.RunLeft:
                 MoveTarget.Translate(-Speed, 0, 0);
-
+                //rigdbody.AddForce(-Speed , 0 , 0);
                 if (CheckAnim(TargetAnim, "Dash_2"))
                 {
                     p.AnimationSettingAndSend("WalkState", 2);
@@ -239,8 +240,8 @@ public static class PlayerMove {
                 break;
 
             case MoveState.RunRight:
-                MoveTarget.Translate(Speed, 0, 0);
-
+                MoveTarget.Translate(Speed , 0 , 0);
+                //rigdbody.AddForce(Speed , 0 , 0);
                 if (CheckAnim(TargetAnim, "Dash_2"))
                 {
                     p.AnimationSettingAndSend("WalkState", 2);
@@ -254,7 +255,7 @@ public static class PlayerMove {
                 break;
             case MoveState.RunFoward_Left:
                 MoveTarget.Translate(Mathf.Cos(135 * Mathf.Deg2Rad) * Speed, 0, Mathf.Sin(135 * Mathf.Deg2Rad) * Speed);
-
+                //rigdbody.AddForce(Mathf.Cos(135 * Mathf.Deg2Rad) * Speed , 0 , Mathf.Sin(135 * Mathf.Deg2Rad) * Speed);
                 if (CheckAnim(TargetAnim, "Dash_2"))
                 {
                     p.AnimationSettingAndSend("WalkState", 2);
@@ -269,7 +270,7 @@ public static class PlayerMove {
 
             case MoveState.RunFoward_Right:
                 MoveTarget.Translate(Mathf.Cos(45 * Mathf.Deg2Rad) * Speed, 0, Mathf.Sin(45 * Mathf.Deg2Rad) * Speed);
-
+                //rigdbody.AddForce(Mathf.Cos(45 * Mathf.Deg2Rad) * Speed , 0 , Mathf.Sin(45 * Mathf.Deg2Rad) * Speed);
                 if (CheckAnim(TargetAnim, "Dash_2"))
                 {
                     p.AnimationSettingAndSend("WalkState", 2);
@@ -284,7 +285,7 @@ public static class PlayerMove {
 
             case MoveState.RunBack_Left:
                 MoveTarget.Translate(Mathf.Cos(225 * Mathf.Deg2Rad) * Speed, 0, Mathf.Sin(225 * Mathf.Deg2Rad) * Speed);
-
+                //rigdbody.AddForce(Mathf.Cos(225 * Mathf.Deg2Rad) * Speed , 0 , Mathf.Sin(225 * Mathf.Deg2Rad) * Speed);
                 if (CheckAnim(TargetAnim, "Dash_2"))
                 {
                     p.AnimationSettingAndSend("WalkState", 2);
@@ -299,7 +300,7 @@ public static class PlayerMove {
 
             case MoveState.RunBack_Right:
                 MoveTarget.Translate(Mathf.Cos(315 * Mathf.Deg2Rad) * Speed, 0, Mathf.Sin(315 * Mathf.Deg2Rad) * Speed);
-
+                //rigdbody.AddForce(Mathf.Cos(315 * Mathf.Deg2Rad) * Speed , 0 , Mathf.Sin(315 * Mathf.Deg2Rad) * Speed);
                 if (CheckAnim(TargetAnim, "Dash_2"))
                 {
                     p.AnimationSettingAndSend("WalkState", 2);

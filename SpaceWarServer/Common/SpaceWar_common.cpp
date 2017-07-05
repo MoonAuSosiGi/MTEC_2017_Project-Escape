@@ -14,6 +14,10 @@ namespace SpaceWar
                
 		Rmi_RequestWorldCreateItem,
                
+		Rmi_RequestPlayerDamage,
+               
+		Rmi_RequestPlayerUseOxy,
+               
 		Rmi_NotifyLoginSuccess,
                
 		Rmi_NotifyLoginFailed,
@@ -36,14 +40,14 @@ namespace SpaceWar
                
 		Rmi_NotifyPlayerBulletMove,
                
-		Rmi_NotifyPlayerAnimation,
+		Rmi_NotifyPlayerBulletDelete,
                
-		Rmi_NotifyPlayerDamage,
+		Rmi_NotifyPlayerAnimation,
                
 		Rmi_NotifyPlayerChangeHP,
                
 		Rmi_NotifyPlayerChangeOxygen,
 	};
 
-	int g_RmiIDListCount = 18;
+	int g_RmiIDListCount = 20;
 }

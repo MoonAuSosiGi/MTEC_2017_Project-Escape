@@ -10,7 +10,7 @@ public class Gun01Bullet : MonoBehaviour {
     public float DuringTime;
     public string m_BulletType = "Gun01Bullet";
     private UnityEngine.Vector3 m_prevPos = UnityEngine.Vector3.zero;
-
+    private float m_tick = 0.0f;
    
     public GameObject[] Effect;
     public bool HitEnemy;
@@ -45,7 +45,7 @@ public class Gun01Bullet : MonoBehaviour {
     
 
     void NetworkBulletEnable()
-    {
+    {  
         //if(m_positionFollower == null)
         {
             m_positionFollower = new PositionFollower();
@@ -58,6 +58,7 @@ public class Gun01Bullet : MonoBehaviour {
         this.GetComponent<SphereCollider>().enabled = false;
         Effect[1].SetActive(true);
         Effect[0].SetActive(false);
+        
     }
 
     public void NetworkMoveRecv(UnityEngine.Vector3 pos, UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot)
@@ -102,6 +103,13 @@ public class Gun01Bullet : MonoBehaviour {
         var rotate = Quaternion.Euler(fx , fy , fz);
         transform.localRotation = rotate;
     }
+    public void NetworkRemoveEvent()
+    {
+        this.enabled = false;
+        //  gameObject.SetActive(false);
+        Effect[1].SetActive(false);
+        Effect[0].SetActive(true);
+    }
 
     #endregion
 
@@ -127,20 +135,19 @@ public class Gun01Bullet : MonoBehaviour {
         Effect[1].SetActive(true);
         HitEnemy = false;
         StartCoroutine(SetTime());
-
-
+     
        
     }
 
     // Update is called once per frame
     void Update () {
-
+        m_prevPos = transform.position;
         if (m_networkBullet)
         {
             NetworkUpdate();
             return;
         }
-        m_prevPos = transform.position;
+        
         if (!HitEnemy)
         {
             BulletMove();
@@ -155,11 +162,14 @@ public class Gun01Bullet : MonoBehaviour {
         
         this.transform.RotateAround(AnchorPlanet.Planet.position, ShotRotation * UnityEngine.Vector3.right, Speed);
 
-        UnityEngine.Vector3 velo = (transform.position - m_prevPos) / Time.deltaTime;
+        MoveSend();
+    }
+
+    void MoveSend()
+    {
+        UnityEngine.Vector3 velo = GetComponent<Rigidbody>().velocity;//(transform.position - m_prevPos) / Time.deltaTime;
         NetworkManager.Instance().C2SRequestBulletMove(m_bulletID ,
-            transform.position ,velo, transform.localEulerAngles);
-
-
+            transform.position , velo , transform.localEulerAngles);
     }
 
     IEnumerator SetTime()
@@ -201,6 +211,12 @@ public class Gun01Bullet : MonoBehaviour {
 
             if (other.CompareTag("PlayerCharacter"))
             {
+                NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
+
+                if(p != null)
+                {
+                    NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f));
+                }
                 // TODO WEAPON
                 //   AnchorPlanet.PlayerCharacter.GetComponent<TestStram>().SenddataCall("Hitcall01/" + WeaponID + "/" + Mynum + "/" + other.gameObject.GetComponents<PhotonView>()[0].viewID + "/" + this.transform.position.x + "/" + this.transform.position.y + "/" + this.transform.position.z);               
             }
@@ -213,6 +229,7 @@ public class Gun01Bullet : MonoBehaviour {
             Debug.Log(other.tag);
 
             this.GetComponent<SphereCollider>().enabled = false;
+            NetworkManager.Instance().C2SRequestBulletRemove(m_bulletID);
         }
 
     }

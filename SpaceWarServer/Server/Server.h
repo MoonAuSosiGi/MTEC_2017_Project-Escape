@@ -35,7 +35,12 @@ public:
 
 	//아이템 장비
 	DECRMI_SpaceWar_NotifyPlayerEquipItem;
-	
+
+	// 데미지 요청
+	DECRMI_SpaceWar_RequestPlayerDamage;
+
+	// 숨을 쉬었다.
+	DECRMI_SpaceWar_RequestPlayerUseOxy;
 
 	// 서버 이벤트 로직
 	void OnClientJoin(CNetClientInfo* clientInfo);

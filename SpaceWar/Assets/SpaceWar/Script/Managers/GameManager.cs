@@ -9,6 +9,7 @@ public class GameManager : Singletone<GameManager> {
     public GameObject PlayerPref;
     public GameObject MainCam;
     public GameObject Plant;
+    public InGameUI m_inGameUI;
 
     public Transform PlanetAnchor;
 
@@ -39,7 +40,8 @@ public class GameManager : Singletone<GameManager> {
     public class PlayerInfo
     {
         public string m_name = "";
-        public int m_hp = 0;
+        public float m_hp = 100.0f;
+        public float m_oxy = 100.0f;
     }
     #endregion
 
@@ -209,5 +211,15 @@ public class GameManager : Singletone<GameManager> {
         //}
     }
 
+    public void ChangeHP(float curHp,float prevHp,float maxHp)
+    {
+        m_playerInfo.m_hp = curHp;
+        m_inGameUI.PlayerHPUpdate(curHp , prevHp , maxHp);
+    }
 
+    public void ChangeOxy(float curOxy,float prevOxy,float maxOxy)
+    {
+        m_playerInfo.m_oxy = curOxy;
+        m_inGameUI.PlayerOxyUpdate(curOxy , prevOxy , maxOxy);
+    }
 }

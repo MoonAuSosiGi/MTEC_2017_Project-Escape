@@ -193,7 +193,7 @@ DEFRMI_SpaceWar_RequestClientJoin(Server)
 
 DEFRMI_SpaceWar_RequestWorldCreateItem(Server)
 {
-	cout << "RequestWorldCreateItem x : "<< pos.x << " y : " << pos.y << " z : "<<pos.z  << endl;
+	cout << "RequestWorldCreateItem  item CID : " << itemCID << " x : "<< pos.x << " y : " << pos.y << " z : "<<pos.z  << endl;
 	auto iter = m_clientMap.find((HostID)hostID);
 
 	{
@@ -257,6 +257,29 @@ DEFRMI_SpaceWar_NotifyPlayerMove(Server)
 DEFRMI_SpaceWar_NotifyPlayerEquipItem(Server)
 {
 	cout << "NotifyPlayerEquipItem " << hostID << " item " << itemID << endl;
+	return true;
+}
+
+DEFRMI_SpaceWar_RequestPlayerDamage(Server)
+{
+	cout << "Request Player Damage ¶§¸°³ð " << sendHostID << " ¸ÂÀº³ð " << targetHostID << " µ¥¹ÌÁö " << damage << endl;
+	
+	float prevHp = m_clientMap[(HostID)targetHostID]->hp;
+	m_clientMap[(HostID)targetHostID]->hp -= damage;
+
+	m_proxy.NotifyPlayerChangeHP(m_playerP2PGroup, RmiContext::ReliableSend, targetHostID, m_clientMap[(HostID)targetHostID]->m_userName, m_clientMap[(HostID)targetHostID]->hp, prevHp, MAX_HP);
+	return true;
+}
+
+DEFRMI_SpaceWar_RequestPlayerUseOxy(Server)
+{
+	cout << "RequestPlayerUseOxy " << useOxy << endl;
+	
+	float prevOxy =	m_clientMap[(HostID)sendHostID]->oxy;
+	m_clientMap[(HostID)sendHostID]->oxy -= useOxy;
+
+	m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName, m_clientMap[(HostID)sendHostID]->oxy, prevOxy, MAX_OXY);
+
 	return true;
 }
 

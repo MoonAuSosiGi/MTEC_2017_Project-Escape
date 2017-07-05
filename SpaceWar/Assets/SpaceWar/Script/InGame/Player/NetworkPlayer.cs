@@ -128,6 +128,7 @@ public class NetworkPlayer : MonoBehaviour {
             m_weapon.transform.parent = null;
             m_weapon.transform.position = pos;
             m_weapon.transform.eulerAngles = rot;
+            m_weapon.GetComponent<SphereCollider>().enabled = true;
         }
     }
 }
