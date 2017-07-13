@@ -4,6 +4,7 @@
 
 Item::Item()
 {
+	m_count = 5;
 }
 
 

@@ -35,6 +35,10 @@ public class GameManager : Singletone<GameManager> {
     }
 
     // -------------------------------------------------------------------------------------//
+    // 
+
+    public InventoryUI m_InventoryUI = null;
+
     #endregion
     #region PlayerINFO
     public class PlayerInfo
@@ -42,10 +46,11 @@ public class GameManager : Singletone<GameManager> {
         public string m_name = "";
         public float m_hp = 100.0f;
         public float m_oxy = 100.0f;
+        public Player m_player = null;
     }
     #endregion
 
-
+    #region UnityMethod
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -61,6 +66,18 @@ public class GameManager : Singletone<GameManager> {
         AnchorPlanet.GM = this.transform;
         Application.runInBackground = true;
     }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            if (m_InventoryUI.INVEN_OPENSTATE)
+                m_InventoryUI.CloseInventory();
+            else
+                m_InventoryUI.OpenInventory();
+        }
+    }
+    #endregion
 
     public GameObject CommandItemCreate(int itemCID,int itemID,Vector3 pos,Vector3 rot)
     {
@@ -150,6 +167,52 @@ public class GameManager : Singletone<GameManager> {
 
     }
 
+    public void RecvItem(int itemCID,GameObject box)
+    {
+        Vector3 boxPos = box.transform.position;
+        CreateWeaponList.Add(Instantiate(
+                Item[itemCID] ,SponeHitInfo.point ,
+                Quaternion.Euler(SponeHitInfo.normal.x + 45 , SponeHitInfo.normal.y + 45 ,
+                SponeHitInfo.normal.z + 90)));
+
+        GameObject obj = CreateWeaponList[CreateWeaponList.Count - 1];
+
+        //obj.transform.parent = box.transform ;
+        obj.transform.position = boxPos;
+
+        Vector3 scale = obj.transform.localScale;
+        obj.transform.localScale = new Vector3(0.0f , 0.0f , 0.0f);
+        CreateWeaponList[CreateWeaponList.Count - 1].GetComponent<Weapon>().WeaponID = CreateWeaponList.Count - 1;
+        CreateWeaponList[CreateWeaponList.Count - 1].GetComponent<Weapon>().CID = itemCID;
+        CreateWeaponList[CreateWeaponList.Count - 1].layer = 2;
+
+        
+        iTween.ScaleTo(obj , iTween.Hash(
+            "x" , scale.x , "y" , scale.y , "z" , scale.z ,
+            "oncompletetarget" , gameObject ,
+            "easeType","easeOutCubic",
+            "speed",300.0f,
+            "oncomplete" , "RecvItemTweenEnd", 
+            "oncompleteparams", (CreateWeaponList.Count - 1)));
+        
+
+    }
+    
+    void RecvItemTweenEnd(int index)
+    {
+        
+        // 딱히 하는거 없음 
+
+        NetworkManager.Instance().C2SRequestItemCreate(
+            CreateWeaponList[index]
+            .GetComponent<Weapon>().CID , index ,
+            CreateWeaponList[index].transform.position ,
+                CreateWeaponList[index].transform.eulerAngles);
+        NetworkManager.Instance().m_networkItemList.Add(
+            CreateWeaponList[index].GetComponent<Weapon>().WeaponID ,
+            CreateWeaponList[index]);
+    }
+
     public GameObject OnJoinedRoom(string name,bool me,Vector3 startPos)
     {
         
@@ -184,6 +247,7 @@ public class GameManager : Singletone<GameManager> {
             Plant.GetComponent<Gravity>().TargetObject = MP.GetComponent<Rigidbody>();
 
             AnchorPlanet.PlayerCharacter = MP.transform;
+            GameManager.Instance().PLAYER.m_player = MP.GetComponent<Player>();
 
             NetworkManager.Instance().C2SRequestClientJoin(
                 GameManager.Instance().PLAYER.m_name , MP.transform.position);
@@ -211,9 +275,17 @@ public class GameManager : Singletone<GameManager> {
         //}
     }
 
-    public void ChangeHP(float curHp,float prevHp,float maxHp)
+    #region NetworkInfoChange
+    public void ChangeHP(float curHp , float prevHp , float maxHp)
     {
         m_playerInfo.m_hp = curHp;
+        if (m_playerInfo.m_hp > 0.0f)
+            m_playerInfo.m_player.AnimationSettingAndSend("Damage" , 1234);
+        else
+        {
+            m_playerInfo.m_player.IsMoveable = false;
+            m_playerInfo.m_player.AnimationSettingAndSend("Dead" , 1234);
+        }
         m_inGameUI.PlayerHPUpdate(curHp , prevHp , maxHp);
     }
 
@@ -222,4 +294,19 @@ public class GameManager : Singletone<GameManager> {
         m_playerInfo.m_oxy = curOxy;
         m_inGameUI.PlayerOxyUpdate(curOxy , prevOxy , maxOxy);
     }
+    #endregion
+
+    #region EquipEvent
+    public void EquipWeapon(int itemCID,int cur,int max)
+    {
+        m_inGameUI.EquipWeapon(itemCID , cur , max);
+    }
+
+    public void UnEquipWeapon(int itemCID,int cur,int max)
+    {
+        m_inGameUI.UnEquipWeapon(itemCID , cur , max);
+    }
+    #endregion
+
+
 }

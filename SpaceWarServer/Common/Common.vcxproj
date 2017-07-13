@@ -72,6 +72,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(PROUDNET_DIR)\include;$(WindowsSDK_IncludePath);$(VC_IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(PROUDNET_DIR)\include;$(WindowsSDK_IncludePath);$(VC_IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -112,12 +115,17 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(PROUDNET_DIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>ProudNetClient.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(PROUDNET_DIR)\lib\Win32\VS2015\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -172,9 +180,11 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Nettention\ProudNet\util\PIDL.exe;%(AdditionalInputs)</AdditionalInputs>
       <PIDLVersion Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">2.0</PIDLVersion>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename).pidl ...</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"C:\Program Files (x86)\Nettention\ProudNet\util\PIDL.exe " "%(FullPath)" -cpp  </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(PROUDNET_DIR)\UTIL\PIDL.exe " "%(FullPath)" -cpp  
+ 
+ "$(PROUDNET_DIR)\UTIL\PIDL.exe " "%(FullPath)" -cs -outdir ..\..\SpaceWar\Assets\SpaceWar\Script\NetworkPIDL </Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename)_common.cpp;%(Filename)_common.h;%(Filename)_proxy.cpp;%(Filename)_proxy.h;%(Filename)_stub.cpp;%(Filename)_stub.h;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Program Files (x86)\Nettention\ProudNet\util\PIDL.exe;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(PROUDNET_DIR)\UTIL\PIDL.exe;%(AdditionalInputs)</AdditionalInputs>
       <PIDLVersion Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">2.0</PIDLVersion>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(Filename).pidl ...</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"C:\Program Files (x86)\Nettention\ProudNet\util\PIDL.exe " "%(FullPath)" -cpp  </Command>

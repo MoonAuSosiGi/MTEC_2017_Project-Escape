@@ -4,6 +4,7 @@ using UnityEngine;
 using Nettention;
 using Nettention.Proud;
 using SpaceWar;
+using System;
 
 public class NetworkManager : Singletone<NetworkManager> {
 
@@ -20,6 +21,12 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     // 서버 아이피
     private string m_serverIP = "localhost";
+
+    public string SERVER_IP
+    {
+        get { return m_serverIP; }
+        set { m_serverIP = value; }
+    }
 
     // 프라우드넷 클라이언트 객체
     private NetClient m_netClient = null;
@@ -66,6 +73,32 @@ public class NetworkManager : Singletone<NetworkManager> {
             return m_bulletList[bulletID];
         else
             return null;
+    }
+
+    // OxyCharger
+    public List<OxyCharger> m_oxyChargerList = new List<OxyCharger>();
+
+    public bool isListInOxyCharger(OxyCharger charger)
+    {
+        return m_oxyChargerList.Contains(charger);
+    }
+
+    public int GetOxyChargerIndex(OxyCharger charger)
+    {
+        return m_oxyChargerList.IndexOf(charger);
+    }
+
+    // itemBox
+    public List<ItemBox> m_itemBoxList = new List<ItemBox>();
+    
+    public bool isListInItemBox(ItemBox box)
+    {
+        return m_itemBoxList.Contains(box);
+    }
+
+    public int GetItemBoxIndex(ItemBox box)
+    {
+        return m_itemBoxList.IndexOf(box);
     }
 
     #endregion
@@ -116,9 +149,9 @@ public class NetworkManager : Singletone<NetworkManager> {
             m_isLogin = true;
             m_hostID = (HostID)hostid;
             NetworkLog("Login Success " + (int)hostid);
+            if (loginResult != null)
+                loginResult(true);
 
-            GameManager.Instance().OnJoinedRoom(GameManager.Instance().PLAYER.m_name , true ,
-            new UnityEngine.Vector3(0.0f , 80.0f , 0.0f));
             return true;
         };
 
@@ -126,6 +159,8 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyLoginFailed = (HostID remote ,RmiContext rmiContext , System.String reason) =>
         {
             NetworkLog("Login Failed " + reason);
+            if (loginResult != null)
+                loginResult(false);
             return true;
         };
         
@@ -329,15 +364,49 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyPlayerChangeOxygen = (HostID remote , RmiContext rmiContext , 
             int targetHostID , string name , float oxygen , float prevoxy , float maxoxy) =>
         {
-          //  NetworkLog("use oxy host " + (int)m_hostID + " target " + targetHostID);
             if ((int)m_hostID == targetHostID)
                 GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);
             return true;
         };
 
+        // OxyCharger 조작 이벤트
+        m_s2cStub.NotifyUseOxyCharger = (HostID remote , RmiContext rmiContext , 
+            int sendHostID , int oxyChargerIndex , float userOxy) =>
+        {
+            m_oxyChargerList[oxyChargerIndex].RecvOxy(userOxy);
+            return true;
+        };
+
+        // itemBox 조작 이벤트 ( 아이템 박스 사용 결과와 생성할 아이템 코드가 날아옴 )
+        m_s2cStub.NotifyUseItemBox = (HostID remote , RmiContext rmiContext ,
+            int sendHostID , int itemBoxIndex , int itemID) =>
+        {
+            if (itemBoxIndex < 0 || m_itemBoxList.Count <= itemBoxIndex)
+            {
+                Debug.Log("NotifyUseItemBox index Error " + itemBoxIndex);
+                return true;
+            }
+            ItemBox box = m_itemBoxList[itemBoxIndex];
+            
+            box.ItemBoxClose();
+
+            if ((int)m_hostID != sendHostID)
+                box.ItemBoxNetworkOpen();
+            else
+            {
+                // 같을 경우 
+                Debug.Log("얻었다 ! " + itemID + "를!");
+                //임의
+                GameManager.Instance().RecvItem(0 , box.transform.GetChild(3).gameObject);
+            }
+
+            return true;
+        };
+
+
         #endregion
 
-        ServerConnect();
+     //   ServerConnect();
     }
 
     void Update()
@@ -351,7 +420,16 @@ public class NetworkManager : Singletone<NetworkManager> {
     public void ServerConnect()
     {
         m_param.serverIP = m_serverIP;
-        m_netClient.Connect(m_param);
+        try
+        {
+            m_netClient.Connect(m_param);
+        }
+        catch(Exception)
+        {
+            if (loginResult != null)
+                loginResult(false);
+        }
+        
         
     }
     #endregion
@@ -365,7 +443,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
             Debug.Log("Server Connected");
             
-            GameManager.Instance().PLAYER.m_name = "TEST " + Random.Range(1 , 100);
+            GameManager.Instance().PLAYER.m_name = "TEST " + UnityEngine.Random.Range(1 , 100);
             C2SRequestLogin(GameManager.Instance().PLAYER.m_name);
             m_isConnect = true; // bool 변수 값 true 로 변경합니다.
           
@@ -522,6 +600,21 @@ public class NetworkManager : Singletone<NetworkManager> {
     public void C2SRequestPlayerUseOxy(string name,float useOxy)
     {
         m_c2sProxy.RequestPlayerUseOxy(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID , name , useOxy);
+    }
+
+    // user OxyCharger
+    public void C2SRequestPlayerUseOxyCharger(OxyCharger charger,float UseOxy)
+    {
+        m_c2sProxy.RequestUseOxyCharger(HostID.HostID_Server , RmiContext.ReliableSend ,
+            (int)m_hostID , GetOxyChargerIndex(charger) , UseOxy);
+    }
+
+    // use itemBox
+    public void C2SRequestPlayerUseItemBox(ItemBox box)
+    {
+        Debug.Log("itemBox Use ");
+        m_c2sProxy.RequestUseItemBox(HostID.HostID_Server , RmiContext.ReliableSend ,
+            (int)m_hostID , GetItemBoxIndex(box));   
     }
 
     #endregion

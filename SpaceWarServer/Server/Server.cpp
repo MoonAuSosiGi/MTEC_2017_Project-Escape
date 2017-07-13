@@ -283,6 +283,46 @@ DEFRMI_SpaceWar_RequestPlayerUseOxy(Server)
 	return true;
 }
 
+DEFRMI_SpaceWar_RequestUseOxyCharger(Server)
+{
+	cout << "RequestUseOxyCharger " << endl;
+
+	CriticalSectionLock lock(m_critSec, true);
+	
+	float prevOxy = m_clientMap[(HostID)sendHostID]->oxy;
+	m_clientMap[(HostID)sendHostID]->oxy += userOxy;
+
+	m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName, m_clientMap[(HostID)sendHostID]->oxy, prevOxy, MAX_OXY);
+
+	m_proxy.NotifyUseOxyCharger(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID,
+		oxyChargerIndex, userOxy);
+	return true;
+}
+
+DEFRMI_SpaceWar_RequestUseItemBox(Server)
+{
+	cout << "RequestUseItemBox " << itemBoxIndex << endl;
+
+	// TESTCODE
+	if (m_itemBoxMap.find(itemBoxIndex) == m_itemBoxMap.end())
+	{
+		
+		// 첫 사용
+		m_itemBoxMap[itemBoxIndex] = sendHostID;
+
+		int itemCode = 0; // 여기서 줘야함
+		m_proxy.NotifyUseItemBox(m_playerP2PGroup, RmiContext::ReliableSend,
+			sendHostID, itemBoxIndex, itemCode);
+		return true;
+	}
+
+	// 이미 사용중
+	
+	
+
+	return true;
+}
+
 #pragma endregion
 
 

@@ -180,6 +180,68 @@ __msg << useOxy;
 			RmiName_RequestPlayerUseOxy, (::Proud::RmiID)Rmi_RequestPlayerUseOxy);
 	}
         
+	bool Proxy::RequestUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestUseOxyCharger;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << oxyChargerIndex;
+__msg << userOxy;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestUseOxyCharger, (::Proud::RmiID)Rmi_RequestUseOxyCharger);
+	}
+
+	bool Proxy::RequestUseOxyCharger ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestUseOxyCharger;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << oxyChargerIndex;
+__msg << userOxy;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestUseOxyCharger, (::Proud::RmiID)Rmi_RequestUseOxyCharger);
+	}
+        
+	bool Proxy::RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestUseItemBox;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << itemBoxIndex;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestUseItemBox, (::Proud::RmiID)Rmi_RequestUseItemBox);
+	}
+
+	bool Proxy::RequestUseItemBox ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & itemBoxIndex)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestUseItemBox;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << itemBoxIndex;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestUseItemBox, (::Proud::RmiID)Rmi_RequestUseItemBox);
+	}
+        
 	bool Proxy::NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -416,6 +478,66 @@ __msg << rot;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyCreateItem, (::Proud::RmiID)Rmi_NotifyCreateItem);
+	}
+        
+	bool Proxy::NotifyStartOxyChargerState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID,  const float & oxy)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyStartOxyChargerState;
+__msg.Write(__msgid); 
+	
+__msg << oxyChargerID;
+__msg << oxy;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyStartOxyChargerState, (::Proud::RmiID)Rmi_NotifyStartOxyChargerState);
+	}
+
+	bool Proxy::NotifyStartOxyChargerState ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & oxyChargerID,  const float & oxy)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyStartOxyChargerState;
+__msg.Write(__msgid); 
+	
+__msg << oxyChargerID;
+__msg << oxy;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyStartOxyChargerState, (::Proud::RmiID)Rmi_NotifyStartOxyChargerState);
+	}
+        
+	bool Proxy::NotifyStartItemBoxState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemBoxID,  const bool & openState)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyStartItemBoxState;
+__msg.Write(__msgid); 
+	
+__msg << itemBoxID;
+__msg << openState;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyStartItemBoxState, (::Proud::RmiID)Rmi_NotifyStartItemBoxState);
+	}
+
+	bool Proxy::NotifyStartItemBoxState ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & itemBoxID,  const bool & openState)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyStartItemBoxState;
+__msg.Write(__msgid); 
+	
+__msg << itemBoxID;
+__msg << openState;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyStartItemBoxState, (::Proud::RmiID)Rmi_NotifyStartItemBoxState);
 	}
         
 	bool Proxy::NotifyPlayerEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID)	{
@@ -693,6 +815,70 @@ __msg << maxoxy;
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyPlayerChangeOxygen, (::Proud::RmiID)Rmi_NotifyPlayerChangeOxygen);
 	}
+        
+	bool Proxy::NotifyUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyUseOxyCharger;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << oxyChargerIndex;
+__msg << userOxy;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyUseOxyCharger, (::Proud::RmiID)Rmi_NotifyUseOxyCharger);
+	}
+
+	bool Proxy::NotifyUseOxyCharger ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyUseOxyCharger;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << oxyChargerIndex;
+__msg << userOxy;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyUseOxyCharger, (::Proud::RmiID)Rmi_NotifyUseOxyCharger);
+	}
+        
+	bool Proxy::NotifyUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyUseItemBox;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << itemBoxIndex;
+__msg << itemID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyUseItemBox, (::Proud::RmiID)Rmi_NotifyUseItemBox);
+	}
+
+	bool Proxy::NotifyUseItemBox ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyUseItemBox;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << itemBoxIndex;
+__msg << itemID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyUseItemBox, (::Proud::RmiID)Rmi_NotifyUseItemBox);
+	}
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestServerConnect =_PNT("RequestServerConnect");
 #else
@@ -717,6 +903,16 @@ const PNTCHAR* Proxy::RmiName_RequestPlayerDamage =_PNT("");
 const PNTCHAR* Proxy::RmiName_RequestPlayerUseOxy =_PNT("RequestPlayerUseOxy");
 #else
 const PNTCHAR* Proxy::RmiName_RequestPlayerUseOxy =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestUseOxyCharger =_PNT("RequestUseOxyCharger");
+#else
+const PNTCHAR* Proxy::RmiName_RequestUseOxyCharger =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestUseItemBox =_PNT("RequestUseItemBox");
+#else
+const PNTCHAR* Proxy::RmiName_RequestUseItemBox =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyLoginSuccess =_PNT("NotifyLoginSuccess");
@@ -752,6 +948,16 @@ const PNTCHAR* Proxy::RmiName_NotifyDeleteItem =_PNT("");
 const PNTCHAR* Proxy::RmiName_NotifyCreateItem =_PNT("NotifyCreateItem");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyCreateItem =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyStartOxyChargerState =_PNT("NotifyStartOxyChargerState");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyStartOxyChargerState =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyStartItemBoxState =_PNT("NotifyStartItemBoxState");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyStartItemBoxState =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyPlayerEquipItem =_PNT("NotifyPlayerEquipItem");
@@ -792,6 +998,16 @@ const PNTCHAR* Proxy::RmiName_NotifyPlayerChangeHP =_PNT("");
 const PNTCHAR* Proxy::RmiName_NotifyPlayerChangeOxygen =_PNT("NotifyPlayerChangeOxygen");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyPlayerChangeOxygen =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyUseOxyCharger =_PNT("NotifyUseOxyCharger");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyUseOxyCharger =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyUseItemBox =_PNT("NotifyUseItemBox");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyUseItemBox =_PNT("");
 #endif
 const PNTCHAR* Proxy::RmiName_First = RmiName_RequestServerConnect;
 }

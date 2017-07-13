@@ -55,7 +55,13 @@ public class NetworkPlayer : MonoBehaviour {
 
     public void RecvNetworkAnimation(string animationName,int aniValue)
     {
-        PlayerAnim.SetInteger(animationName , aniValue);
+        //test code
+        if(aniValue == 1234)
+        {
+            PlayerAnim.Play(animationName);
+        }
+        else
+            PlayerAnim.SetInteger(animationName , aniValue);
     }
 
     void NetworkMoveUpdate()

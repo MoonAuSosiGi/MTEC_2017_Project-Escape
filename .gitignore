@@ -8,6 +8,7 @@
 /SpaceWar/[Bb]uild/
 /SpaceWar/[Bb]uilds/
 /SpaceWar/Assets/AssetStoreTools*
+/SpaceWar/Assets/AssetStore
 /SpaceWar/Assets/Art
 
 # Visual Studio 2015 cache directory

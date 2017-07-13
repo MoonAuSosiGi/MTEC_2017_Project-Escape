@@ -26,6 +26,10 @@ namespace SpaceWar
 	virtual bool RequestPlayerDamage ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage)   PN_SEALED;  
 	virtual bool RequestPlayerUseOxy ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & useOxy) PN_SEALED; 
 	virtual bool RequestPlayerUseOxy ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & useOxy)   PN_SEALED;  
+	virtual bool RequestUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy) PN_SEALED; 
+	virtual bool RequestUseOxyCharger ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)   PN_SEALED;  
+	virtual bool RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex) PN_SEALED; 
+	virtual bool RequestUseItemBox ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & itemBoxIndex)   PN_SEALED;  
 	virtual bool NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID) PN_SEALED; 
 	virtual bool NotifyLoginSuccess ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID)   PN_SEALED;  
 	virtual bool NotifyLoginFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & reason) PN_SEALED; 
@@ -40,6 +44,10 @@ namespace SpaceWar
 	virtual bool NotifyDeleteItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & itemID)   PN_SEALED;  
 	virtual bool NotifyCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot) PN_SEALED; 
 	virtual bool NotifyCreateItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)   PN_SEALED;  
+	virtual bool NotifyStartOxyChargerState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID,  const float & oxy) PN_SEALED; 
+	virtual bool NotifyStartOxyChargerState ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & oxyChargerID,  const float & oxy)   PN_SEALED;  
+	virtual bool NotifyStartItemBoxState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemBoxID,  const bool & openState) PN_SEALED; 
+	virtual bool NotifyStartItemBoxState ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & itemBoxID,  const bool & openState)   PN_SEALED;  
 	virtual bool NotifyPlayerEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID) PN_SEALED; 
 	virtual bool NotifyPlayerEquipItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const int & itemCID,  const int & itemID)   PN_SEALED;  
 	virtual bool NotifyPlayerUnEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot) PN_SEALED; 
@@ -56,11 +64,17 @@ namespace SpaceWar
 	virtual bool NotifyPlayerChangeHP ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp)   PN_SEALED;  
 	virtual bool NotifyPlayerChangeOxygen ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & oxygen,  const float & prevoxy,  const float & maxoxy) PN_SEALED; 
 	virtual bool NotifyPlayerChangeOxygen ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & oxygen,  const float & prevoxy,  const float & maxoxy)   PN_SEALED;  
+	virtual bool NotifyUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy) PN_SEALED; 
+	virtual bool NotifyUseOxyCharger ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)   PN_SEALED;  
+	virtual bool NotifyUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID) PN_SEALED; 
+	virtual bool NotifyUseItemBox ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)   PN_SEALED;  
 static const PNTCHAR* RmiName_RequestServerConnect;
 static const PNTCHAR* RmiName_RequestClientJoin;
 static const PNTCHAR* RmiName_RequestWorldCreateItem;
 static const PNTCHAR* RmiName_RequestPlayerDamage;
 static const PNTCHAR* RmiName_RequestPlayerUseOxy;
+static const PNTCHAR* RmiName_RequestUseOxyCharger;
+static const PNTCHAR* RmiName_RequestUseItemBox;
 static const PNTCHAR* RmiName_NotifyLoginSuccess;
 static const PNTCHAR* RmiName_NotifyLoginFailed;
 static const PNTCHAR* RmiName_NotifyOtherClientJoin;
@@ -68,6 +82,8 @@ static const PNTCHAR* RmiName_NotifyPlayerLost;
 static const PNTCHAR* RmiName_NotifyPlayerMove;
 static const PNTCHAR* RmiName_NotifyDeleteItem;
 static const PNTCHAR* RmiName_NotifyCreateItem;
+static const PNTCHAR* RmiName_NotifyStartOxyChargerState;
+static const PNTCHAR* RmiName_NotifyStartItemBoxState;
 static const PNTCHAR* RmiName_NotifyPlayerEquipItem;
 static const PNTCHAR* RmiName_NotifyPlayerUnEquipItem;
 static const PNTCHAR* RmiName_NotifyPlayerBulletCreate;
@@ -76,6 +92,8 @@ static const PNTCHAR* RmiName_NotifyPlayerBulletDelete;
 static const PNTCHAR* RmiName_NotifyPlayerAnimation;
 static const PNTCHAR* RmiName_NotifyPlayerChangeHP;
 static const PNTCHAR* RmiName_NotifyPlayerChangeOxygen;
+static const PNTCHAR* RmiName_NotifyUseOxyCharger;
+static const PNTCHAR* RmiName_NotifyUseItemBox;
 static const PNTCHAR* RmiName_First;
 		Proxy()
 		{

@@ -42,9 +42,21 @@ public:
 	// 숨을 쉬었다.
 	DECRMI_SpaceWar_RequestPlayerUseOxy;
 
+	// 산소 충전기 사용
+	DECRMI_SpaceWar_RequestUseOxyCharger;
+
+	// 아이템 박스 사용
+	DECRMI_SpaceWar_RequestUseItemBox;
+
 	// 서버 이벤트 로직
 	void OnClientJoin(CNetClientInfo* clientInfo);
 	void OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, const ByteArray& comment);
+
+private:
+	// 아이템 박스 등 상호작용 오브젝트의 경우 동시접근을 막아야 하므로
+	// 현재 접근하고 있는지 체크하는 로직이 필요함, 이에 따른 체크용 변수들
+	unordered_map<int, int> m_itemBoxMap;
+	unordered_map<int, int> m_oxyChargerMap;
 
 public:
 	// 전송 프록시

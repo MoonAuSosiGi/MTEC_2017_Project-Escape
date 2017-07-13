@@ -18,6 +18,10 @@ namespace SpaceWar
                
 		Rmi_RequestPlayerUseOxy,
                
+		Rmi_RequestUseOxyCharger,
+               
+		Rmi_RequestUseItemBox,
+               
 		Rmi_NotifyLoginSuccess,
                
 		Rmi_NotifyLoginFailed,
@@ -31,6 +35,10 @@ namespace SpaceWar
 		Rmi_NotifyDeleteItem,
                
 		Rmi_NotifyCreateItem,
+               
+		Rmi_NotifyStartOxyChargerState,
+               
+		Rmi_NotifyStartItemBoxState,
                
 		Rmi_NotifyPlayerEquipItem,
                
@@ -47,7 +55,11 @@ namespace SpaceWar
 		Rmi_NotifyPlayerChangeHP,
                
 		Rmi_NotifyPlayerChangeOxygen,
+               
+		Rmi_NotifyUseOxyCharger,
+               
+		Rmi_NotifyUseItemBox,
 	};
 
-	int g_RmiIDListCount = 20;
+	int g_RmiIDListCount = 26;
 }

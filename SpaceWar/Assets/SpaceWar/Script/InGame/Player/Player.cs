@@ -26,7 +26,10 @@ public class Player : MonoBehaviour {
     public float JumpH;
     public float JumpT;
 
+    public Transform EffectShowLongAnchor;
+
     public GameObject WeaponAnchor;
+    
     public GameObject Weapon = null;
     public Animator PlayerAnim;
 
@@ -39,7 +42,7 @@ public class Player : MonoBehaviour {
 
     public Transform FirePoint;
 
-    public GameObject EquipEffect;
+    public GameObject m_UseEffect;
 
     float deltaTime = 0.0f;
 
@@ -49,6 +52,9 @@ public class Player : MonoBehaviour {
     public bool NearWeaponPick;
 
     private Vector3 m_prevPos = Vector3.zero;
+
+    public OxyCharger NearOxyCharger = null;
+    public ItemBox NearItemBox = null;
 
     // TEST CODE
     void MoveSend()
@@ -91,6 +97,7 @@ public class Player : MonoBehaviour {
         else
         {
             GetWeapon();
+            ControlObject();
         }
 
         if (NearWeaponPick)
@@ -113,7 +120,7 @@ public class Player : MonoBehaviour {
         if (NearWeapon.transform.parent != null)
         {
             NearWeapon = null;
-            EquipEffect.SetActive(false);
+            m_UseEffect.SetActive(false);
             NearWeaponPick = false;
         }
     }
@@ -139,8 +146,9 @@ public class Player : MonoBehaviour {
 
     public void GetWeapon()
     {
-        if (Input.GetKeyDown(GetKey) && Weapon == null)
+        if (Input.GetKeyDown(GetKey) && Weapon == null && NearWeapon != null)
         {
+            
             NearWeapon.transform.parent = WeaponAnchor.transform;
             NearWeapon.transform.localPosition = NearWeapon.GetComponent<Weapon>().LocalSetPos;
             NearWeapon.transform.localRotation = Quaternion.Euler(NearWeapon.GetComponent<Weapon>().LocalSetRot);
@@ -152,13 +160,25 @@ public class Player : MonoBehaviour {
             PlayerAnim.gameObject.GetComponent<AttackEvent>().Weapon = NearWeapon;
             Weapon.GetComponent<SphereCollider>().enabled = false;
 
-            EquipEffect.SetActive(false);
+            m_UseEffect.SetActive(false);
             NearWeaponPick = false;
 
             // 
             Weapon w = Weapon.GetComponent<Weapon>();
-
+            GameManager.Instance().EquipWeapon(w.CID , 0 , 0);
             NetworkManager.Instance().C2SRequestEquipItem(w.CID , w.WeaponID);
+        }
+    }
+
+
+    public void ControlObject()
+    {
+        if(Input.GetKeyDown(GetKey))
+        {
+            if (NearOxyCharger != null)
+                NearOxyCharger.UseOxy();
+            else if (NearItemBox != null)
+                NearItemBox.UseItemBox();
         }
     }
 
@@ -195,7 +215,7 @@ public class Player : MonoBehaviour {
             Weapon.transform.Translate(Vector3.right * 0.15f);
 
 
-            Weapon.transform.localScale = NearWeapon.GetComponent<Weapon>().ThrowSetScale;
+            //Weapon.transform.localScale = NearWeapon.GetComponent<Weapon>().ThrowSetScale;
 
 
 
@@ -210,6 +230,7 @@ public class Player : MonoBehaviour {
 
             Weapon w = Weapon.GetComponent<Weapon>();
 
+            GameManager.Instance().UnEquipWeapon(w.CID , 0 , 0);
             NetworkManager.Instance().C2SRequestUnEquipItem(w.CID , w.WeaponID , Weapon.transform.position , Weapon.transform.eulerAngles);
 
             Weapon = null;
@@ -218,10 +239,16 @@ public class Player : MonoBehaviour {
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Weapon") && Weapon == null)
+        bool showUseKeyEffect =
+            (other.CompareTag("Weapon") && Weapon != null) ||
+            (other.CompareTag("OxyCharger") && NearOxyCharger != null) ||
+            (other.CompareTag("ItemBox") && NearItemBox != null);
+
+        if (showUseKeyEffect)
         {
-            EquipEffect.transform.GetChild(0).GetChild(0).rotation = this.transform.rotation;
+            m_UseEffect.transform.GetChild(0).GetChild(0).rotation = this.transform.rotation;
         }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -230,15 +257,40 @@ public class Player : MonoBehaviour {
         {
             NearWeapon = other.gameObject;
 
-            EquipEffect.transform.position = NearWeapon.transform.GetChild(0).position;
+            // Vector3 pos = NearWeapon.transform.GetChild(0).position;
+            m_UseEffect.transform.position = NearWeapon.transform.GetChild(0).position;// new Vector3(pos.x , pos.y , pos.z);
+            //m_UseEffect.transform.parent = NearWeapon.transform;
+            //m_UseEffect.transform.rotation = NearWeapon.transform.rotation;
+            
+            //m_UseEffect.transform.Rotate(0 , 0 , -90f);
 
-            EquipEffect.transform.parent = NearWeapon.transform;
-            EquipEffect.transform.rotation = NearWeapon.transform.rotation;
-            EquipEffect.transform.Rotate(0 , 0 , -90f);
 
-            EquipEffect.SetActive(true);
+            m_UseEffect.SetActive(true);
             NearWeaponPick = true;
 
+        }
+
+        else if(other.CompareTag("OxyCharger") && NearOxyCharger == null)
+        {
+            m_UseEffect.SetActive(true);
+            NearOxyCharger = other.GetComponent<OxyCharger>();
+            Vector3 pos = EffectShowLongAnchor.position;
+
+            m_UseEffect.transform.parent = transform;
+            m_UseEffect.transform.position = new Vector3(pos.x , pos.y , 
+                transform.position.z);
+        }
+
+        else if(other.CompareTag("ItemBox") && NearItemBox == null)
+        {
+            if (other.GetComponent<ItemBox>().OPENED)
+                return;
+
+            m_UseEffect.SetActive(true);
+            NearItemBox = other.GetComponent<ItemBox>();
+            Vector3 pos = NearItemBox.transform.position;
+            m_UseEffect.transform.position = new Vector3(pos.x , pos.y + 0.5f ,
+                pos.z);
         }
     }
 
@@ -247,9 +299,21 @@ public class Player : MonoBehaviour {
         if (other.CompareTag("Weapon"))
         {
             NearWeapon = null;
-            EquipEffect.SetActive(false);
+            m_UseEffect.SetActive(false);
             NearWeaponPick = false;
         }
+
+        else if (other.CompareTag("OxyCharger"))
+        {
+            m_UseEffect.SetActive(false);
+            NearOxyCharger = null;
+        }
+        else if (other.CompareTag("ItemBox"))
+        {
+            m_UseEffect.SetActive(false);
+            NearItemBox = null;
+        }
+
     }
 
     public void AttackAnimPlay(string AnimationName , int AnimLayer)
@@ -555,7 +619,10 @@ public class Player : MonoBehaviour {
     #region NetworkMessage
     public void AnimationSettingAndSend(string aniName,int aniValue)
     {
-        PlayerAnim.SetInteger(aniName , aniValue);
+        if (aniValue != 1234)
+            PlayerAnim.SetInteger(aniName , aniValue);
+        else
+            PlayerAnim.Play(aniName);
         NetworkManager.Instance().C2SRequestPlayerAnimation(
             GameManager.Instance().PLAYER.m_name , aniName , aniValue);
     }

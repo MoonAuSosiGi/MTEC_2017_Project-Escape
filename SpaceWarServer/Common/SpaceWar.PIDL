@@ -35,6 +35,12 @@ global SpaceWar 3141
 	// 플레이어가 숨을쉬었다.
 	RequestPlayerUseOxy([in]int sendHostID,[in]string name,[in]float useOxy);
 
+	// 산소 충전기 조작
+	RequestUseOxyCharger([in]int sendHostID,[in]int oxyChargerIndex,[in]float userOxy);
+
+	// 아이템 박스 조작
+	RequestUseItemBox([in]int sendHostID,[in]int itemBoxIndex);
+
 	//S2C -------------------------------------------------------------
 	NotifyLoginSuccess([in]int hostID);
 	NotifyLoginFailed([in]string reason);
@@ -56,7 +62,12 @@ global SpaceWar 3141
 
 	// 아이템 생성하는 명령
 	NotifyCreateItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
-	////NotifyCreateItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]float x,[in]float y,[in]float z,[in]float rx,[in]float ry,[in]float rz);
+	
+	// 처음 접속시 산소 충전기의 상태를 전송하는 명령
+	NotifyStartOxyChargerState([in]int oxyChargerID,[in]float oxy);
+
+	// 처음 접속시 아이템 박스의 상태를 전송하는 명령
+	NotifyStartItemBoxState([in]int itemBoxID,[in]bool openState);
 
 	// 플레이어가 아이템을 먹었다. // 임시로 없음
 
@@ -85,5 +96,9 @@ global SpaceWar 3141
 	// 산소 변동 이벤트
 	NotifyPlayerChangeOxygen([in]int sendHostID,[in]string name,[in]float oxygen,[in]float prevoxy,[in]float maxoxy);
 
+	// 산소충전기 조작
+	NotifyUseOxyCharger([in]int sendHostID,[in]int oxyChargerIndex,[in]float userOxy);
 
+	// 아이템 박스 조작
+	NotifyUseItemBox([in]int sendHostID,[in]int itemBoxIndex,[in]int itemID);
 }
