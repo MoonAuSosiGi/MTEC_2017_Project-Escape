@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{95a1232c-2587-41a8-9bbb-32b58f67849f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetworkObject">
+      <UniqueIdentifier>{743a59a3-86f0-48cf-82d7-05ff2d214035}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -24,20 +30,23 @@
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Server.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="SP_Marshaler.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Server</Filter>
+    </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>NetworkObject</Filter>
     </ClInclude>
     <ClInclude Include="OxyCharger.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>NetworkObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Shelter.h">
+      <Filter>NetworkObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -45,16 +54,19 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Server.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Server</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>NetworkObject</Filter>
     </ClCompile>
     <ClCompile Include="OxyCharger.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>NetworkObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Shelter.cpp">
+      <Filter>NetworkObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Server</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -28,6 +28,8 @@ public class GameManager : Singletone<GameManager> {
 
     private PlayerInfo m_playerInfo = new PlayerInfo();
 
+    public GameObject m_meteorPrefab = null;
+
     public PlayerInfo PLAYER
     {
         get { return m_playerInfo; }
@@ -59,13 +61,14 @@ public class GameManager : Singletone<GameManager> {
         //PhotonNetwork.ConnectUsingSettings("0.1");
 
         Application.targetFrameRate = 100;
-        Screen.SetResolution(1920 / 2 , 1080 / 2 , false);
+        Screen.SetResolution(1920 , 1080 , false);
 
         AnchorPlanet.PlanetAnchor = PlanetAnchor;
         AnchorPlanet.Planet = Plant.transform;
         AnchorPlanet.GM = this.transform;
         Application.runInBackground = true;
     }
+
 
     void Update()
     {
@@ -76,6 +79,10 @@ public class GameManager : Singletone<GameManager> {
             else
                 m_InventoryUI.OpenInventory();
         }
+
+     
+        Debug.DrawLine(Vector3.zero , GetPlanetPosition(Plant.transform.localScale.x + 13.0f , 30.0f , 100.0f));
+      
     }
     #endregion
 
@@ -167,6 +174,42 @@ public class GameManager : Singletone<GameManager> {
 
     }
 
+    public GameObject test;
+
+    // 메테오 생성
+    public void CreateMeteor(float anglex,float anglez)
+    {
+
+        float planetScale = Plant.transform.localScale.x + 11.0f;
+        Debug.Log("TEST " + planetScale + " angle " +anglex + " angle " +anglez);
+
+        Vector3 pos = GetPlanetPosition(planetScale , anglex , anglez);
+        Vector3 pos2 = GetPlanetPosition(planetScale + 30.0f , anglex , anglez);
+
+        Physics.Raycast(Vector3.zero , (pos - Vector3.zero).normalized , out SponeHitInfo , 40.0f);
+
+
+        GameObject obj = Instantiate(m_meteorPrefab , new Vector3(pos.x,pos.y,pos.z),Quaternion.Euler(0.0f,0.0f,0.0f));
+        
+        obj.transform.rotation = Quaternion.LookRotation((pos - Vector3.zero).normalized);
+        Vector3 r = obj.transform.eulerAngles;
+        obj.transform.eulerAngles =new Vector3( r.x + 90.0f,r.y,r.z);
+
+        test.transform.position = pos;
+        test.transform.rotation = Quaternion.LookRotation((pos - Vector3.zero).normalized);
+
+
+
+    }
+
+    public Vector3 GetPlanetPosition(float scale,float anglex,float anglez)
+    {
+        float x = scale * Mathf.Sin(anglex * Mathf.Deg2Rad) * Mathf.Cos(anglez * Mathf.Deg2Rad);
+        float y = scale * Mathf.Sin(anglex * Mathf.Deg2Rad) * Mathf.Sin(anglez * Mathf.Deg2Rad);
+        float z = scale * Mathf.Cos(anglex * Mathf.Deg2Rad);
+        return new Vector3(x,y,z); 
+    }
+    
     public void RecvItem(int itemCID,GameObject box)
     {
         Vector3 boxPos = box.transform.position;
@@ -241,6 +284,7 @@ public class GameManager : Singletone<GameManager> {
             MainCam.GetComponent<CamRotate>().CamAnchor[0] = MP.transform.GetChild(1);
             MainCam.GetComponent<CamRotate>().CamAnchor[1] = MP.transform.GetChild(1).GetChild(0);
             MainCam.GetComponent<CamRotate>().CamAnchor[2] = MP.transform.GetChild(1).GetChild(0).GetChild(0);
+            MainCam.GetComponent<CamRotate>().CamAnchor[3] = MP.transform.GetChild(1).GetChild(0).GetChild(1);
             MainCam.GetComponent<CamRotate>().enabled = true;
 
 
@@ -264,15 +308,6 @@ public class GameManager : Singletone<GameManager> {
         }
 
         return MP;
-        //TODO NETWORK
-        //if (PhotonNetwork.playerList.Length - 1 == 0)
-        //{
-        //    StartCoroutine(CreateItem(CreateItemNum));
-        //}
-        //else
-        //{
-        //    MP.GetComponent<TestStram>().SenddataCall("00/0");
-        //}
     }
 
     #region NetworkInfoChange

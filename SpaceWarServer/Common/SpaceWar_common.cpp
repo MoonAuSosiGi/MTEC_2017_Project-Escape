@@ -22,6 +22,12 @@ namespace SpaceWar
                
 		Rmi_RequestUseItemBox,
                
+		Rmi_RequestShelterStartSetup,
+               
+		Rmi_RequestShelterDoorControl,
+               
+		Rmi_RequestShelterEnter,
+               
 		Rmi_NotifyLoginSuccess,
                
 		Rmi_NotifyLoginFailed,
@@ -59,7 +65,13 @@ namespace SpaceWar
 		Rmi_NotifyUseOxyCharger,
                
 		Rmi_NotifyUseItemBox,
+               
+		Rmi_NotifyShelterInfo,
+               
+		Rmi_NotifyMeteorCreateTime,
+               
+		Rmi_NotifyMeteorCreate,
 	};
 
-	int g_RmiIDListCount = 26;
+	int g_RmiIDListCount = 32;
 }

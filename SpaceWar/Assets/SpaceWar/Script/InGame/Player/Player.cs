@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    #region Player_INFO
     public Transform PlayerTransform;
     public Transform ModelTransform;
 
@@ -55,6 +56,19 @@ public class Player : MonoBehaviour {
 
     public OxyCharger NearOxyCharger = null;
     public ItemBox NearItemBox = null;
+    public Shelter NearShelter = null;
+
+    private bool m_isShelter = false;
+
+    public bool IS_SHELTER
+    {
+        get { return m_isShelter; }
+        set { m_isShelter = value; }
+    }
+
+    float m_coolTime = 0.0f;
+
+    #endregion
 
     // TEST CODE
     void MoveSend()
@@ -111,8 +125,12 @@ public class Player : MonoBehaviour {
 
     void UseOxy()
     {
-        if(NetworkManager.Instance().LOGIN_STATE)
-            NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , Random.Range(0.1f , 10.0f));
+        if (NetworkManager.Instance().LOGIN_STATE)
+        {
+            float oxy = Random.Range(0.1f , 10.0f);
+            if (GameManager.Instance().PLAYER.m_oxy - oxy >= 0.0f)
+                NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , oxy);
+        }
     }
 
     private void NearWeaponPickCheck()
@@ -179,6 +197,8 @@ public class Player : MonoBehaviour {
                 NearOxyCharger.UseOxy();
             else if (NearItemBox != null)
                 NearItemBox.UseItemBox();
+            else if (NearShelter != null)
+                NearShelter.DoorControl();
         }
     }
 
@@ -249,6 +269,31 @@ public class Player : MonoBehaviour {
             m_UseEffect.transform.GetChild(0).GetChild(0).rotation = this.transform.rotation;
         }
 
+        if (other.CompareTag("Meteor") && IS_SHELTER == false)
+        {
+            
+            if (m_coolTime > 0.0f)
+            {
+                return;
+            }
+            NetworkManager.Instance().C2SRequestPlayerDamage(
+                (int)NetworkManager.Instance().m_hostID , "" , "Meteor" , 10.0f);
+            m_coolTime = 0.5f;
+            InvokeRepeating("CoolTimeChecker" , 0.1f , 0.1f);
+            
+        }
+
+    }
+
+    void CoolTimeChecker()
+    {
+        m_coolTime -= 0.1f;
+
+        if(m_coolTime <= 0.0f)
+        {
+            m_coolTime = -1.0f;
+            CancelInvoke("CoolTimeChecker");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -292,6 +337,12 @@ public class Player : MonoBehaviour {
             m_UseEffect.transform.position = new Vector3(pos.x , pos.y + 0.5f ,
                 pos.z);
         }
+        else if(other.CompareTag("ShelterDoor") && NearShelter == null)
+        {
+            m_UseEffect.SetActive(true);
+            NearShelter = other.transform.parent.GetComponent<Shelter>();
+            m_UseEffect.transform.position = other.transform.position;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -312,6 +363,11 @@ public class Player : MonoBehaviour {
         {
             m_UseEffect.SetActive(false);
             NearItemBox = null;
+        }
+        else if(other.CompareTag("ShelterDoor"))
+        {
+            m_UseEffect.SetActive(false);
+            NearShelter = null;
         }
 
     }
@@ -393,43 +449,6 @@ public class Player : MonoBehaviour {
 
         }
 
-        //while (Time.time - StartTime < (T / (float)2.0f))
-        //{
-        //    Character.Translate(Vector3.up * (H * Dur));
-
-
-        //    PlayerMove.MoveCode(PlayerTransform, LastState, MoveSpeed);
-
-
-        //    yield return new WaitForFixedUpdate();
-
-
-        //}
-
-        //while (Time.time - StartTime < T)
-        //{
-        //    Character.Translate(Vector3.down * (H * Dur));
-
-        //    PlayerMove.MoveCode(PlayerTransform, LastState, MoveSpeed);
-
-        //    RaycastHit Ground;
-        //    Physics.Raycast(this.transform.position, Vector3.down, out Ground, 0.07f);
-
-        //    if (Ground.point != Vector3.zero)
-        //    {
-        //        if (!Ground.transform.CompareTag("Bullet") && !Ground.transform.CompareTag("Weapon"))
-        //        {
-        //            PlayerAnim.SetInteger("JumpState", 0);
-        //            break;
-
-        //        }
-        //    }
-
-        //    yield return new WaitForFixedUpdate();
-
-
-        //}
-
         AnchorPlanet.Planet.GetComponent<Gravity>().Power = 100;
         //AnchorPlanet.MainCam.GetComponent<CamRotate>().RotateNow = true;
 
@@ -462,7 +481,7 @@ public class Player : MonoBehaviour {
             }
 
             IsJumpable = false;
-            IsMoveable = false;
+            IsMoveable = true; // test code 
         }
 
         if (Input.GetKey(Run))

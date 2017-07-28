@@ -17,7 +17,7 @@ public class AttackEvent : MonoBehaviour {
         {
             this.transform.localRotation = Quaternion.Euler(Vector3.zero);
             Weapon.GetComponent<Weapon>().Attack(Weapon.GetComponent<Weapon>().Myname, Type, Character);
-            Character.GetComponent<Player>().IsMoveable = false;
+           // Character.GetComponent<Player>().IsMoveable = false;
         }
     }
 

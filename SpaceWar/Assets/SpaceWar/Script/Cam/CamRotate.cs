@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CamRotate : MonoBehaviour {
 
+    #region CamRotate_INFO
     public Transform Player; // 플레이어
-    public Transform[] CamAnchor; // 카메라 고정 오브젝트 2개 0 = 처음, 1 = 중간, 2 = 마지막
+    // 카메라 고정 오브젝트 2개 0 = 처음, 1 = 중간, 2 = 마지막
+    // 3 = FPS Anchor  ( 카메라가 여기로 이동 )
+    public Transform[] CamAnchor; 
     
 
     public float[] CamRoateSpeed; // 카메라 회전속도 0 = X, 1 = Y
@@ -16,7 +19,36 @@ public class CamRotate : MonoBehaviour {
 
     public bool RotateNow = true;
 
-	void Start () {
+    private bool m_fpsMode = false;
+
+    public bool FPS_MODE
+    {
+        get { return m_fpsMode; }
+        set
+        {
+            m_fpsMode = value;
+
+            //Debug.Log("FPS MODE " + m_fpsMode);
+
+            if (m_fpsMode)
+            {
+                transform.SetParent(CamAnchor[3] , false);
+                transform.localEulerAngles = new Vector3(0.0f , 0.0f , 0.0f);
+                transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
+                Camera.main.fieldOfView = 70.0f;
+
+            }
+            else
+            {
+                Camera.main.fieldOfView = 20.0f;
+                transform.SetParent(CamAnchor[2] , false) ;
+            }
+        }
+    }
+    #endregion
+
+
+    void Start () {
 
         CamSet();
         Cursor.visible = false;
@@ -26,11 +58,13 @@ public class CamRotate : MonoBehaviour {
 	
 	void Update () {
 
+    
         if (RotateNow)
         {
             CamRotateCode();
         }
         CursorManager();
+        
 
     }
 
@@ -53,7 +87,7 @@ public class CamRotate : MonoBehaviour {
 
     private void CamRotateCode()  // 카메라 회전
     {
-
+        
         Player.Rotate(0, Input.GetAxis("Mouse X") * CamRoateSpeed[0], 0); // 플레이어 캐릭터(카메라 부모 오브젝트) X축 회전
 
         // Y축 회전 시작
@@ -75,8 +109,8 @@ public class CamRotate : MonoBehaviour {
 
 
         CamAnchor[0].localRotation = Quaternion.Euler(CamAngle.y, 0, 0); // 회전 적용
-
-        CamLastPosSet(); // 카메라가 오브젝트뒤로 나가는 현상 방지
+        if (!m_fpsMode)
+            CamLastPosSet(); // 카메라가 오브젝트뒤로 나가는 현상 방지
 
     }
 
@@ -85,6 +119,8 @@ public class CamRotate : MonoBehaviour {
         this.transform.parent = CamAnchor[2]; // 부모 설정
         this.transform.localPosition = Vector3.zero; // 위치 설정
         this.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
+
+    //    FPS_MODE = true;
     }
 
     private void OnGUI()
@@ -95,16 +131,25 @@ public class CamRotate : MonoBehaviour {
         {
             CamDis[2] -= Input.GetAxis("Mouse ScrollWheel") * CamZoomSpeed; // 줌인 줌아웃
 
+            
+            // 줌인 최대
             if (CamDis[2] < CamDis[0]) // 줌인 줌아웃 최대, 최소 거리 보정
             {
-                CamDis[2] = CamDis[0];
+                
+               CamDis[2] = CamDis[3];//CamDis[2] = CamDis[0];
+
+                FPS_MODE = true;
+
             }
+            // 줌아웃 최대
             else if (CamDis[2] > CamDis[1])
             {
+                
                 CamDis[2] = CamDis[1];
+                FPS_MODE = false;
             }
-
-            CamLastPosSet(); // 카메라가 오브젝트뒤로 나가는 현상 방지
+            if (!m_fpsMode)
+                CamLastPosSet(); // 카메라가 오브젝트뒤로 나가는 현상 방지
         }
     }
 

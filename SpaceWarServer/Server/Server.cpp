@@ -4,18 +4,64 @@
 #include "stdafx.h"
 #include "Server.h"
 
+Server server;
+
 int main()
 {
-	Server server;
+	srand((unsigned int)time(NULL));
+	
 
 	server.ServerRun();
     return 0;
 }
+#pragma region Meteor
+
+void MeteorLoop(void*)
+{
+
+	s_meteorCommingSec--;
+
+	if(s_meteorCommingSec % 5 == 0)
+		cout << "메테오 " << s_meteorCommingSec << " 초 남음 " << endl;
+
+	if (s_meteorCommingSec > 0)
+		server.m_proxy.NotifyMeteorCreateTime(server.m_playerP2PGroup, RmiContext::UnreliableSend, s_meteorCommingSec);
+	else
+	{
+		if (s_meteorCommingSec == 0)
+		{
+			float anglex = RandomRange(-360.0f, 360.0f);
+			float anglez = RandomRange(-360.0f, 360.0f);
+
+			cout << "anglex " << anglex << " anglez " << anglez;
+			server.m_proxy.NotifyMeteorCreate(server.m_playerP2PGroup, RmiContext::ReliableSend, anglex,anglez);
+
+		}
+
+		else
+		{
+			if (s_meteorCommingSec == -60)
+			{
+				s_meteorCommingSec = 10;
+			}
+		}
+	}
+
+}
+#pragma endregion
+
 
 
 void Server::ServerRun()
 {
 	m_netServer = shared_ptr<CNetServer>(CNetServer::Create());
+	
+//	typedef void(*ThreadProc)(void* ctx);
+	void(*func)(void*);
+	func = &MeteorLoop;
+	CTimerThread meteorThread(func, 1000, nullptr);
+	
+	meteorThread.Start();
 
 	// -- 서버 파라매터 지정 ( 프로토콜 / 포트 지정 ) ---------------------------//
 	CStartServerParameter pl;
@@ -85,12 +131,13 @@ void Server::ServerRun()
 
 	string line;
 	getline(std::cin, line);
+	meteorThread.Stop();
 }
 
 void Server::OnClientJoin(CNetClientInfo* clientInfo)
 {
 	cout << "OnClientJoin " << clientInfo->m_HostID << endl;
-
+	
 	m_netServer->JoinP2PGroup(clientInfo->m_HostID, m_playerP2PGroup);
 }
 
@@ -323,8 +370,58 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 	return true;
 }
 
-#pragma endregion
+// 쉘터 등록
+DEFRMI_SpaceWar_RequestShelterStartSetup(Server)
+{
+	cout << "RequestShelterStartSetup " << shelterID << endl;
 
+	auto newshelter = make_shared<Shelter>();
+	newshelter->m_shelterID = shelterID;
+	m_shelterMap[shelterID] = newshelter;
+	return true;
+}
+
+// 쉘터 문 조작 
+DEFRMI_SpaceWar_RequestShelterDoorControl(Server)
+{
+	cout << "RequestShelterDoorControl " << shelterID << " state " << doorState << endl;
+
+	m_shelterMap[shelterID]->ShelterDoorStateChange(doorState);
+
+	m_proxy.NotifyShelterInfo(m_playerP2PGroup,
+		RmiContext::ReliableSend, sendHostID, shelterID,
+		doorState,m_shelterMap[shelterID]->m_lightState);
+
+	return true;
+}
+
+// 쉘터 입장
+DEFRMI_SpaceWar_RequestShelterEnter(Server)
+{
+	cout << "RequestShelterEnter " << sendHostID << endl;
+
+	// 기존 상태 
+	bool prevState = m_shelterMap[shelterID]->m_lightState;
+	bool prevDoorState = m_shelterMap[shelterID]->m_doorState;
+	if (enter)
+		m_shelterMap[shelterID]->ShelterEnter();
+	else
+		m_shelterMap[shelterID]->ShelterExit();
+
+	// 기존 상태와 달라졌을 경우
+	if (m_shelterMap[shelterID]->m_lightState != prevState || 
+		m_shelterMap[shelterID]->m_doorState != prevDoorState)
+	{
+		// 상태 전송
+		m_proxy.NotifyShelterInfo(m_playerP2PGroup,
+			RmiContext::ReliableSend, sendHostID,
+			shelterID, m_shelterMap[shelterID]->m_doorState, m_shelterMap[shelterID]->m_lightState);
+	}
+
+
+	return true;
+}
+#pragma endregion
 
 
 

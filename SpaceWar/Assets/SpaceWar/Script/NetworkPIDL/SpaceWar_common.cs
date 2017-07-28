@@ -22,25 +22,31 @@ namespace SpaceWar
 			public const Nettention.Proud.RmiID RequestPlayerUseOxy = (Nettention.Proud.RmiID)3141+5;
 			public const Nettention.Proud.RmiID RequestUseOxyCharger = (Nettention.Proud.RmiID)3141+6;
 			public const Nettention.Proud.RmiID RequestUseItemBox = (Nettention.Proud.RmiID)3141+7;
-			public const Nettention.Proud.RmiID NotifyLoginSuccess = (Nettention.Proud.RmiID)3141+8;
-			public const Nettention.Proud.RmiID NotifyLoginFailed = (Nettention.Proud.RmiID)3141+9;
-			public const Nettention.Proud.RmiID NotifyOtherClientJoin = (Nettention.Proud.RmiID)3141+10;
-			public const Nettention.Proud.RmiID NotifyPlayerLost = (Nettention.Proud.RmiID)3141+11;
-			public const Nettention.Proud.RmiID NotifyPlayerMove = (Nettention.Proud.RmiID)3141+12;
-			public const Nettention.Proud.RmiID NotifyDeleteItem = (Nettention.Proud.RmiID)3141+13;
-			public const Nettention.Proud.RmiID NotifyCreateItem = (Nettention.Proud.RmiID)3141+14;
-			public const Nettention.Proud.RmiID NotifyStartOxyChargerState = (Nettention.Proud.RmiID)3141+15;
-			public const Nettention.Proud.RmiID NotifyStartItemBoxState = (Nettention.Proud.RmiID)3141+16;
-			public const Nettention.Proud.RmiID NotifyPlayerEquipItem = (Nettention.Proud.RmiID)3141+17;
-			public const Nettention.Proud.RmiID NotifyPlayerUnEquipItem = (Nettention.Proud.RmiID)3141+18;
-			public const Nettention.Proud.RmiID NotifyPlayerBulletCreate = (Nettention.Proud.RmiID)3141+19;
-			public const Nettention.Proud.RmiID NotifyPlayerBulletMove = (Nettention.Proud.RmiID)3141+20;
-			public const Nettention.Proud.RmiID NotifyPlayerBulletDelete = (Nettention.Proud.RmiID)3141+21;
-			public const Nettention.Proud.RmiID NotifyPlayerAnimation = (Nettention.Proud.RmiID)3141+22;
-			public const Nettention.Proud.RmiID NotifyPlayerChangeHP = (Nettention.Proud.RmiID)3141+23;
-			public const Nettention.Proud.RmiID NotifyPlayerChangeOxygen = (Nettention.Proud.RmiID)3141+24;
-			public const Nettention.Proud.RmiID NotifyUseOxyCharger = (Nettention.Proud.RmiID)3141+25;
-			public const Nettention.Proud.RmiID NotifyUseItemBox = (Nettention.Proud.RmiID)3141+26;
+			public const Nettention.Proud.RmiID RequestShelterStartSetup = (Nettention.Proud.RmiID)3141+8;
+			public const Nettention.Proud.RmiID RequestShelterDoorControl = (Nettention.Proud.RmiID)3141+9;
+			public const Nettention.Proud.RmiID RequestShelterEnter = (Nettention.Proud.RmiID)3141+10;
+			public const Nettention.Proud.RmiID NotifyLoginSuccess = (Nettention.Proud.RmiID)3141+11;
+			public const Nettention.Proud.RmiID NotifyLoginFailed = (Nettention.Proud.RmiID)3141+12;
+			public const Nettention.Proud.RmiID NotifyOtherClientJoin = (Nettention.Proud.RmiID)3141+13;
+			public const Nettention.Proud.RmiID NotifyPlayerLost = (Nettention.Proud.RmiID)3141+14;
+			public const Nettention.Proud.RmiID NotifyPlayerMove = (Nettention.Proud.RmiID)3141+15;
+			public const Nettention.Proud.RmiID NotifyDeleteItem = (Nettention.Proud.RmiID)3141+16;
+			public const Nettention.Proud.RmiID NotifyCreateItem = (Nettention.Proud.RmiID)3141+17;
+			public const Nettention.Proud.RmiID NotifyStartOxyChargerState = (Nettention.Proud.RmiID)3141+18;
+			public const Nettention.Proud.RmiID NotifyStartItemBoxState = (Nettention.Proud.RmiID)3141+19;
+			public const Nettention.Proud.RmiID NotifyPlayerEquipItem = (Nettention.Proud.RmiID)3141+20;
+			public const Nettention.Proud.RmiID NotifyPlayerUnEquipItem = (Nettention.Proud.RmiID)3141+21;
+			public const Nettention.Proud.RmiID NotifyPlayerBulletCreate = (Nettention.Proud.RmiID)3141+22;
+			public const Nettention.Proud.RmiID NotifyPlayerBulletMove = (Nettention.Proud.RmiID)3141+23;
+			public const Nettention.Proud.RmiID NotifyPlayerBulletDelete = (Nettention.Proud.RmiID)3141+24;
+			public const Nettention.Proud.RmiID NotifyPlayerAnimation = (Nettention.Proud.RmiID)3141+25;
+			public const Nettention.Proud.RmiID NotifyPlayerChangeHP = (Nettention.Proud.RmiID)3141+26;
+			public const Nettention.Proud.RmiID NotifyPlayerChangeOxygen = (Nettention.Proud.RmiID)3141+27;
+			public const Nettention.Proud.RmiID NotifyUseOxyCharger = (Nettention.Proud.RmiID)3141+28;
+			public const Nettention.Proud.RmiID NotifyUseItemBox = (Nettention.Proud.RmiID)3141+29;
+			public const Nettention.Proud.RmiID NotifyShelterInfo = (Nettention.Proud.RmiID)3141+30;
+			public const Nettention.Proud.RmiID NotifyMeteorCreateTime = (Nettention.Proud.RmiID)3141+31;
+			public const Nettention.Proud.RmiID NotifyMeteorCreate = (Nettention.Proud.RmiID)3141+32;
 		// List that has RMI ID.
 		public static Nettention.Proud.RmiID[] RmiIDList = new Nettention.Proud.RmiID[] {
 			RequestServerConnect,
@@ -50,6 +56,9 @@ namespace SpaceWar
 			RequestPlayerUseOxy,
 			RequestUseOxyCharger,
 			RequestUseItemBox,
+			RequestShelterStartSetup,
+			RequestShelterDoorControl,
+			RequestShelterEnter,
 			NotifyLoginSuccess,
 			NotifyLoginFailed,
 			NotifyOtherClientJoin,
@@ -69,6 +78,9 @@ namespace SpaceWar
 			NotifyPlayerChangeOxygen,
 			NotifyUseOxyCharger,
 			NotifyUseItemBox,
+			NotifyShelterInfo,
+			NotifyMeteorCreateTime,
+			NotifyMeteorCreate,
 		};
 	}
 }

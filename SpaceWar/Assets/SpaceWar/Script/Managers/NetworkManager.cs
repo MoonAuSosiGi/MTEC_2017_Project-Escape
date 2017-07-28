@@ -75,8 +75,9 @@ public class NetworkManager : Singletone<NetworkManager> {
             return null;
     }
 
+    #region NetworkObjectList
     // OxyCharger
-    public List<OxyCharger> m_oxyChargerList = new List<OxyCharger>();
+    private List<OxyCharger> m_oxyChargerList = new List<OxyCharger>();
 
     public bool isListInOxyCharger(OxyCharger charger)
     {
@@ -89,7 +90,7 @@ public class NetworkManager : Singletone<NetworkManager> {
     }
 
     // itemBox
-    public List<ItemBox> m_itemBoxList = new List<ItemBox>();
+    private List<ItemBox> m_itemBoxList = new List<ItemBox>();
     
     public bool isListInItemBox(ItemBox box)
     {
@@ -101,11 +102,39 @@ public class NetworkManager : Singletone<NetworkManager> {
         return m_itemBoxList.IndexOf(box);
     }
 
+    // Shelter
+    private List<Shelter> m_shelterList = new List<Shelter>();
+
+    public bool isListInShelter(Shelter shelter)
+    {
+        return m_shelterList.Contains(shelter);
+    }
+
+    public int GetShelterIndex(Shelter shelter)
+    {
+        return m_shelterList.IndexOf(shelter);
+    }
+    #endregion
+
+    public GameObject m_itemBoxParent = null;
+    public GameObject m_oxyChargerParent = null;
+    public GameObject m_shelterParent = null;
     #endregion
 
     #region UnityMethod
     void Start()
     {
+        // 네트워크 세팅
+        for (int i = 0; i < m_itemBoxParent.transform.childCount; i++)
+            m_itemBoxList.Add(m_itemBoxParent.transform.GetChild(i).GetComponent<ItemBox>());
+
+        for (int i = 0; i < m_oxyChargerParent.transform.childCount; i++)
+            m_oxyChargerList.Add(m_oxyChargerParent.transform.GetChild(i).GetComponent<OxyCharger>());
+
+        // 쉘터 세팅
+        for (int i = 0; i < m_shelterParent.transform.childCount; i++)
+            m_shelterList.Add(m_shelterParent.transform.GetChild(i).GetComponent<Shelter>());
+
         // 관련 클래스 생성 -----------------------------------//
 
         // 클라이언트 생성
@@ -149,6 +178,15 @@ public class NetworkManager : Singletone<NetworkManager> {
             m_isLogin = true;
             m_hostID = (HostID)hostid;
             NetworkLog("Login Success " + (int)hostid);
+
+            if((int)hostid == 4)
+            {
+                for (int i = 0; i < m_shelterList.Count; i++)
+                {
+                    m_shelterList[i].SHELTER_ID = GetShelterIndex(m_shelterList[i]);
+                    C2SRequestShelterStartSetup(m_shelterList[i].SHELTER_ID);
+                }
+            }
             if (loginResult != null)
                 loginResult(true);
 
@@ -403,10 +441,47 @@ public class NetworkManager : Singletone<NetworkManager> {
             return true;
         };
 
+        // 쉘터 문 정보가 왔을 때 
+        m_s2cStub.NotifyShelterInfo = (HostID remote , 
+            RmiContext rmiContext , 
+            int sendHostID , int shelterID , bool doorState , 
+            bool lightState) =>
+        {
+            Debug.Log("shelterinfo " + lightState + " id " +shelterID);
+            
+
+            if (lightState)
+                m_shelterList[shelterID].LightOn();
+            else
+                m_shelterList[shelterID].LightOff();
+
+            if (doorState)
+                m_shelterList[shelterID].OpenDoor();
+            else
+                m_shelterList[shelterID].CloseDoor();
+
+            return true;
+        };
+
+        // 메테오 시간
+        m_s2cStub.NotifyMeteorCreateTime = (HostID remote , RmiContext rmiContext , int time) =>
+        {
+    //        Debug.Log("메테오 " + time);
+            return true;
+        };
+
+        // 메테오 생성해라
+        m_s2cStub.NotifyMeteorCreate = (HostID remote , RmiContext rmiContext , 
+            float anglex,float anglez) =>
+        {
+            GameManager.Instance().CreateMeteor(anglex , anglez);
+            return true;
+        };
+
 
         #endregion
 
-     //   ServerConnect();
+        //   ServerConnect();
     }
 
     void Update()
@@ -615,6 +690,30 @@ public class NetworkManager : Singletone<NetworkManager> {
         Debug.Log("itemBox Use ");
         m_c2sProxy.RequestUseItemBox(HostID.HostID_Server , RmiContext.ReliableSend ,
             (int)m_hostID , GetItemBoxIndex(box));   
+    }
+
+    // 쉘터 등록
+    public void C2SRequestShelterStartSetup(int shelterID)
+    {
+        m_c2sProxy.RequestShelterStartSetup(HostID.HostID_Server , RmiContext.ReliableSend ,
+            shelterID);
+    }
+
+    // 쉘터 변경 요청
+    public void C2SRequestShelterDoorControl(int shelterID , bool doorState)
+    {
+        Debug.Log("Shelter Door Control");
+
+        m_c2sProxy.RequestShelterDoorControl(HostID.HostID_Server, 
+            RmiContext.ReliableSend,(int)m_hostID , shelterID , doorState);
+    }
+
+    // 쉘터 입장
+    public void C2SRequestShelterEnter(int shelterID,bool enter)
+    {
+        Debug.Log("Shelter Enter " +enter);
+        m_c2sProxy.RequestShelterEnter(HostID.HostID_Server , 
+            RmiContext.ReliableSend , (int)m_hostID,shelterID , enter);
     }
 
     #endregion

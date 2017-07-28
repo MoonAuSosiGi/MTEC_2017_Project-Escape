@@ -242,6 +242,98 @@ __msg << itemBoxIndex;
 			RmiName_RequestUseItemBox, (::Proud::RmiID)Rmi_RequestUseItemBox);
 	}
         
+	bool Proxy::RequestShelterStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & shelterID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestShelterStartSetup;
+__msg.Write(__msgid); 
+	
+__msg << shelterID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestShelterStartSetup, (::Proud::RmiID)Rmi_RequestShelterStartSetup);
+	}
+
+	bool Proxy::RequestShelterStartSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & shelterID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestShelterStartSetup;
+__msg.Write(__msgid); 
+	
+__msg << shelterID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestShelterStartSetup, (::Proud::RmiID)Rmi_RequestShelterStartSetup);
+	}
+        
+	bool Proxy::RequestShelterDoorControl ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestShelterDoorControl;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << shelterID;
+__msg << doorState;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestShelterDoorControl, (::Proud::RmiID)Rmi_RequestShelterDoorControl);
+	}
+
+	bool Proxy::RequestShelterDoorControl ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & shelterID,  const bool & doorState)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestShelterDoorControl;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << shelterID;
+__msg << doorState;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestShelterDoorControl, (::Proud::RmiID)Rmi_RequestShelterDoorControl);
+	}
+        
+	bool Proxy::RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestShelterEnter;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << shelterID;
+__msg << enter;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestShelterEnter, (::Proud::RmiID)Rmi_RequestShelterEnter);
+	}
+
+	bool Proxy::RequestShelterEnter ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & shelterID,  const bool & enter)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestShelterEnter;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << shelterID;
+__msg << enter;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestShelterEnter, (::Proud::RmiID)Rmi_RequestShelterEnter);
+	}
+        
 	bool Proxy::NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -879,6 +971,98 @@ __msg << itemID;
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyUseItemBox, (::Proud::RmiID)Rmi_NotifyUseItemBox);
 	}
+        
+	bool Proxy::NotifyShelterInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyShelterInfo;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << shelterID;
+__msg << doorState;
+__msg << lightState;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyShelterInfo, (::Proud::RmiID)Rmi_NotifyShelterInfo);
+	}
+
+	bool Proxy::NotifyShelterInfo ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyShelterInfo;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << shelterID;
+__msg << doorState;
+__msg << lightState;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyShelterInfo, (::Proud::RmiID)Rmi_NotifyShelterInfo);
+	}
+        
+	bool Proxy::NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyMeteorCreateTime;
+__msg.Write(__msgid); 
+	
+__msg << time;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyMeteorCreateTime, (::Proud::RmiID)Rmi_NotifyMeteorCreateTime);
+	}
+
+	bool Proxy::NotifyMeteorCreateTime ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & time)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyMeteorCreateTime;
+__msg.Write(__msgid); 
+	
+__msg << time;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyMeteorCreateTime, (::Proud::RmiID)Rmi_NotifyMeteorCreateTime);
+	}
+        
+	bool Proxy::NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyMeteorCreate;
+__msg.Write(__msgid); 
+	
+__msg << anglex;
+__msg << anglez;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyMeteorCreate, (::Proud::RmiID)Rmi_NotifyMeteorCreate);
+	}
+
+	bool Proxy::NotifyMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & anglex,  const float & anglez)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyMeteorCreate;
+__msg.Write(__msgid); 
+	
+__msg << anglex;
+__msg << anglez;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyMeteorCreate, (::Proud::RmiID)Rmi_NotifyMeteorCreate);
+	}
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestServerConnect =_PNT("RequestServerConnect");
 #else
@@ -913,6 +1097,21 @@ const PNTCHAR* Proxy::RmiName_RequestUseOxyCharger =_PNT("");
 const PNTCHAR* Proxy::RmiName_RequestUseItemBox =_PNT("RequestUseItemBox");
 #else
 const PNTCHAR* Proxy::RmiName_RequestUseItemBox =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestShelterStartSetup =_PNT("RequestShelterStartSetup");
+#else
+const PNTCHAR* Proxy::RmiName_RequestShelterStartSetup =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestShelterDoorControl =_PNT("RequestShelterDoorControl");
+#else
+const PNTCHAR* Proxy::RmiName_RequestShelterDoorControl =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestShelterEnter =_PNT("RequestShelterEnter");
+#else
+const PNTCHAR* Proxy::RmiName_RequestShelterEnter =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyLoginSuccess =_PNT("NotifyLoginSuccess");
@@ -1008,6 +1207,21 @@ const PNTCHAR* Proxy::RmiName_NotifyUseOxyCharger =_PNT("");
 const PNTCHAR* Proxy::RmiName_NotifyUseItemBox =_PNT("NotifyUseItemBox");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyUseItemBox =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyShelterInfo =_PNT("NotifyShelterInfo");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyShelterInfo =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyMeteorCreateTime =_PNT("NotifyMeteorCreateTime");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyMeteorCreateTime =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyMeteorCreate =_PNT("NotifyMeteorCreate");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyMeteorCreate =_PNT("");
 #endif
 const PNTCHAR* Proxy::RmiName_First = RmiName_RequestServerConnect;
 }

@@ -627,6 +627,244 @@ namespace SpaceWar
 					}
 				}
 				break;
+			case Rmi_RequestShelterStartSetup:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int shelterID; __msg >> shelterID;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestShelterStartSetup);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,shelterID);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestShelterStartSetup, 
+							RmiName_RequestShelterStartSetup,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestShelterStartSetup, 
+							RmiName_RequestShelterStartSetup, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestShelterStartSetup, 
+							RmiName_RequestShelterStartSetup, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestShelterStartSetup;
+						summary.m_rmiName = RmiName_RequestShelterStartSetup;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestShelterStartSetup (remote,ctx , shelterID );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestShelterStartSetup);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestShelterStartSetup;
+						summary.m_rmiName = RmiName_RequestShelterStartSetup;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestShelterDoorControl:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int sendHostID; __msg >> sendHostID;
+					int shelterID; __msg >> shelterID;
+					bool doorState; __msg >> doorState;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestShelterDoorControl);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,sendHostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,shelterID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,doorState);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestShelterDoorControl, 
+							RmiName_RequestShelterDoorControl,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestShelterDoorControl, 
+							RmiName_RequestShelterDoorControl, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestShelterDoorControl, 
+							RmiName_RequestShelterDoorControl, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestShelterDoorControl;
+						summary.m_rmiName = RmiName_RequestShelterDoorControl;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestShelterDoorControl (remote,ctx , sendHostID, shelterID, doorState );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestShelterDoorControl);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestShelterDoorControl;
+						summary.m_rmiName = RmiName_RequestShelterDoorControl;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestShelterEnter:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int sendHostID; __msg >> sendHostID;
+					int shelterID; __msg >> shelterID;
+					bool enter; __msg >> enter;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestShelterEnter);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,sendHostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,shelterID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,enter);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestShelterEnter, 
+							RmiName_RequestShelterEnter,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestShelterEnter, 
+							RmiName_RequestShelterEnter, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestShelterEnter, 
+							RmiName_RequestShelterEnter, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestShelterEnter;
+						summary.m_rmiName = RmiName_RequestShelterEnter;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestShelterEnter (remote,ctx , sendHostID, shelterID, enter );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestShelterEnter);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestShelterEnter;
+						summary.m_rmiName = RmiName_RequestShelterEnter;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
 			case Rmi_NotifyLoginSuccess:
 				{
 					::Proud::RmiContext ctx;
@@ -2245,6 +2483,244 @@ namespace SpaceWar
 					}
 				}
 				break;
+			case Rmi_NotifyShelterInfo:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int sendHostID; __msg >> sendHostID;
+					int shelterID; __msg >> shelterID;
+					bool doorState; __msg >> doorState;
+					bool lightState; __msg >> lightState;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyShelterInfo);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,sendHostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,shelterID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,doorState);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,lightState);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyShelterInfo, 
+							RmiName_NotifyShelterInfo,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyShelterInfo, 
+							RmiName_NotifyShelterInfo, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyShelterInfo, 
+							RmiName_NotifyShelterInfo, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyShelterInfo;
+						summary.m_rmiName = RmiName_NotifyShelterInfo;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyShelterInfo (remote,ctx , sendHostID, shelterID, doorState, lightState );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyShelterInfo);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyShelterInfo;
+						summary.m_rmiName = RmiName_NotifyShelterInfo;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyMeteorCreateTime:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int time; __msg >> time;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyMeteorCreateTime);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,time);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyMeteorCreateTime, 
+							RmiName_NotifyMeteorCreateTime,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyMeteorCreateTime, 
+							RmiName_NotifyMeteorCreateTime, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyMeteorCreateTime, 
+							RmiName_NotifyMeteorCreateTime, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyMeteorCreateTime;
+						summary.m_rmiName = RmiName_NotifyMeteorCreateTime;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyMeteorCreateTime (remote,ctx , time );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyMeteorCreateTime);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyMeteorCreateTime;
+						summary.m_rmiName = RmiName_NotifyMeteorCreateTime;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyMeteorCreate:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					float anglex; __msg >> anglex;
+					float anglez; __msg >> anglez;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyMeteorCreate);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,anglex);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,anglez);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyMeteorCreate, 
+							RmiName_NotifyMeteorCreate,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyMeteorCreate, 
+							RmiName_NotifyMeteorCreate, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyMeteorCreate, 
+							RmiName_NotifyMeteorCreate, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyMeteorCreate;
+						summary.m_rmiName = RmiName_NotifyMeteorCreate;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyMeteorCreate (remote,ctx , anglex, anglez );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyMeteorCreate);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyMeteorCreate;
+						summary.m_rmiName = RmiName_NotifyMeteorCreate;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
 		default:
 			goto __fail;
 		}		
@@ -2289,6 +2765,21 @@ __fail:
 	const PNTCHAR* Stub::RmiName_RequestUseItemBox =_PNT("RequestUseItemBox");
 	#else
 	const PNTCHAR* Stub::RmiName_RequestUseItemBox =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestShelterStartSetup =_PNT("RequestShelterStartSetup");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestShelterStartSetup =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestShelterDoorControl =_PNT("RequestShelterDoorControl");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestShelterDoorControl =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestShelterEnter =_PNT("RequestShelterEnter");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestShelterEnter =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_NotifyLoginSuccess =_PNT("NotifyLoginSuccess");
@@ -2384,6 +2875,21 @@ __fail:
 	const PNTCHAR* Stub::RmiName_NotifyUseItemBox =_PNT("NotifyUseItemBox");
 	#else
 	const PNTCHAR* Stub::RmiName_NotifyUseItemBox =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyShelterInfo =_PNT("NotifyShelterInfo");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyShelterInfo =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyMeteorCreateTime =_PNT("NotifyMeteorCreateTime");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyMeteorCreateTime =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyMeteorCreate =_PNT("NotifyMeteorCreate");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyMeteorCreate =_PNT("");
 	#endif
 	const PNTCHAR* Stub::RmiName_First = RmiName_RequestServerConnect;
 }

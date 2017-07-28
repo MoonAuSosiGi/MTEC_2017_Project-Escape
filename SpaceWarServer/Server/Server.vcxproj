@@ -154,6 +154,7 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="OxyCharger.h" />
+    <ClInclude Include="Shelter.h" />
     <ClInclude Include="SP_Marshaler.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="stdafx.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="OxyCharger.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Shelter.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

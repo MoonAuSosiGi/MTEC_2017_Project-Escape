@@ -30,6 +30,12 @@ namespace SpaceWar
 	virtual bool RequestUseOxyCharger ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)   PN_SEALED;  
 	virtual bool RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex) PN_SEALED; 
 	virtual bool RequestUseItemBox ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & itemBoxIndex)   PN_SEALED;  
+	virtual bool RequestShelterStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & shelterID) PN_SEALED; 
+	virtual bool RequestShelterStartSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & shelterID)   PN_SEALED;  
+	virtual bool RequestShelterDoorControl ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState) PN_SEALED; 
+	virtual bool RequestShelterDoorControl ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & shelterID,  const bool & doorState)   PN_SEALED;  
+	virtual bool RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter) PN_SEALED; 
+	virtual bool RequestShelterEnter ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & shelterID,  const bool & enter)   PN_SEALED;  
 	virtual bool NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID) PN_SEALED; 
 	virtual bool NotifyLoginSuccess ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID)   PN_SEALED;  
 	virtual bool NotifyLoginFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & reason) PN_SEALED; 
@@ -68,6 +74,12 @@ namespace SpaceWar
 	virtual bool NotifyUseOxyCharger ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)   PN_SEALED;  
 	virtual bool NotifyUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID) PN_SEALED; 
 	virtual bool NotifyUseItemBox ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)   PN_SEALED;  
+	virtual bool NotifyShelterInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState) PN_SEALED; 
+	virtual bool NotifyShelterInfo ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState)   PN_SEALED;  
+	virtual bool NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time) PN_SEALED; 
+	virtual bool NotifyMeteorCreateTime ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & time)   PN_SEALED;  
+	virtual bool NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez) PN_SEALED; 
+	virtual bool NotifyMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & anglex,  const float & anglez)   PN_SEALED;  
 static const PNTCHAR* RmiName_RequestServerConnect;
 static const PNTCHAR* RmiName_RequestClientJoin;
 static const PNTCHAR* RmiName_RequestWorldCreateItem;
@@ -75,6 +87,9 @@ static const PNTCHAR* RmiName_RequestPlayerDamage;
 static const PNTCHAR* RmiName_RequestPlayerUseOxy;
 static const PNTCHAR* RmiName_RequestUseOxyCharger;
 static const PNTCHAR* RmiName_RequestUseItemBox;
+static const PNTCHAR* RmiName_RequestShelterStartSetup;
+static const PNTCHAR* RmiName_RequestShelterDoorControl;
+static const PNTCHAR* RmiName_RequestShelterEnter;
 static const PNTCHAR* RmiName_NotifyLoginSuccess;
 static const PNTCHAR* RmiName_NotifyLoginFailed;
 static const PNTCHAR* RmiName_NotifyOtherClientJoin;
@@ -94,6 +109,9 @@ static const PNTCHAR* RmiName_NotifyPlayerChangeHP;
 static const PNTCHAR* RmiName_NotifyPlayerChangeOxygen;
 static const PNTCHAR* RmiName_NotifyUseOxyCharger;
 static const PNTCHAR* RmiName_NotifyUseItemBox;
+static const PNTCHAR* RmiName_NotifyShelterInfo;
+static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
+static const PNTCHAR* RmiName_NotifyMeteorCreate;
 static const PNTCHAR* RmiName_First;
 		Proxy()
 		{

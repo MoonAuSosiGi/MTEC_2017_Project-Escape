@@ -41,6 +41,16 @@ global SpaceWar 3141
 	// 아이템 박스 조작
 	RequestUseItemBox([in]int sendHostID,[in]int itemBoxIndex);
 
+
+	// 처음에 쉘터를 등록한다
+	RequestShelterStartSetup([in]int shelterID);
+
+	// 쉘터 문을 조작했다.
+	RequestShelterDoorControl([in]int sendHostID,[in]int shelterID,[in]bool doorState);
+
+	// 쉘터를 들어오고 나갔다 // false 면 나갔다
+	RequestShelterEnter([in]int sendHostID,[in]int shelterID,[in]bool enter);
+
 	//S2C -------------------------------------------------------------
 	NotifyLoginSuccess([in]int hostID);
 	NotifyLoginFailed([in]string reason);
@@ -101,4 +111,13 @@ global SpaceWar 3141
 
 	// 아이템 박스 조작
 	NotifyUseItemBox([in]int sendHostID,[in]int itemBoxIndex,[in]int itemID);
+
+	// 쉘터의 상태 정보
+	NotifyShelterInfo([in]int sendHostID,[in]int shelterID,[in]bool doorState,[in]bool lightState);
+
+	// 메테오 생성까지 남은 시간
+	NotifyMeteorCreateTime([in]int time);
+
+	// 메테오 생성해라
+	NotifyMeteorCreate([in]float anglex,[in]float anglez);
 }

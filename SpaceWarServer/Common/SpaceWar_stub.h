@@ -90,6 +90,36 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestUseItemBox RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex)
 #define PARAM_SpaceWar_RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex)
                
+		virtual bool RequestShelterStartSetup ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestShelterStartSetup bool RequestShelterStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & shelterID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestShelterStartSetup(DerivedClass) bool DerivedClass::RequestShelterStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & shelterID)
+#define CALL_SpaceWar_RequestShelterStartSetup RequestShelterStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & shelterID)
+#define PARAM_SpaceWar_RequestShelterStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & shelterID)
+               
+		virtual bool RequestShelterDoorControl ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestShelterDoorControl bool RequestShelterDoorControl ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestShelterDoorControl(DerivedClass) bool DerivedClass::RequestShelterDoorControl ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState)
+#define CALL_SpaceWar_RequestShelterDoorControl RequestShelterDoorControl ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState)
+#define PARAM_SpaceWar_RequestShelterDoorControl ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState)
+               
+		virtual bool RequestShelterEnter ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestShelterEnter bool RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestShelterEnter(DerivedClass) bool DerivedClass::RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
+#define CALL_SpaceWar_RequestShelterEnter RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
+#define PARAM_SpaceWar_RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
+               
 		virtual bool NotifyLoginSuccess ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
 		} 
@@ -279,6 +309,36 @@ namespace SpaceWar
 #define DEFRMI_SpaceWar_NotifyUseItemBox(DerivedClass) bool DerivedClass::NotifyUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)
 #define CALL_SpaceWar_NotifyUseItemBox NotifyUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)
 #define PARAM_SpaceWar_NotifyUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)
+               
+		virtual bool NotifyShelterInfo ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const bool & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyShelterInfo bool NotifyShelterInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyShelterInfo(DerivedClass) bool DerivedClass::NotifyShelterInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState)
+#define CALL_SpaceWar_NotifyShelterInfo NotifyShelterInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState)
+#define PARAM_SpaceWar_NotifyShelterInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState)
+               
+		virtual bool NotifyMeteorCreateTime ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyMeteorCreateTime bool NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyMeteorCreateTime(DerivedClass) bool DerivedClass::NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time)
+#define CALL_SpaceWar_NotifyMeteorCreateTime NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time)
+#define PARAM_SpaceWar_NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time)
+               
+		virtual bool NotifyMeteorCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & ,  const float & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyMeteorCreate bool NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyMeteorCreate(DerivedClass) bool DerivedClass::NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
+#define CALL_SpaceWar_NotifyMeteorCreate NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
+#define PARAM_SpaceWar_NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
  
 		virtual bool ProcessReceivedMessage(::Proud::CReceivedMessage &pa, void* hostTag) PN_OVERRIDE;
 		static const PNTCHAR* RmiName_RequestServerConnect;
@@ -288,6 +348,9 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_RequestPlayerUseOxy;
 		static const PNTCHAR* RmiName_RequestUseOxyCharger;
 		static const PNTCHAR* RmiName_RequestUseItemBox;
+		static const PNTCHAR* RmiName_RequestShelterStartSetup;
+		static const PNTCHAR* RmiName_RequestShelterDoorControl;
+		static const PNTCHAR* RmiName_RequestShelterEnter;
 		static const PNTCHAR* RmiName_NotifyLoginSuccess;
 		static const PNTCHAR* RmiName_NotifyLoginFailed;
 		static const PNTCHAR* RmiName_NotifyOtherClientJoin;
@@ -307,6 +370,9 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyPlayerChangeOxygen;
 		static const PNTCHAR* RmiName_NotifyUseOxyCharger;
 		static const PNTCHAR* RmiName_NotifyUseItemBox;
+		static const PNTCHAR* RmiName_NotifyShelterInfo;
+		static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
+		static const PNTCHAR* RmiName_NotifyMeteorCreate;
 		static const PNTCHAR* RmiName_First;
 		virtual ::Proud::RmiID* GetRmiIDList() PN_OVERRIDE { return g_RmiIDList; }
 		virtual int GetRmiIDListCount() PN_OVERRIDE { return g_RmiIDListCount; }
@@ -378,6 +444,33 @@ namespace SpaceWar
 			if (RequestUseItemBox_Function==nullptr) 
 				return true; 
 			return RequestUseItemBox_Function(remote,rmiContext, sendHostID, itemBoxIndex); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestShelterStartSetup_Function;
+		virtual bool RequestShelterStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & shelterID) 
+		{ 
+			if (RequestShelterStartSetup_Function==nullptr) 
+				return true; 
+			return RequestShelterStartSetup_Function(remote,rmiContext, shelterID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const bool & ) > RequestShelterDoorControl_Function;
+		virtual bool RequestShelterDoorControl ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState) 
+		{ 
+			if (RequestShelterDoorControl_Function==nullptr) 
+				return true; 
+			return RequestShelterDoorControl_Function(remote,rmiContext, sendHostID, shelterID, doorState); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const bool & ) > RequestShelterEnter_Function;
+		virtual bool RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter) 
+		{ 
+			if (RequestShelterEnter_Function==nullptr) 
+				return true; 
+			return RequestShelterEnter_Function(remote,rmiContext, sendHostID, shelterID, enter); 
 		}
 
                
@@ -549,6 +642,33 @@ namespace SpaceWar
 			if (NotifyUseItemBox_Function==nullptr) 
 				return true; 
 			return NotifyUseItemBox_Function(remote,rmiContext, sendHostID, itemBoxIndex, itemID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const bool & ,  const bool & ) > NotifyShelterInfo_Function;
+		virtual bool NotifyShelterInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & doorState,  const bool & lightState) 
+		{ 
+			if (NotifyShelterInfo_Function==nullptr) 
+				return true; 
+			return NotifyShelterInfo_Function(remote,rmiContext, sendHostID, shelterID, doorState, lightState); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > NotifyMeteorCreateTime_Function;
+		virtual bool NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time) 
+		{ 
+			if (NotifyMeteorCreateTime_Function==nullptr) 
+				return true; 
+			return NotifyMeteorCreateTime_Function(remote,rmiContext, time); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & ,  const float & ) > NotifyMeteorCreate_Function;
+		virtual bool NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez) 
+		{ 
+			if (NotifyMeteorCreate_Function==nullptr) 
+				return true; 
+			return NotifyMeteorCreate_Function(remote,rmiContext, anglex, anglez); 
 		}
 
 	};
