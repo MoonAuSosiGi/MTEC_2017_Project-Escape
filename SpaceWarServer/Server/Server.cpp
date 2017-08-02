@@ -6,6 +6,7 @@
 
 Server server;
 
+
 int main()
 {
 	srand((unsigned int)time(NULL));
@@ -18,15 +19,14 @@ int main()
 
 void MeteorLoop(void*)
 {
-
 	s_meteorCommingSec--;
 
 	if(s_meteorCommingSec % 5 == 0)
 		cout << "메테오 " << s_meteorCommingSec << " 초 남음 " << endl;
 
-	if (s_meteorCommingSec > 0)
-		server.m_proxy.NotifyMeteorCreateTime(server.m_playerP2PGroup, RmiContext::UnreliableSend, s_meteorCommingSec);
-	else
+	
+	server.m_proxy.NotifyMeteorCreateTime(server.m_playerP2PGroup, RmiContext::UnreliableSend, s_meteorCommingSec);
+
 	{
 		if (s_meteorCommingSec == 0)
 		{
@@ -38,7 +38,7 @@ void MeteorLoop(void*)
 
 		}
 
-		else
+		else if (s_meteorCommingSec < 0)
 		{
 			if (s_meteorCommingSec == -60)
 			{
@@ -55,7 +55,7 @@ void MeteorLoop(void*)
 void Server::ServerRun()
 {
 	m_netServer = shared_ptr<CNetServer>(CNetServer::Create());
-	
+
 //	typedef void(*ThreadProc)(void* ctx);
 	void(*func)(void*);
 	func = &MeteorLoop;
@@ -88,6 +88,8 @@ void Server::ServerRun()
 		cout << "Server Start Failed : " << e.what() << endl;
 		return;
 	}
+
+	m_gameStartTime = m_netServer->GetTimeMs();
 	// 클라이언트가 들어왔다 
 	m_netServer->OnClientJoin = [this](CNetClientInfo *clientInfo) { OnClientJoin(clientInfo); };
 
@@ -314,6 +316,27 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 	float prevHp = m_clientMap[(HostID)targetHostID]->hp;
 	m_clientMap[(HostID)targetHostID]->hp -= damage;
 
+	if (m_clientMap[(HostID)targetHostID]->hp <= 0.0f)
+	{
+		m_clientMap[(HostID)targetHostID]->PlayerDead(m_netServer->GetTimeMs());
+
+		// 죽은 후에 어시스트 목록 갱신
+		forward_list<int> list = m_clientMap[(HostID)targetHostID]->GetAssistClientList();
+		for (auto value : list)
+		{
+			m_clientMap[(HostID)value]->m_assistCount++;
+			m_proxy.NotifyKillInfo((HostID)value, RmiContext::ReliableSend, m_clientMap[(HostID)targetHostID]->m_userName, false, m_clientMap[(HostID)value]->m_killCount, m_clientMap[(HostID)value]->m_assistCount);
+		}
+		m_clientMap[(HostID)sendHostID]->m_killCount++;
+		m_proxy.NotifyKillInfo((HostID)sendHostID, RmiContext::ReliableSend, m_clientMap[(HostID)targetHostID]->m_userName, true, m_clientMap[(HostID)sendHostID]->m_killCount, m_clientMap[(HostID)sendHostID]->m_assistCount);
+	}
+	else
+	{
+		// 이녀석은 어시스트 체크를 해야함
+		m_clientMap[(HostID)targetHostID]->DamageClient((int)sendHostID,m_netServer->GetTimeMs());
+	}
+
+
 	m_proxy.NotifyPlayerChangeHP(m_playerP2PGroup, RmiContext::ReliableSend, targetHostID, m_clientMap[(HostID)targetHostID]->m_userName, m_clientMap[(HostID)targetHostID]->hp, prevHp, MAX_HP);
 	return true;
 }
@@ -388,9 +411,18 @@ DEFRMI_SpaceWar_RequestShelterDoorControl(Server)
 
 	m_shelterMap[shelterID]->ShelterDoorStateChange(doorState);
 
-	m_proxy.NotifyShelterInfo(m_playerP2PGroup,
-		RmiContext::ReliableSend, sendHostID, shelterID,
-		doorState,m_shelterMap[shelterID]->m_lightState);
+
+	auto iter = m_clientMap.begin();
+	while (iter != m_clientMap.end())
+	{
+		if((int)iter->second->m_hostID != sendHostID)
+			m_proxy.NotifyShelterInfo(iter->second->m_hostID,
+				RmiContext::ReliableSend, sendHostID, shelterID,
+				doorState, m_shelterMap[shelterID]->m_lightState);
+
+		iter++;
+	}
+	
 
 	return true;
 }
@@ -418,6 +450,48 @@ DEFRMI_SpaceWar_RequestShelterEnter(Server)
 			shelterID, m_shelterMap[shelterID]->m_doorState, m_shelterMap[shelterID]->m_lightState);
 	}
 
+
+	return true;
+}
+
+#pragma endregion
+
+#pragma region Game_RESULT
+
+DEFRMI_SpaceWar_RequestGameEnd(Server)
+{
+	cout << "RequestGameEnd -- 게임 종료 -- 승자 - " << winPlayerID << endl;
+
+	auto iter = m_clientMap.begin();
+
+	float playTime = m_netServer->GetTimeMs() - m_gameStartTime;
+
+	while (iter != m_clientMap.end())
+	{
+
+		HostID targetID = iter->first;
+
+		int winState = (targetID == (HostID)winPlayerID) ? 1 : 0;
+
+
+		m_proxy.NotifyGameResultInfoMe(targetID, RmiContext::ReliableSend, "test", winState,
+			playTime, iter->second->m_killCount, iter->second->m_assistCount, iter->second->m_deathCount, 100);
+
+		auto resultIter = m_clientMap.begin();
+		while (resultIter != m_clientMap.end())
+		{
+			if (resultIter->first != iter->first)
+			{
+				m_proxy.NotifyGameResultInfoOther(targetID, RmiContext::ReliableSend,
+					resultIter->second->m_userName, resultIter->second->m_state);
+			}
+			
+			resultIter++;
+		}
+		m_proxy.NotifyGameResultShow(targetID, RmiContext::ReliableSend);
+
+		iter++;
+	}
 
 	return true;
 }

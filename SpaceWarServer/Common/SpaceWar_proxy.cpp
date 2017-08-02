@@ -1063,6 +1063,194 @@ __msg << anglez;
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyMeteorCreate, (::Proud::RmiID)Rmi_NotifyMeteorCreate);
 	}
+        
+	bool Proxy::NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifySpaceShipEngineCharge;
+__msg.Write(__msgid); 
+	
+__msg << spaceShipID;
+__msg << fuel;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifySpaceShipEngineCharge, (::Proud::RmiID)Rmi_NotifySpaceShipEngineCharge);
+	}
+
+	bool Proxy::NotifySpaceShipEngineCharge ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipID,  const float & fuel)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifySpaceShipEngineCharge;
+__msg.Write(__msgid); 
+	
+__msg << spaceShipID;
+__msg << fuel;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifySpaceShipEngineCharge, (::Proud::RmiID)Rmi_NotifySpaceShipEngineCharge);
+	}
+        
+	bool Proxy::RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameEnd;
+__msg.Write(__msgid); 
+	
+__msg << winPlayerID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestGameEnd, (::Proud::RmiID)Rmi_RequestGameEnd);
+	}
+
+	bool Proxy::RequestGameEnd ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & winPlayerID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameEnd;
+__msg.Write(__msgid); 
+	
+__msg << winPlayerID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestGameEnd, (::Proud::RmiID)Rmi_RequestGameEnd);
+	}
+        
+	bool Proxy::NotifyKillInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyKillInfo;
+__msg.Write(__msgid); 
+	
+__msg << targetName;
+__msg << kill;
+__msg << totalKill;
+__msg << totalAssist;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyKillInfo, (::Proud::RmiID)Rmi_NotifyKillInfo);
+	}
+
+	bool Proxy::NotifyKillInfo ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyKillInfo;
+__msg.Write(__msgid); 
+	
+__msg << targetName;
+__msg << kill;
+__msg << totalKill;
+__msg << totalAssist;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyKillInfo, (::Proud::RmiID)Rmi_NotifyKillInfo);
+	}
+        
+	bool Proxy::NotifyGameResultInfoMe ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGameResultInfoMe;
+__msg.Write(__msgid); 
+	
+__msg << gameMode;
+__msg << winState;
+__msg << playTime;
+__msg << kills;
+__msg << assists;
+__msg << death;
+__msg << getMoney;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyGameResultInfoMe, (::Proud::RmiID)Rmi_NotifyGameResultInfoMe);
+	}
+
+	bool Proxy::NotifyGameResultInfoMe ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGameResultInfoMe;
+__msg.Write(__msgid); 
+	
+__msg << gameMode;
+__msg << winState;
+__msg << playTime;
+__msg << kills;
+__msg << assists;
+__msg << death;
+__msg << getMoney;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyGameResultInfoMe, (::Proud::RmiID)Rmi_NotifyGameResultInfoMe);
+	}
+        
+	bool Proxy::NotifyGameResultInfoOther ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const int & state)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGameResultInfoOther;
+__msg.Write(__msgid); 
+	
+__msg << name;
+__msg << state;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyGameResultInfoOther, (::Proud::RmiID)Rmi_NotifyGameResultInfoOther);
+	}
+
+	bool Proxy::NotifyGameResultInfoOther ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & name,  const int & state)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGameResultInfoOther;
+__msg.Write(__msgid); 
+	
+__msg << name;
+__msg << state;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyGameResultInfoOther, (::Proud::RmiID)Rmi_NotifyGameResultInfoOther);
+	}
+        
+	bool Proxy::NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGameResultShow;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyGameResultShow, (::Proud::RmiID)Rmi_NotifyGameResultShow);
+	}
+
+	bool Proxy::NotifyGameResultShow ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGameResultShow;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyGameResultShow, (::Proud::RmiID)Rmi_NotifyGameResultShow);
+	}
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestServerConnect =_PNT("RequestServerConnect");
 #else
@@ -1222,6 +1410,36 @@ const PNTCHAR* Proxy::RmiName_NotifyMeteorCreateTime =_PNT("");
 const PNTCHAR* Proxy::RmiName_NotifyMeteorCreate =_PNT("NotifyMeteorCreate");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyMeteorCreate =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifySpaceShipEngineCharge =_PNT("NotifySpaceShipEngineCharge");
+#else
+const PNTCHAR* Proxy::RmiName_NotifySpaceShipEngineCharge =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestGameEnd =_PNT("RequestGameEnd");
+#else
+const PNTCHAR* Proxy::RmiName_RequestGameEnd =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyKillInfo =_PNT("NotifyKillInfo");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyKillInfo =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyGameResultInfoMe =_PNT("NotifyGameResultInfoMe");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyGameResultInfoMe =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyGameResultInfoOther =_PNT("NotifyGameResultInfoOther");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyGameResultInfoOther =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyGameResultShow =_PNT("NotifyGameResultShow");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyGameResultShow =_PNT("");
 #endif
 const PNTCHAR* Proxy::RmiName_First = RmiName_RequestServerConnect;
 }

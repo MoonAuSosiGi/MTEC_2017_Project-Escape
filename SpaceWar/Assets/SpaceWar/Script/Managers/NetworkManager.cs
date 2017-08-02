@@ -114,26 +114,58 @@ public class NetworkManager : Singletone<NetworkManager> {
     {
         return m_shelterList.IndexOf(shelter);
     }
+
+    // SpaceShip
+    private List<SpaceShip> m_spaceShipList = new List<SpaceShip>();
+
+    public bool isListInSpaceShip(SpaceShip spaceShip)
+    {
+        return m_spaceShipList.Contains(spaceShip);
+    }
+
+    public int GetSpaceShipIndex(SpaceShip spaceShip)
+    {
+        return m_spaceShipList.IndexOf(spaceShip);
+    }
     #endregion
 
     public GameObject m_itemBoxParent = null;
     public GameObject m_oxyChargerParent = null;
     public GameObject m_shelterParent = null;
+    public GameObject m_spaceShipParent = null;
     #endregion
 
     #region UnityMethod
     void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         // 네트워크 세팅
         for (int i = 0; i < m_itemBoxParent.transform.childCount; i++)
+        {
             m_itemBoxList.Add(m_itemBoxParent.transform.GetChild(i).GetComponent<ItemBox>());
+            m_itemBoxList[i].ITEMBOX_ID = i;
+        }
 
         for (int i = 0; i < m_oxyChargerParent.transform.childCount; i++)
+        {
             m_oxyChargerList.Add(m_oxyChargerParent.transform.GetChild(i).GetComponent<OxyCharger>());
+            m_oxyChargerList[i].OXY_CHARGER_ID = i;
+        }
+        
 
         // 쉘터 세팅
         for (int i = 0; i < m_shelterParent.transform.childCount; i++)
+        {
             m_shelterList.Add(m_shelterParent.transform.GetChild(i).GetComponent<Shelter>());
+            m_shelterList[i].SHELTER_ID = i;
+        }
+
+        //우주선 세팅
+        for (int i = 0; i < m_spaceShipParent.transform.childCount; i++)
+        {
+            m_spaceShipList.Add(m_spaceShipParent.transform.GetChild(i).GetComponent<SpaceShip>());
+            m_spaceShipList[i].SPACESHIP_ID = i;
+        }
 
         // 관련 클래스 생성 -----------------------------------//
 
@@ -466,7 +498,15 @@ public class NetworkManager : Singletone<NetworkManager> {
         // 메테오 시간
         m_s2cStub.NotifyMeteorCreateTime = (HostID remote , RmiContext rmiContext , int time) =>
         {
-    //        Debug.Log("메테오 " + time);
+            if (time >= 0)
+            {
+                GameManager.Instance().m_inGameUI.StartMeteor();
+                GameManager.Instance().m_inGameUI.RecvMeteorInfo(time);
+            }
+            else if(time < -1)
+            {
+                GameManager.Instance().m_inGameUI.StopMeteor();
+            }
             return true;
         };
 
@@ -478,6 +518,48 @@ public class NetworkManager : Singletone<NetworkManager> {
             return true;
         };
 
+        // 우주선 조작 정보가 넘어옴
+        m_s2cStub.NotifySpaceShipEngineCharge = (HostID remote , RmiContext rmiContext , 
+            int spaceShipID , float fuel) =>
+        {
+            Debug.Log("넘어옴 정보 " + spaceShipID);
+            var spaceShip = m_spaceShipList[spaceShipID];
+
+            spaceShip.SpaceShipEngineCharge(fuel , false);
+            return true;
+        };
+
+
+        #endregion
+
+        // -- 게임 결과에 관련된 것들
+        #region ResultStub 
+        // 게임 결과 // 자기 자신
+        m_s2cStub.NotifyGameResultInfoMe = (HostID remote , RmiContext rmiContext , 
+            string gameMode , int winState , int playTime , int kills , int assists , 
+            int death , int getMoney) =>
+        {
+            Debug.Log("Result 자기자신");
+            GameManager.Instance().SetResultProfileInfo(gameMode,winState, playTime , kills , assists , death , getMoney);
+            return true;
+        };
+
+        // 게임 결과 // 적들
+        m_s2cStub.NotifyGameResultInfoOther = (HostID remote , RmiContext rmiContext , 
+            string name , int state) =>
+        {
+            Debug.Log("Result 적들");
+            GameManager.Instance().AddResultOtherProfileInfo(name , state);
+            return true;
+        };
+
+        // 이제 결과를 띄워라
+        m_s2cStub.NotifyGameResultShow = (HostID remote , RmiContext rmiContext) =>
+        {
+            Debug.Log("Result Show");
+            GameManager.Instance().GameResultShow();
+            return true;
+        };
 
         #endregion
 
@@ -714,6 +796,22 @@ public class NetworkManager : Singletone<NetworkManager> {
         Debug.Log("Shelter Enter " +enter);
         m_c2sProxy.RequestShelterEnter(HostID.HostID_Server , 
             RmiContext.ReliableSend , (int)m_hostID,shelterID , enter);
+    }
+
+    // 우주선 조작
+    public void C2SNotifySpaceShipEngineCharge(int spaceShipID,float fuel)
+    {
+        NetworkLog("SpaceShip Charge "+fuel);
+        var sendOption = new RmiContext(); // (2)
+        sendOption.reliability = MessageReliability.MessageReliability_Reliable;
+        sendOption.enableLoopback = false;
+        m_c2sProxy.NotifySpaceShipEngineCharge(m_p2pID , sendOption , spaceShipID , fuel);
+    }
+
+    // 게임이 끝났음을 알림
+    public void C2SRequestGameEnd()
+    {
+        m_c2sProxy.RequestGameEnd(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID);
     }
 
     #endregion

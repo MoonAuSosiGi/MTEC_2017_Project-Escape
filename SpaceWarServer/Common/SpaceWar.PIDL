@@ -120,4 +120,20 @@ global SpaceWar 3141
 
 	// 메테오 생성해라
 	NotifyMeteorCreate([in]float anglex,[in]float anglez);
+
+	// 누군가가 우주선 조작중
+	NotifySpaceShipEngineCharge([in]int spaceShipID,[in]float fuel);
+
+	// RESULT -------------------------------------------------------------------------
+
+	// 우주선 탄놈이 보냄
+	RequestGameEnd([in]int winPlayerID);
+
+	// 킬 / 어시스트 마다 제공되는 정보
+	NotifyKillInfo([in]string targetName,[in]bool kill,[in]int totalKill,[in]int totalAssist);
+	
+	// 최종 결과 - 내 정보
+	NotifyGameResultInfoMe([in]string gameMode,[in]int winState,[in]int playTime,[in]int kills,[in]int assists,[in]int death,[in]int getMoney); 
+	NotifyGameResultInfoOther([in]string name,[in]int state);
+	NotifyGameResultShow();
 }

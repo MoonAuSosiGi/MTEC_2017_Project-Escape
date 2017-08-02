@@ -60,6 +60,9 @@ public:
 	// 쉘터 입장 퇴장
 	DECRMI_SpaceWar_RequestShelterEnter;
 
+	//게임 끝
+	DECRMI_SpaceWar_RequestGameEnd;
+
 	// 서버 이벤트 로직
 	void OnClientJoin(CNetClientInfo* clientInfo);
 	void OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, const ByteArray& comment);
@@ -76,7 +79,8 @@ private:
 	// 쉘터의 경우엔 등록해야함
 	unordered_map<int, shared_ptr<Shelter>> m_shelterMap;
 
-	
+	// 플레이 타임
+	int m_gameStartTime;
 public:
 	// 전송 프록시
 	SpaceWar::Proxy m_proxy;

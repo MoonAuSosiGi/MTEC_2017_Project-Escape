@@ -71,7 +71,19 @@ namespace SpaceWar
 		Rmi_NotifyMeteorCreateTime,
                
 		Rmi_NotifyMeteorCreate,
+               
+		Rmi_NotifySpaceShipEngineCharge,
+               
+		Rmi_RequestGameEnd,
+               
+		Rmi_NotifyKillInfo,
+               
+		Rmi_NotifyGameResultInfoMe,
+               
+		Rmi_NotifyGameResultInfoOther,
+               
+		Rmi_NotifyGameResultShow,
 	};
 
-	int g_RmiIDListCount = 32;
+	int g_RmiIDListCount = 38;
 }

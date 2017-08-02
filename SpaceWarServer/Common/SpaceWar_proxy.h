@@ -80,6 +80,18 @@ namespace SpaceWar
 	virtual bool NotifyMeteorCreateTime ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & time)   PN_SEALED;  
 	virtual bool NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez) PN_SEALED; 
 	virtual bool NotifyMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & anglex,  const float & anglez)   PN_SEALED;  
+	virtual bool NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel) PN_SEALED; 
+	virtual bool NotifySpaceShipEngineCharge ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipID,  const float & fuel)   PN_SEALED;  
+	virtual bool RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) PN_SEALED; 
+	virtual bool RequestGameEnd ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & winPlayerID)   PN_SEALED;  
+	virtual bool NotifyKillInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist) PN_SEALED; 
+	virtual bool NotifyKillInfo ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist)   PN_SEALED;  
+	virtual bool NotifyGameResultInfoMe ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney) PN_SEALED; 
+	virtual bool NotifyGameResultInfoMe ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney)   PN_SEALED;  
+	virtual bool NotifyGameResultInfoOther ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const int & state) PN_SEALED; 
+	virtual bool NotifyGameResultInfoOther ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & name,  const int & state)   PN_SEALED;  
+	virtual bool NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_SEALED; 
+	virtual bool NotifyGameResultShow ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)   PN_SEALED;  
 static const PNTCHAR* RmiName_RequestServerConnect;
 static const PNTCHAR* RmiName_RequestClientJoin;
 static const PNTCHAR* RmiName_RequestWorldCreateItem;
@@ -112,6 +124,12 @@ static const PNTCHAR* RmiName_NotifyUseItemBox;
 static const PNTCHAR* RmiName_NotifyShelterInfo;
 static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
 static const PNTCHAR* RmiName_NotifyMeteorCreate;
+static const PNTCHAR* RmiName_NotifySpaceShipEngineCharge;
+static const PNTCHAR* RmiName_RequestGameEnd;
+static const PNTCHAR* RmiName_NotifyKillInfo;
+static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
+static const PNTCHAR* RmiName_NotifyGameResultInfoOther;
+static const PNTCHAR* RmiName_NotifyGameResultShow;
 static const PNTCHAR* RmiName_First;
 		Proxy()
 		{

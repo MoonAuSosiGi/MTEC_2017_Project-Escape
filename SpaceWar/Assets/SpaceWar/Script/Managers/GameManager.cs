@@ -10,7 +10,9 @@ public class GameManager : Singletone<GameManager> {
     public GameObject MainCam;
     public GameObject Plant;
     public InGameUI m_inGameUI;
-
+    public GameObject m_map = null;
+    public GameObject m_itemParent = null;
+    public GameObject m_meteorParent = null;
     public Transform PlanetAnchor;
 
 
@@ -36,6 +38,80 @@ public class GameManager : Singletone<GameManager> {
         set { m_playerInfo = value; }
     }
 
+    // result ------------------------------------------------------------------------------//
+    #region RESULT 
+    public ResultUI m_resultUI;
+    private bool m_winner = false;
+    public bool WINNER { get { return m_winner; } set { m_winner = value; } }
+    private string m_resultMode = null;
+    private int m_resultWinState = 0;
+    private int m_resultPlayTime = 0;
+    private int m_resultKills = 0;
+    private int m_resultAssists = 0;
+    private int m_resultDeath = 0;
+    private int m_resultMoney = 0;
+
+    private bool m_resultUIAlready = false;
+    public void ResultUIAlready()
+    {
+        Debug.Log("Already!!");
+        m_resultUIAlready = true;
+    }
+
+    public class UserInformation
+    {
+        public string m_name = null;
+        public int m_state = 0;
+        public int m_team = 0;
+
+        public UserInformation(string name , int state , int team)
+        {
+            m_name = name;
+            m_state = state;
+            m_team = team;
+        }
+    }
+
+    public List<UserInformation> m_infoList = new List<UserInformation>();
+
+    public void SetResultProfileInfo(string mode,int winState,int playTime,int kill,int assist,int death,int money)
+    {
+        m_resultMode = mode;
+        m_resultWinState = winState;
+        m_resultPlayTime = playTime;
+        m_resultKills = kill;
+        m_resultAssists = assist;
+        m_resultDeath = death;
+        m_resultMoney = money;
+    }
+
+    public void AddResultOtherProfileInfo(string userName , int state , int team = 0)
+    {
+        m_infoList.Add(new GameManager.UserInformation(userName , state , team));
+    }
+
+    public void GameResultShow()
+    {
+        m_resultUI.SetProfileInfo(m_resultMode,m_resultWinState, m_resultPlayTime , m_resultKills , m_resultAssists , m_resultDeath , m_resultMoney);
+        m_resultUI.SettingEnd();
+
+        if (m_resultUIAlready)
+            m_resultUI.gameObject.SetActive(true);
+        else
+            InvokeRepeating("ResultShowCheck" , 0.5f , 0.5f);
+    }
+
+    void ResultShowCheck()
+    {
+        Debug.Log("TTT " + m_resultUIAlready);
+        if (m_resultUIAlready)
+        {
+            m_resultUI.gameObject.SetActive(true);
+            CancelInvoke("ResultShowCheck");
+        }
+    }
+
+    #endregion
     // -------------------------------------------------------------------------------------//
     // 
 
@@ -79,9 +155,6 @@ public class GameManager : Singletone<GameManager> {
             else
                 m_InventoryUI.OpenInventory();
         }
-
-     
-        Debug.DrawLine(Vector3.zero , GetPlanetPosition(Plant.transform.localScale.x + 13.0f , 30.0f , 100.0f));
       
     }
     #endregion
@@ -139,7 +212,7 @@ public class GameManager : Singletone<GameManager> {
             CreateWeaponList.Add(Instantiate(Item[CID] , SponeHitInfo.point , 
                 Quaternion.Euler(SponeHitInfo.normal.x + 45 , SponeHitInfo.normal.y + 45 , 
                 SponeHitInfo.normal.z + 90)));
-
+          //  CreateWeaponList[i].transform.parent = m_itemParent.transform;
             CreateWeaponList[i].GetComponent<Weapon>().WeaponID = i;
             CreateWeaponList[i].GetComponent<Weapon>().CID = CID;
             CreateWeaponList[i].layer = 2;
@@ -179,9 +252,7 @@ public class GameManager : Singletone<GameManager> {
     // 메테오 생성
     public void CreateMeteor(float anglex,float anglez)
     {
-
-        float planetScale = Plant.transform.localScale.x + 11.0f;
-        Debug.Log("TEST " + planetScale + " angle " +anglex + " angle " +anglez);
+        float planetScale = Plant.transform.localScale.x + 13.0f;
 
         Vector3 pos = GetPlanetPosition(planetScale , anglex , anglez);
         Vector3 pos2 = GetPlanetPosition(planetScale + 30.0f , anglex , anglez);
@@ -195,9 +266,11 @@ public class GameManager : Singletone<GameManager> {
         Vector3 r = obj.transform.eulerAngles;
         obj.transform.eulerAngles =new Vector3( r.x + 90.0f,r.y,r.z);
 
+        obj.transform.parent = m_meteorParent.transform;
+
+        // 테스트용 위치 확인
         test.transform.position = pos;
         test.transform.rotation = Quaternion.LookRotation((pos - Vector3.zero).normalized);
-
 
 
     }
@@ -342,6 +415,7 @@ public class GameManager : Singletone<GameManager> {
         m_inGameUI.UnEquipWeapon(itemCID , cur , max);
     }
     #endregion
+    
 
 
 }

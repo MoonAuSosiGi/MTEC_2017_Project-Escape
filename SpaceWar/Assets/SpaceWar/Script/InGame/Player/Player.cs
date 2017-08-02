@@ -57,6 +57,7 @@ public class Player : MonoBehaviour {
     public OxyCharger NearOxyCharger = null;
     public ItemBox NearItemBox = null;
     public Shelter NearShelter = null;
+    public SpaceShip m_nearSpaceShip = null;
 
     private bool m_isShelter = false;
 
@@ -199,6 +200,17 @@ public class Player : MonoBehaviour {
                 NearItemBox.UseItemBox();
             else if (NearShelter != null)
                 NearShelter.DoorControl();
+            else if (m_nearSpaceShip != null)
+                m_nearSpaceShip.StartSpaceShipEngineCharge();
+        }
+
+        if(m_nearSpaceShip != null)
+        {
+            if(Input.GetKey(GetKey))
+                m_nearSpaceShip.SpaceShipEngineCharge(0.01f , true);
+            
+            if (Input.GetKeyUp(GetKey))
+                m_nearSpaceShip.StopSpaceShipEngineCharge();
         }
     }
 
@@ -304,9 +316,9 @@ public class Player : MonoBehaviour {
 
             // Vector3 pos = NearWeapon.transform.GetChild(0).position;
             m_UseEffect.transform.position = NearWeapon.transform.GetChild(0).position;// new Vector3(pos.x , pos.y , pos.z);
-            //m_UseEffect.transform.parent = NearWeapon.transform;
-            //m_UseEffect.transform.rotation = NearWeapon.transform.rotation;
-            
+                                                                                       //m_UseEffect.transform.parent = NearWeapon.transform;
+                                                                                       //m_UseEffect.transform.rotation = NearWeapon.transform.rotation;
+
             //m_UseEffect.transform.Rotate(0 , 0 , -90f);
 
 
@@ -315,18 +327,18 @@ public class Player : MonoBehaviour {
 
         }
 
-        else if(other.CompareTag("OxyCharger") && NearOxyCharger == null)
+        else if (other.CompareTag("OxyCharger") && NearOxyCharger == null)
         {
             m_UseEffect.SetActive(true);
             NearOxyCharger = other.GetComponent<OxyCharger>();
             Vector3 pos = EffectShowLongAnchor.position;
 
             m_UseEffect.transform.parent = transform;
-            m_UseEffect.transform.position = new Vector3(pos.x , pos.y , 
+            m_UseEffect.transform.position = new Vector3(pos.x , pos.y ,
                 transform.position.z);
         }
 
-        else if(other.CompareTag("ItemBox") && NearItemBox == null)
+        else if (other.CompareTag("ItemBox") && NearItemBox == null)
         {
             if (other.GetComponent<ItemBox>().OPENED)
                 return;
@@ -337,11 +349,22 @@ public class Player : MonoBehaviour {
             m_UseEffect.transform.position = new Vector3(pos.x , pos.y + 0.5f ,
                 pos.z);
         }
-        else if(other.CompareTag("ShelterDoor") && NearShelter == null)
+        else if (other.CompareTag("ShelterDoor") && NearShelter == null)
         {
             m_UseEffect.SetActive(true);
             NearShelter = other.transform.parent.GetComponent<Shelter>();
-            m_UseEffect.transform.position = other.transform.position;
+
+            if (m_isShelter)
+                m_UseEffect.transform.position = other.transform.GetChild(1).position;
+            else
+                m_UseEffect.transform.position = other.transform.GetChild(0).position;
+        }
+        else if(other.CompareTag("SpaceShipControlPanel"))
+        {
+            m_UseEffect.SetActive(true);
+            m_UseEffect.transform.position = other.transform.GetChild(0).GetChild(1).position;
+            m_nearSpaceShip = other.GetComponent<SpaceShip>();
+            m_nearSpaceShip.StartSpaceShipEngineCharge();
         }
     }
 
@@ -368,6 +391,12 @@ public class Player : MonoBehaviour {
         {
             m_UseEffect.SetActive(false);
             NearShelter = null;
+        }
+        else if (other.CompareTag("SpaceShipControlPanel") && m_nearSpaceShip != null)
+        {
+            m_UseEffect.SetActive(false);
+            m_nearSpaceShip.StopSpaceShipEngineCharge();
+            m_nearSpaceShip = null;
         }
 
     }

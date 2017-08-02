@@ -9,6 +9,11 @@ public class OxyCharger : MonoBehaviour {
     public bool m_isAlive = true;
     float m_oxy = 100.0f;
 
+    public int OXY_CHARGER_ID
+    {
+        get { return m_index; }
+        set { m_index = value; }
+    }
     #endregion
 
     #region UnityMethod

@@ -178,6 +178,36 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
+		public delegate bool NotifySpaceShipEngineChargeDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int spaceShipID, float fuel);  
+		public NotifySpaceShipEngineChargeDelegate NotifySpaceShipEngineCharge = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int spaceShipID, float fuel)
+		{ 
+			return false;
+		};
+		public delegate bool RequestGameEndDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID);  
+		public RequestGameEndDelegate RequestGameEnd = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyKillInfoDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string targetName, bool kill, int totalKill, int totalAssist);  
+		public NotifyKillInfoDelegate NotifyKillInfo = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string targetName, bool kill, int totalKill, int totalAssist)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyGameResultInfoMeDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string gameMode, int winState, int playTime, int kills, int assists, int death, int getMoney);  
+		public NotifyGameResultInfoMeDelegate NotifyGameResultInfoMe = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string gameMode, int winState, int playTime, int kills, int assists, int death, int getMoney)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyGameResultInfoOtherDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string name, int state);  
+		public NotifyGameResultInfoOtherDelegate NotifyGameResultInfoOther = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string name, int state)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyGameResultShowDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext);  
+		public NotifyGameResultShowDelegate NotifyGameResultShow = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext)
+		{ 
+			return false;
+		};
 	public override bool ProcessReceivedMessage(Nettention.Proud.ReceivedMessage pa, Object hostTag) 
 	{
 		Nettention.Proud.HostID remote=pa.RemoteHostID;
@@ -1982,6 +2012,332 @@ parameterString+=anglez.ToString()+",";
 		}
 	}
 	break;
+case Common.NotifySpaceShipEngineCharge:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int spaceShipID; SP_Marshaler.Read(__msg,out spaceShipID);	
+float fuel; SP_Marshaler.Read(__msg,out fuel);	
+core.PostCheckReadMessage(__msg, RmiName_NotifySpaceShipEngineCharge);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=spaceShipID.ToString()+",";
+parameterString+=fuel.ToString()+",";
+			NotifyCallFromStub(Common.NotifySpaceShipEngineCharge, RmiName_NotifySpaceShipEngineCharge,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifySpaceShipEngineCharge;
+			summary.rmiName = RmiName_NotifySpaceShipEngineCharge;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifySpaceShipEngineCharge (remote,ctx , spaceShipID, fuel );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifySpaceShipEngineCharge);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifySpaceShipEngineCharge;
+			summary.rmiName = RmiName_NotifySpaceShipEngineCharge;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.RequestGameEnd:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int winPlayerID; SP_Marshaler.Read(__msg,out winPlayerID);	
+core.PostCheckReadMessage(__msg, RmiName_RequestGameEnd);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=winPlayerID.ToString()+",";
+			NotifyCallFromStub(Common.RequestGameEnd, RmiName_RequestGameEnd,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.RequestGameEnd;
+			summary.rmiName = RmiName_RequestGameEnd;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=RequestGameEnd (remote,ctx , winPlayerID );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_RequestGameEnd);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.RequestGameEnd;
+			summary.rmiName = RmiName_RequestGameEnd;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyKillInfo:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		string targetName; SP_Marshaler.Read(__msg,out targetName);	
+bool kill; SP_Marshaler.Read(__msg,out kill);	
+int totalKill; SP_Marshaler.Read(__msg,out totalKill);	
+int totalAssist; SP_Marshaler.Read(__msg,out totalAssist);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyKillInfo);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=targetName.ToString()+",";
+parameterString+=kill.ToString()+",";
+parameterString+=totalKill.ToString()+",";
+parameterString+=totalAssist.ToString()+",";
+			NotifyCallFromStub(Common.NotifyKillInfo, RmiName_NotifyKillInfo,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyKillInfo;
+			summary.rmiName = RmiName_NotifyKillInfo;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyKillInfo (remote,ctx , targetName, kill, totalKill, totalAssist );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyKillInfo);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyKillInfo;
+			summary.rmiName = RmiName_NotifyKillInfo;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyGameResultInfoMe:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		string gameMode; SP_Marshaler.Read(__msg,out gameMode);	
+int winState; SP_Marshaler.Read(__msg,out winState);	
+int playTime; SP_Marshaler.Read(__msg,out playTime);	
+int kills; SP_Marshaler.Read(__msg,out kills);	
+int assists; SP_Marshaler.Read(__msg,out assists);	
+int death; SP_Marshaler.Read(__msg,out death);	
+int getMoney; SP_Marshaler.Read(__msg,out getMoney);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyGameResultInfoMe);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=gameMode.ToString()+",";
+parameterString+=winState.ToString()+",";
+parameterString+=playTime.ToString()+",";
+parameterString+=kills.ToString()+",";
+parameterString+=assists.ToString()+",";
+parameterString+=death.ToString()+",";
+parameterString+=getMoney.ToString()+",";
+			NotifyCallFromStub(Common.NotifyGameResultInfoMe, RmiName_NotifyGameResultInfoMe,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyGameResultInfoMe;
+			summary.rmiName = RmiName_NotifyGameResultInfoMe;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyGameResultInfoMe (remote,ctx , gameMode, winState, playTime, kills, assists, death, getMoney );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyGameResultInfoMe);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyGameResultInfoMe;
+			summary.rmiName = RmiName_NotifyGameResultInfoMe;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyGameResultInfoOther:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		string name; SP_Marshaler.Read(__msg,out name);	
+int state; SP_Marshaler.Read(__msg,out state);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyGameResultInfoOther);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=name.ToString()+",";
+parameterString+=state.ToString()+",";
+			NotifyCallFromStub(Common.NotifyGameResultInfoOther, RmiName_NotifyGameResultInfoOther,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyGameResultInfoOther;
+			summary.rmiName = RmiName_NotifyGameResultInfoOther;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyGameResultInfoOther (remote,ctx , name, state );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyGameResultInfoOther);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyGameResultInfoOther;
+			summary.rmiName = RmiName_NotifyGameResultInfoOther;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyGameResultShow:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		core.PostCheckReadMessage(__msg, RmiName_NotifyGameResultShow);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+						NotifyCallFromStub(Common.NotifyGameResultShow, RmiName_NotifyGameResultShow,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyGameResultShow;
+			summary.rmiName = RmiName_NotifyGameResultShow;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyGameResultShow (remote,ctx  );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyGameResultShow);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyGameResultShow;
+			summary.rmiName = RmiName_NotifyGameResultShow;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
 		default:
 			 goto __fail;
 		}
@@ -2027,6 +2383,12 @@ const string RmiName_NotifyUseItemBox="NotifyUseItemBox";
 const string RmiName_NotifyShelterInfo="NotifyShelterInfo";
 const string RmiName_NotifyMeteorCreateTime="NotifyMeteorCreateTime";
 const string RmiName_NotifyMeteorCreate="NotifyMeteorCreate";
+const string RmiName_NotifySpaceShipEngineCharge="NotifySpaceShipEngineCharge";
+const string RmiName_RequestGameEnd="RequestGameEnd";
+const string RmiName_NotifyKillInfo="NotifyKillInfo";
+const string RmiName_NotifyGameResultInfoMe="NotifyGameResultInfoMe";
+const string RmiName_NotifyGameResultInfoOther="NotifyGameResultInfoOther";
+const string RmiName_NotifyGameResultShow="NotifyGameResultShow";
        
 const string RmiName_First = RmiName_RequestServerConnect;
 #else
@@ -2064,6 +2426,12 @@ const string RmiName_NotifyUseItemBox="";
 const string RmiName_NotifyShelterInfo="";
 const string RmiName_NotifyMeteorCreateTime="";
 const string RmiName_NotifyMeteorCreate="";
+const string RmiName_NotifySpaceShipEngineCharge="";
+const string RmiName_RequestGameEnd="";
+const string RmiName_NotifyKillInfo="";
+const string RmiName_NotifyGameResultInfoMe="";
+const string RmiName_NotifyGameResultInfoOther="";
+const string RmiName_NotifyGameResultShow="";
        
 const string RmiName_First = "";
 #endif

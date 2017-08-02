@@ -10,11 +10,17 @@ public class InGameUI : MonoBehaviour
 
     public UISlider m_hpSlider = null;
     public UISlider m_oxySlider = null;
+    public UISlider m_spaceShipEngineSlider = null;
 
     public GameObject m_South = null;
     public GameObject m_North = null;
 
     public GameObject m_equipInfo = null;
+
+    public GameObject m_spaceShipUI = null;
+
+    public UILabel m_meteoTimeLabel = null;
+    public GameObject m_meteorObj = null;
 
     public interface PlayerHPOxyUpdate
     {
@@ -83,9 +89,10 @@ public class InGameUI : MonoBehaviour
 
     void PlanetDirCheck()
     {
-        Vector3 perp = Vector3.Cross(Vector3.forward , target.transform.forward);
-        float dir = Vector3.Dot(perp , Vector3.up);
-        m_North.transform.position = startPosition + (new Vector3(Vector3.Angle(target.transform.forward , Vector3.forward) * Mathf.Sign(dir) * rationAngleToPixel , 0 , 0));
+        
+        //Vector3 perp = Vector3.Cross(Vector3.forward , target.transform.forward);
+        //float dir = Vector3.Dot(perp , Vector3.up);
+        //m_North.transform.position = startPosition + (new Vector3(Vector3.Angle(target.transform.forward , Vector3.forward) * Mathf.Sign(dir) * rationAngleToPixel , 0 , 0));
 
         ////Vector3 angles = Camera.main.transform.eulerAngles;
 
@@ -190,6 +197,48 @@ public class InGameUI : MonoBehaviour
     public void UnEquipWeapon(int itemCID,int curCount,int maxCount)
     {
         m_equipInfo.SetActive(false);
+    }
+    #endregion
+
+    #region MeteorUI
+    #endregion
+
+    #region SpaceShipUI
+
+    public void StartSpaceShipUI()
+    {
+        m_spaceShipUI.SetActive(true);
+
+        m_spaceShipEngineSlider.value = 0.0f;
+    }
+
+    public void StopSpaceShipUI()
+    {
+        m_spaceShipUI.SetActive(false);
+    }
+
+    public void ProcessSpaceShipEngine(float t)
+    {
+        m_spaceShipEngineSlider.value = t;
+    }
+    #endregion
+
+    #region MeteorUI
+    public void StartMeteor()
+    {
+        m_meteoTimeLabel.text = "";
+        m_meteorObj.SetActive(true);
+    }
+
+    public void StopMeteor()
+    {
+        m_meteoTimeLabel.text = "";
+        m_meteorObj.SetActive(false);
+    }
+
+    public void RecvMeteorInfo(int time)
+    {
+        m_meteoTimeLabel.text = time.ToString();
     }
     #endregion
 }

@@ -339,6 +339,66 @@ namespace SpaceWar
 #define DEFRMI_SpaceWar_NotifyMeteorCreate(DerivedClass) bool DerivedClass::NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
 #define CALL_SpaceWar_NotifyMeteorCreate NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
 #define PARAM_SpaceWar_NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
+               
+		virtual bool NotifySpaceShipEngineCharge ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const float & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifySpaceShipEngineCharge bool NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifySpaceShipEngineCharge(DerivedClass) bool DerivedClass::NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel)
+#define CALL_SpaceWar_NotifySpaceShipEngineCharge NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel)
+#define PARAM_SpaceWar_NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel)
+               
+		virtual bool RequestGameEnd ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestGameEnd bool RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestGameEnd(DerivedClass) bool DerivedClass::RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+#define CALL_SpaceWar_RequestGameEnd RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+#define PARAM_SpaceWar_RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+               
+		virtual bool NotifyKillInfo ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const bool & ,  const int & ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyKillInfo bool NotifyKillInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyKillInfo(DerivedClass) bool DerivedClass::NotifyKillInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist)
+#define CALL_SpaceWar_NotifyKillInfo NotifyKillInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist)
+#define PARAM_SpaceWar_NotifyKillInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist)
+               
+		virtual bool NotifyGameResultInfoMe ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const int & ,  const int & ,  const int & ,  const int & ,  const int & ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyGameResultInfoMe bool NotifyGameResultInfoMe ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyGameResultInfoMe(DerivedClass) bool DerivedClass::NotifyGameResultInfoMe ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney)
+#define CALL_SpaceWar_NotifyGameResultInfoMe NotifyGameResultInfoMe ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney)
+#define PARAM_SpaceWar_NotifyGameResultInfoMe ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney)
+               
+		virtual bool NotifyGameResultInfoOther ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyGameResultInfoOther bool NotifyGameResultInfoOther ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const int & state) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyGameResultInfoOther(DerivedClass) bool DerivedClass::NotifyGameResultInfoOther ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const int & state)
+#define CALL_SpaceWar_NotifyGameResultInfoOther NotifyGameResultInfoOther ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const int & state)
+#define PARAM_SpaceWar_NotifyGameResultInfoOther ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const int & state)
+               
+		virtual bool NotifyGameResultShow ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyGameResultShow bool NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyGameResultShow(DerivedClass) bool DerivedClass::NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_NotifyGameResultShow NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
  
 		virtual bool ProcessReceivedMessage(::Proud::CReceivedMessage &pa, void* hostTag) PN_OVERRIDE;
 		static const PNTCHAR* RmiName_RequestServerConnect;
@@ -373,6 +433,12 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyShelterInfo;
 		static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
 		static const PNTCHAR* RmiName_NotifyMeteorCreate;
+		static const PNTCHAR* RmiName_NotifySpaceShipEngineCharge;
+		static const PNTCHAR* RmiName_RequestGameEnd;
+		static const PNTCHAR* RmiName_NotifyKillInfo;
+		static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
+		static const PNTCHAR* RmiName_NotifyGameResultInfoOther;
+		static const PNTCHAR* RmiName_NotifyGameResultShow;
 		static const PNTCHAR* RmiName_First;
 		virtual ::Proud::RmiID* GetRmiIDList() PN_OVERRIDE { return g_RmiIDList; }
 		virtual int GetRmiIDListCount() PN_OVERRIDE { return g_RmiIDListCount; }
@@ -669,6 +735,60 @@ namespace SpaceWar
 			if (NotifyMeteorCreate_Function==nullptr) 
 				return true; 
 			return NotifyMeteorCreate_Function(remote,rmiContext, anglex, anglez); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const float & ) > NotifySpaceShipEngineCharge_Function;
+		virtual bool NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel) 
+		{ 
+			if (NotifySpaceShipEngineCharge_Function==nullptr) 
+				return true; 
+			return NotifySpaceShipEngineCharge_Function(remote,rmiContext, spaceShipID, fuel); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestGameEnd_Function;
+		virtual bool RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) 
+		{ 
+			if (RequestGameEnd_Function==nullptr) 
+				return true; 
+			return RequestGameEnd_Function(remote,rmiContext, winPlayerID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const bool & ,  const int & ,  const int & ) > NotifyKillInfo_Function;
+		virtual bool NotifyKillInfo ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & targetName,  const bool & kill,  const int & totalKill,  const int & totalAssist) 
+		{ 
+			if (NotifyKillInfo_Function==nullptr) 
+				return true; 
+			return NotifyKillInfo_Function(remote,rmiContext, targetName, kill, totalKill, totalAssist); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const int & ,  const int & ,  const int & ,  const int & ,  const int & ,  const int & ) > NotifyGameResultInfoMe_Function;
+		virtual bool NotifyGameResultInfoMe ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & gameMode,  const int & winState,  const int & playTime,  const int & kills,  const int & assists,  const int & death,  const int & getMoney) 
+		{ 
+			if (NotifyGameResultInfoMe_Function==nullptr) 
+				return true; 
+			return NotifyGameResultInfoMe_Function(remote,rmiContext, gameMode, winState, playTime, kills, assists, death, getMoney); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const int & ) > NotifyGameResultInfoOther_Function;
+		virtual bool NotifyGameResultInfoOther ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const int & state) 
+		{ 
+			if (NotifyGameResultInfoOther_Function==nullptr) 
+				return true; 
+			return NotifyGameResultInfoOther_Function(remote,rmiContext, name, state); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > NotifyGameResultShow_Function;
+		virtual bool NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (NotifyGameResultShow_Function==nullptr) 
+				return true; 
+			return NotifyGameResultShow_Function(remote,rmiContext); 
 		}
 
 	};
