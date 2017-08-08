@@ -29,7 +29,7 @@ void Client::DamageClient(int hostID, float time)
 void Client::PlayerDead(float deadTime)
 {
 	cout << "사망시 어시스트 체크" << endl;
-
+	m_state = DEATH;
 	// 어시스트의 목록을 만들어야 함
 	auto iter = m_assistCheck.begin();
 	
@@ -49,10 +49,15 @@ void Client::PlayerDead(float deadTime)
 	}
 }
 
+void Client::PlayerWin()
+{
+	m_state = SPACESHIP;
+}
+
 forward_list<int> Client::GetAssistClientList()
 {
 	forward_list<int> list;
-
+	
 	auto iter = m_assistCheck.begin();
 
 	while (iter != m_assistCheck.end())

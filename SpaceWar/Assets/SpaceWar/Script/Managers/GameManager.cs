@@ -114,7 +114,6 @@ public class GameManager : Singletone<GameManager> {
     #endregion
     // -------------------------------------------------------------------------------------//
     // 
-
     public InventoryUI m_InventoryUI = null;
 
     #endregion
@@ -136,27 +135,49 @@ public class GameManager : Singletone<GameManager> {
         //PhotonNetwork.playerName = "Test" + Random.Range(0 , 22);
         //PhotonNetwork.ConnectUsingSettings("0.1");
 
-        Application.targetFrameRate = 100;
+        Application.targetFrameRate = -1;
         Screen.SetResolution(1920 , 1080 , false);
 
         AnchorPlanet.PlanetAnchor = PlanetAnchor;
         AnchorPlanet.Planet = Plant.transform;
         AnchorPlanet.GM = this.transform;
         Application.runInBackground = true;
+        
     }
 
-
+    public float PLANET_XANGLE = 0.0f;
+    public float PLANET_ZANGLE = 0.0f;
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I))
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+        if (Input.GetKeyDown(KeyCode.I))
         {
             if (m_InventoryUI.INVEN_OPENSTATE)
                 m_InventoryUI.CloseInventory();
             else
                 m_InventoryUI.OpenInventory();
         }
+    //    float planetScale = Plant.transform.localScale.x + 12.8f;
+    //    Debug.DrawLine(transform.position , GetPlanetPosition(planetScale , PLANET_XANGLE , PLANET_ZANGLE) , Color.red);
       
     }
+
+    void OnGUI()
+    {
+        int w = Screen.width, h = Screen.height;
+
+        GUIStyle style = new GUIStyle();
+
+        Rect rect = new Rect(0 , 0 , w , h * 2 / 100);
+        style.alignment = TextAnchor.UpperLeft;
+        style.fontSize = h * 2 / 100;
+        style.normal.textColor = new Color(1.0f , 1.0f , 1.0f , 1.0f);
+        float msec = deltaTime * 1000.0f;
+        float fps = 1.0f / deltaTime;
+        string text = string.Format("{0:0.0} ms ({1:0.} fps)" , msec , fps);
+        GUI.Label(rect , text , style);
+    }
+
     #endregion
 
     public GameObject CommandItemCreate(int itemCID,int itemID,Vector3 pos,Vector3 rot)
@@ -252,7 +273,7 @@ public class GameManager : Singletone<GameManager> {
     // 메테오 생성
     public void CreateMeteor(float anglex,float anglez)
     {
-        float planetScale = Plant.transform.localScale.x + 13.0f;
+        float planetScale = Plant.transform.localScale.x + 12.8f;
 
         Vector3 pos = GetPlanetPosition(planetScale , anglex , anglez);
         Vector3 pos2 = GetPlanetPosition(planetScale + 30.0f , anglex , anglez);

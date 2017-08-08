@@ -36,6 +36,8 @@ public:
 
 	void PlayerDead(float deadTime);
 
+	void PlayerWin();
+
 	// 이 클라를 죽이는데 일조한 리스트 
 	forward_list<int> GetAssistClientList();
 	

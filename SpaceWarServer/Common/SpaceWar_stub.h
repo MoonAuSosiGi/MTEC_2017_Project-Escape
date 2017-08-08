@@ -350,15 +350,25 @@ namespace SpaceWar
 #define CALL_SpaceWar_NotifySpaceShipEngineCharge NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel)
 #define PARAM_SpaceWar_NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel)
                
-		virtual bool RequestGameEnd ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+		virtual bool RequestSpaceShip ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_RequestGameEnd bool RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) PN_OVERRIDE
+#define DECRMI_SpaceWar_RequestSpaceShip bool RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_RequestGameEnd(DerivedClass) bool DerivedClass::RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
-#define CALL_SpaceWar_RequestGameEnd RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
-#define PARAM_SpaceWar_RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+#define DEFRMI_SpaceWar_RequestSpaceShip(DerivedClass) bool DerivedClass::RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+#define CALL_SpaceWar_RequestSpaceShip RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+#define PARAM_SpaceWar_RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+               
+		virtual bool RequestGameEnd ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestGameEnd bool RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestGameEnd(DerivedClass) bool DerivedClass::RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_RequestGameEnd RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
                
 		virtual bool NotifyKillInfo ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const bool & ,  const int & ,  const int & )		{ 
 			return false;
@@ -434,6 +444,7 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
 		static const PNTCHAR* RmiName_NotifyMeteorCreate;
 		static const PNTCHAR* RmiName_NotifySpaceShipEngineCharge;
+		static const PNTCHAR* RmiName_RequestSpaceShip;
 		static const PNTCHAR* RmiName_RequestGameEnd;
 		static const PNTCHAR* RmiName_NotifyKillInfo;
 		static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
@@ -747,12 +758,21 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestGameEnd_Function;
-		virtual bool RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) 
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestSpaceShip_Function;
+		virtual bool RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) 
+		{ 
+			if (RequestSpaceShip_Function==nullptr) 
+				return true; 
+			return RequestSpaceShip_Function(remote,rmiContext, winPlayerID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > RequestGameEnd_Function;
+		virtual bool RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
 		{ 
 			if (RequestGameEnd_Function==nullptr) 
 				return true; 
-			return RequestGameEnd_Function(remote,rmiContext, winPlayerID); 
+			return RequestGameEnd_Function(remote,rmiContext); 
 		}
 
                

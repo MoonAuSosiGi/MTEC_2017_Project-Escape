@@ -61,6 +61,7 @@ public class SpaceShip : MonoBehaviour {
         {
             if(me)
             {
+                NetworkManager.Instance().C2SRequestSpaceShip();
                 GameManager.Instance().WINNER = true;
                 GameManager.Instance().m_inGameUI.StopSpaceShipUI();
                 Camera.main.GetComponent<CamRotate>().enabled = false;

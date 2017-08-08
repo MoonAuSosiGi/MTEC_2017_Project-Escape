@@ -60,6 +60,9 @@ public:
 	// 쉘터 입장 퇴장
 	DECRMI_SpaceWar_RequestShelterEnter;
 
+
+	// 우주선 탔음 
+	DECRMI_SpaceWar_RequestSpaceShip;
 	//게임 끝
 	DECRMI_SpaceWar_RequestGameEnd;
 

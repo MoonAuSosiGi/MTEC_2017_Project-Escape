@@ -1094,21 +1094,35 @@ __msg << fuel;
 			RmiName_NotifySpaceShipEngineCharge, (::Proud::RmiID)Rmi_NotifySpaceShipEngineCharge);
 	}
         
-	bool Proxy::RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)	{
+	bool Proxy::RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 
-::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameEnd;
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShip;
 __msg.Write(__msgid); 
 	
 __msg << winPlayerID;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
-			RmiName_RequestGameEnd, (::Proud::RmiID)Rmi_RequestGameEnd);
+			RmiName_RequestSpaceShip, (::Proud::RmiID)Rmi_RequestSpaceShip);
 	}
 
-	bool Proxy::RequestGameEnd ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & winPlayerID)  	{
+	bool Proxy::RequestSpaceShip ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & winPlayerID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShip;
+__msg.Write(__msgid); 
+	
+__msg << winPlayerID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestSpaceShip, (::Proud::RmiID)Rmi_RequestSpaceShip);
+	}
+        
+	bool Proxy::RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1116,7 +1130,19 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 ::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameEnd;
 __msg.Write(__msgid); 
 	
-__msg << winPlayerID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestGameEnd, (::Proud::RmiID)Rmi_RequestGameEnd);
+	}
+
+	bool Proxy::RequestGameEnd ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameEnd;
+__msg.Write(__msgid); 
+	
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_RequestGameEnd, (::Proud::RmiID)Rmi_RequestGameEnd);
@@ -1415,6 +1441,11 @@ const PNTCHAR* Proxy::RmiName_NotifyMeteorCreate =_PNT("");
 const PNTCHAR* Proxy::RmiName_NotifySpaceShipEngineCharge =_PNT("NotifySpaceShipEngineCharge");
 #else
 const PNTCHAR* Proxy::RmiName_NotifySpaceShipEngineCharge =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("RequestSpaceShip");
+#else
+const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestGameEnd =_PNT("RequestGameEnd");

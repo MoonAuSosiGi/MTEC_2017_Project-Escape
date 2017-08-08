@@ -125,9 +125,11 @@ global SpaceWar 3141
 	NotifySpaceShipEngineCharge([in]int spaceShipID,[in]float fuel);
 
 	// RESULT -------------------------------------------------------------------------
-
-	// 우주선 탄놈이 보냄
-	RequestGameEnd([in]int winPlayerID);
+	
+	// 우주선 타서 연료 다채웠을 경우 보냄
+	RequestSpaceShip([in]int winPlayerID);
+	// 이것은 결과를 받아오는 것
+	RequestGameEnd();
 
 	// 킬 / 어시스트 마다 제공되는 정보
 	NotifyKillInfo([in]string targetName,[in]bool kill,[in]int totalKill,[in]int totalAssist);

@@ -48,11 +48,12 @@ namespace SpaceWar
 			public const Nettention.Proud.RmiID NotifyMeteorCreateTime = (Nettention.Proud.RmiID)3141+31;
 			public const Nettention.Proud.RmiID NotifyMeteorCreate = (Nettention.Proud.RmiID)3141+32;
 			public const Nettention.Proud.RmiID NotifySpaceShipEngineCharge = (Nettention.Proud.RmiID)3141+33;
-			public const Nettention.Proud.RmiID RequestGameEnd = (Nettention.Proud.RmiID)3141+34;
-			public const Nettention.Proud.RmiID NotifyKillInfo = (Nettention.Proud.RmiID)3141+35;
-			public const Nettention.Proud.RmiID NotifyGameResultInfoMe = (Nettention.Proud.RmiID)3141+36;
-			public const Nettention.Proud.RmiID NotifyGameResultInfoOther = (Nettention.Proud.RmiID)3141+37;
-			public const Nettention.Proud.RmiID NotifyGameResultShow = (Nettention.Proud.RmiID)3141+38;
+			public const Nettention.Proud.RmiID RequestSpaceShip = (Nettention.Proud.RmiID)3141+34;
+			public const Nettention.Proud.RmiID RequestGameEnd = (Nettention.Proud.RmiID)3141+35;
+			public const Nettention.Proud.RmiID NotifyKillInfo = (Nettention.Proud.RmiID)3141+36;
+			public const Nettention.Proud.RmiID NotifyGameResultInfoMe = (Nettention.Proud.RmiID)3141+37;
+			public const Nettention.Proud.RmiID NotifyGameResultInfoOther = (Nettention.Proud.RmiID)3141+38;
+			public const Nettention.Proud.RmiID NotifyGameResultShow = (Nettention.Proud.RmiID)3141+39;
 		// List that has RMI ID.
 		public static Nettention.Proud.RmiID[] RmiIDList = new Nettention.Proud.RmiID[] {
 			RequestServerConnect,
@@ -88,6 +89,7 @@ namespace SpaceWar
 			NotifyMeteorCreateTime,
 			NotifyMeteorCreate,
 			NotifySpaceShipEngineCharge,
+			RequestSpaceShip,
 			RequestGameEnd,
 			NotifyKillInfo,
 			NotifyGameResultInfoMe,

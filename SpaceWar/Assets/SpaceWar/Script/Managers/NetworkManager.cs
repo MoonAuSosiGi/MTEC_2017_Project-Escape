@@ -808,10 +808,17 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_c2sProxy.NotifySpaceShipEngineCharge(m_p2pID , sendOption , spaceShipID , fuel);
     }
 
+    // 우주선을 탔음을 알림
+    public void C2SRequestSpaceShip()
+    {
+        NetworkLog("RequestSpaceShip");
+        m_c2sProxy.RequestSpaceShip(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID);
+    }
+
     // 게임이 끝났음을 알림
     public void C2SRequestGameEnd()
     {
-        m_c2sProxy.RequestGameEnd(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID);
+        m_c2sProxy.RequestGameEnd(HostID.HostID_Server , RmiContext.ReliableSend);
     }
 
     #endregion

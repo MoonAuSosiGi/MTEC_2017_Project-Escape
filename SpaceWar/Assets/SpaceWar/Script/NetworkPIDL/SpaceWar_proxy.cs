@@ -1031,13 +1031,38 @@ SP_Marshaler.Write(__msg, fuel);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifySpaceShipEngineCharge, Common.NotifySpaceShipEngineCharge);
 }
-public bool RequestGameEnd(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
+public bool RequestSpaceShip(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.RequestSpaceShip;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, winPlayerID);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_RequestSpaceShip, Common.RequestSpaceShip);
+}
+
+public bool RequestSpaceShip(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.RequestSpaceShip;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, winPlayerID);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_RequestSpaceShip, Common.RequestSpaceShip);
+}
+public bool RequestGameEnd(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
 		Nettention.Proud.RmiID __msgid= Common.RequestGameEnd;
 		__msg.Write(__msgid);
-		SP_Marshaler.Write(__msg, winPlayerID);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -1046,13 +1071,12 @@ public bool RequestGameEnd(Nettention.Proud.HostID remote,Nettention.Proud.RmiCo
 		RmiName_RequestGameEnd, Common.RequestGameEnd);
 }
 
-public bool RequestGameEnd(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
+public bool RequestGameEnd(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
 Nettention.Proud.RmiID __msgid= Common.RequestGameEnd;
 __msg.Write(__msgid);
-SP_Marshaler.Write(__msg, winPlayerID);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_RequestGameEnd, Common.RequestGameEnd);
@@ -1215,6 +1239,7 @@ const string RmiName_NotifyShelterInfo="NotifyShelterInfo";
 const string RmiName_NotifyMeteorCreateTime="NotifyMeteorCreateTime";
 const string RmiName_NotifyMeteorCreate="NotifyMeteorCreate";
 const string RmiName_NotifySpaceShipEngineCharge="NotifySpaceShipEngineCharge";
+const string RmiName_RequestSpaceShip="RequestSpaceShip";
 const string RmiName_RequestGameEnd="RequestGameEnd";
 const string RmiName_NotifyKillInfo="NotifyKillInfo";
 const string RmiName_NotifyGameResultInfoMe="NotifyGameResultInfoMe";
@@ -1258,6 +1283,7 @@ const string RmiName_NotifyShelterInfo="";
 const string RmiName_NotifyMeteorCreateTime="";
 const string RmiName_NotifyMeteorCreate="";
 const string RmiName_NotifySpaceShipEngineCharge="";
+const string RmiName_RequestSpaceShip="";
 const string RmiName_RequestGameEnd="";
 const string RmiName_NotifyKillInfo="";
 const string RmiName_NotifyGameResultInfoMe="";

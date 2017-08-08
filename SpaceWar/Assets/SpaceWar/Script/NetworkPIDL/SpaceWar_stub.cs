@@ -183,8 +183,13 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool RequestGameEndDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID);  
-		public RequestGameEndDelegate RequestGameEnd = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
+		public delegate bool RequestSpaceShipDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID);  
+		public RequestSpaceShipDelegate RequestSpaceShip = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
+		{ 
+			return false;
+		};
+		public delegate bool RequestGameEndDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext);  
+		public RequestGameEndDelegate RequestGameEnd = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext)
 		{ 
 			return false;
 		};
@@ -2065,7 +2070,7 @@ parameterString+=fuel.ToString()+",";
 		}
 	}
 	break;
-case Common.RequestGameEnd:
+case Common.RequestSpaceShip:
 	{
 		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
 		ctx.sentFrom=pa.RemoteHostID;
@@ -2075,12 +2080,61 @@ case Common.RequestGameEnd:
 		ctx.compressMode = pa.CompressMode;
 			
 		int winPlayerID; SP_Marshaler.Read(__msg,out winPlayerID);	
-core.PostCheckReadMessage(__msg, RmiName_RequestGameEnd);
+core.PostCheckReadMessage(__msg, RmiName_RequestSpaceShip);
 		if(enableNotifyCallFromStub==true)
 		{
 			string parameterString="";
 			parameterString+=winPlayerID.ToString()+",";
-			NotifyCallFromStub(Common.RequestGameEnd, RmiName_RequestGameEnd,parameterString);
+			NotifyCallFromStub(Common.RequestSpaceShip, RmiName_RequestSpaceShip,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.RequestSpaceShip;
+			summary.rmiName = RmiName_RequestSpaceShip;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=RequestSpaceShip (remote,ctx , winPlayerID );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_RequestSpaceShip);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.RequestSpaceShip;
+			summary.rmiName = RmiName_RequestSpaceShip;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.RequestGameEnd:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		core.PostCheckReadMessage(__msg, RmiName_RequestGameEnd);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+						NotifyCallFromStub(Common.RequestGameEnd, RmiName_RequestGameEnd,parameterString);
 		}
 			
 		if(enableStubProfiling)
@@ -2096,7 +2150,7 @@ core.PostCheckReadMessage(__msg, RmiName_RequestGameEnd);
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=RequestGameEnd (remote,ctx , winPlayerID );
+		bool __ret=RequestGameEnd (remote,ctx  );
 			
 		if(__ret==false)
 		{
@@ -2384,6 +2438,7 @@ const string RmiName_NotifyShelterInfo="NotifyShelterInfo";
 const string RmiName_NotifyMeteorCreateTime="NotifyMeteorCreateTime";
 const string RmiName_NotifyMeteorCreate="NotifyMeteorCreate";
 const string RmiName_NotifySpaceShipEngineCharge="NotifySpaceShipEngineCharge";
+const string RmiName_RequestSpaceShip="RequestSpaceShip";
 const string RmiName_RequestGameEnd="RequestGameEnd";
 const string RmiName_NotifyKillInfo="NotifyKillInfo";
 const string RmiName_NotifyGameResultInfoMe="NotifyGameResultInfoMe";
@@ -2427,6 +2482,7 @@ const string RmiName_NotifyShelterInfo="";
 const string RmiName_NotifyMeteorCreateTime="";
 const string RmiName_NotifyMeteorCreate="";
 const string RmiName_NotifySpaceShipEngineCharge="";
+const string RmiName_RequestSpaceShip="";
 const string RmiName_RequestGameEnd="";
 const string RmiName_NotifyKillInfo="";
 const string RmiName_NotifyGameResultInfoMe="";

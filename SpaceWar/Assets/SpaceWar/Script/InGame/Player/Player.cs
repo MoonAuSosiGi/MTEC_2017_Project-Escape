@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     #region Player_INFO
+
+    private Rigidbody m_rigidBody = null;
+
     public Transform PlayerTransform;
     public Transform ModelTransform;
 
@@ -45,7 +48,7 @@ public class Player : MonoBehaviour {
 
     public GameObject m_UseEffect;
 
-    float deltaTime = 0.0f;
+
 
 
     public AnimationCurve JumpCurve;
@@ -76,7 +79,7 @@ public class Player : MonoBehaviour {
     {
         if (!NetworkManager.Instance().LOGIN_STATE)
             return;
-        Vector3 velo = GetComponent<Rigidbody>().velocity; //(transform.position - m_prevPos) / Time.deltaTime;
+        Vector3 velo = m_rigidBody.velocity; //(transform.position - m_prevPos) / Time.deltaTime;
 
         //  if (PrevState != NowState)
         NetworkManager.Instance().C2SRequestPlayerMove(name ,
@@ -88,6 +91,7 @@ public class Player : MonoBehaviour {
 
     void Start()
     {
+        m_rigidBody = GetComponent<Rigidbody>();
         InvokeRepeating("UseOxy" , 2.0f , 2.0f);
     }
 
@@ -120,7 +124,7 @@ public class Player : MonoBehaviour {
             NearWeaponPickCheck();
         }
 
-        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+        
         
     }
 
@@ -143,25 +147,6 @@ public class Player : MonoBehaviour {
             NearWeaponPick = false;
         }
     }
-
-
-    void OnGUI()
-    {
-        int w = Screen.width, h = Screen.height;
-
-        GUIStyle style = new GUIStyle();
-
-        Rect rect = new Rect(0 , 0 , w , h * 2 / 100);
-        style.alignment = TextAnchor.UpperLeft;
-        style.fontSize = h * 2 / 100;
-        style.normal.textColor = new Color(0.0f , 0.0f , 0.5f , 1.0f);
-        float msec = deltaTime * 1000.0f;
-        float fps = 1.0f / deltaTime;
-        string text = string.Format("{0:0.0} ms ({1:0.} fps)" , msec , fps);
-        GUI.Label(rect , text , style);
-    }
-
-
 
     public void GetWeapon()
     {
@@ -196,11 +181,11 @@ public class Player : MonoBehaviour {
         {
             if (NearOxyCharger != null)
                 NearOxyCharger.UseOxy();
-            else if (NearItemBox != null)
+            if (NearItemBox != null)
                 NearItemBox.UseItemBox();
-            else if (NearShelter != null)
+            if (NearShelter != null)
                 NearShelter.DoorControl();
-            else if (m_nearSpaceShip != null)
+            if (m_nearSpaceShip != null)
                 m_nearSpaceShip.StartSpaceShipEngineCharge();
         }
 
@@ -441,7 +426,7 @@ public class Player : MonoBehaviour {
         }
 
     }
-
+    // h 3 T 1
     IEnumerator JumpCall(Transform Character , float H , float T , PlayerMove.MoveState LastState)
     {
 

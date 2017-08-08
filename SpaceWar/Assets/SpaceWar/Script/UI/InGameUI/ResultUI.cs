@@ -46,7 +46,12 @@ public class ResultUI : MonoBehaviour {
         m_gameMode.text = "TEST MODE";
 
         m_userName.text = GameManager.Instance().PLAYER.m_name;
-        m_playTime.text = playTime.ToString(); // 임시
+
+        // 플레이 타임
+        int time = playTime / 1000;
+        
+        
+        m_playTime.text = time.ToString(); // 임시
         m_killCount.text = killCount.ToString();
         m_assistCount.text = assistCount.ToString();
         m_deathCount.text = deathCount.ToString();
@@ -58,7 +63,7 @@ public class ResultUI : MonoBehaviour {
     public void SettingEnd()
     {
         List<GameManager.UserInformation> infoList = GameManager.Instance().m_infoList;
-
+        Debug.Log("info List "+infoList.Count);
         for (int i = 0; i < infoList.Count; i++)
         {
             GameManager.UserInformation user = infoList[i];
@@ -71,9 +76,9 @@ public class ResultUI : MonoBehaviour {
             string stateSprName = "";
             switch((PlayerState)user.m_state)
             {
-                case PlayerState.ALIVE:         stateSprName = "icon_Play"; break;
-                case PlayerState.DEATH:         stateSprName = "icon_Dead"; break;
-                case PlayerState.SPACESHIP:     stateSprName = "icon_survival"; break;
+                case PlayerState.ALIVE:         stateSprName = "Icon_Play"; break;
+                case PlayerState.DEATH:         stateSprName = "Icon_Dead"; break;
+                case PlayerState.SPACESHIP:     stateSprName = "Icon_survival"; break;
             }
 
             info.m_stateLogo.spriteName = stateSprName;

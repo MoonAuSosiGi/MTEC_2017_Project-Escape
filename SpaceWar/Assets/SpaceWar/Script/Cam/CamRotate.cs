@@ -63,6 +63,7 @@ public class CamRotate : MonoBehaviour {
         {
             CamRotateCode();
         }
+   //     ZoomProcess();
         CursorManager();
         
 
@@ -123,7 +124,8 @@ public class CamRotate : MonoBehaviour {
     //    FPS_MODE = true;
     }
 
-    private void OnGUI()
+    
+    void OnGUI()
     {
         Event CheckInput = Event.current; // 이벤트 저장
 
@@ -131,12 +133,12 @@ public class CamRotate : MonoBehaviour {
         {
             CamDis[2] -= Input.GetAxis("Mouse ScrollWheel") * CamZoomSpeed; // 줌인 줌아웃
 
-            
+
             // 줌인 최대
             if (CamDis[2] < CamDis[0]) // 줌인 줌아웃 최대, 최소 거리 보정
             {
-                
-               CamDis[2] = CamDis[3];//CamDis[2] = CamDis[0];
+
+                CamDis[2] = CamDis[3];//CamDis[2] = CamDis[0];
 
                 FPS_MODE = true;
 
@@ -144,7 +146,7 @@ public class CamRotate : MonoBehaviour {
             // 줌아웃 최대
             else if (CamDis[2] > CamDis[1])
             {
-                
+
                 CamDis[2] = CamDis[1];
                 FPS_MODE = false;
             }
@@ -153,18 +155,26 @@ public class CamRotate : MonoBehaviour {
         }
     }
 
+
     private void CamLastPosSet() // 카메라가 오브젝트뒤로 나가는 현상 방지
     {
         RaycastHit Hitinfo;
         Physics.Raycast(CamAnchor[1].position, CamAnchor[2].rotation * Vector3.back, out Hitinfo, (float)Vector3.Distance(CamAnchor[1].position, Vector3.Lerp(CamAnchor[1].position, CamAnchor[2].position, CamDis[2]))); // 레이캐스트
         //Debug.DrawRay(CamAnchor[1].position, CamAnchor[2].rotation * Vector3.back * Vector3.Distance(CamAnchor[1].position, Vector3.Lerp(CamAnchor[1].position, CamAnchor[2].position, CamDis[2])), Color.red, 0.1f);
-
+        if (Hitinfo.transform != null &&
+            (Hitinfo.transform.CompareTag("NoCameraCollider") || Hitinfo.transform.CompareTag("ShelterDoor")))
+        {
+            this.transform.position = Vector3.Lerp(CamAnchor[1].position , CamAnchor[2].position , CamDis[2]);
+            return;
+        }
         if (Hitinfo.point == Vector3.zero)
         {
             this.transform.position = Vector3.Lerp(CamAnchor[1].position, CamAnchor[2].position, CamDis[2]);
         }
         else
         {
+            if (Hitinfo.transform != null)
+              Debug.Log("Name " + Hitinfo.transform.name);
             this.transform.position = Hitinfo.point;
         }
     }

@@ -74,6 +74,8 @@ namespace SpaceWar
                
 		Rmi_NotifySpaceShipEngineCharge,
                
+		Rmi_RequestSpaceShip,
+               
 		Rmi_RequestGameEnd,
                
 		Rmi_NotifyKillInfo,
@@ -85,5 +87,5 @@ namespace SpaceWar
 		Rmi_NotifyGameResultShow,
 	};
 
-	int g_RmiIDListCount = 38;
+	int g_RmiIDListCount = 39;
 }
