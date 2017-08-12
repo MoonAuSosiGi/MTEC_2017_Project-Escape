@@ -135,13 +135,11 @@ public class GameManager : Singletone<GameManager> {
         //PhotonNetwork.playerName = "Test" + Random.Range(0 , 22);
         //PhotonNetwork.ConnectUsingSettings("0.1");
 
-        Application.targetFrameRate = -1;
-        Screen.SetResolution(1920 , 1080 , false);
-
+        
         AnchorPlanet.PlanetAnchor = PlanetAnchor;
         AnchorPlanet.Planet = Plant.transform;
         AnchorPlanet.GM = this.transform;
-        Application.runInBackground = true;
+        
         
     }
 
@@ -363,7 +361,7 @@ public class GameManager : Singletone<GameManager> {
 
         if (me)
         {
-            if((int)NetworkManager.Instance().m_hostID == 4)
+            if(NetworkManager.Instance().IS_HOST)
                 StartCoroutine(CreateItem(CreateItemNum));
 
             GameManager.Instance().PLAYER.m_name = name;

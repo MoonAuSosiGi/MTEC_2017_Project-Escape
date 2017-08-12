@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="GameRoom.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="OxyCharger.h" />
     <ClInclude Include="Shelter.h" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="GameRoom.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="OxyCharger.cpp" />
     <ClCompile Include="Server.cpp" />

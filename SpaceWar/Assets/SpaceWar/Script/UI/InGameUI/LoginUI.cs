@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoginUI : MonoBehaviour {
 
@@ -16,9 +17,13 @@ public class LoginUI : MonoBehaviour {
             if(result)
             {
                 gameObject.SetActive(false);
-                GameManager.Instance().OnJoinedRoom(GameManager.Instance().PLAYER.m_name , true ,
-                   new UnityEngine.Vector3(0.0f , 80.0f , 0.0f));
-                GameManager.Instance().m_inGameUI.gameObject.SetActive(true);
+
+                // 로비
+                SceneManager.LoadScene(1);
+                // 다음씬 
+                //GameManager.Instance().OnJoinedRoom(GameManager.Instance().PLAYER.m_name , true ,
+                //   new UnityEngine.Vector3(0.0f , 80.0f , 0.0f));
+                //GameManager.Instance().m_inGameUI.gameObject.SetActive(true);
             }
             else
             {

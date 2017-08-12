@@ -19,6 +19,22 @@ public class NetworkManager : Singletone<NetworkManager> {
     // 서버 포트
     int m_serverPort = 54532;
 
+    private string m_userName = null;
+
+    public string USER_NAME
+    {
+        get { return m_userName; }
+        set { m_userName = value; }
+    }
+
+    // 호스트 유무
+    private bool m_isHost = false;
+
+    public bool IS_HOST
+    {
+        get { return m_isHost; }
+    }
+
     // 서버 아이피
     private string m_serverIP = "localhost";
 
@@ -43,9 +59,13 @@ public class NetworkManager : Singletone<NetworkManager> {
     // 서버 연결 유무
     private bool m_isConnect = false;
     private bool m_isLogin = false;
+    private bool m_isGameRunning = false;
+    private bool m_isTeamMode = false;
 
-    public bool LOGIN_STATE {  get { return m_isLogin; } }
+    public bool LOGIN_STATE { get { return m_isLogin; } }
     public bool CONNECT_STATE { get { return m_isConnect; } }
+    public bool GAME_RUNNING { get { return m_isGameRunning; } }
+    public bool IS_TEAMMODE { get { return m_isTeamMode; } set { m_isTeamMode = value; } }
 
     private List<NetworkPlayer> m_players = new List<NetworkPlayer>();
 
@@ -66,7 +86,7 @@ public class NetworkManager : Singletone<NetworkManager> {
     }
 
     // 추후 Bullet 으로 변경할 것
-    public Dictionary<string,Gun01Bullet> m_bulletList = new Dictionary<string , Gun01Bullet>();
+    public Dictionary<string , Gun01Bullet> m_bulletList = new Dictionary<string , Gun01Bullet>();
     public Gun01Bullet GetNetworkBullet(string bulletID)
     {
         if (m_bulletList.ContainsKey(bulletID))
@@ -91,7 +111,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     // itemBox
     private List<ItemBox> m_itemBoxList = new List<ItemBox>();
-    
+
     public bool isListInItemBox(ItemBox box)
     {
         return m_itemBoxList.Contains(box);
@@ -139,33 +159,6 @@ public class NetworkManager : Singletone<NetworkManager> {
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        // 네트워크 세팅
-        for (int i = 0; i < m_itemBoxParent.transform.childCount; i++)
-        {
-            m_itemBoxList.Add(m_itemBoxParent.transform.GetChild(i).GetComponent<ItemBox>());
-            m_itemBoxList[i].ITEMBOX_ID = i;
-        }
-
-        for (int i = 0; i < m_oxyChargerParent.transform.childCount; i++)
-        {
-            m_oxyChargerList.Add(m_oxyChargerParent.transform.GetChild(i).GetComponent<OxyCharger>());
-            m_oxyChargerList[i].OXY_CHARGER_ID = i;
-        }
-        
-
-        // 쉘터 세팅
-        for (int i = 0; i < m_shelterParent.transform.childCount; i++)
-        {
-            m_shelterList.Add(m_shelterParent.transform.GetChild(i).GetComponent<Shelter>());
-            m_shelterList[i].SHELTER_ID = i;
-        }
-
-        //우주선 세팅
-        for (int i = 0; i < m_spaceShipParent.transform.childCount; i++)
-        {
-            m_spaceShipList.Add(m_spaceShipParent.transform.GetChild(i).GetComponent<SpaceShip>());
-            m_spaceShipList[i].SPACESHIP_ID = i;
-        }
 
         // 관련 클래스 생성 -----------------------------------//
 
@@ -204,21 +197,23 @@ public class NetworkManager : Singletone<NetworkManager> {
         #endregion
 
         #region Stub Setup
+        #region Network Lobby 
         // 로그인 성공시
-        m_s2cStub.NotifyLoginSuccess = (HostID remote, RmiContext rmiContext,int hostid) =>
+        m_s2cStub.NotifyLoginSuccess = (HostID remote , RmiContext rmiContext , int hostid, bool host) =>
         {
             m_isLogin = true;
             m_hostID = (HostID)hostid;
+            m_isHost = host;
             NetworkLog("Login Success " + (int)hostid);
 
-            if((int)hostid == 4)
-            {
-                for (int i = 0; i < m_shelterList.Count; i++)
-                {
-                    m_shelterList[i].SHELTER_ID = GetShelterIndex(m_shelterList[i]);
-                    C2SRequestShelterStartSetup(m_shelterList[i].SHELTER_ID);
-                }
-            }
+            //if((int)hostid == 4)
+            //{
+            //    for (int i = 0; i < m_shelterList.Count; i++)
+            //    {
+            //        m_shelterList[i].SHELTER_ID = GetShelterIndex(m_shelterList[i]);
+            //        C2SRequestShelterStartSetup(m_shelterList[i].SHELTER_ID);
+            //    }
+            //}
             if (loginResult != null)
                 loginResult(true);
 
@@ -226,23 +221,29 @@ public class NetworkManager : Singletone<NetworkManager> {
         };
 
         // 로그인 실패시
-        m_s2cStub.NotifyLoginFailed = (HostID remote ,RmiContext rmiContext , System.String reason) =>
+        m_s2cStub.NotifyLoginFailed = (HostID remote , RmiContext rmiContext , System.String reason) =>
         {
             NetworkLog("Login Failed " + reason);
             if (loginResult != null)
                 loginResult(false);
             return true;
         };
-        
+
         // 플레이어가 나갔을 때
         m_s2cStub.NotifyPlayerLost = (HostID remote , RmiContext rmiContext , int hostID) =>
         {
             NetworkLog("Player Lost .. " + hostID);
 
+            if (playerLost != null)
+                playerLost(hostID);
+
+            if (!GAME_RUNNING)
+                return true;
+
             NetworkPlayer target = null;
-            foreach(NetworkPlayer p in m_players)
+            foreach (NetworkPlayer p in m_players)
             {
-                if(p.m_hostID == (HostID)hostID)
+                if (p.m_hostID == (HostID)hostID)
                 {
                     target = p;
                     break;
@@ -254,21 +255,97 @@ public class NetworkManager : Singletone<NetworkManager> {
             return true;
         };
 
+        // 처음 들어왔을때 기존 정보를 싹다 받아야함
+        m_s2cStub.NotifyNetworkUserSetup = (HostID remote , RmiContext rmiContext , int userHostID , string userName ,
+            bool ready , bool teamRed) =>
+        {
+            Debug.Log("Notify Network User Setup " + userHostID);
+            if (otherRoomPlayerInfo != null)
+                otherRoomPlayerInfo(userHostID , userName , ready , teamRed);
+            return true;
+        };
+
+        // 누군가가 방을 들어왔다.
+        m_s2cStub.NotifyNetworkConnectUser = (HostID remote , RmiContext rmiContext ,int userHostID, string userName) =>
+        {
+            if (otherPlayerConnect != null)
+                otherPlayerConnect(userHostID , userName);
+            return true;
+        };
+
+        // 팀 변경 정보가 넘어왔다
+        m_s2cStub.NotifyNetworkGameTeamChange = (HostID remote , RmiContext rmiContext , int userHostID , bool teamRed) =>
+        {
+            if (otherPlayerTeamChange != null)
+                otherPlayerTeamChange(userHostID , teamRed);
+            return true;
+        };
+
+        // 레디 정보가 넘어왔다
+        m_s2cStub.NotifyNetworkReady = (HostID remote , RmiContext rmiContext ,int userHostID, string userName , bool ready) =>
+        {
+            if (otherPlayerReady != null)
+                otherPlayerReady(userHostID , userName , ready);
+            return true;
+        };
+
+        // 게임 모드가 변경됨
+        m_s2cStub.NotifyNetworkGameModeChange = (HostID remote , RmiContext rmiContext , int gameMode , bool teamMode) =>
+        {
+            if (gameModeChange != null)
+                gameModeChange(gameMode , teamMode);
+            return true;
+        };
+
+        // 플레이어 수가 바뀜 
+        m_s2cStub.NotifyNetworkGamePlayerCountChange = (HostID remote , RmiContext rmiContext , int playerCount) =>
+        {
+            if (playerCountChnage != null)
+                playerCountChnage(playerCount);
+            return true;
+        };
+
+        // 게임이 시작되었음!
+        m_s2cStub.NotifyNetworkGameStart = (HostID remote , RmiContext rmiContext) =>
+        {
+            if (gameStart != null)
+                gameStart();
+            return true;
+        };
+
+        // 게임이 실패
+        m_s2cStub.NotifyNetworkGameStartFailed = (HostID remote , RmiContext rmiContext) =>
+        {
+            if (gameStartFailed != null)
+                gameStartFailed("test");
+            return true;
+        };
+
+        // 호스트가 나갔다.
+        m_s2cStub.NotifyNetworkGameHostOut = (HostID remote , RmiContext rmiContext) =>
+        {
+            if (hostOut != null)
+                hostOut();
+            return true;
+        };
+
+        #endregion
+        #region InGame Network Play
         // 네트워크 플레이어의 이동 메시지가 왔다.
         m_s2cStub.NotifyPlayerMove = (HostID remote , RmiContext rmiContext ,
             int sendHostID , string name , float curX , float curY , float curZ ,
-            float velocityX , float velocityY , float velocityZ,
-            float crx,float cry,float crz,
-            float rx, float ry, float rz) =>
+            float velocityX , float velocityY , float velocityZ ,
+            float crx , float cry , float crz ,
+            float rx , float ry , float rz) =>
         {
             foreach (NetworkPlayer p in m_players)
             {
                 if (p.m_userName.Equals(name))
                 {
                     p.RecvNetworkMove(new UnityEngine.Vector3(curX , curY , curZ) ,
-                       new UnityEngine.Vector3(velocityX , velocityY , velocityZ),
-                       new UnityEngine.Vector3(crx,cry,crz),
-                       new UnityEngine.Vector3(rx,ry,rz));
+                       new UnityEngine.Vector3(velocityX , velocityY , velocityZ) ,
+                       new UnityEngine.Vector3(crx , cry , crz) ,
+                       new UnityEngine.Vector3(rx , ry , rz));
                     return true;
                 }
             }
@@ -294,24 +371,24 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyOtherClientJoin = (HostID remote , RmiContext rmiContext ,
             int hostID , string name , float x , float y , float z) =>
         {
-            NetworkLog("Other Client Join " + name + " host "+m_hostID + " h " +hostID );
+            NetworkLog("Other Client Join " + name + " host " + m_hostID + " h " + hostID);
             if (m_hostID == (HostID)hostID)
                 return true;
-            
-            GameObject MP = GameManager.Instance().OnJoinedRoom(name , false,
-                 new UnityEngine.Vector3(0.0f,80.0f,0.0f));
+
+            GameObject MP = GameManager.Instance().OnJoinedRoom(name , false ,
+                 new UnityEngine.Vector3(0.0f , 80.0f , 0.0f));
             MP.GetComponent<NetworkPlayer>().NetworkPlayerSetup((HostID)hostID , name);
             return true;
         };
 
         // 아이템 생성 로직
         m_s2cStub.NotifyCreateItem = (HostID remote , RmiContext rmiContext , int sendHostID ,
-            int itemCID,int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
+            int itemCID , int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
             NetworkLog("NotifyCreateItem .." + itemCID);
-            
+
             // 아이템 등록 
-            m_networkItemList.Add(itemID,GameManager.Instance().CommandItemCreate(itemCID,itemID , pos , rot));
+            m_networkItemList.Add(itemID , GameManager.Instance().CommandItemCreate(itemCID , itemID , pos , rot));
             return true;
         };
 
@@ -319,15 +396,15 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyPlayerEquipItem = (HostID remote , RmiContext rmiContext , int hostID ,
             int itemCID , int itemID) =>
         {
-            
+
             GameObject item = GetNetworkItem(itemID);
-            NetworkLog("NotifyPlayerEquipItem " + itemID + " null ? " +(item==null));
+            NetworkLog("NotifyPlayerEquipItem " + itemID + " null ? " + (item == null));
 
             if (item != null)
             {
-                foreach(var p in m_players)
+                foreach (var p in m_players)
                 {
-                    if((int)p.m_hostID == hostID)
+                    if ((int)p.m_hostID == hostID)
                     {
                         p.EquipWeapon(item);
                         break;
@@ -348,23 +425,23 @@ public class NetworkManager : Singletone<NetworkManager> {
             {
                 foreach (var p in m_players)
                 {
-                    p.UnEquipWeapon(pos,rot);
+                    p.UnEquipWeapon(pos , rot);
                     break;
                 }
             }
-                return true;
+            return true;
         };
 
         // 총알 생성해라
-        m_s2cStub.NotifyPlayerBulletCreate = (HostID remote , RmiContext rmiContext , 
-            int sendHostID , string bulletType , string bulletID , 
+        m_s2cStub.NotifyPlayerBulletCreate = (HostID remote , RmiContext rmiContext ,
+            int sendHostID , string bulletType , string bulletID ,
             UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
             NetworkLog("Bullet Create " + sendHostID + " t " + (int)m_hostID);
 
             Gun01Bullet b = GetNetworkBullet(bulletID);
 
-            if(b != null)
+            if (b != null)
             {
                 // 이미 생성되어 있는 것
                 // 재활용ㅋ
@@ -377,7 +454,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             {
                 // 타입 검사 후 생성하는 로직이 들어가야함 ( 지금은 일단 하나니까 ..)
                 GameObject bullet = GameObject.Instantiate(Resources.Load("Bullet/Gun01Bullet")) as GameObject;
-                
+
                 bullet.transform.parent = transform;
                 bullet.transform.position = pos;
                 bullet.transform.localEulerAngles = rot;
@@ -394,8 +471,8 @@ public class NetworkManager : Singletone<NetworkManager> {
         };
 
         // 총알 이동
-        m_s2cStub.NotifyPlayerBulletMove = (HostID remote , RmiContext rmiContext , 
-            int sendHostID , string bulletID , UnityEngine.Vector3 pos, UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot) =>
+        m_s2cStub.NotifyPlayerBulletMove = (HostID remote , RmiContext rmiContext ,
+            int sendHostID , string bulletID , UnityEngine.Vector3 pos , UnityEngine.Vector3 velocity , UnityEngine.Vector3 rot) =>
         {
             Gun01Bullet b = GetNetworkBullet(bulletID);
 
@@ -421,8 +498,8 @@ public class NetworkManager : Singletone<NetworkManager> {
         };
 
         // hp 업데이트 이벤트
-        m_s2cStub.NotifyPlayerChangeHP = (HostID remote,RmiContext rmiContext, 
-            int targetHostID, string name, float hp, float prevhp, float maxhp) =>
+        m_s2cStub.NotifyPlayerChangeHP = (HostID remote , RmiContext rmiContext ,
+            int targetHostID , string name , float hp , float prevhp , float maxhp) =>
         {
             NetworkLog("damage host " + (int)m_hostID + " target " + targetHostID);
             if ((int)m_hostID == targetHostID)
@@ -431,7 +508,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         };
 
         // oxy 업데이트 이벤트
-        m_s2cStub.NotifyPlayerChangeOxygen = (HostID remote , RmiContext rmiContext , 
+        m_s2cStub.NotifyPlayerChangeOxygen = (HostID remote , RmiContext rmiContext ,
             int targetHostID , string name , float oxygen , float prevoxy , float maxoxy) =>
         {
             if ((int)m_hostID == targetHostID)
@@ -440,7 +517,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         };
 
         // OxyCharger 조작 이벤트
-        m_s2cStub.NotifyUseOxyCharger = (HostID remote , RmiContext rmiContext , 
+        m_s2cStub.NotifyUseOxyCharger = (HostID remote , RmiContext rmiContext ,
             int sendHostID , int oxyChargerIndex , float userOxy) =>
         {
             m_oxyChargerList[oxyChargerIndex].RecvOxy(userOxy);
@@ -457,7 +534,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 return true;
             }
             ItemBox box = m_itemBoxList[itemBoxIndex];
-            
+
             box.ItemBoxClose();
 
             if ((int)m_hostID != sendHostID)
@@ -474,13 +551,13 @@ public class NetworkManager : Singletone<NetworkManager> {
         };
 
         // 쉘터 문 정보가 왔을 때 
-        m_s2cStub.NotifyShelterInfo = (HostID remote , 
-            RmiContext rmiContext , 
-            int sendHostID , int shelterID , bool doorState , 
+        m_s2cStub.NotifyShelterInfo = (HostID remote ,
+            RmiContext rmiContext ,
+            int sendHostID , int shelterID , bool doorState ,
             bool lightState) =>
         {
-            Debug.Log("shelterinfo " + lightState + " id " +shelterID);
-            
+            Debug.Log("shelterinfo " + lightState + " id " + shelterID);
+
 
             if (lightState)
                 m_shelterList[shelterID].LightOn();
@@ -498,12 +575,14 @@ public class NetworkManager : Singletone<NetworkManager> {
         // 메테오 시간
         m_s2cStub.NotifyMeteorCreateTime = (HostID remote , RmiContext rmiContext , int time) =>
         {
+            if (m_isGameRunning == false)
+                return true;
             if (time >= 0)
             {
                 GameManager.Instance().m_inGameUI.StartMeteor();
                 GameManager.Instance().m_inGameUI.RecvMeteorInfo(time);
             }
-            else if(time < -1)
+            else if (time < -1)
             {
                 GameManager.Instance().m_inGameUI.StopMeteor();
             }
@@ -511,15 +590,17 @@ public class NetworkManager : Singletone<NetworkManager> {
         };
 
         // 메테오 생성해라
-        m_s2cStub.NotifyMeteorCreate = (HostID remote , RmiContext rmiContext , 
-            float anglex,float anglez) =>
+        m_s2cStub.NotifyMeteorCreate = (HostID remote , RmiContext rmiContext ,
+            float anglex , float anglez) =>
         {
+            if (m_isGameRunning == false)
+                return true;
             GameManager.Instance().CreateMeteor(anglex , anglez);
             return true;
         };
 
         // 우주선 조작 정보가 넘어옴
-        m_s2cStub.NotifySpaceShipEngineCharge = (HostID remote , RmiContext rmiContext , 
+        m_s2cStub.NotifySpaceShipEngineCharge = (HostID remote , RmiContext rmiContext ,
             int spaceShipID , float fuel) =>
         {
             Debug.Log("넘어옴 정보 " + spaceShipID);
@@ -535,17 +616,17 @@ public class NetworkManager : Singletone<NetworkManager> {
         // -- 게임 결과에 관련된 것들
         #region ResultStub 
         // 게임 결과 // 자기 자신
-        m_s2cStub.NotifyGameResultInfoMe = (HostID remote , RmiContext rmiContext , 
-            string gameMode , int winState , int playTime , int kills , int assists , 
+        m_s2cStub.NotifyGameResultInfoMe = (HostID remote , RmiContext rmiContext ,
+            string gameMode , int winState , int playTime , int kills , int assists ,
             int death , int getMoney) =>
         {
             Debug.Log("Result 자기자신");
-            GameManager.Instance().SetResultProfileInfo(gameMode,winState, playTime , kills , assists , death , getMoney);
+            GameManager.Instance().SetResultProfileInfo(gameMode , winState , playTime , kills , assists , death , getMoney);
             return true;
         };
 
         // 게임 결과 // 적들
-        m_s2cStub.NotifyGameResultInfoOther = (HostID remote , RmiContext rmiContext , 
+        m_s2cStub.NotifyGameResultInfoOther = (HostID remote , RmiContext rmiContext ,
             string name , int state) =>
         {
             Debug.Log("Result 적들");
@@ -560,6 +641,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             GameManager.Instance().GameResultShow();
             return true;
         };
+        #endregion
 
         #endregion
 
@@ -576,18 +658,77 @@ public class NetworkManager : Singletone<NetworkManager> {
     #region Server Control Method
     public void ServerConnect()
     {
+        if (m_isConnect)
+            return;
         m_param.serverIP = m_serverIP;
         try
         {
             m_netClient.Connect(m_param);
         }
-        catch(Exception)
+        catch (Exception)
         {
             if (loginResult != null)
                 loginResult(false);
         }
-        
-        
+
+
+    }
+    #endregion
+
+    #region InGame Method
+
+    void NetworkObjectSetup()
+    {
+        NetworkLog("Network Object Setup -- 사용 가능한 상태로 만들기 --");
+        NetworkSetupItemBox();
+        NetworkSetupOxyCharger();
+        NetworkSetupSpaceShip();
+        NetworkSetupShelter();
+        NetworkLog("Network Object Setup --          Finish           --");
+    }
+
+    // 쉘터
+    void NetworkSetupShelter()
+    {
+        NetworkLog("Shelter--");
+        for (int i = 0; i < m_shelterParent.transform.childCount; i++)
+        {
+            m_shelterList.Add(m_shelterParent.transform.GetChild(i).GetComponent<Shelter>());
+            m_shelterList[i].SHELTER_ID = i;
+        }
+    }
+
+    // 아이템박스
+    void NetworkSetupItemBox()
+    {
+        NetworkLog("ItemBox--");
+        for (int i = 0; i < m_itemBoxParent.transform.childCount; i++)
+        {
+            m_itemBoxList.Add(m_itemBoxParent.transform.GetChild(i).GetComponent<ItemBox>());
+            m_itemBoxList[i].ITEMBOX_ID = i;
+        }
+    }
+
+    // 산소 충전기
+    void NetworkSetupOxyCharger()
+    {
+        NetworkLog("OxyCharger--");
+        for (int i = 0; i < m_oxyChargerParent.transform.childCount; i++)
+        {
+            m_oxyChargerList.Add(m_oxyChargerParent.transform.GetChild(i).GetComponent<OxyCharger>());
+            m_oxyChargerList[i].OXY_CHARGER_ID = i;
+        }
+    }
+
+    // 우주선
+    void NetworkSetupSpaceShip()
+    {
+        NetworkLog("SpaceShip--");
+        for (int i = 0; i < m_spaceShipParent.transform.childCount; i++)
+        {
+            m_spaceShipList.Add(m_spaceShipParent.transform.GetChild(i).GetComponent<SpaceShip>());
+            m_spaceShipList[i].SPACESHIP_ID = i;
+        }
     }
     #endregion
 
@@ -597,19 +738,16 @@ public class NetworkManager : Singletone<NetworkManager> {
         // 성공적으로 연결 되면.
         if (Nettention.Proud.ErrorType.ErrorType_Ok == info.errorType)
         {
+            NetworkLog("Server Connected ----------------------- ");
+            // 유저네임으로 로그인 요청 ( 중복도 상관 없음 , 내부적으로는 hostID 로 판단)
+            RequestServerConnect(USER_NAME);
 
-            Debug.Log("Server Connected");
-            
-            GameManager.Instance().PLAYER.m_name = "TEST " + UnityEngine.Random.Range(1 , 100);
-            C2SRequestLogin(GameManager.Instance().PLAYER.m_name);
-            m_isConnect = true; // bool 변수 값 true 로 변경합니다.
-          
+            m_isConnect = true; // bool 변수 값 true 로 변경합니다.          
         }
         else
         {
             // 에러처리를 합니다.
-            Debug.Log("Server connection failed.");
-            Debug.Log(info.ToString());
+            NetworkLog("Server connection failed. ::  " + info.ToString());
         }
     }
     // 서버와 연결이 해제 되면 콜백됩니다.
@@ -618,10 +756,10 @@ public class NetworkManager : Singletone<NetworkManager> {
         if (Nettention.Proud.ErrorType.ErrorType_Ok != info.errorType)
         {
             // 에러입니다.
-            Debug.Log("OnLeaveServer. " + info.ToString());
+            NetworkLog("OnLeaveServer. " + info.ToString());
         }
 
-        Debug.Log("Server Disconnected");
+        NetworkLog("Server Disconnected");
         // 서버와의 연결이 종료되었으니 초기화면으로 나가거나, 다른처리를 해주어야 하빈다.
         m_isConnect = false;
 
@@ -631,25 +769,141 @@ public class NetworkManager : Singletone<NetworkManager> {
     void OnP2PMemberJoin(HostID memberHostID , HostID groupHostID , int memberCount , ByteArray customField)
     {
         m_p2pID = groupHostID;
-        Debug.Log("P2P MemberJoin " + memberHostID + " groupHostID " + groupHostID + " member Count " + memberCount);
+        NetworkLog("P2P MemberJoin " + memberHostID + " groupHostID " + groupHostID + " member Count " + memberCount);
     }
 
     // p2p member leave
     void OnP2PMemberLeave(HostID memberHostID , HostID groupHostID , int memberCount)
     {
-        Debug.Log("P2P MemberLeave " + memberHostID + " groupHostID " + groupHostID + " memberCount " + memberCount);
+        NetworkLog("P2P MemberLeave " + memberHostID + " groupHostID " + groupHostID + " memberCount " + memberCount);
     }
     #endregion
 
-    #region C2S_Method
-    public delegate void LoginResult(bool result);
-    public event LoginResult loginResult;
+    // 바뀌는 네트워크 메소드 
+    #region NetworkPlay 
 
-    //login
-    public void C2SRequestLogin(string name)
+    #region NetworkLobby Method
+
+    // 호스트가 나갔다
+    public delegate void HostOut();
+    public event HostOut hostOut = null;
+
+    // 플레이어가 나갔다.
+    public delegate void PlayerLost(int lostPlayerID);
+    public event PlayerLost playerLost = null;
+
+    // 로그인 정보를 받아야 할 델리게이트
+    public delegate void LoginResult(bool result);
+    public event LoginResult loginResult = null;
+
+    // 처음으로 들어왔을때 이미 들어온 놈들에 대한 정보
+    public delegate void OtherRoomPlayerInfo(int hostID , string userName , bool ready , bool redTeam);
+    public event OtherRoomPlayerInfo otherRoomPlayerInfo = null;
+
+    //누군가가 방에 들어왔다.
+    public delegate void OtherPlayerConnect(int hostID , string userName);
+    public event OtherPlayerConnect otherPlayerConnect = null;
+
+    //팀변경 
+    public delegate void OtherPlayerTeamChange(int hostID  , bool redTeam);
+    public event OtherPlayerTeamChange otherPlayerTeamChange = null;
+
+    // 레디
+    public delegate void OtherPlayerReady(int hostID , string userName , bool ready);
+    public event OtherPlayerReady otherPlayerReady = null;
+
+    // 인원
+    public delegate void PlayerCountChange(int playerCount);
+    public event PlayerCountChange playerCountChnage = null;
+
+    // 게임모드 변경
+    public delegate void GameModeChange(int gameMode , bool teamMode);
+    public event GameModeChange gameModeChange = null;
+
+    // 맵 변경
+    public delegate void MapChange(string changeMap);
+    public event MapChange mapChange = null;
+
+    // 게임 시작
+    public delegate void GameStart();
+    public event GameStart gameStart = null;
+
+    // 게임 시작 실패
+    public delegate void GameStartFailed(string reason);
+    public event GameStartFailed gameStartFailed = null;
+
+
+    // 로그인 요청. 서버에 접속하고 바로 날린다.
+    public void RequestServerConnect(string name)
     {
         m_c2sProxy.RequestServerConnect(HostID.HostID_Server , RmiContext.ReliableSend , name);
     }
+
+    // 내가 로비에 들어왔음을 알리고 정보를 받는다.
+    public void RequestLobbyConnect()
+    {
+        m_c2sProxy.RequestLobbyConnect(HostID.HostID_Server , RmiContext.ReliableSend);
+    }
+
+    // 팀 선택 
+    public void RequestNetworkGameTeamSelect(bool teamRed)
+    {
+        m_c2sProxy.RequestNetworkGameTeamSelect(HostID.HostID_Server , RmiContext.ReliableSend ,
+            USER_NAME , teamRed);
+    }
+
+    // 레디하기
+    public void RequestNetworkGameReady(bool ready)
+    {
+        m_c2sProxy.RequestNetworkGameReady(HostID.HostID_Server , RmiContext.ReliableSend ,
+            USER_NAME , ready);
+    }
+
+    #region Room Host Method
+    // 방장이 맵을 바꾼다!
+    public void RequestNetworkChangeMap(string mapName)
+    {
+        m_c2sProxy.RequestNetworkChangeMap(HostID.HostID_Server , RmiContext.ReliableSend ,
+            mapName);
+    }
+
+    // 방장이 플레이어 수를 바꾼다!
+    public void RequestNetworkPlayerCount(int playerCount)
+    {
+        m_c2sProxy.RequestNetworkPlayerCount(HostID.HostID_Server , RmiContext.ReliableSend , playerCount);
+    }
+
+    // 방장이 게임 모드를 바꾼다!
+    public void RequestNetworkGameModeChange(int gameMode,bool teamMode)
+    {
+        m_c2sProxy.RequestNetworkGameModeChange(HostID.HostID_Server , RmiContext.ReliableSend , gameMode , teamMode);
+    }
+
+    // 방장이 게임 시작을 눌렀다!
+    public void RequestNetworkGameStart()
+    {
+        m_c2sProxy.RequestNetworkGameStart(HostID.HostID_Server , RmiContext.ReliableSend);
+    }
+
+    // 방장이 나갔어!
+    public void RequestNetworkHostOut()
+    {
+        m_c2sProxy.RequestNetworkHostOut(HostID.HostID_Server,RmiContext.ReliableSend,(int)m_hostID);
+    }
+
+    // 게임 씬으로 넘어왔어!
+    public void RequestGameSceneJoin(UnityEngine.Vector3 pos)
+    {
+        m_c2sProxy.RequestGameSceneJoin( HostID.HostID_Server,RmiContext.ReliableSend, pos , (int)m_hostID , USER_NAME);   
+    }
+
+    #endregion
+
+    #endregion
+    #endregion
+
+    #region C2S_Method
+
 
     //player created
     public void C2SRequestClientJoin(string name,UnityEngine.Vector3 pos)

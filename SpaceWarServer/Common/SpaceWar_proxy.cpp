@@ -40,6 +40,554 @@ __msg << id;
 			RmiName_RequestServerConnect, (::Proud::RmiID)Rmi_RequestServerConnect);
 	}
         
+	bool Proxy::RequestLobbyConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestLobbyConnect;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestLobbyConnect, (::Proud::RmiID)Rmi_RequestLobbyConnect);
+	}
+
+	bool Proxy::RequestLobbyConnect ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestLobbyConnect;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestLobbyConnect, (::Proud::RmiID)Rmi_RequestLobbyConnect);
+	}
+        
+	bool Proxy::RequestNetworkGameTeamSelect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & teamRed)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect;
+__msg.Write(__msgid); 
+	
+__msg << name;
+__msg << teamRed;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestNetworkGameTeamSelect, (::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect);
+	}
+
+	bool Proxy::RequestNetworkGameTeamSelect ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & name,  const bool & teamRed)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect;
+__msg.Write(__msgid); 
+	
+__msg << name;
+__msg << teamRed;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestNetworkGameTeamSelect, (::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect);
+	}
+        
+	bool Proxy::RequestNetworkGameReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & ready)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkGameReady;
+__msg.Write(__msgid); 
+	
+__msg << name;
+__msg << ready;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestNetworkGameReady, (::Proud::RmiID)Rmi_RequestNetworkGameReady);
+	}
+
+	bool Proxy::RequestNetworkGameReady ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & name,  const bool & ready)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkGameReady;
+__msg.Write(__msgid); 
+	
+__msg << name;
+__msg << ready;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestNetworkGameReady, (::Proud::RmiID)Rmi_RequestNetworkGameReady);
+	}
+        
+	bool Proxy::RequestNetworkChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & mapName)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkChangeMap;
+__msg.Write(__msgid); 
+	
+__msg << mapName;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestNetworkChangeMap, (::Proud::RmiID)Rmi_RequestNetworkChangeMap);
+	}
+
+	bool Proxy::RequestNetworkChangeMap ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & mapName)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkChangeMap;
+__msg.Write(__msgid); 
+	
+__msg << mapName;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestNetworkChangeMap, (::Proud::RmiID)Rmi_RequestNetworkChangeMap);
+	}
+        
+	bool Proxy::RequestNetworkPlayerCount ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkPlayerCount;
+__msg.Write(__msgid); 
+	
+__msg << playerCount;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestNetworkPlayerCount, (::Proud::RmiID)Rmi_RequestNetworkPlayerCount);
+	}
+
+	bool Proxy::RequestNetworkPlayerCount ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & playerCount)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkPlayerCount;
+__msg.Write(__msgid); 
+	
+__msg << playerCount;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestNetworkPlayerCount, (::Proud::RmiID)Rmi_RequestNetworkPlayerCount);
+	}
+        
+	bool Proxy::RequestNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkGameModeChange;
+__msg.Write(__msgid); 
+	
+__msg << gameMode;
+__msg << teamMode;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestNetworkGameModeChange, (::Proud::RmiID)Rmi_RequestNetworkGameModeChange);
+	}
+
+	bool Proxy::RequestNetworkGameModeChange ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & gameMode,  const bool & teamMode)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkGameModeChange;
+__msg.Write(__msgid); 
+	
+__msg << gameMode;
+__msg << teamMode;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestNetworkGameModeChange, (::Proud::RmiID)Rmi_RequestNetworkGameModeChange);
+	}
+        
+	bool Proxy::RequestNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkGameStart;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestNetworkGameStart, (::Proud::RmiID)Rmi_RequestNetworkGameStart);
+	}
+
+	bool Proxy::RequestNetworkGameStart ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkGameStart;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestNetworkGameStart, (::Proud::RmiID)Rmi_RequestNetworkGameStart);
+	}
+        
+	bool Proxy::RequestNetworkHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkHostOut;
+__msg.Write(__msgid); 
+	
+__msg << hostID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestNetworkHostOut, (::Proud::RmiID)Rmi_RequestNetworkHostOut);
+	}
+
+	bool Proxy::RequestNetworkHostOut ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestNetworkHostOut;
+__msg.Write(__msgid); 
+	
+__msg << hostID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestNetworkHostOut, (::Proud::RmiID)Rmi_RequestNetworkHostOut);
+	}
+        
+	bool Proxy::RequestGameSceneJoin ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const int & hostID,  const string & name)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameSceneJoin;
+__msg.Write(__msgid); 
+	
+__msg << pos;
+__msg << hostID;
+__msg << name;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestGameSceneJoin, (::Proud::RmiID)Rmi_RequestGameSceneJoin);
+	}
+
+	bool Proxy::RequestGameSceneJoin ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const Proud::Vector3 & pos,  const int & hostID,  const string & name)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameSceneJoin;
+__msg.Write(__msgid); 
+	
+__msg << pos;
+__msg << hostID;
+__msg << name;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestGameSceneJoin, (::Proud::RmiID)Rmi_RequestGameSceneJoin);
+	}
+        
+	bool Proxy::NotifyNetworkUserSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName,  const bool & ready,  const bool & teamRed)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkUserSetup;
+__msg.Write(__msgid); 
+	
+__msg << userHostID;
+__msg << userName;
+__msg << ready;
+__msg << teamRed;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkUserSetup, (::Proud::RmiID)Rmi_NotifyNetworkUserSetup);
+	}
+
+	bool Proxy::NotifyNetworkUserSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & userHostID,  const string & userName,  const bool & ready,  const bool & teamRed)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkUserSetup;
+__msg.Write(__msgid); 
+	
+__msg << userHostID;
+__msg << userName;
+__msg << ready;
+__msg << teamRed;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkUserSetup, (::Proud::RmiID)Rmi_NotifyNetworkUserSetup);
+	}
+        
+	bool Proxy::NotifyNetworkGameTeamChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const bool & teamRed)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange;
+__msg.Write(__msgid); 
+	
+__msg << userHostID;
+__msg << teamRed;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkGameTeamChange, (::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange);
+	}
+
+	bool Proxy::NotifyNetworkGameTeamChange ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & userHostID,  const bool & teamRed)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange;
+__msg.Write(__msgid); 
+	
+__msg << userHostID;
+__msg << teamRed;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkGameTeamChange, (::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange);
+	}
+        
+	bool Proxy::NotifyNetworkConnectUser ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkConnectUser;
+__msg.Write(__msgid); 
+	
+__msg << userHostID;
+__msg << userName;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkConnectUser, (::Proud::RmiID)Rmi_NotifyNetworkConnectUser);
+	}
+
+	bool Proxy::NotifyNetworkConnectUser ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & userHostID,  const string & userName)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkConnectUser;
+__msg.Write(__msgid); 
+	
+__msg << userHostID;
+__msg << userName;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkConnectUser, (::Proud::RmiID)Rmi_NotifyNetworkConnectUser);
+	}
+        
+	bool Proxy::NotifyNetworkReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & userName,  const bool & ready)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkReady;
+__msg.Write(__msgid); 
+	
+__msg << hostID;
+__msg << userName;
+__msg << ready;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkReady, (::Proud::RmiID)Rmi_NotifyNetworkReady);
+	}
+
+	bool Proxy::NotifyNetworkReady ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const string & userName,  const bool & ready)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkReady;
+__msg.Write(__msgid); 
+	
+__msg << hostID;
+__msg << userName;
+__msg << ready;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkReady, (::Proud::RmiID)Rmi_NotifyNetworkReady);
+	}
+        
+	bool Proxy::NotifyNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameModeChange;
+__msg.Write(__msgid); 
+	
+__msg << gameMode;
+__msg << teamMode;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkGameModeChange, (::Proud::RmiID)Rmi_NotifyNetworkGameModeChange);
+	}
+
+	bool Proxy::NotifyNetworkGameModeChange ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & gameMode,  const bool & teamMode)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameModeChange;
+__msg.Write(__msgid); 
+	
+__msg << gameMode;
+__msg << teamMode;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkGameModeChange, (::Proud::RmiID)Rmi_NotifyNetworkGameModeChange);
+	}
+        
+	bool Proxy::NotifyNetworkGamePlayerCountChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange;
+__msg.Write(__msgid); 
+	
+__msg << playerCount;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkGamePlayerCountChange, (::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange);
+	}
+
+	bool Proxy::NotifyNetworkGamePlayerCountChange ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & playerCount)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange;
+__msg.Write(__msgid); 
+	
+__msg << playerCount;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkGamePlayerCountChange, (::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange);
+	}
+        
+	bool Proxy::NotifyNetworkGameChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & map)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap;
+__msg.Write(__msgid); 
+	
+__msg << map;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkGameChangeMap, (::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap);
+	}
+
+	bool Proxy::NotifyNetworkGameChangeMap ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & map)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap;
+__msg.Write(__msgid); 
+	
+__msg << map;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkGameChangeMap, (::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap);
+	}
+        
+	bool Proxy::NotifyNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameStart;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkGameStart, (::Proud::RmiID)Rmi_NotifyNetworkGameStart);
+	}
+
+	bool Proxy::NotifyNetworkGameStart ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameStart;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkGameStart, (::Proud::RmiID)Rmi_NotifyNetworkGameStart);
+	}
+        
+	bool Proxy::NotifyNetworkGameStartFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkGameStartFailed, (::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed);
+	}
+
+	bool Proxy::NotifyNetworkGameStartFailed ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkGameStartFailed, (::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed);
+	}
+        
+	bool Proxy::NotifyNetworkGameHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameHostOut;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkGameHostOut, (::Proud::RmiID)Rmi_NotifyNetworkGameHostOut);
+	}
+
+	bool Proxy::NotifyNetworkGameHostOut ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkGameHostOut;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkGameHostOut, (::Proud::RmiID)Rmi_NotifyNetworkGameHostOut);
+	}
+        
 	bool Proxy::RequestClientJoin ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & name,  const float & x,  const float & y,  const float & z)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -334,7 +882,7 @@ __msg << enter;
 			RmiName_RequestShelterEnter, (::Proud::RmiID)Rmi_RequestShelterEnter);
 	}
         
-	bool Proxy::NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)	{
+	bool Proxy::NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -343,12 +891,13 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
+__msg << host;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyLoginSuccess, (::Proud::RmiID)Rmi_NotifyLoginSuccess);
 	}
 
-	bool Proxy::NotifyLoginSuccess ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID)  	{
+	bool Proxy::NotifyLoginSuccess ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const bool & host)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -357,6 +906,7 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
+__msg << host;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyLoginSuccess, (::Proud::RmiID)Rmi_NotifyLoginSuccess);
@@ -1281,6 +1831,101 @@ __msg.Write(__msgid);
 const PNTCHAR* Proxy::RmiName_RequestServerConnect =_PNT("RequestServerConnect");
 #else
 const PNTCHAR* Proxy::RmiName_RequestServerConnect =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestLobbyConnect =_PNT("RequestLobbyConnect");
+#else
+const PNTCHAR* Proxy::RmiName_RequestLobbyConnect =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestNetworkGameTeamSelect =_PNT("RequestNetworkGameTeamSelect");
+#else
+const PNTCHAR* Proxy::RmiName_RequestNetworkGameTeamSelect =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestNetworkGameReady =_PNT("RequestNetworkGameReady");
+#else
+const PNTCHAR* Proxy::RmiName_RequestNetworkGameReady =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestNetworkChangeMap =_PNT("RequestNetworkChangeMap");
+#else
+const PNTCHAR* Proxy::RmiName_RequestNetworkChangeMap =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestNetworkPlayerCount =_PNT("RequestNetworkPlayerCount");
+#else
+const PNTCHAR* Proxy::RmiName_RequestNetworkPlayerCount =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestNetworkGameModeChange =_PNT("RequestNetworkGameModeChange");
+#else
+const PNTCHAR* Proxy::RmiName_RequestNetworkGameModeChange =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestNetworkGameStart =_PNT("RequestNetworkGameStart");
+#else
+const PNTCHAR* Proxy::RmiName_RequestNetworkGameStart =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestNetworkHostOut =_PNT("RequestNetworkHostOut");
+#else
+const PNTCHAR* Proxy::RmiName_RequestNetworkHostOut =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestGameSceneJoin =_PNT("RequestGameSceneJoin");
+#else
+const PNTCHAR* Proxy::RmiName_RequestGameSceneJoin =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkUserSetup =_PNT("NotifyNetworkUserSetup");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkUserSetup =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameTeamChange =_PNT("NotifyNetworkGameTeamChange");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameTeamChange =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkConnectUser =_PNT("NotifyNetworkConnectUser");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkConnectUser =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkReady =_PNT("NotifyNetworkReady");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkReady =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameModeChange =_PNT("NotifyNetworkGameModeChange");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameModeChange =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGamePlayerCountChange =_PNT("NotifyNetworkGamePlayerCountChange");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGamePlayerCountChange =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameChangeMap =_PNT("NotifyNetworkGameChangeMap");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameChangeMap =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameStart =_PNT("NotifyNetworkGameStart");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameStart =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameStartFailed =_PNT("NotifyNetworkGameStartFailed");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameStartFailed =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameHostOut =_PNT("NotifyNetworkGameHostOut");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkGameHostOut =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestClientJoin =_PNT("RequestClientJoin");

@@ -5,7 +5,12 @@ using UnityEngine;
 public class MainLobbyUI : MonoBehaviour {
 
     #region MainLobbyUI_INFO
+    // 추후 사라지겠지만 지금은 일단 있어야 함
+    public GameObject m_loginUI = null;
 
+    // 유저정보
+    public UILabel m_userName = null;
+    
     // 버튼 Tween을 위한 리스트
     public List<UISprite> m_mainButtonList = new List<UISprite>();
     private int m_currentOpenButton = -1;
@@ -13,27 +18,44 @@ public class MainLobbyUI : MonoBehaviour {
     private bool m_currentHideAniPlay = false;
     #endregion
 
+    #region UnityMethod
+
+    void Start()
+    {
+        // 게임 설정 --
+        Application.targetFrameRate = -1;
+        Screen.SetResolution(1920 , 1080 , false);
+        Application.runInBackground = true;
+    }
+    #endregion
+
+    #region UserInfo
+
+    public void OnChangeUserName(string name)
+    {
+        NetworkManager.Instance().USER_NAME = name;
+    }
+    #endregion
+
     #region MainLobbyButton
 
     public void NetworkPlayButton(UISprite bt)
     {
-        if(bt.name.Equals("Survival"))
-        {
-
-        }else if(bt.name.Equals("DEATH MATCH"))
-        {
-
-        }
+        if (m_loginUI.activeSelf)
+            return;
+        NetworkManager.Instance().USER_NAME = m_userName.text;
+        m_loginUI.SetActive(!m_loginUI.activeSelf);
     }
 
     public void PressButton(UISprite bt)
     {
+        if (m_loginUI.activeSelf)
+            return;
         //TODO 재생중일때 다른거 누르면 닫히게 할 것
         if (iTween.Count() == 0 && m_mainButtonList.Contains(bt))
         {
             int index = m_mainButtonList.IndexOf(bt);
-            
-            Debug.Log("tt " + m_currentOpenButton + " dd "+index);
+
             if (m_currentOpenButton != -1)
                 HideButton();
             // 같은걸 눌렀을땐 닫히기만 함

@@ -10,6 +10,44 @@ namespace SpaceWar
                
 		Rmi_RequestServerConnect,
                
+		Rmi_RequestLobbyConnect,
+               
+		Rmi_RequestNetworkGameTeamSelect,
+               
+		Rmi_RequestNetworkGameReady,
+               
+		Rmi_RequestNetworkChangeMap,
+               
+		Rmi_RequestNetworkPlayerCount,
+               
+		Rmi_RequestNetworkGameModeChange,
+               
+		Rmi_RequestNetworkGameStart,
+               
+		Rmi_RequestNetworkHostOut,
+               
+		Rmi_RequestGameSceneJoin,
+               
+		Rmi_NotifyNetworkUserSetup,
+               
+		Rmi_NotifyNetworkGameTeamChange,
+               
+		Rmi_NotifyNetworkConnectUser,
+               
+		Rmi_NotifyNetworkReady,
+               
+		Rmi_NotifyNetworkGameModeChange,
+               
+		Rmi_NotifyNetworkGamePlayerCountChange,
+               
+		Rmi_NotifyNetworkGameChangeMap,
+               
+		Rmi_NotifyNetworkGameStart,
+               
+		Rmi_NotifyNetworkGameStartFailed,
+               
+		Rmi_NotifyNetworkGameHostOut,
+               
 		Rmi_RequestClientJoin,
                
 		Rmi_RequestWorldCreateItem,
@@ -87,5 +125,5 @@ namespace SpaceWar
 		Rmi_NotifyGameResultShow,
 	};
 
-	int g_RmiIDListCount = 39;
+	int g_RmiIDListCount = 58;
 }

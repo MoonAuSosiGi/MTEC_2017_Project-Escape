@@ -17,11 +17,73 @@ using(cs) Nettention.Proud;
 [marshaler(cs)=SP_Marshaler]
 global SpaceWar 3141
 {
-	//C2S -------------------------------------------------------------
-
-	// Connect
+	// Room Logic -----------------------------------------------------
+	
+	// Connect - 방 입장 
 	RequestServerConnect([in]string id);
 
+	// 로비에 들어왔다 - 이제부터 메시지를 받겠다.
+	RequestLobbyConnect();
+
+	// 팀 선택
+	RequestNetworkGameTeamSelect([in]string name,[in]bool teamRed);
+
+	// 레디
+	RequestNetworkGameReady([in]string name,[in]bool ready);
+
+	// 방장이 맵을 바꿈 // 지금 실 적용은 하지 않음
+	RequestNetworkChangeMap([in]string mapName);
+	
+	// 방장이 인원제한을 바꿈 
+	RequestNetworkPlayerCount([in]int playerCount);
+	
+	// 방장이 게임 모드를 바꿈
+	RequestNetworkGameModeChange([in]int gameMode,[in]bool teamMode);
+
+	// 방장이 게임 시작을 누름
+	RequestNetworkGameStart();
+
+	// 방장이 로비를 나갔다.
+	RequestNetworkHostOut([in]int hostID);
+
+	// 이제 게임이 시작되고 게임 씬으로 넘어왔을 때 다들 요청한다.
+	RequestGameSceneJoin([in]Proud::Vector3 pos,[in]int hostID,[in]string name);
+
+	// Room Server -------------------------
+
+	// 초창기 정보를 넘긴다
+	NotifyNetworkUserSetup([in]int userHostID,[in]string userName,[in]bool ready,[in]bool teamRed);
+
+	// 누군가 팀 선택을 바꾸었다.
+	NotifyNetworkGameTeamChange([in]int userHostID,[in]bool teamRed);
+	// 누군가 접속을 했다
+	NotifyNetworkConnectUser([in]int userHostID,[in]string userName);
+
+	// 레디 정보
+	NotifyNetworkReady([in]int hostID,[in]string userName, [in]bool ready);
+
+	// 게임 모드가 바뀐것을 알려줌
+	NotifyNetworkGameModeChange([in]int gameMode,[in]bool teamMode);
+
+	// 인원 제한이 바뀐 것을 알려줌
+	NotifyNetworkGamePlayerCountChange([in]int playerCount);
+
+	// 맵 정보가 바뀐것을 알려줌
+	NotifyNetworkGameChangeMap([in]string map);
+	                                                                      
+	// 게임 시작이 눌린것을 알려줌
+	NotifyNetworkGameStart();
+
+	// 게임 시작 실패
+	NotifyNetworkGameStartFailed();
+
+	// 호스트가 나갔다.
+	NotifyNetworkGameHostOut();
+
+
+	// Game Logic ----------------------------------------------------
+	//C2S -------------------------------------------------------------
+	
 	// Start Send
 	RequestClientJoin([in]int hostID,[in]string name,[in]float x,[in]float y,[in]float z);
 	
@@ -52,7 +114,7 @@ global SpaceWar 3141
 	RequestShelterEnter([in]int sendHostID,[in]int shelterID,[in]bool enter);
 
 	//S2C -------------------------------------------------------------
-	NotifyLoginSuccess([in]int hostID);
+	NotifyLoginSuccess([in]int hostID,[in]bool host);
 	NotifyLoginFailed([in]string reason);
 
 	// Other Player join

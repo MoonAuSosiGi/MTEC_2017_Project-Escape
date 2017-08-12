@@ -30,6 +30,196 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestServerConnect RequestServerConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & id)
 #define PARAM_SpaceWar_RequestServerConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & id)
                
+		virtual bool RequestLobbyConnect ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestLobbyConnect bool RequestLobbyConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestLobbyConnect(DerivedClass) bool DerivedClass::RequestLobbyConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_RequestLobbyConnect RequestLobbyConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_RequestLobbyConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
+		virtual bool RequestNetworkGameTeamSelect ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestNetworkGameTeamSelect bool RequestNetworkGameTeamSelect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & teamRed) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestNetworkGameTeamSelect(DerivedClass) bool DerivedClass::RequestNetworkGameTeamSelect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & teamRed)
+#define CALL_SpaceWar_RequestNetworkGameTeamSelect RequestNetworkGameTeamSelect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & teamRed)
+#define PARAM_SpaceWar_RequestNetworkGameTeamSelect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & teamRed)
+               
+		virtual bool RequestNetworkGameReady ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestNetworkGameReady bool RequestNetworkGameReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & ready) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestNetworkGameReady(DerivedClass) bool DerivedClass::RequestNetworkGameReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & ready)
+#define CALL_SpaceWar_RequestNetworkGameReady RequestNetworkGameReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & ready)
+#define PARAM_SpaceWar_RequestNetworkGameReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & ready)
+               
+		virtual bool RequestNetworkChangeMap ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestNetworkChangeMap bool RequestNetworkChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & mapName) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestNetworkChangeMap(DerivedClass) bool DerivedClass::RequestNetworkChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & mapName)
+#define CALL_SpaceWar_RequestNetworkChangeMap RequestNetworkChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & mapName)
+#define PARAM_SpaceWar_RequestNetworkChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & mapName)
+               
+		virtual bool RequestNetworkPlayerCount ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestNetworkPlayerCount bool RequestNetworkPlayerCount ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestNetworkPlayerCount(DerivedClass) bool DerivedClass::RequestNetworkPlayerCount ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount)
+#define CALL_SpaceWar_RequestNetworkPlayerCount RequestNetworkPlayerCount ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount)
+#define PARAM_SpaceWar_RequestNetworkPlayerCount ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount)
+               
+		virtual bool RequestNetworkGameModeChange ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestNetworkGameModeChange bool RequestNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestNetworkGameModeChange(DerivedClass) bool DerivedClass::RequestNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode)
+#define CALL_SpaceWar_RequestNetworkGameModeChange RequestNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode)
+#define PARAM_SpaceWar_RequestNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode)
+               
+		virtual bool RequestNetworkGameStart ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestNetworkGameStart bool RequestNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestNetworkGameStart(DerivedClass) bool DerivedClass::RequestNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_RequestNetworkGameStart RequestNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_RequestNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
+		virtual bool RequestNetworkHostOut ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestNetworkHostOut bool RequestNetworkHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestNetworkHostOut(DerivedClass) bool DerivedClass::RequestNetworkHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)
+#define CALL_SpaceWar_RequestNetworkHostOut RequestNetworkHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)
+#define PARAM_SpaceWar_RequestNetworkHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)
+               
+		virtual bool RequestGameSceneJoin ( ::Proud::HostID, ::Proud::RmiContext& ,  const Proud::Vector3 & ,  const int & ,  const string & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestGameSceneJoin bool RequestGameSceneJoin ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const int & hostID,  const string & name) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestGameSceneJoin(DerivedClass) bool DerivedClass::RequestGameSceneJoin ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const int & hostID,  const string & name)
+#define CALL_SpaceWar_RequestGameSceneJoin RequestGameSceneJoin ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const int & hostID,  const string & name)
+#define PARAM_SpaceWar_RequestGameSceneJoin ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const int & hostID,  const string & name)
+               
+		virtual bool NotifyNetworkUserSetup ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const bool & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkUserSetup bool NotifyNetworkUserSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName,  const bool & ready,  const bool & teamRed) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkUserSetup(DerivedClass) bool DerivedClass::NotifyNetworkUserSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName,  const bool & ready,  const bool & teamRed)
+#define CALL_SpaceWar_NotifyNetworkUserSetup NotifyNetworkUserSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName,  const bool & ready,  const bool & teamRed)
+#define PARAM_SpaceWar_NotifyNetworkUserSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName,  const bool & ready,  const bool & teamRed)
+               
+		virtual bool NotifyNetworkGameTeamChange ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkGameTeamChange bool NotifyNetworkGameTeamChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const bool & teamRed) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkGameTeamChange(DerivedClass) bool DerivedClass::NotifyNetworkGameTeamChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const bool & teamRed)
+#define CALL_SpaceWar_NotifyNetworkGameTeamChange NotifyNetworkGameTeamChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const bool & teamRed)
+#define PARAM_SpaceWar_NotifyNetworkGameTeamChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const bool & teamRed)
+               
+		virtual bool NotifyNetworkConnectUser ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkConnectUser bool NotifyNetworkConnectUser ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkConnectUser(DerivedClass) bool DerivedClass::NotifyNetworkConnectUser ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName)
+#define CALL_SpaceWar_NotifyNetworkConnectUser NotifyNetworkConnectUser ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName)
+#define PARAM_SpaceWar_NotifyNetworkConnectUser ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName)
+               
+		virtual bool NotifyNetworkReady ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkReady bool NotifyNetworkReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & userName,  const bool & ready) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkReady(DerivedClass) bool DerivedClass::NotifyNetworkReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & userName,  const bool & ready)
+#define CALL_SpaceWar_NotifyNetworkReady NotifyNetworkReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & userName,  const bool & ready)
+#define PARAM_SpaceWar_NotifyNetworkReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & userName,  const bool & ready)
+               
+		virtual bool NotifyNetworkGameModeChange ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkGameModeChange bool NotifyNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkGameModeChange(DerivedClass) bool DerivedClass::NotifyNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode)
+#define CALL_SpaceWar_NotifyNetworkGameModeChange NotifyNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode)
+#define PARAM_SpaceWar_NotifyNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode)
+               
+		virtual bool NotifyNetworkGamePlayerCountChange ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkGamePlayerCountChange bool NotifyNetworkGamePlayerCountChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkGamePlayerCountChange(DerivedClass) bool DerivedClass::NotifyNetworkGamePlayerCountChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount)
+#define CALL_SpaceWar_NotifyNetworkGamePlayerCountChange NotifyNetworkGamePlayerCountChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount)
+#define PARAM_SpaceWar_NotifyNetworkGamePlayerCountChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount)
+               
+		virtual bool NotifyNetworkGameChangeMap ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkGameChangeMap bool NotifyNetworkGameChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & map) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkGameChangeMap(DerivedClass) bool DerivedClass::NotifyNetworkGameChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & map)
+#define CALL_SpaceWar_NotifyNetworkGameChangeMap NotifyNetworkGameChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & map)
+#define PARAM_SpaceWar_NotifyNetworkGameChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & map)
+               
+		virtual bool NotifyNetworkGameStart ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkGameStart bool NotifyNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkGameStart(DerivedClass) bool DerivedClass::NotifyNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_NotifyNetworkGameStart NotifyNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_NotifyNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
+		virtual bool NotifyNetworkGameStartFailed ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkGameStartFailed bool NotifyNetworkGameStartFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkGameStartFailed(DerivedClass) bool DerivedClass::NotifyNetworkGameStartFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_NotifyNetworkGameStartFailed NotifyNetworkGameStartFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_NotifyNetworkGameStartFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
+		virtual bool NotifyNetworkGameHostOut ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkGameHostOut bool NotifyNetworkGameHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkGameHostOut(DerivedClass) bool DerivedClass::NotifyNetworkGameHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_NotifyNetworkGameHostOut NotifyNetworkGameHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_NotifyNetworkGameHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
 		virtual bool RequestClientJoin ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const float & ,  const float & ,  const float & )		{ 
 			return false;
 		} 
@@ -120,15 +310,15 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestShelterEnter RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
 #define PARAM_SpaceWar_RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
                
-		virtual bool NotifyLoginSuccess ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+		virtual bool NotifyLoginSuccess ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_NotifyLoginSuccess bool NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID) PN_OVERRIDE
+#define DECRMI_SpaceWar_NotifyLoginSuccess bool NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_NotifyLoginSuccess(DerivedClass) bool DerivedClass::NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)
-#define CALL_SpaceWar_NotifyLoginSuccess NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)
-#define PARAM_SpaceWar_NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID)
+#define DEFRMI_SpaceWar_NotifyLoginSuccess(DerivedClass) bool DerivedClass::NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host)
+#define CALL_SpaceWar_NotifyLoginSuccess NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host)
+#define PARAM_SpaceWar_NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host)
                
 		virtual bool NotifyLoginFailed ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & )		{ 
 			return false;
@@ -412,6 +602,25 @@ namespace SpaceWar
  
 		virtual bool ProcessReceivedMessage(::Proud::CReceivedMessage &pa, void* hostTag) PN_OVERRIDE;
 		static const PNTCHAR* RmiName_RequestServerConnect;
+		static const PNTCHAR* RmiName_RequestLobbyConnect;
+		static const PNTCHAR* RmiName_RequestNetworkGameTeamSelect;
+		static const PNTCHAR* RmiName_RequestNetworkGameReady;
+		static const PNTCHAR* RmiName_RequestNetworkChangeMap;
+		static const PNTCHAR* RmiName_RequestNetworkPlayerCount;
+		static const PNTCHAR* RmiName_RequestNetworkGameModeChange;
+		static const PNTCHAR* RmiName_RequestNetworkGameStart;
+		static const PNTCHAR* RmiName_RequestNetworkHostOut;
+		static const PNTCHAR* RmiName_RequestGameSceneJoin;
+		static const PNTCHAR* RmiName_NotifyNetworkUserSetup;
+		static const PNTCHAR* RmiName_NotifyNetworkGameTeamChange;
+		static const PNTCHAR* RmiName_NotifyNetworkConnectUser;
+		static const PNTCHAR* RmiName_NotifyNetworkReady;
+		static const PNTCHAR* RmiName_NotifyNetworkGameModeChange;
+		static const PNTCHAR* RmiName_NotifyNetworkGamePlayerCountChange;
+		static const PNTCHAR* RmiName_NotifyNetworkGameChangeMap;
+		static const PNTCHAR* RmiName_NotifyNetworkGameStart;
+		static const PNTCHAR* RmiName_NotifyNetworkGameStartFailed;
+		static const PNTCHAR* RmiName_NotifyNetworkGameHostOut;
 		static const PNTCHAR* RmiName_RequestClientJoin;
 		static const PNTCHAR* RmiName_RequestWorldCreateItem;
 		static const PNTCHAR* RmiName_RequestPlayerDamage;
@@ -467,6 +676,177 @@ namespace SpaceWar
 			if (RequestServerConnect_Function==nullptr) 
 				return true; 
 			return RequestServerConnect_Function(remote,rmiContext, id); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > RequestLobbyConnect_Function;
+		virtual bool RequestLobbyConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (RequestLobbyConnect_Function==nullptr) 
+				return true; 
+			return RequestLobbyConnect_Function(remote,rmiContext); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const bool & ) > RequestNetworkGameTeamSelect_Function;
+		virtual bool RequestNetworkGameTeamSelect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & teamRed) 
+		{ 
+			if (RequestNetworkGameTeamSelect_Function==nullptr) 
+				return true; 
+			return RequestNetworkGameTeamSelect_Function(remote,rmiContext, name, teamRed); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const bool & ) > RequestNetworkGameReady_Function;
+		virtual bool RequestNetworkGameReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & name,  const bool & ready) 
+		{ 
+			if (RequestNetworkGameReady_Function==nullptr) 
+				return true; 
+			return RequestNetworkGameReady_Function(remote,rmiContext, name, ready); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ) > RequestNetworkChangeMap_Function;
+		virtual bool RequestNetworkChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & mapName) 
+		{ 
+			if (RequestNetworkChangeMap_Function==nullptr) 
+				return true; 
+			return RequestNetworkChangeMap_Function(remote,rmiContext, mapName); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestNetworkPlayerCount_Function;
+		virtual bool RequestNetworkPlayerCount ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount) 
+		{ 
+			if (RequestNetworkPlayerCount_Function==nullptr) 
+				return true; 
+			return RequestNetworkPlayerCount_Function(remote,rmiContext, playerCount); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & ) > RequestNetworkGameModeChange_Function;
+		virtual bool RequestNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode) 
+		{ 
+			if (RequestNetworkGameModeChange_Function==nullptr) 
+				return true; 
+			return RequestNetworkGameModeChange_Function(remote,rmiContext, gameMode, teamMode); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > RequestNetworkGameStart_Function;
+		virtual bool RequestNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (RequestNetworkGameStart_Function==nullptr) 
+				return true; 
+			return RequestNetworkGameStart_Function(remote,rmiContext); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestNetworkHostOut_Function;
+		virtual bool RequestNetworkHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID) 
+		{ 
+			if (RequestNetworkHostOut_Function==nullptr) 
+				return true; 
+			return RequestNetworkHostOut_Function(remote,rmiContext, hostID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const Proud::Vector3 & ,  const int & ,  const string & ) > RequestGameSceneJoin_Function;
+		virtual bool RequestGameSceneJoin ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const int & hostID,  const string & name) 
+		{ 
+			if (RequestGameSceneJoin_Function==nullptr) 
+				return true; 
+			return RequestGameSceneJoin_Function(remote,rmiContext, pos, hostID, name); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const bool & ,  const bool & ) > NotifyNetworkUserSetup_Function;
+		virtual bool NotifyNetworkUserSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName,  const bool & ready,  const bool & teamRed) 
+		{ 
+			if (NotifyNetworkUserSetup_Function==nullptr) 
+				return true; 
+			return NotifyNetworkUserSetup_Function(remote,rmiContext, userHostID, userName, ready, teamRed); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & ) > NotifyNetworkGameTeamChange_Function;
+		virtual bool NotifyNetworkGameTeamChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const bool & teamRed) 
+		{ 
+			if (NotifyNetworkGameTeamChange_Function==nullptr) 
+				return true; 
+			return NotifyNetworkGameTeamChange_Function(remote,rmiContext, userHostID, teamRed); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ) > NotifyNetworkConnectUser_Function;
+		virtual bool NotifyNetworkConnectUser ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & userHostID,  const string & userName) 
+		{ 
+			if (NotifyNetworkConnectUser_Function==nullptr) 
+				return true; 
+			return NotifyNetworkConnectUser_Function(remote,rmiContext, userHostID, userName); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const bool & ) > NotifyNetworkReady_Function;
+		virtual bool NotifyNetworkReady ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & userName,  const bool & ready) 
+		{ 
+			if (NotifyNetworkReady_Function==nullptr) 
+				return true; 
+			return NotifyNetworkReady_Function(remote,rmiContext, hostID, userName, ready); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & ) > NotifyNetworkGameModeChange_Function;
+		virtual bool NotifyNetworkGameModeChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & gameMode,  const bool & teamMode) 
+		{ 
+			if (NotifyNetworkGameModeChange_Function==nullptr) 
+				return true; 
+			return NotifyNetworkGameModeChange_Function(remote,rmiContext, gameMode, teamMode); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > NotifyNetworkGamePlayerCountChange_Function;
+		virtual bool NotifyNetworkGamePlayerCountChange ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & playerCount) 
+		{ 
+			if (NotifyNetworkGamePlayerCountChange_Function==nullptr) 
+				return true; 
+			return NotifyNetworkGamePlayerCountChange_Function(remote,rmiContext, playerCount); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ) > NotifyNetworkGameChangeMap_Function;
+		virtual bool NotifyNetworkGameChangeMap ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & map) 
+		{ 
+			if (NotifyNetworkGameChangeMap_Function==nullptr) 
+				return true; 
+			return NotifyNetworkGameChangeMap_Function(remote,rmiContext, map); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > NotifyNetworkGameStart_Function;
+		virtual bool NotifyNetworkGameStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (NotifyNetworkGameStart_Function==nullptr) 
+				return true; 
+			return NotifyNetworkGameStart_Function(remote,rmiContext); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > NotifyNetworkGameStartFailed_Function;
+		virtual bool NotifyNetworkGameStartFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (NotifyNetworkGameStartFailed_Function==nullptr) 
+				return true; 
+			return NotifyNetworkGameStartFailed_Function(remote,rmiContext); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > NotifyNetworkGameHostOut_Function;
+		virtual bool NotifyNetworkGameHostOut ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (NotifyNetworkGameHostOut_Function==nullptr) 
+				return true; 
+			return NotifyNetworkGameHostOut_Function(remote,rmiContext); 
 		}
 
                
@@ -551,12 +931,12 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > NotifyLoginSuccess_Function;
-		virtual bool NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID) 
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & ) > NotifyLoginSuccess_Function;
+		virtual bool NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host) 
 		{ 
 			if (NotifyLoginSuccess_Function==nullptr) 
 				return true; 
-			return NotifyLoginSuccess_Function(remote,rmiContext, hostID); 
+			return NotifyLoginSuccess_Function(remote,rmiContext, hostID, host); 
 		}
 
                

@@ -6,7 +6,6 @@
 
 Server server;
 
-
 int main()
 {
 	srand((unsigned int)time(NULL));
@@ -59,9 +58,9 @@ void Server::ServerRun()
 //	typedef void(*ThreadProc)(void* ctx);
 	void(*func)(void*);
 	func = &MeteorLoop;
-	CTimerThread meteorThread(func, 1000, nullptr);
-	
-	meteorThread.Start();
+	//CTimerThread meteorThread(func, 1000, nullptr);
+	//
+	//meteorThread.Start();
 
 	// -- 서버 파라매터 지정 ( 프로토콜 / 포트 지정 ) ---------------------------//
 	CStartServerParameter pl;
@@ -133,7 +132,7 @@ void Server::ServerRun()
 
 	string line;
 	getline(std::cin, line);
-	meteorThread.Stop();
+	//meteorThread.Stop();
 }
 
 void Server::OnClientJoin(CNetClientInfo* clientInfo)
@@ -158,6 +157,7 @@ void Server::OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, con
 	}
 
 	m_proxy.NotifyPlayerLost(m_playerP2PGroup,RmiContext::ReliableSend,clientInfo->m_HostID);
+	m_gameRoom->LogOutClient(iter->second->m_hostID);
 	
 	m_clientMap.erase(iter);
 
@@ -182,6 +182,15 @@ DEFRMI_SpaceWar_RequestServerConnect(Server)
 		iter++;
 	}
 
+	if (m_gameRoom != nullptr)
+	{
+		if (m_gameRoom->NewClientConnect(remote, id, m_critSec) == false)
+		{
+			cout << "Login Failed .. 더 이상 참여할 수 없습니다. " << endl;
+			m_proxy.NotifyLoginFailed(remote, RmiContext::ReliableSend, "더 이상 참여할 수 없습니다.");
+			return true;
+		}
+	}
 
 	{
 		// 추가로직
@@ -191,8 +200,23 @@ DEFRMI_SpaceWar_RequestServerConnect(Server)
 		newClient->m_userName = id;
 		m_clientMap[remote] = newClient;
 	}
-	cout << "Server : LoginSuccess" << endl;
-	m_proxy.NotifyLoginSuccess(remote, RmiContext::ReliableSend,(int)remote);
+	int count = m_clientMap.size();
+	cout << "Server : LoginSuccess "<< count << endl;
+	
+
+	m_proxy.NotifyLoginSuccess(remote, RmiContext::ReliableSend,(int)remote,(count == 1));
+	
+	if (m_gameRoom != nullptr)
+	{
+		forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+		auto iter = list.begin();
+
+		while (iter != list.end())
+		{
+			m_proxy.NotifyNetworkConnectUser(*iter, RmiContext::ReliableSend, (int)remote, id);
+			iter++;
+		}
+	}
 	return true;
 }
 
@@ -508,5 +532,174 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 }
 #pragma endregion
 
+#pragma region Network Lobby
 
+// 로비 화면에 들어왔다.
+DEFRMI_SpaceWar_RequestLobbyConnect(Server)
+{
+	// 이제 이친구한테 모든 정보를 날린다.
+	cout << "Lobby Connect " << endl;
+	forward_list<RoomClient> list = m_gameRoom->GetOtherClientInfos(remote);
 
+	//먼저 게임모드를 날린다.
+	m_proxy.NotifyNetworkGameModeChange(remote, RmiContext::ReliableSend, m_gameRoom->GetGameMode(), m_gameRoom->GetTeamMode());
+
+	// 플레이 카운트도 날림
+	m_proxy.NotifyNetworkGamePlayerCountChange(remote, RmiContext::ReliableSend, m_gameRoom->GetPlayerLimitCount());
+
+	auto iter = list.begin();
+
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkUserSetup(remote, RmiContext::ReliableSend, (int)iter->GetHostID(),iter->GetName(), iter->IsReady(), iter->IsRedTeam());
+		iter++;
+	}
+	return true;
+}
+
+// 팀 선택을 바꿈 
+DEFRMI_SpaceWar_RequestNetworkGameTeamSelect(Server)
+{
+	cout << "Team 변경 " << endl;
+	m_gameRoom->TeamChange(remote, teamRed);
+
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+	
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGameTeamChange(*iter, RmiContext::ReliableSend,(int)remote, teamRed);
+		iter++;
+	}
+
+	
+	return true;
+}
+
+// 레디
+DEFRMI_SpaceWar_RequestNetworkGameReady(Server)
+{
+	cout << " Ready 변경 " << endl;
+
+	m_gameRoom->SetReady(remote, ready);
+
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkReady(*iter, RmiContext::ReliableSend,(int)remote,m_gameRoom->GetClient(remote)->GetName(), ready);
+		iter++;
+	}
+	return true;
+}
+
+// 방장이 맵을 바꿈
+DEFRMI_SpaceWar_RequestNetworkChangeMap(Server)
+{
+	cout << " Map 변경 " << endl;
+
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGameChangeMap(*iter, RmiContext::ReliableSend, mapName);
+		iter++;
+	}
+	
+	return true;
+}
+
+// 방장이 게임 모드를 바꿈 
+DEFRMI_SpaceWar_RequestNetworkGameModeChange(Server)
+{
+	cout << " Game Mode 변경 " << endl;
+
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	m_gameRoom->SetGameMode(gameMode);
+	m_gameRoom->SetTeamMode(teamMode);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGameModeChange(*iter, RmiContext::ReliableSend, gameMode, teamMode);
+		iter++;
+	}
+	return true;
+}
+
+// 방장이 플레이어 수를 바꿈
+DEFRMI_SpaceWar_RequestNetworkPlayerCount(Server)
+{
+	cout << " Player Count 변경 " << playerCount << endl;
+
+	m_gameRoom->SetPlayerLimitCount(playerCount);
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGamePlayerCountChange(*iter, RmiContext::ReliableSend, playerCount);
+		iter++;
+	}
+	return true;
+}
+
+// 방장이 게임 시작을 누름
+DEFRMI_SpaceWar_RequestNetworkGameStart(Server)
+{
+	cout << " Game Start 변경 " << endl;
+
+	if (!m_gameRoom->GameStartCheck())
+	{
+		//실패
+		m_proxy.NotifyNetworkGameStartFailed(m_playerP2PGroup, RmiContext::ReliableSend);
+		return true;
+		
+	}
+
+	auto iter = m_clientMap.begin();
+	while (iter != m_clientMap.end())
+	{
+		m_proxy.NotifyNetworkGameStart(iter->second->m_hostID, RmiContext::ReliableSend);
+		iter++;
+	}
+
+	/*forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGameStart(*iter, RmiContext::ReliableSend);
+		iter++;
+	}*/
+	return true;
+}
+
+//방장이 나감
+DEFRMI_SpaceWar_RequestNetworkHostOut(Server)
+{
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGameHostOut(*iter, RmiContext::ReliableSend);
+		iter++;
+	}
+
+	m_gameRoom->ClearRoom();
+
+	cout << "호스트가 나갔으므로 게임 룸 클리어 " << endl;
+
+	return true;
+}
+
+DEFRMI_SpaceWar_ReqeustGameSceneJoin(Server)
+{
+	return true;
+}
+
+#pragma endregion

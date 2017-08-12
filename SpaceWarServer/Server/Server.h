@@ -4,6 +4,7 @@
 #include "Client.h"
 #include "Item.h"
 #include "Shelter.h"
+#include "GameRoom.h"
 #include "SP_Marshaler.h"
 #include "../Common/SpaceWar_stub.h"
 #include "../Common/SpaceWar_proxy.h"
@@ -21,7 +22,7 @@ int s_meteorCommingSec = 11;
 class Server : public SpaceWar::Stub
 {
 public:
-	Server() {}
+	Server() { m_gameRoom = make_shared <GameRoom>(); }
 	~Server() {}
 
 public:
@@ -66,6 +67,26 @@ public:
 	//게임 끝
 	DECRMI_SpaceWar_RequestGameEnd;
 
+	// 서버 로비 로직
+	DECRMI_SpaceWar_RequestLobbyConnect;
+	// 팀 선택 요청
+	DECRMI_SpaceWar_RequestNetworkGameTeamSelect;
+	// 레디
+	DECRMI_SpaceWar_RequestNetworkGameReady;
+	// 맵 바꿈 요청
+	DECRMI_SpaceWar_RequestNetworkChangeMap;
+	// 방장이 인원 수를 조작
+	DECRMI_SpaceWar_RequestNetworkPlayerCount;
+	// 방장이 게임 모드를 바꿈
+	DECRMI_SpaceWar_RequestNetworkGameModeChange;
+	// 방장이 게임 시작을 누름
+	DECRMI_SpaceWar_RequestNetworkGameStart;
+	// 방장이 로비를 나갔다.
+	DECRMI_SpaceWar_RequestNetworkHostOut;
+
+	// 게임 씬에 들어왔다는 것을 알려야지
+	DECRMI_SpaceWar_RequestGameSceneJoin;
+
 	// 서버 이벤트 로직
 	void OnClientJoin(CNetClientInfo* clientInfo);
 	void OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, const ByteArray& comment);
@@ -98,8 +119,9 @@ public:
 	// 아이템 리스트
 	unordered_map<int, shared_ptr<Item>> m_itemMap;
 
-	// 메테오
-	//shared_ptr<CTimerThread> m_meteorThread;
+	// 게임 룸
+	shared_ptr<GameRoom> m_gameRoom;
+
 };
 
 // 랜덤함수

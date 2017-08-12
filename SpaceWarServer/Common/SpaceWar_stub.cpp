@@ -115,6 +115,1454 @@ namespace SpaceWar
 					}
 				}
 				break;
+			case Rmi_RequestLobbyConnect:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestLobbyConnect);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+									
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestLobbyConnect, 
+							RmiName_RequestLobbyConnect,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestLobbyConnect, 
+							RmiName_RequestLobbyConnect, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestLobbyConnect, 
+							RmiName_RequestLobbyConnect, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestLobbyConnect;
+						summary.m_rmiName = RmiName_RequestLobbyConnect;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestLobbyConnect (remote,ctx  );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestLobbyConnect);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestLobbyConnect;
+						summary.m_rmiName = RmiName_RequestLobbyConnect;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestNetworkGameTeamSelect:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					string name; __msg >> name;
+					bool teamRed; __msg >> teamRed;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestNetworkGameTeamSelect);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,name);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,teamRed);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect, 
+							RmiName_RequestNetworkGameTeamSelect,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect, 
+							RmiName_RequestNetworkGameTeamSelect, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect, 
+							RmiName_RequestNetworkGameTeamSelect, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect;
+						summary.m_rmiName = RmiName_RequestNetworkGameTeamSelect;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestNetworkGameTeamSelect (remote,ctx , name, teamRed );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestNetworkGameTeamSelect);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkGameTeamSelect;
+						summary.m_rmiName = RmiName_RequestNetworkGameTeamSelect;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestNetworkGameReady:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					string name; __msg >> name;
+					bool ready; __msg >> ready;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestNetworkGameReady);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,name);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,ready);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameReady, 
+							RmiName_RequestNetworkGameReady,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameReady, 
+							RmiName_RequestNetworkGameReady, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameReady, 
+							RmiName_RequestNetworkGameReady, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkGameReady;
+						summary.m_rmiName = RmiName_RequestNetworkGameReady;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestNetworkGameReady (remote,ctx , name, ready );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestNetworkGameReady);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkGameReady;
+						summary.m_rmiName = RmiName_RequestNetworkGameReady;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestNetworkChangeMap:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					string mapName; __msg >> mapName;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestNetworkChangeMap);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,mapName);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestNetworkChangeMap, 
+							RmiName_RequestNetworkChangeMap,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkChangeMap, 
+							RmiName_RequestNetworkChangeMap, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkChangeMap, 
+							RmiName_RequestNetworkChangeMap, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkChangeMap;
+						summary.m_rmiName = RmiName_RequestNetworkChangeMap;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestNetworkChangeMap (remote,ctx , mapName );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestNetworkChangeMap);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkChangeMap;
+						summary.m_rmiName = RmiName_RequestNetworkChangeMap;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestNetworkPlayerCount:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int playerCount; __msg >> playerCount;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestNetworkPlayerCount);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,playerCount);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestNetworkPlayerCount, 
+							RmiName_RequestNetworkPlayerCount,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkPlayerCount, 
+							RmiName_RequestNetworkPlayerCount, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkPlayerCount, 
+							RmiName_RequestNetworkPlayerCount, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkPlayerCount;
+						summary.m_rmiName = RmiName_RequestNetworkPlayerCount;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestNetworkPlayerCount (remote,ctx , playerCount );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestNetworkPlayerCount);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkPlayerCount;
+						summary.m_rmiName = RmiName_RequestNetworkPlayerCount;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestNetworkGameModeChange:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int gameMode; __msg >> gameMode;
+					bool teamMode; __msg >> teamMode;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestNetworkGameModeChange);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,gameMode);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,teamMode);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameModeChange, 
+							RmiName_RequestNetworkGameModeChange,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameModeChange, 
+							RmiName_RequestNetworkGameModeChange, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameModeChange, 
+							RmiName_RequestNetworkGameModeChange, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkGameModeChange;
+						summary.m_rmiName = RmiName_RequestNetworkGameModeChange;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestNetworkGameModeChange (remote,ctx , gameMode, teamMode );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestNetworkGameModeChange);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkGameModeChange;
+						summary.m_rmiName = RmiName_RequestNetworkGameModeChange;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestNetworkGameStart:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestNetworkGameStart);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+									
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameStart, 
+							RmiName_RequestNetworkGameStart,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameStart, 
+							RmiName_RequestNetworkGameStart, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkGameStart, 
+							RmiName_RequestNetworkGameStart, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkGameStart;
+						summary.m_rmiName = RmiName_RequestNetworkGameStart;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestNetworkGameStart (remote,ctx  );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestNetworkGameStart);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkGameStart;
+						summary.m_rmiName = RmiName_RequestNetworkGameStart;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestNetworkHostOut:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int hostID; __msg >> hostID;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestNetworkHostOut);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,hostID);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestNetworkHostOut, 
+							RmiName_RequestNetworkHostOut,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkHostOut, 
+							RmiName_RequestNetworkHostOut, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestNetworkHostOut, 
+							RmiName_RequestNetworkHostOut, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkHostOut;
+						summary.m_rmiName = RmiName_RequestNetworkHostOut;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestNetworkHostOut (remote,ctx , hostID );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestNetworkHostOut);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestNetworkHostOut;
+						summary.m_rmiName = RmiName_RequestNetworkHostOut;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestGameSceneJoin:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					Proud::Vector3 pos; __msg >> pos;
+					int hostID; __msg >> hostID;
+					string name; __msg >> name;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestGameSceneJoin);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,pos);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,hostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,name);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestGameSceneJoin, 
+							RmiName_RequestGameSceneJoin,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestGameSceneJoin, 
+							RmiName_RequestGameSceneJoin, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestGameSceneJoin, 
+							RmiName_RequestGameSceneJoin, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestGameSceneJoin;
+						summary.m_rmiName = RmiName_RequestGameSceneJoin;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestGameSceneJoin (remote,ctx , pos, hostID, name );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestGameSceneJoin);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestGameSceneJoin;
+						summary.m_rmiName = RmiName_RequestGameSceneJoin;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkUserSetup:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int userHostID; __msg >> userHostID;
+					string userName; __msg >> userName;
+					bool ready; __msg >> ready;
+					bool teamRed; __msg >> teamRed;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkUserSetup);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,userHostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,userName);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,ready);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,teamRed);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkUserSetup, 
+							RmiName_NotifyNetworkUserSetup,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkUserSetup, 
+							RmiName_NotifyNetworkUserSetup, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkUserSetup, 
+							RmiName_NotifyNetworkUserSetup, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkUserSetup;
+						summary.m_rmiName = RmiName_NotifyNetworkUserSetup;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkUserSetup (remote,ctx , userHostID, userName, ready, teamRed );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkUserSetup);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkUserSetup;
+						summary.m_rmiName = RmiName_NotifyNetworkUserSetup;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkGameTeamChange:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int userHostID; __msg >> userHostID;
+					bool teamRed; __msg >> teamRed;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkGameTeamChange);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,userHostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,teamRed);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange, 
+							RmiName_NotifyNetworkGameTeamChange,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange, 
+							RmiName_NotifyNetworkGameTeamChange, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange, 
+							RmiName_NotifyNetworkGameTeamChange, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange;
+						summary.m_rmiName = RmiName_NotifyNetworkGameTeamChange;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkGameTeamChange (remote,ctx , userHostID, teamRed );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkGameTeamChange);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameTeamChange;
+						summary.m_rmiName = RmiName_NotifyNetworkGameTeamChange;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkConnectUser:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int userHostID; __msg >> userHostID;
+					string userName; __msg >> userName;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkConnectUser);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,userHostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,userName);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkConnectUser, 
+							RmiName_NotifyNetworkConnectUser,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkConnectUser, 
+							RmiName_NotifyNetworkConnectUser, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkConnectUser, 
+							RmiName_NotifyNetworkConnectUser, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkConnectUser;
+						summary.m_rmiName = RmiName_NotifyNetworkConnectUser;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkConnectUser (remote,ctx , userHostID, userName );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkConnectUser);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkConnectUser;
+						summary.m_rmiName = RmiName_NotifyNetworkConnectUser;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkReady:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int hostID; __msg >> hostID;
+					string userName; __msg >> userName;
+					bool ready; __msg >> ready;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkReady);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,hostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,userName);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,ready);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkReady, 
+							RmiName_NotifyNetworkReady,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkReady, 
+							RmiName_NotifyNetworkReady, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkReady, 
+							RmiName_NotifyNetworkReady, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkReady;
+						summary.m_rmiName = RmiName_NotifyNetworkReady;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkReady (remote,ctx , hostID, userName, ready );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkReady);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkReady;
+						summary.m_rmiName = RmiName_NotifyNetworkReady;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkGameModeChange:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int gameMode; __msg >> gameMode;
+					bool teamMode; __msg >> teamMode;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkGameModeChange);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,gameMode);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,teamMode);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameModeChange, 
+							RmiName_NotifyNetworkGameModeChange,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameModeChange, 
+							RmiName_NotifyNetworkGameModeChange, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameModeChange, 
+							RmiName_NotifyNetworkGameModeChange, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameModeChange;
+						summary.m_rmiName = RmiName_NotifyNetworkGameModeChange;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkGameModeChange (remote,ctx , gameMode, teamMode );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkGameModeChange);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameModeChange;
+						summary.m_rmiName = RmiName_NotifyNetworkGameModeChange;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkGamePlayerCountChange:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int playerCount; __msg >> playerCount;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkGamePlayerCountChange);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,playerCount);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange, 
+							RmiName_NotifyNetworkGamePlayerCountChange,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange, 
+							RmiName_NotifyNetworkGamePlayerCountChange, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange, 
+							RmiName_NotifyNetworkGamePlayerCountChange, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange;
+						summary.m_rmiName = RmiName_NotifyNetworkGamePlayerCountChange;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkGamePlayerCountChange (remote,ctx , playerCount );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkGamePlayerCountChange);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGamePlayerCountChange;
+						summary.m_rmiName = RmiName_NotifyNetworkGamePlayerCountChange;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkGameChangeMap:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					string map; __msg >> map;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkGameChangeMap);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,map);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap, 
+							RmiName_NotifyNetworkGameChangeMap,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap, 
+							RmiName_NotifyNetworkGameChangeMap, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap, 
+							RmiName_NotifyNetworkGameChangeMap, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap;
+						summary.m_rmiName = RmiName_NotifyNetworkGameChangeMap;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkGameChangeMap (remote,ctx , map );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkGameChangeMap);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameChangeMap;
+						summary.m_rmiName = RmiName_NotifyNetworkGameChangeMap;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkGameStart:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkGameStart);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+									
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameStart, 
+							RmiName_NotifyNetworkGameStart,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameStart, 
+							RmiName_NotifyNetworkGameStart, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameStart, 
+							RmiName_NotifyNetworkGameStart, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameStart;
+						summary.m_rmiName = RmiName_NotifyNetworkGameStart;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkGameStart (remote,ctx  );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkGameStart);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameStart;
+						summary.m_rmiName = RmiName_NotifyNetworkGameStart;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkGameStartFailed:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkGameStartFailed);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+									
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed, 
+							RmiName_NotifyNetworkGameStartFailed,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed, 
+							RmiName_NotifyNetworkGameStartFailed, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed, 
+							RmiName_NotifyNetworkGameStartFailed, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed;
+						summary.m_rmiName = RmiName_NotifyNetworkGameStartFailed;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkGameStartFailed (remote,ctx  );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkGameStartFailed);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameStartFailed;
+						summary.m_rmiName = RmiName_NotifyNetworkGameStartFailed;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyNetworkGameHostOut:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyNetworkGameHostOut);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+									
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameHostOut, 
+							RmiName_NotifyNetworkGameHostOut,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameHostOut, 
+							RmiName_NotifyNetworkGameHostOut, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyNetworkGameHostOut, 
+							RmiName_NotifyNetworkGameHostOut, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameHostOut;
+						summary.m_rmiName = RmiName_NotifyNetworkGameHostOut;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyNetworkGameHostOut (remote,ctx  );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyNetworkGameHostOut);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyNetworkGameHostOut;
+						summary.m_rmiName = RmiName_NotifyNetworkGameHostOut;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
 			case Rmi_RequestClientJoin:
 				{
 					::Proud::RmiContext ctx;
@@ -876,6 +2324,7 @@ namespace SpaceWar
 					
 					
 					int hostID; __msg >> hostID;
+					bool host; __msg >> host;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyLoginSuccess);
 					
 			
@@ -884,6 +2333,9 @@ namespace SpaceWar
 						::Proud::String parameterString;
 						
 						::Proud::AppendTextOut(parameterString,hostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,host);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyLoginSuccess, 
 							RmiName_NotifyLoginSuccess,parameterString);
@@ -915,7 +2367,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyLoginSuccess (remote,ctx , hostID );
+					bool __ret = NotifyLoginSuccess (remote,ctx , hostID, host );
 						
 					if(__ret==false)
 					{
@@ -3293,6 +4745,101 @@ __fail:
 	const PNTCHAR* Stub::RmiName_RequestServerConnect =_PNT("RequestServerConnect");
 	#else
 	const PNTCHAR* Stub::RmiName_RequestServerConnect =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestLobbyConnect =_PNT("RequestLobbyConnect");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestLobbyConnect =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestNetworkGameTeamSelect =_PNT("RequestNetworkGameTeamSelect");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestNetworkGameTeamSelect =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestNetworkGameReady =_PNT("RequestNetworkGameReady");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestNetworkGameReady =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestNetworkChangeMap =_PNT("RequestNetworkChangeMap");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestNetworkChangeMap =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestNetworkPlayerCount =_PNT("RequestNetworkPlayerCount");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestNetworkPlayerCount =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestNetworkGameModeChange =_PNT("RequestNetworkGameModeChange");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestNetworkGameModeChange =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestNetworkGameStart =_PNT("RequestNetworkGameStart");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestNetworkGameStart =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestNetworkHostOut =_PNT("RequestNetworkHostOut");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestNetworkHostOut =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestGameSceneJoin =_PNT("RequestGameSceneJoin");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestGameSceneJoin =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkUserSetup =_PNT("NotifyNetworkUserSetup");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkUserSetup =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameTeamChange =_PNT("NotifyNetworkGameTeamChange");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameTeamChange =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkConnectUser =_PNT("NotifyNetworkConnectUser");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkConnectUser =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkReady =_PNT("NotifyNetworkReady");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkReady =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameModeChange =_PNT("NotifyNetworkGameModeChange");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameModeChange =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGamePlayerCountChange =_PNT("NotifyNetworkGamePlayerCountChange");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGamePlayerCountChange =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameChangeMap =_PNT("NotifyNetworkGameChangeMap");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameChangeMap =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameStart =_PNT("NotifyNetworkGameStart");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameStart =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameStartFailed =_PNT("NotifyNetworkGameStartFailed");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameStartFailed =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameHostOut =_PNT("NotifyNetworkGameHostOut");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyNetworkGameHostOut =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_RequestClientJoin =_PNT("RequestClientJoin");
