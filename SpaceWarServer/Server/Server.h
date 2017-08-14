@@ -122,6 +122,8 @@ public:
 	// 게임 룸
 	shared_ptr<GameRoom> m_gameRoom;
 
+	// 게임 유저 리셋
+	void ResetUsers();
 };
 
 // 랜덤함수

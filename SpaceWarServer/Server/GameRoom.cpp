@@ -131,3 +131,34 @@ forward_list<RoomClient> GameRoom::GetOtherClientInfos(HostID hostID)
 
 	return list;
 }
+
+forward_list<HostID> GameRoom::GetAllClient()
+{
+	forward_list<HostID> list;
+
+	auto iter = m_clientMap.begin();
+	while (iter != m_clientMap.end())
+	{
+		list.push_front(iter->second->GetHostID());
+		iter++;
+	}
+	return list;
+}
+
+bool GameRoom::IsGameSceneAllReady()
+{
+	auto iter = m_clientMap.begin();
+
+	while (iter != m_clientMap.end())
+	{
+		bool ready = iter->second->IsGameScene();
+
+		// 하나라도 불만족시 준비가 안되어있음
+		if (!ready)
+			return false;
+
+		iter++;
+	}
+
+	return true;
+}

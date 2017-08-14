@@ -58,7 +58,7 @@ public class Shelter : MonoBehaviour {
             CloseDoor();
     }
 
-    public void OpenDoor()
+    public void OpenDoor(bool networkOrder = false)
     {
         if (m_curState)
             return;
@@ -67,10 +67,11 @@ public class Shelter : MonoBehaviour {
       
         // 열렸다.
         GetComponent<Animator>().SetInteger("DOOR_OPEN_STATE" , 1);
-        NetworkManager.Instance().C2SRequestShelterDoorControl(m_shelterID , true);
+        if(networkOrder == false)
+            NetworkManager.Instance().C2SRequestShelterDoorControl(m_shelterID , true);
     }
 
-    public void CloseDoor()
+    public void CloseDoor(bool networkOrder = false)
     {
         if (!m_curState)
             return;
@@ -78,7 +79,8 @@ public class Shelter : MonoBehaviour {
         m_curState = false;
         // 닫혔다
         GetComponent<Animator>().SetInteger("DOOR_OPEN_STATE" , 2);
-        NetworkManager.Instance().C2SRequestShelterDoorControl(m_shelterID , false);
+        if(networkOrder == false)
+            NetworkManager.Instance().C2SRequestShelterDoorControl(m_shelterID , false);
     }
 
     public void LightOn()

@@ -97,7 +97,7 @@ public class Weapon : MonoBehaviour {
             GameManager.Instance().PLAYER.m_name + "_Gun01Bullet_" + CurrentBulletNum;
         // 생성 명령
         NetworkManager.Instance().C2SRequestBulletCreate(Bullet[CurrentBulletNum].GetComponent<Gun01Bullet>().m_bulletID ,
-            FirePoint.position , Bullet[CurrentBulletNum].transform.localEulerAngles);
+            FirePoint.position , Bullet[CurrentBulletNum].transform.localEulerAngles,0);
 
         if (CurrentBulletNum == Bullet.Length - 1)
         {
@@ -126,7 +126,7 @@ public class Weapon : MonoBehaviour {
            GameManager.Instance().PLAYER.m_name + "_Gun01Bullet_" + CurrentBulletNum;
         // 생성 명령
         NetworkManager.Instance().C2SRequestBulletCreate(Bullet[CurrentBulletNum].GetComponent<Gun01Bullet>().m_bulletID ,
-            Position , Bullet[CurrentBulletNum].transform.localEulerAngles);
+            Position , Bullet[CurrentBulletNum].transform.localEulerAngles,0);
 
         if (CurrentBulletNum == Bullet.Length - 1)
         {

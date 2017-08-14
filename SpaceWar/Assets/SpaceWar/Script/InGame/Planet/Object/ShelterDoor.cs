@@ -15,7 +15,7 @@ public class ShelterDoor : MonoBehaviour {
         if (!other.CompareTag("PlayerCharacter"))
             return;
 
-        Player p = other.GetComponent<Player>();
+        PlayerController p = other.GetComponent<PlayerController>();
         if (!p.enabled)
             return;
 
@@ -24,6 +24,7 @@ public class ShelterDoor : MonoBehaviour {
             p.IS_SHELTER = true;
             // 들어옴
             m_targetShelter.ShelterEnter();
+            
             transform.parent.parent.GetChild(2).GetComponent<MeshRenderer>().material = m_opacityMat;
         }
         else

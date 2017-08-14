@@ -124,215 +124,39 @@ public class LobbyUI : MonoBehaviour {
     {
         m_teamMode = NetworkManager.Instance().IS_TEAMMODE;
         // 호스트가 나갔다
-        NetworkManager.Instance().hostOut += () =>
-        {
-            // 전부 타이틀 화면으로 넘어와야 한다.
-            Destroy(NetworkManager.Instance().gameObject); // ? 이래도 되나
-        };
+        NetworkManager.Instance().hostOut += LobbyUI_hostOut;
 
         // 처음 등장시 이미 들어와있는 애들
-        NetworkManager.Instance().otherRoomPlayerInfo += (int hostID , string userName , bool ready , bool redTeam) =>
-        {
-            m_curPlayer++;
-
-            for(int i = 0; i < m_playerLobbyList.Count; i++)
-            {
-                PlayerLobbyData data = m_playerLobbyList[i];
-
-                if (data.m_hostID == -1)
-                {
-                    data.m_readyEffect.transform.parent.gameObject.SetActive(true);
-                    data.m_hostID = hostID;
-                    data.m_userName.text = userName;
-                    data.m_readyEffect.SetActive(ready);
-
-                    if (NetworkManager.Instance().IS_TEAMMODE)
-                        data.SetTeamColor(true , redTeam);
-                    else
-                        data.SetTeamColor(false , redTeam);
-                    break;
-                }
-            }
-
-
-            for (int i = 0; i < m_teamList.Count; i++)
-            {
-                TeamRightData data = m_teamList[i];
-
-                if (data.m_hostID == -1)
-                {
-                    data.m_hostID = hostID;
-                    data.SetTeamColor(redTeam);
-                    data.m_userName.text = userName;
-                    data.m_teamBG.gameObject.SetActive(NetworkManager.Instance().IS_TEAMMODE);
-                    break;
-                }
-            }
-            m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
-        };
+        NetworkManager.Instance().otherRoomPlayerInfo += LobbyUI_otherRoomPlayerInfo;
 
         // 다른 플레이어가 들어왔다.
-        NetworkManager.Instance().otherPlayerConnect += (int hostID , string userName) =>
-        {
-            m_curPlayer++;
-            for(int i =0; i < m_playerLobbyList.Count; i++)
-            {
-                PlayerLobbyData data = m_playerLobbyList[i];
-                
-                if(data.m_hostID == -1)
-                {
-                    data.m_readyEffect.transform.parent.gameObject.SetActive(true);
-                    data.m_hostID = hostID;
-                    data.m_userName.text = userName;
-                    data.m_readyEffect.SetActive(false);
-
-                    if (NetworkManager.Instance().IS_TEAMMODE)
-                        data.SetTeamColor(true);
-                    else
-                        data.SetTeamColor(false);
-                    break;
-                }
-            }
-
-            for (int i = 0; i < m_teamList.Count; i++)
-            {
-                TeamRightData data = m_teamList[i];
-
-                if (data.m_hostID == -1)
-                {
-                    data.m_hostID = hostID;
-                    data.m_userName.text = userName;
-                    break;
-                }
-            }
-
-
-            m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
-        };
+        NetworkManager.Instance().otherPlayerConnect += LobbyUI_otherPlayerConnect;
 
         // 다른 플레이어가 나갔다.
-        NetworkManager.Instance().playerLost += (int sendHostID) =>
-        {
-            m_curPlayer--;
-            for (int i = 0; i < m_playerLobbyList.Count; i++)
-            {
-                PlayerLobbyData data = m_playerLobbyList[i];
-
-                if (data.m_hostID == sendHostID)
-                {
-                    data.m_hostID = -1;
-                    data.m_readyEffect.SetActive(false);
-                    data.m_readyEffect.transform.parent.gameObject.SetActive(false);
-                    break;
-                }
-            }
-
-            for (int i = 0; i < m_teamList.Count; i++)
-            {
-                TeamRightData data = m_teamList[i];
-
-                if (data.m_hostID == sendHostID)
-                {
-                    data.m_hostID = -1;
-                    break;
-                }
-            }
-
-            m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
-        };
+        NetworkManager.Instance().playerLost += LobbyUI_playerLost;
 
         // 팀 선택이 도착함
-        NetworkManager.Instance().otherPlayerTeamChange += (int hostID  , bool redTeam) =>
-        {
-            for (int i = 0; i < m_playerLobbyList.Count; i++)
-            {
-                PlayerLobbyData data = m_playerLobbyList[i];
-
-                if (data.m_hostID == hostID)
-                {
-                    data.SetTeamColor(true, redTeam);
-                    break;
-                }
-            }
-
-            for (int i = 0; i < m_teamList.Count; i++)
-            {
-                TeamRightData data = m_teamList[i];
-
-                if (data.m_hostID == hostID)
-                {
-                    data.SetTeamColor(redTeam);
-                    break;
-                }
-            }
-        };
+        NetworkManager.Instance().otherPlayerTeamChange += LobbyUI_otherPlayerTeamChange;
 
         // 제한 플레이어 수가 바뀜
-        NetworkManager.Instance().playerCountChnage += (int playerCount) =>
-        {
-            m_playerCount = playerCount;
-            m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
-        };
+        NetworkManager.Instance().playerCountChnage += LobbyUI_playerCountChnage;
 
         // 레디했다
-        NetworkManager.Instance().otherPlayerReady += (int hostID , string userName , bool ready) =>
-        {
-            for (int i = 0; i < m_playerLobbyList.Count; i++)
-            {
-                PlayerLobbyData data = m_playerLobbyList[i];
-
-                if (data.m_hostID == hostID)
-                {
-                    data.m_readyEffect.SetActive(ready);
-                    break;
-                }
-            }
-        };
+        NetworkManager.Instance().otherPlayerReady += LobbyUI_otherPlayerReady;
 
         // 방장이 게임 모드를 바꾼다.
-        NetworkManager.Instance().gameModeChange += (int gameMode , bool teamMode) =>
-        {
-            NetworkManager.Instance().IS_TEAMMODE = teamMode;
-            for (int i = 0; i < m_playerLobbyList.Count; i++)
-            {
-                PlayerLobbyData data = m_playerLobbyList[i];
-                data.SetTeamColor(true,teamMode);
-            }
-            m_gameMode = gameMode;
-            m_teamMode = teamMode;
-
-            NetworkManager.Instance().IS_TEAMMODE = teamMode;
-
-            if (m_teamMode)
-                TeamModeSetup();
-            else
-                IndividualModeSetup();
-        };
+        NetworkManager.Instance().gameModeChange += LobbyUI_gameModeChange;
 
         // 맵을 바꿈
-        NetworkManager.Instance().mapChange += (string mapName) =>
-        {
-            // 맵정보를 여기서 판단하고 변환해야함 
-            m_currentMapName.text = mapName;
-        };
+        NetworkManager.Instance().mapChange += LobbyUI_mapChange;
 
         // 게임 시작
-        NetworkManager.Instance().gameStart += () =>
-        {
-            SceneManager.LoadScene(2);
-        };
+        NetworkManager.Instance().gameStart += LobbyUI_gameStart;
 
         // 게임 시작 실패
-        NetworkManager.Instance().gameStartFailed += (string reason) =>
-        {
-            Debug.Log("게임 시작 실패");
-        };
+        NetworkManager.Instance().gameStartFailed += LobbyUI_gameStartFailed;
 
-        // 방장이 나갔어
-        NetworkManager.Instance().hostOut += () =>
-        {
-            SceneManager.LoadScene(0);
-        };
+        
 
         DefSetup();
 
@@ -348,14 +172,245 @@ public class LobbyUI : MonoBehaviour {
 
 
     }
+
+    void EventHandlerAllRemove()
+    {
+        // 호스트가 나갔다
+        NetworkManager.Instance().hostOut -= LobbyUI_hostOut;
+
+        // 처음 등장시 이미 들어와있는 애들
+        NetworkManager.Instance().otherRoomPlayerInfo -= LobbyUI_otherRoomPlayerInfo;
+
+        // 다른 플레이어가 들어왔다.
+        NetworkManager.Instance().otherPlayerConnect -= LobbyUI_otherPlayerConnect;
+
+        // 다른 플레이어가 나갔다.
+        NetworkManager.Instance().playerLost -= LobbyUI_playerLost;
+
+        // 팀 선택이 도착함
+        NetworkManager.Instance().otherPlayerTeamChange -= LobbyUI_otherPlayerTeamChange;
+
+        // 제한 플레이어 수가 바뀜
+        NetworkManager.Instance().playerCountChnage -= LobbyUI_playerCountChnage;
+
+        // 레디했다
+        NetworkManager.Instance().otherPlayerReady -= LobbyUI_otherPlayerReady;
+
+        // 방장이 게임 모드를 바꾼다.
+        NetworkManager.Instance().gameModeChange -= LobbyUI_gameModeChange;
+
+        // 맵을 바꿈
+        NetworkManager.Instance().mapChange -= LobbyUI_mapChange;
+
+        // 게임 시작
+        NetworkManager.Instance().gameStart -= LobbyUI_gameStart;
+
+        // 게임 시작 실패
+        NetworkManager.Instance().gameStartFailed -= LobbyUI_gameStartFailed;
+    }
+
+    private void LobbyUI_gameStartFailed(string reason)
+    {
+        Debug.Log("게임 시작 실패");
+    }
+
+    private void LobbyUI_gameStart()
+    {
+        EventHandlerAllRemove();
+        SceneManager.LoadScene(2);
+    }
+
+    private void LobbyUI_mapChange(string changeMap)
+    {
+        // 맵정보를 여기서 판단하고 변환해야함 
+        m_currentMapName.text = changeMap;
+    }
+
+    private void LobbyUI_gameModeChange(int gameMode , bool teamMode)
+    {
+        NetworkManager.Instance().IS_TEAMMODE = teamMode;
+        for (int i = 0; i < m_playerLobbyList.Count; i++)
+        {
+            PlayerLobbyData data = m_playerLobbyList[i];
+            data.SetTeamColor(true , teamMode);
+        }
+        m_gameMode = gameMode;
+        m_teamMode = teamMode;
+
+        NetworkManager.Instance().IS_TEAMMODE = teamMode;
+
+        if (m_teamMode)
+            TeamModeSetup();
+        else
+            IndividualModeSetup();
+    }
+
+    private void LobbyUI_otherPlayerReady(int hostID , string userName , bool ready)
+    {
+        for (int i = 0; i < m_playerLobbyList.Count; i++)
+        {
+            PlayerLobbyData data = m_playerLobbyList[i];
+
+            if (data.m_hostID == hostID)
+            {
+                data.m_readyEffect.SetActive(ready);
+                break;
+            }
+        }
+    }
+
+    private void LobbyUI_playerCountChnage(int playerCount)
+    {
+        m_playerCount = playerCount;
+        m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
+    }
+
+    private void LobbyUI_otherPlayerTeamChange(int hostID , bool redTeam)
+    {
+        for (int i = 0; i < m_playerLobbyList.Count; i++)
+        {
+            PlayerLobbyData data = m_playerLobbyList[i];
+
+            if (data.m_hostID == hostID)
+            {
+                data.SetTeamColor(true , redTeam);
+                break;
+            }
+        }
+
+        for (int i = 0; i < m_teamList.Count; i++)
+        {
+            TeamRightData data = m_teamList[i];
+
+            if (data.m_hostID == hostID)
+            {
+                data.SetTeamColor(redTeam);
+                break;
+            }
+        }
+    }
+
+    private void LobbyUI_otherPlayerConnect(int hostID , string userName)
+    {
+        m_curPlayer++;
+        for (int i = 0; i < m_playerLobbyList.Count; i++)
+        {
+            PlayerLobbyData data = m_playerLobbyList[i];
+
+            if (data.m_hostID == -1)
+            {
+                data.m_readyEffect.transform.parent.gameObject.SetActive(true);
+                data.m_hostID = hostID;
+                data.m_userName.text = userName;
+                data.m_readyEffect.SetActive(false);
+
+                if (NetworkManager.Instance().IS_TEAMMODE)
+                    data.SetTeamColor(true);
+                else
+                    data.SetTeamColor(false);
+                break;
+            }
+        }
+
+        for (int i = 0; i < m_teamList.Count; i++)
+        {
+            TeamRightData data = m_teamList[i];
+
+            if (data.m_hostID == -1)
+            {
+                data.m_hostID = hostID;
+                data.m_userName.text = userName;
+                break;
+            }
+        }
+
+
+        m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
+    }
+
+    private void LobbyUI_otherRoomPlayerInfo(int hostID , string userName , bool ready , bool redTeam)
+    {
+        m_curPlayer++;
+
+        for (int i = 0; i < m_playerLobbyList.Count; i++)
+        {
+            PlayerLobbyData data = m_playerLobbyList[i];
+
+            if (data.m_hostID == -1)
+            {
+                data.m_readyEffect.transform.parent.gameObject.SetActive(true);
+                data.m_hostID = hostID;
+                data.m_userName.text = userName;
+                data.m_readyEffect.SetActive(ready);
+
+                if (NetworkManager.Instance().IS_TEAMMODE)
+                    data.SetTeamColor(true , redTeam);
+                else
+                    data.SetTeamColor(false , redTeam);
+                break;
+            }
+        }
+
+
+        for (int i = 0; i < m_teamList.Count; i++)
+        {
+            TeamRightData data = m_teamList[i];
+
+            if (data.m_hostID == -1)
+            {
+                data.m_hostID = hostID;
+                data.SetTeamColor(redTeam);
+                data.m_userName.text = userName;
+                data.m_teamBG.gameObject.SetActive(NetworkManager.Instance().IS_TEAMMODE);
+                break;
+            }
+        }
+        m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
+    }
+
+    private void LobbyUI_hostOut()
+    {
+        EventHandlerAllRemove();
+        SceneManager.LoadScene(0);
+    }
+
+    private void LobbyUI_playerLost(int sendHostID)
+    {
+        m_curPlayer--;
+        for (int i = 0; i < m_playerLobbyList.Count; i++)
+        {
+            PlayerLobbyData data = m_playerLobbyList[i];
+
+            if (data.m_hostID == sendHostID)
+            {
+                data.m_hostID = -1;
+                data.m_readyEffect.SetActive(false);
+                data.m_readyEffect.transform.parent.gameObject.SetActive(false);
+                break;
+            }
+        }
+
+        for (int i = 0; i < m_teamList.Count; i++)
+        {
+            TeamRightData data = m_teamList[i];
+
+            if (data.m_hostID == sendHostID)
+            {
+                data.m_hostID = -1;
+                break;
+            }
+        }
+
+        m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
+    }
     #endregion
-    
+
 
     /// 기본 기능 메소드들
     #region Default
 
-     // 공통 실행
-     void DefSetup()
+    // 공통 실행
+    void DefSetup()
     {
         m_currentPlayerCount.text = m_curPlayer + " / " + m_playerCount;
         m_myName.text = NetworkManager.Instance().USER_NAME;

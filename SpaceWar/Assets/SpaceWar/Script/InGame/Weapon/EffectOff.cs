@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class EffectOff : MonoBehaviour {
 
+    public Bullet m_target = null;
+
     public void EffectOffCall()
     {
-        this.gameObject.SetActive(false);
+        m_target.gameObject.SetActive(false);
     }
 
 }

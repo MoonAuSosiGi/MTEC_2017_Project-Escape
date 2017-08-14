@@ -215,7 +215,7 @@ public class Gun01Bullet : MonoBehaviour {
 
                 if(p != null)
                 {
-                    NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f));
+                    //NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f));
                 }
                 // TODO WEAPON
                 //   AnchorPlanet.PlayerCharacter.GetComponent<TestStram>().SenddataCall("Hitcall01/" + WeaponID + "/" + Mynum + "/" + other.gameObject.GetComponents<PhotonView>()[0].viewID + "/" + this.transform.position.x + "/" + this.transform.position.y + "/" + this.transform.position.z);               

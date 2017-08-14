@@ -10,7 +10,7 @@ public class NetworkPlayer : MonoBehaviour {
     public Animator PlayerAnim;
     public HostID m_hostID;
     public string m_userName = "";
-    public GameObject m_weapon = null;
+    public WeaponItem m_weapon = null;
     public GameObject m_weaponAnchor;
 
     PositionFollower m_positionFollower = new PositionFollower();
@@ -21,6 +21,8 @@ public class NetworkPlayer : MonoBehaviour {
     AngleFollower m_playerSeeX = new AngleFollower();
     AngleFollower m_playerSeeY = new AngleFollower();
     AngleFollower m_playerSeeZ = new AngleFollower();
+
+    public HostID HOST_ID { get { return m_hostID; } }
     #endregion
 
     public void NetworkPlayerSetup(HostID hostID,string userName)
@@ -116,13 +118,20 @@ public class NetworkPlayer : MonoBehaviour {
     {
         if(weapon != null)
         {
-            m_weapon = weapon;
+            m_weapon = weapon.GetComponent<WeaponItem>() ;
 
             m_weapon.transform.parent = m_weaponAnchor.transform;
-            m_weapon.transform.localPosition = m_weapon.GetComponent<Weapon>().LocalSetPos;
-            m_weapon.transform.localRotation = Quaternion.Euler(m_weapon.GetComponent<Weapon>().LocalSetRot);
-            m_weapon.transform.localScale = m_weapon.GetComponent<Weapon>().LocalSetScale;
+            m_weapon.transform.localPosition = m_weapon.LOCAL_SET_POS;
+            m_weapon.transform.localRotation = Quaternion.Euler(m_weapon.LOCAL_SET_ROT);
+            m_weapon.transform.localScale = m_weapon.LOCAL_SET_SCALE;
             m_weapon.GetComponent<SphereCollider>().enabled = false;
+
+            PlayerController p = this.GetComponent<PlayerController>();
+            switch (m_weapon.WEAPON_TYPE)
+            {
+                case WeaponItem.WeaponType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
+                case WeaponItem.WeaponType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
+            }
         }
     }
 
@@ -135,6 +144,10 @@ public class NetworkPlayer : MonoBehaviour {
             m_weapon.transform.position = pos;
             m_weapon.transform.eulerAngles = rot;
             m_weapon.GetComponent<SphereCollider>().enabled = true;
+
+            PlayerController p = this.GetComponent<PlayerController>();
+
+            PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainLobbyUI : MonoBehaviour {
 
@@ -44,7 +45,11 @@ public class MainLobbyUI : MonoBehaviour {
         if (m_loginUI.activeSelf)
             return;
         NetworkManager.Instance().USER_NAME = m_userName.text;
-        m_loginUI.SetActive(!m_loginUI.activeSelf);
+
+        if (NetworkManager.Instance().LOGIN_STATE == false)
+            m_loginUI.SetActive(!m_loginUI.activeSelf);
+        else
+            SceneManager.LoadScene(1);
     }
 
     public void PressButton(UISprite bt)

@@ -1758,6 +1758,7 @@ namespace SpaceWar
 					string name; __msg >> name;
 					string weaponName; __msg >> weaponName;
 					float damage; __msg >> damage;
+					Proud::Vector3 dir; __msg >> dir;
 					m_core->PostCheckReadMessage(__msg,RmiName_RequestPlayerDamage);
 					
 			
@@ -1778,6 +1779,9 @@ namespace SpaceWar
 										
 						parameterString += _PNT(", ");
 						::Proud::AppendTextOut(parameterString,damage);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,dir);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestPlayerDamage, 
 							RmiName_RequestPlayerDamage,parameterString);
@@ -1809,7 +1813,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = RequestPlayerDamage (remote,ctx , sendHostID, targetHostID, name, weaponName, damage );
+					bool __ret = RequestPlayerDamage (remote,ctx , sendHostID, targetHostID, name, weaponName, damage, dir );
 						
 					if(__ret==false)
 					{
@@ -3258,7 +3262,7 @@ namespace SpaceWar
 					
 					
 					int sendHostID; __msg >> sendHostID;
-					string bulletType; __msg >> bulletType;
+					int bulletType; __msg >> bulletType;
 					string bulletID; __msg >> bulletID;
 					Proud::Vector3 pos; __msg >> pos;
 					Proud::Vector3 rot; __msg >> rot;
@@ -3606,6 +3610,7 @@ namespace SpaceWar
 					float hp; __msg >> hp;
 					float prevhp; __msg >> prevhp;
 					float maxhp; __msg >> maxhp;
+					Proud::Vector3 dir; __msg >> dir;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyPlayerChangeHP);
 					
 			
@@ -3626,6 +3631,9 @@ namespace SpaceWar
 										
 						parameterString += _PNT(", ");
 						::Proud::AppendTextOut(parameterString,maxhp);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,dir);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyPlayerChangeHP, 
 							RmiName_NotifyPlayerChangeHP,parameterString);
@@ -3657,7 +3665,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyPlayerChangeHP (remote,ctx , sendHostID, name, hp, prevhp, maxhp );
+					bool __ret = NotifyPlayerChangeHP (remote,ctx , sendHostID, name, hp, prevhp, maxhp, dir );
 						
 					if(__ret==false)
 					{

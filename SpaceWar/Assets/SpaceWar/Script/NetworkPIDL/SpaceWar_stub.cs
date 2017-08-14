@@ -128,8 +128,8 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool RequestPlayerDamageDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage);  
-		public RequestPlayerDamageDelegate RequestPlayerDamage = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage)
+		public delegate bool RequestPlayerDamageDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage, UnityEngine.Vector3 dir);  
+		public RequestPlayerDamageDelegate RequestPlayerDamage = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage, UnityEngine.Vector3 dir)
 		{ 
 			return false;
 		};
@@ -218,8 +218,8 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool NotifyPlayerBulletCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
-		public NotifyPlayerBulletCreateDelegate NotifyPlayerBulletCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+		public delegate bool NotifyPlayerBulletCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
+		public NotifyPlayerBulletCreateDelegate NotifyPlayerBulletCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 		{ 
 			return false;
 		};
@@ -238,8 +238,8 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool NotifyPlayerChangeHPDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp);  
-		public NotifyPlayerChangeHPDelegate NotifyPlayerChangeHP = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp)
+		public delegate bool NotifyPlayerChangeHPDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp, UnityEngine.Vector3 dir);  
+		public NotifyPlayerChangeHPDelegate NotifyPlayerChangeHP = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp, UnityEngine.Vector3 dir)
 		{ 
 			return false;
 		};
@@ -1492,6 +1492,7 @@ int targetHostID; SP_Marshaler.Read(__msg,out targetHostID);
 string name; SP_Marshaler.Read(__msg,out name);	
 string weaponName; SP_Marshaler.Read(__msg,out weaponName);	
 float damage; SP_Marshaler.Read(__msg,out damage);	
+UnityEngine.Vector3 dir; SP_Marshaler.Read(__msg,out dir);	
 core.PostCheckReadMessage(__msg, RmiName_RequestPlayerDamage);
 		if(enableNotifyCallFromStub==true)
 		{
@@ -1501,6 +1502,7 @@ parameterString+=targetHostID.ToString()+",";
 parameterString+=name.ToString()+",";
 parameterString+=weaponName.ToString()+",";
 parameterString+=damage.ToString()+",";
+parameterString+=dir.ToString()+",";
 			NotifyCallFromStub(Common.RequestPlayerDamage, RmiName_RequestPlayerDamage,parameterString);
 		}
 			
@@ -1517,7 +1519,7 @@ parameterString+=damage.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=RequestPlayerDamage (remote,ctx , sendHostID, targetHostID, name, weaponName, damage );
+		bool __ret=RequestPlayerDamage (remote,ctx , sendHostID, targetHostID, name, weaponName, damage, dir );
 			
 		if(__ret==false)
 		{
@@ -2492,7 +2494,7 @@ case Common.NotifyPlayerBulletCreate:
 		ctx.compressMode = pa.CompressMode;
 			
 		int sendHostID; SP_Marshaler.Read(__msg,out sendHostID);	
-string bulletType; SP_Marshaler.Read(__msg,out bulletType);	
+int bulletType; SP_Marshaler.Read(__msg,out bulletType);	
 string bulletID; SP_Marshaler.Read(__msg,out bulletID);	
 UnityEngine.Vector3 pos; SP_Marshaler.Read(__msg,out pos);	
 UnityEngine.Vector3 rot; SP_Marshaler.Read(__msg,out rot);	
@@ -2724,6 +2726,7 @@ string name; SP_Marshaler.Read(__msg,out name);
 float hp; SP_Marshaler.Read(__msg,out hp);	
 float prevhp; SP_Marshaler.Read(__msg,out prevhp);	
 float maxhp; SP_Marshaler.Read(__msg,out maxhp);	
+UnityEngine.Vector3 dir; SP_Marshaler.Read(__msg,out dir);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyPlayerChangeHP);
 		if(enableNotifyCallFromStub==true)
 		{
@@ -2733,6 +2736,7 @@ parameterString+=name.ToString()+",";
 parameterString+=hp.ToString()+",";
 parameterString+=prevhp.ToString()+",";
 parameterString+=maxhp.ToString()+",";
+parameterString+=dir.ToString()+",";
 			NotifyCallFromStub(Common.NotifyPlayerChangeHP, RmiName_NotifyPlayerChangeHP,parameterString);
 		}
 			
@@ -2749,7 +2753,7 @@ parameterString+=maxhp.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyPlayerChangeHP (remote,ctx , sendHostID, name, hp, prevhp, maxhp );
+		bool __ret=NotifyPlayerChangeHP (remote,ctx , sendHostID, name, hp, prevhp, maxhp, dir );
 			
 		if(__ret==false)
 		{

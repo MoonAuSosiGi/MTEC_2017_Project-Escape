@@ -135,6 +135,19 @@ void Server::ServerRun()
 	//meteorThread.Stop();
 }
 
+void Server::ResetUsers()
+{
+	auto iter = m_clientMap.begin();
+
+	while (iter != m_clientMap.end())
+	{
+		iter->second->Reset();
+		iter++;
+	}
+
+	m_itemMap.clear();
+}
+
 void Server::OnClientJoin(CNetClientInfo* clientInfo)
 {
 	cout << "OnClientJoin " << clientInfo->m_HostID << endl;
@@ -220,6 +233,7 @@ DEFRMI_SpaceWar_RequestServerConnect(Server)
 	return true;
 }
 
+// TODO 서버 구조 변경으로 삭제 대상
 DEFRMI_SpaceWar_RequestClientJoin(Server)
 {
 	cout << "Server : RequestClientJoin "<<name << endl;
@@ -254,19 +268,13 @@ DEFRMI_SpaceWar_RequestClientJoin(Server)
 		}
 	}
 
-	// 아이템 생성 샌드
-	for each(auto item in m_itemMap)
-	{
-		m_proxy.NotifyCreateItem((HostID)hostID, RmiContext::ReliableSend, (int)HostID_Server,
-			item.second->m_itemCID, item.second->m_itemID, item.second->pos, item.second->rot);
-	}
-	
+
 	return true;
 }
 
 DEFRMI_SpaceWar_RequestWorldCreateItem(Server)
 {
-	cout << "RequestWorldCreateItem  item CID : " << itemCID << " x : "<< pos.x << " y : " << pos.y << " z : "<<pos.z  << endl;
+	cout << "RequestWorldCreateItem  item CID : " << itemCID << " item ID " << itemID << " x : "<< pos.x << " y : " << pos.y << " z : "<<pos.z  << endl;
 	auto iter = m_clientMap.find((HostID)hostID);
 
 	{
@@ -324,6 +332,8 @@ DEFRMI_SpaceWar_NotifyPlayerMove(Server)
 	m_clientMap[(HostID)hostID]->x = curX;
 	m_clientMap[(HostID)hostID]->y = curY;
 	m_clientMap[(HostID)hostID]->z = curZ;
+
+	m_gameRoom->GetClient((HostID)hostID)->SetPosition(curX, curY, curZ);
 	return true;
 }
 
@@ -364,15 +374,22 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 	}
 
 
-	m_proxy.NotifyPlayerChangeHP(m_playerP2PGroup, RmiContext::ReliableSend, targetHostID, m_clientMap[(HostID)targetHostID]->m_userName, m_clientMap[(HostID)targetHostID]->hp, prevHp, MAX_HP);
+	m_proxy.NotifyPlayerChangeHP(m_playerP2PGroup, RmiContext::ReliableSend, targetHostID, m_clientMap[(HostID)targetHostID]->m_userName, m_clientMap[(HostID)targetHostID]->hp, prevHp, MAX_HP,dir);
 	return true;
 }
 
 DEFRMI_SpaceWar_RequestPlayerUseOxy(Server)
 {
-	cout << "RequestPlayerUseOxy " << useOxy << endl;
+	//cout << "RequestPlayerUseOxy " << useOxy << endl;
+	float prevOxy = m_clientMap[(HostID)sendHostID]->oxy;
+
+	if (m_clientMap[(HostID)sendHostID]->oxy - useOxy < 0)
+	{
+		m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName,0.0f, prevOxy, MAX_OXY);
+		return true;
+	}
 	
-	float prevOxy =	m_clientMap[(HostID)sendHostID]->oxy;
+	
 	m_clientMap[(HostID)sendHostID]->oxy -= useOxy;
 
 	m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName, m_clientMap[(HostID)sendHostID]->oxy, prevOxy, MAX_OXY);
@@ -407,7 +424,8 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 		// 첫 사용
 		m_itemBoxMap[itemBoxIndex] = sendHostID;
 
-		int itemCode = 0; // 여기서 줘야함
+		int itemCode = (int)RandomRange(1,3); // 여기서 줘야함
+		cout << "item Code " << itemCode << endl;
 		m_proxy.NotifyUseItemBox(m_playerP2PGroup, RmiContext::ReliableSend,
 			sendHostID, itemBoxIndex, itemCode);
 		return true;
@@ -495,6 +513,10 @@ DEFRMI_SpaceWar_RequestSpaceShip(Server)
 DEFRMI_SpaceWar_RequestGameEnd(Server)
 {
 	cout << "RequestGameEnd -- 게임 종료  - " << endl;
+
+	if (m_clientMap[remote]->m_state != SPACESHIP)
+		return true;
+
 	
 	auto iter = m_clientMap.begin();
 
@@ -506,7 +528,6 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 		HostID targetID = iter->first;
 
 		int winState = (m_clientMap[targetID]->m_state == SPACESHIP) ? 1 : 0;
-
 		
 		m_proxy.NotifyGameResultInfoMe(targetID, RmiContext::ReliableSend, "test", winState,
 			playTime, iter->second->m_killCount, iter->second->m_assistCount, iter->second->m_deathCount, 100);
@@ -527,6 +548,7 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 
 		iter++;
 	}
+	ResetUsers();
 
 	return true;
 }
@@ -651,14 +673,14 @@ DEFRMI_SpaceWar_RequestNetworkPlayerCount(Server)
 DEFRMI_SpaceWar_RequestNetworkGameStart(Server)
 {
 	cout << " Game Start 변경 " << endl;
-
-	if (!m_gameRoom->GameStartCheck())
-	{
-		//실패
-		m_proxy.NotifyNetworkGameStartFailed(m_playerP2PGroup, RmiContext::ReliableSend);
-		return true;
-		
-	}
+	m_itemMap.clear();
+	//if (!m_gameRoom->GameStartCheck())
+	//{
+	//	//실패
+	//	m_proxy.NotifyNetworkGameStartFailed(m_playerP2PGroup, RmiContext::ReliableSend);
+	//	return true;
+	//	
+	//}
 
 	auto iter = m_clientMap.begin();
 	while (iter != m_clientMap.end())
@@ -697,8 +719,50 @@ DEFRMI_SpaceWar_RequestNetworkHostOut(Server)
 	return true;
 }
 
-DEFRMI_SpaceWar_ReqeustGameSceneJoin(Server)
+DEFRMI_SpaceWar_RequestGameSceneJoin(Server)
 {
+	shared_ptr<RoomClient> client = m_gameRoom->GetClient(remote);
+
+	client->SetGameScene(true);
+	client->SetPosition(pos);
+
+	// 모든 클라이언트가 준비되었는지 확인 
+	if (m_gameRoom->IsGameSceneAllReady())
+	{
+		// 이 경우 이제 모든 클라에게 접속 정보를 보낸다.
+		forward_list<HostID> list = m_gameRoom->GetAllClient();
+
+		auto iter = list.begin();
+		while (iter != list.end())
+		{
+			forward_list<RoomClient> otherUsers = m_gameRoom->GetOtherClientInfos(*iter);
+
+			auto iter2 = otherUsers.begin();
+			while (iter2 != otherUsers.end())
+			{
+				Vector3 pos = iter2->GetPos();
+				m_proxy.NotifyOtherClientJoin(*iter, RmiContext::ReliableSend,
+					iter2->GetHostID(), iter2->GetName(), pos.x, pos.y, pos.z);
+				iter2++;
+			}
+
+			// 호스트가 아니면 아이템 생성 명령도 보내야 함
+			if (m_gameRoom->GetClient(*iter)->IsHost() == false)
+			{
+				// 아이템 생성 샌드
+				for each(auto item in m_itemMap)
+				{
+					m_proxy.NotifyCreateItem(*iter, RmiContext::ReliableSend, (int)HostID_Server,
+						item.second->m_itemCID, item.second->m_itemID, item.second->pos, item.second->rot);
+				}
+			}
+			
+
+			iter++;
+		}
+	}
+
+	
 	return true;
 }
 

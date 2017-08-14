@@ -39,6 +39,27 @@ public class SpaceShip : MonoBehaviour {
         if(!m_isEnd)
             m_fuel = 0.0f;
         GameManager.Instance().m_inGameUI.StopSpaceShipUI();
+        SpaceShipEngineChargerProcessCancel();
+    }
+
+    public void SpaceShipEngineChargeProcess()
+    {
+        if(IsInvoking("ChargeProcess") == false)
+            InvokeRepeating("ChargeProcess" , Time.deltaTime , Time.deltaTime);
+    }
+    
+    public void SpaceShipEngineChargerProcessCancel()
+    {
+        if(IsInvoking("ChargeProcess"))
+            CancelInvoke("ChargeProcess");
+        m_fuel = 0.0f;
+
+        NetworkManager.Instance().C2SNotifySpaceShipEngineCharge(m_spaceShipID , m_fuel);
+    }
+
+    void ChargeProcess()
+    {
+        SpaceShipEngineCharge(0.001f , true);
     }
     
     public void SpaceShipEngineCharge(float t,bool me)
@@ -64,7 +85,7 @@ public class SpaceShip : MonoBehaviour {
                 NetworkManager.Instance().C2SRequestSpaceShip();
                 GameManager.Instance().WINNER = true;
                 GameManager.Instance().m_inGameUI.StopSpaceShipUI();
-                Camera.main.GetComponent<CamRotate>().enabled = false;
+                CameraManager.Instance().enabled = false;
                 Camera.main.fieldOfView = 70.0f;
                 Camera.main.transform.SetParent(transform.GetChild(0).GetChild(0) , false);
                 Camera.main.transform.localEulerAngles = new Vector3(0.0f , 0.0f , 0.0f);
@@ -88,13 +109,13 @@ public class SpaceShip : MonoBehaviour {
         if (!col.CompareTag("PlayerCharacter"))
             return;
 
-        var p = col.GetComponent<Player>();
+        var p = col.GetComponent<PlayerController>();
 
         if (p.enabled)
         {
             // 실 플레이어일 경우에만
-            p.IsMoveable = false;
-            p.IsJumpable = false;
+            //p.IS_MOVE_ABLE = false;
+            //p.IS_JUMP_ABLE = false;
         }
     }
 

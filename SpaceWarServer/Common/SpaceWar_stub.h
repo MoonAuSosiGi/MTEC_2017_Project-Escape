@@ -240,15 +240,15 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestWorldCreateItem RequestWorldCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
 #define PARAM_SpaceWar_RequestWorldCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
                
-		virtual bool RequestPlayerDamage ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const string & ,  const string & ,  const float & )		{ 
+		virtual bool RequestPlayerDamage ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const string & ,  const string & ,  const float & ,  const Proud::Vector3 & )		{ 
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_RequestPlayerDamage bool RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage) PN_OVERRIDE
+#define DECRMI_SpaceWar_RequestPlayerDamage bool RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage,  const Proud::Vector3 & dir) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_RequestPlayerDamage(DerivedClass) bool DerivedClass::RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage)
-#define CALL_SpaceWar_RequestPlayerDamage RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage)
-#define PARAM_SpaceWar_RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage)
+#define DEFRMI_SpaceWar_RequestPlayerDamage(DerivedClass) bool DerivedClass::RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage,  const Proud::Vector3 & dir)
+#define CALL_SpaceWar_RequestPlayerDamage RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage,  const Proud::Vector3 & dir)
+#define PARAM_SpaceWar_RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage,  const Proud::Vector3 & dir)
                
 		virtual bool RequestPlayerUseOxy ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const float & )		{ 
 			return false;
@@ -420,15 +420,15 @@ namespace SpaceWar
 #define CALL_SpaceWar_NotifyPlayerUnEquipItem NotifyPlayerUnEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
 #define PARAM_SpaceWar_NotifyPlayerUnEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
                
-		virtual bool NotifyPlayerBulletCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & )		{ 
+		virtual bool NotifyPlayerBulletCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & )		{ 
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_NotifyPlayerBulletCreate bool NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot) PN_OVERRIDE
+#define DECRMI_SpaceWar_NotifyPlayerBulletCreate bool NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_NotifyPlayerBulletCreate(DerivedClass) bool DerivedClass::NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
-#define CALL_SpaceWar_NotifyPlayerBulletCreate NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
-#define PARAM_SpaceWar_NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
+#define DEFRMI_SpaceWar_NotifyPlayerBulletCreate(DerivedClass) bool DerivedClass::NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
+#define CALL_SpaceWar_NotifyPlayerBulletCreate NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
+#define PARAM_SpaceWar_NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
                
 		virtual bool NotifyPlayerBulletMove ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ,  const Proud::Vector3 & )		{ 
 			return false;
@@ -460,15 +460,15 @@ namespace SpaceWar
 #define CALL_SpaceWar_NotifyPlayerAnimation NotifyPlayerAnimation ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & name,  const string & animationName,  const int & aniValue)
 #define PARAM_SpaceWar_NotifyPlayerAnimation ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & name,  const string & animationName,  const int & aniValue)
                
-		virtual bool NotifyPlayerChangeHP ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const float & ,  const float & ,  const float & )		{ 
+		virtual bool NotifyPlayerChangeHP ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const float & ,  const float & ,  const float & ,  const Proud::Vector3 & )		{ 
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_NotifyPlayerChangeHP bool NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp) PN_OVERRIDE
+#define DECRMI_SpaceWar_NotifyPlayerChangeHP bool NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp,  const Proud::Vector3 & dir) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_NotifyPlayerChangeHP(DerivedClass) bool DerivedClass::NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp)
-#define CALL_SpaceWar_NotifyPlayerChangeHP NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp)
-#define PARAM_SpaceWar_NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp)
+#define DEFRMI_SpaceWar_NotifyPlayerChangeHP(DerivedClass) bool DerivedClass::NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp,  const Proud::Vector3 & dir)
+#define CALL_SpaceWar_NotifyPlayerChangeHP NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp,  const Proud::Vector3 & dir)
+#define PARAM_SpaceWar_NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp,  const Proud::Vector3 & dir)
                
 		virtual bool NotifyPlayerChangeOxygen ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const float & ,  const float & ,  const float & )		{ 
 			return false;
@@ -868,12 +868,12 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const string & ,  const string & ,  const float & ) > RequestPlayerDamage_Function;
-		virtual bool RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage) 
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const string & ,  const string & ,  const float & ,  const Proud::Vector3 & ) > RequestPlayerDamage_Function;
+		virtual bool RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage,  const Proud::Vector3 & dir) 
 		{ 
 			if (RequestPlayerDamage_Function==nullptr) 
 				return true; 
-			return RequestPlayerDamage_Function(remote,rmiContext, sendHostID, targetHostID, name, weaponName, damage); 
+			return RequestPlayerDamage_Function(remote,rmiContext, sendHostID, targetHostID, name, weaponName, damage, dir); 
 		}
 
                
@@ -1030,8 +1030,8 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ) > NotifyPlayerBulletCreate_Function;
-		virtual bool NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot) 
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ) > NotifyPlayerBulletCreate_Function;
+		virtual bool NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot) 
 		{ 
 			if (NotifyPlayerBulletCreate_Function==nullptr) 
 				return true; 
@@ -1066,12 +1066,12 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const float & ,  const float & ,  const float & ) > NotifyPlayerChangeHP_Function;
-		virtual bool NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp) 
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const float & ,  const float & ,  const float & ,  const Proud::Vector3 & ) > NotifyPlayerChangeHP_Function;
+		virtual bool NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp,  const Proud::Vector3 & dir) 
 		{ 
 			if (NotifyPlayerChangeHP_Function==nullptr) 
 				return true; 
-			return NotifyPlayerChangeHP_Function(remote,rmiContext, sendHostID, name, hp, prevhp, maxhp); 
+			return NotifyPlayerChangeHP_Function(remote,rmiContext, sendHostID, name, hp, prevhp, maxhp, dir); 
 		}
 
                

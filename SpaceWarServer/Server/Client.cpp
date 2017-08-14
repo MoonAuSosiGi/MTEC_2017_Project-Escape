@@ -20,6 +20,17 @@ Client::~Client()
 {
 }
 
+void Client::Reset()
+{
+	x = y = z = 0.0f;
+	hp = MAX_HP;
+	oxy = MAX_OXY;
+	m_killCount = 0;
+	m_assistCount = 0;
+	m_deathCount = 0;
+
+	m_state = ALIVE;
+}
 
 void Client::DamageClient(int hostID, float time)
 {

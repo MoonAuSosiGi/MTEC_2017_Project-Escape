@@ -204,7 +204,8 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(ThrowKey) && Weapon != null)
         {
             RaycastHit ThrowPos;
-            Physics.Raycast(ModelTransform.position + (ModelTransform.rotation * (Vector3.up + Vector3.forward) * 1) , (ModelTransform.position - AnchorPlanet.Planet.position).normalized * -3 , out ThrowPos , 10f);
+            Physics.Raycast(ModelTransform.position + (ModelTransform.rotation * (Vector3.up + Vector3.forward) * 1) , 
+                (ModelTransform.position - AnchorPlanet.Planet.position).normalized * -3 , out ThrowPos , 10f);
 
 
             if (ThrowPos.point == Vector3.zero || ThrowPos.collider.gameObject.CompareTag("NonSpone"))
@@ -273,8 +274,8 @@ public class Player : MonoBehaviour {
             {
                 return;
             }
-            NetworkManager.Instance().C2SRequestPlayerDamage(
-                (int)NetworkManager.Instance().m_hostID , "" , "Meteor" , 10.0f);
+            //NetworkManager.Instance().C2SRequestPlayerDamage(
+            //    (int)NetworkManager.Instance().m_hostID , "" , "Meteor" , 10.0f);
             m_coolTime = 0.5f;
             InvokeRepeating("CoolTimeChecker" , 0.1f , 0.1f);
             

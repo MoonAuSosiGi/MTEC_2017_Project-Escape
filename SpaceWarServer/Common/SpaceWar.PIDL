@@ -84,7 +84,7 @@ global SpaceWar 3141
 	// Game Logic ----------------------------------------------------
 	//C2S -------------------------------------------------------------
 	
-	// Start Send
+	// TODO 서버 구조 변경으로 삭제 대상
 	RequestClientJoin([in]int hostID,[in]string name,[in]float x,[in]float y,[in]float z);
 	
 	// 월드에 아이템 생성 요청 //
@@ -92,7 +92,7 @@ global SpaceWar 3141
 
 	
 	// 플레이어가 맞았다
-	RequestPlayerDamage([in]int sendHostID,[in]int targetHostID,[in]string name,[in]string weaponName,[in]float damage);
+	RequestPlayerDamage([in]int sendHostID,[in]int targetHostID,[in]string name,[in]string weaponName,[in]float damage,[in]Proud::Vector3 dir);
 
 	// 플레이어가 숨을쉬었다.
 	RequestPlayerUseOxy([in]int sendHostID,[in]string name,[in]float useOxy);
@@ -151,7 +151,7 @@ global SpaceWar 3141
 	////NotifyPlayerUnEquipItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]float x,[in]float y,[in]float z,[in]float rx,[in]float ry,[in]float rz);
 
 	// 플레이어의 총알 생성
-	NotifyPlayerBulletCreate([in]int sendHostID,[in]string bulletType,[in]string bulletID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
+	NotifyPlayerBulletCreate([in]int sendHostID,[in]int bulletType,[in]string bulletID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
 
 	// 플레이어의 총알 동기화
 	NotifyPlayerBulletMove([in]int sendHostID,[in]string bulletID,[in]Proud::Vector3 pos,[in]Proud::Vector3 velocity,[in]Proud::Vector3 rot);
@@ -163,7 +163,7 @@ global SpaceWar 3141
 	NotifyPlayerAnimation([in]int hostID,[in]string name,[in]string animationName,[in]int aniValue);
 
 	// 체력 변동 이벤트 (데미지는 여기서 처리되지 않는다.)
-	NotifyPlayerChangeHP([in]int sendHostID,[in]string name,[in]float hp,[in]float prevhp,[in]float maxhp);
+	NotifyPlayerChangeHP([in]int sendHostID,[in]string name,[in]float hp,[in]float prevhp,[in]float maxhp,[in]Proud::Vector3 dir);
 
 	// 산소 변동 이벤트
 	NotifyPlayerChangeOxygen([in]int sendHostID,[in]string name,[in]float oxygen,[in]float prevoxy,[in]float maxoxy);

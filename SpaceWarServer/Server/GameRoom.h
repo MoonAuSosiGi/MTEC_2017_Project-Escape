@@ -16,6 +16,9 @@ private:
 	bool m_redTeam;
 	bool m_isReady;
 	bool m_isHost;
+	bool m_isGameScene;
+
+	Vector3 m_pos;
 public:
 	RoomClient(HostID hostID, string userName,bool host = false)
 	{
@@ -47,12 +50,32 @@ public:
 		m_isLobby = lobby;
 	}
 
+	void SetGameScene(bool gameScene)
+	{
+		m_isGameScene = gameScene;
+	}
+
+	void SetPosition(Vector3 pos)
+	{
+		m_pos = pos;
+	}
+
+	void SetPosition(float x, float y, float z)
+	{
+		m_pos.x = x; m_pos.y = y; m_pos.z = z;
+	}
+
 	bool IsHost() { return m_isHost; }
 	bool IsReady() { return m_isReady; }
 	bool IsRedTeam() { return m_redTeam; }
 	bool IsLobby() { return m_isLobby; }
+	bool IsGameScene() { return m_isGameScene; }
+	Vector3 GetPos() { return m_pos; }
 	HostID GetHostID() { return m_hostID; }
 	string GetName() { return m_userName; }
+
+
+
 };
 
 class GameRoom
@@ -103,10 +126,14 @@ public:
 	// 클리어
 	void ClearRoom();
 
+	// 모두 준비가 되었는지 
+	bool IsGameSceneAllReady();
+
 	shared_ptr<RoomClient> GetClient(HostID hostID) { return m_clientMap[hostID]; }
 
 	forward_list<HostID> GetOtherClients(HostID hostID);
 	forward_list<RoomClient> GetOtherClientInfos(HostID hostID);
+	forward_list<HostID> GetAllClient();
 
 };
 

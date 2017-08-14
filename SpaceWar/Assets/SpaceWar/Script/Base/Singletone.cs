@@ -16,7 +16,7 @@ public class Singletone<T> : MonoBehaviour where T : MonoBehaviour{
                 m_instance = FindObjectOfType(typeof(T)) as T;
                 if (m_instance == null)
                 {
-                    Debug.Log("ERROR...Singletone Instance NULL");
+                    //Debug.Log("ERROR...Singletone Instance NULL");
                     return null;
                 }
             }

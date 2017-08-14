@@ -86,8 +86,8 @@ public class NetworkManager : Singletone<NetworkManager> {
     }
 
     // 추후 Bullet 으로 변경할 것
-    public Dictionary<string , Gun01Bullet> m_bulletList = new Dictionary<string , Gun01Bullet>();
-    public Gun01Bullet GetNetworkBullet(string bulletID)
+    public Dictionary<string , Bullet> m_bulletList = new Dictionary<string , Bullet>();
+    public Bullet GetNetworkBullet(string bulletID)
     {
         if (m_bulletList.ContainsKey(bulletID))
             return m_bulletList[bulletID];
@@ -206,14 +206,6 @@ public class NetworkManager : Singletone<NetworkManager> {
             m_isHost = host;
             NetworkLog("Login Success " + (int)hostid);
 
-            //if((int)hostid == 4)
-            //{
-            //    for (int i = 0; i < m_shelterList.Count; i++)
-            //    {
-            //        m_shelterList[i].SHELTER_ID = GetShelterIndex(m_shelterList[i]);
-            //        C2SRequestShelterStartSetup(m_shelterList[i].SHELTER_ID);
-            //    }
-            //}
             if (loginResult != null)
                 loginResult(true);
 
@@ -240,6 +232,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             if (!GAME_RUNNING)
                 return true;
 
+            Debug.Log("Player Lost ");
             NetworkPlayer target = null;
             foreach (NetworkPlayer p in m_players)
             {
@@ -358,7 +351,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         {
             foreach (NetworkPlayer p in m_players)
             {
-                if (p.m_userName.Equals(name))
+                if ((int)p.m_hostID == sendHostID)
                 {
                     p.RecvNetworkAnimation(animationName , aniValue);
                     return true;
@@ -434,34 +427,47 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 총알 생성해라
         m_s2cStub.NotifyPlayerBulletCreate = (HostID remote , RmiContext rmiContext ,
-            int sendHostID , string bulletType , string bulletID ,
+            int sendHostID , int bulletCode , string bulletID ,
             UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
             NetworkLog("Bullet Create " + sendHostID + " t " + (int)m_hostID);
 
-            Gun01Bullet b = GetNetworkBullet(bulletID);
-
-            if (b != null)
+            Bullet b = GetNetworkBullet(bulletID);
+            Debug.Log("B  BB " + (b == null));
+            
+            if (b != null && b.ITEM_CODE == bulletCode)
             {
                 // 이미 생성되어 있는 것
                 // 재활용ㅋ
-                b.enabled = true;
+                b.NetworkReset(new Nettention.Proud.Vector3(pos.x,pos.y,pos.z));
                 b.transform.position = pos;
                 b.transform.eulerAngles = rot;
-                b.NETWORK_BULLET = true;
+                b.NETWORK_ID = bulletID;
+                b.IS_REMOTE = true;
+                
             }
             else
             {
-                // 타입 검사 후 생성하는 로직이 들어가야함 ( 지금은 일단 하나니까 ..)
-                GameObject bullet = GameObject.Instantiate(Resources.Load("Bullet/Gun01Bullet")) as GameObject;
+                GameObject bullet = null;
+                string path = "";
+                // 타입 검사 후 생성하는 로직 -현재 임시로직
+                switch (bulletCode)
+                {
+                    case 1: path = "Bullet/Gun01/Gun01_01"; break;
+                    case 2: path = "Bullet/Gun02/Gun02_02"; break;
+                }
 
+               bullet = GameObject.Instantiate(Resources.Load(path)) as GameObject;
                 bullet.transform.parent = transform;
                 bullet.transform.position = pos;
                 bullet.transform.localEulerAngles = rot;
-                b = bullet.GetComponent<Gun01Bullet>();
-                b.m_bulletID = bulletID;
-                b.NETWORK_BULLET = true;
+                b = bullet.GetComponent<Bullet>();
+                b.ITEM_CODE = bulletCode;
+                b.NETWORK_ID = bulletID;
+                Debug.Log("ddddddddddddddddddddddddddddd " + bulletID);
+                b.IS_REMOTE = true;
                 b.enabled = true;
+                b.NetworkBulletEnable();
                 bullet.SetActive(true);
                 m_bulletList.Add(bulletID , b);
             }
@@ -474,7 +480,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyPlayerBulletMove = (HostID remote , RmiContext rmiContext ,
             int sendHostID , string bulletID , UnityEngine.Vector3 pos , UnityEngine.Vector3 velocity , UnityEngine.Vector3 rot) =>
         {
-            Gun01Bullet b = GetNetworkBullet(bulletID);
+            Bullet b = GetNetworkBullet(bulletID);
 
             if (b == null)
                 NetworkLog("ERROR bulletID 미등록 " + bulletID);
@@ -488,7 +494,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         // 총알 부딪혀서 삭제해라
         m_s2cStub.NotifyPlayerBulletDelete = (HostID remote , RmiContext rmiContext , int sendHostID , string bulletID) =>
         {
-            Gun01Bullet b = GetNetworkBullet(bulletID);
+            Bullet b = GetNetworkBullet(bulletID);
 
             if (b == null)
                 NetworkLog("ERROR bulletID 미등록");
@@ -499,11 +505,14 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // hp 업데이트 이벤트
         m_s2cStub.NotifyPlayerChangeHP = (HostID remote , RmiContext rmiContext ,
-            int targetHostID , string name , float hp , float prevhp , float maxhp) =>
+            int targetHostID , string name , float hp , float prevhp , float maxhp,UnityEngine.Vector3 dir) =>
         {
             NetworkLog("damage host " + (int)m_hostID + " target " + targetHostID);
             if ((int)m_hostID == targetHostID)
+            {
                 GameManager.Instance().ChangeHP(hp , prevhp , maxhp);
+                GameManager.Instance().PLAYER.m_player.Damage(dir);
+            }
             return true;
         };
 
@@ -512,7 +521,13 @@ public class NetworkManager : Singletone<NetworkManager> {
             int targetHostID , string name , float oxygen , float prevoxy , float maxoxy) =>
         {
             if ((int)m_hostID == targetHostID)
+            {
+                if(oxygen <= 0)
+                {
+                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" , 1.0f,UnityEngine.Vector3.zero);
+                }
                 GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);
+            }
             return true;
         };
 
@@ -544,7 +559,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 // 같을 경우 
                 Debug.Log("얻었다 ! " + itemID + "를!");
                 //임의
-                GameManager.Instance().RecvItem(0 , box.transform.GetChild(3).gameObject);
+                GameManager.Instance().RecvItem(itemID-1 , box.transform.GetChild(3).gameObject);
             }
 
             return true;
@@ -564,10 +579,11 @@ public class NetworkManager : Singletone<NetworkManager> {
             else
                 m_shelterList[shelterID].LightOff();
 
+            // 네트워크에서 쏜 것이므로 메시지는 던지지않음
             if (doorState)
-                m_shelterList[shelterID].OpenDoor();
+                m_shelterList[shelterID].OpenDoor(true);
             else
-                m_shelterList[shelterID].CloseDoor();
+                m_shelterList[shelterID].CloseDoor(true);
 
             return true;
         };
@@ -620,8 +636,9 @@ public class NetworkManager : Singletone<NetworkManager> {
             string gameMode , int winState , int playTime , int kills , int assists ,
             int death , int getMoney) =>
         {
-            Debug.Log("Result 자기자신");
-            GameManager.Instance().SetResultProfileInfo(gameMode , winState , playTime , kills , assists , death , getMoney);
+            if (gameResultInfoToMe != null)
+                gameResultInfoToMe(gameMode , winState , playTime , kills , assists , death , getMoney);
+          //  GameManager.Instance().SetResultProfileInfo(gameMode , winState , playTime , kills , assists , death , getMoney);
             return true;
         };
 
@@ -629,16 +646,23 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyGameResultInfoOther = (HostID remote , RmiContext rmiContext ,
             string name , int state) =>
         {
-            Debug.Log("Result 적들");
-            GameManager.Instance().AddResultOtherProfileInfo(name , state);
+            Debug.Log("Result 적들 "+(gameResultInfoToOther == null) );
+            //GameManager.Instance().AddResultOtherProfileInfo(name , state);
+
+            if (gameResultInfoToOther != null)
+                gameResultInfoToOther(name , state);
+
             return true;
         };
 
         // 이제 결과를 띄워라
         m_s2cStub.NotifyGameResultShow = (HostID remote , RmiContext rmiContext) =>
-        {
-            Debug.Log("Result Show");
-            GameManager.Instance().GameResultShow();
+        { 
+            //GameManager.Instance().GameResultShow();
+
+            if (gameResultShow != null)
+                gameResultShow();
+
             return true;
         };
         #endregion
@@ -677,7 +701,16 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     #region InGame Method
 
-    void NetworkObjectSetup()
+    public void NetworkShelterServerSetup()
+    {
+        for (int i = 0; i < m_shelterList.Count; i++)
+        {
+            m_shelterList[i].SHELTER_ID = GetShelterIndex(m_shelterList[i]);
+            C2SRequestShelterStartSetup(m_shelterList[i].SHELTER_ID);
+        }
+    }
+
+    public void NetworkObjectSetup()
     {
         NetworkLog("Network Object Setup -- 사용 가능한 상태로 만들기 --");
         NetworkSetupItemBox();
@@ -894,27 +927,32 @@ public class NetworkManager : Singletone<NetworkManager> {
     // 게임 씬으로 넘어왔어!
     public void RequestGameSceneJoin(UnityEngine.Vector3 pos)
     {
+        m_isGameRunning = true;
         m_c2sProxy.RequestGameSceneJoin( HostID.HostID_Server,RmiContext.ReliableSend, pos , (int)m_hostID , USER_NAME);   
     }
 
     #endregion
 
     #endregion
+
+    #region NetworkResult Delegate
+    //자기 자신 정보 전달
+    public delegate void GameResultInfoToMe(string gameMode , int winState , int playTime , int kills , int assists , int deah , int getMoney);
+    public event GameResultInfoToMe gameResultInfoToMe = null;
+
+    // 적들의 정보가 하나씩 넘어옴
+    public delegate void GameResultInfoToOther(string name , int state);
+    public event GameResultInfoToOther gameResultInfoToOther = null;
+
+    // 결과를 띄우세요
+    public delegate void GameResultShow();
+    public event GameResultShow gameResultShow = null;
+    
+    #endregion
+
     #endregion
 
     #region C2S_Method
-
-
-    //player created
-    public void C2SRequestClientJoin(string name,UnityEngine.Vector3 pos)
-    {
-        var sendOption = new RmiContext(); // (2)
-
-        NetworkLog("RequestClientJoin " + name);
-
-        m_c2sProxy.RequestClientJoin(HostID.HostID_Server , RmiContext.ReliableSend,(int)m_hostID, name , pos.x , pos.y , pos.z);
-    }
-
     //move
     public void C2SRequestPlayerMove(string name,
         UnityEngine.Vector3 cur,UnityEngine.Vector3 velocity,
@@ -970,13 +1008,13 @@ public class NetworkManager : Singletone<NetworkManager> {
     }
 
     //bullet Create Send
-    public void C2SRequestBulletCreate(string bulletID,UnityEngine.Vector3 pos,UnityEngine.Vector3 rot)
+    public void C2SRequestBulletCreate(string bulletID,UnityEngine.Vector3 pos,UnityEngine.Vector3 rot,int bulletCode)
     {
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
-        sendOption.maxDirectP2PMulticastCount = 30;
+        //sendOption.maxDirectP2PMulticastCount = 30;
         sendOption.enableLoopback = false;
-        m_c2sProxy.NotifyPlayerBulletCreate(m_p2pID , sendOption , (int)m_hostID , "test" , bulletID , pos , rot);
+        m_c2sProxy.NotifyPlayerBulletCreate(m_p2pID , sendOption , (int)m_hostID , bulletCode , bulletID , pos , rot);
     }
 
     // bullet move
@@ -1001,10 +1039,10 @@ public class NetworkManager : Singletone<NetworkManager> {
     }
 
     // damage
-    public void C2SRequestPlayerDamage(int targetHostID,string name,string weaponName,float damage)
+    public void C2SRequestPlayerDamage(int targetHostID,string name,string weaponName,float damage,UnityEngine.Vector3 dir)
     {
         m_c2sProxy.RequestPlayerDamage(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID ,
-            targetHostID , name , weaponName , damage);
+            targetHostID , name , weaponName , damage,dir);
     }
 
     // use Oxy
@@ -1072,6 +1110,7 @@ public class NetworkManager : Singletone<NetworkManager> {
     // 게임이 끝났음을 알림
     public void C2SRequestGameEnd()
     {
+        m_isGameRunning = false;
         m_c2sProxy.RequestGameEnd(HostID.HostID_Server , RmiContext.ReliableSend);
     }
 

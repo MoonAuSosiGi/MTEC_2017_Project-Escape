@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System;
 
 public class ResultUI : MonoBehaviour {
 
@@ -36,7 +38,34 @@ public class ResultUI : MonoBehaviour {
         DEATH,
         SPACESHIP
     }
-   
+    #region NetworkResult 
+    private string m_resultMode = null;
+    private int m_resultWinState = 0;
+    private int m_resultPlayTime = 0;
+    private int m_resultKills = 0;
+    private int m_resultAssists = 0;
+    private int m_resultDeath = 0;
+    private int m_resultMoney = 0;
+
+    private bool m_resultUIAlready = false;
+    public bool RESULT_UI_ALREADY { get { return m_resultUIAlready; } set { m_resultUIAlready = value; } }
+
+    public class UserInformation
+    {
+        public string m_name = null;
+        public int m_state = 0;
+        public int m_team = 0;
+
+        public UserInformation(string name , int state , int team)
+        {
+            m_name = name;
+            m_state = state;
+            m_team = team;
+        }
+    }
+    public List<UserInformation> m_infoList = new List<UserInformation>();
+    #endregion
+
     #endregion
 
     #region Setting Information
@@ -45,28 +74,32 @@ public class ResultUI : MonoBehaviour {
         m_gameResult.text = (winState == 1) ? "VICTORY" : "LOSE";
         m_gameMode.text = "TEST MODE";
 
-        m_userName.text = GameManager.Instance().PLAYER.m_name;
+        m_userName.text = NetworkManager.Instance().USER_NAME;
 
         // 플레이 타임
-        int time = playTime / 1000;
-        
-        
-        m_playTime.text = time.ToString(); // 임시
+        // int time = playTime / 1000;
+        var time = TimeSpan.FromMilliseconds(playTime);
+
+        string hours = (time.Hours > 0) ? time.Hours + ":" : "";
+        m_playTime.text = hours + time.Minutes.ToString("00") + ":" + time.Seconds; // 임시
         m_killCount.text = killCount.ToString();
         m_assistCount.text = assistCount.ToString();
         m_deathCount.text = deathCount.ToString();
         m_money.text = money.ToString();
     }
 
+    public void AddResultOtherProfileInfo(string userName , int state , int team = 0)
+    {
+        m_infoList.Add(new UserInformation(userName , state , team));
+    }
 
     // 실 데이터 적용
     public void SettingEnd()
     {
-        List<GameManager.UserInformation> infoList = GameManager.Instance().m_infoList;
-        Debug.Log("info List "+infoList.Count);
-        for (int i = 0; i < infoList.Count; i++)
+
+        for (int i = 0; i < m_infoList.Count; i++)
         {
-            GameManager.UserInformation user = infoList[i];
+            UserInformation user = m_infoList[i];
             UserInfo info = m_userInfoList[i];
 
             info.m_UserObj.SetActive(true);
@@ -87,7 +120,7 @@ public class ResultUI : MonoBehaviour {
             info.m_teamLogo.gameObject.SetActive(false);
         }
 
-        for(int i = infoList.Count; i < m_userInfoList.Count; i++)
+        for(int i = m_infoList.Count; i < m_userInfoList.Count; i++)
         {
             m_userInfoList[i].m_UserObj.SetActive(false);
         }
@@ -103,16 +136,53 @@ public class ResultUI : MonoBehaviour {
 
     public void BackToMainLobbyButton()
     {
-        Debug.Log("BackToMainLobbyButton ");
+        NetworkManager.Instance().gameResultInfoToMe -= ResultUI_gameResultInfoToMe;
+        NetworkManager.Instance().gameResultInfoToOther -= ResultUI_gameResultInfoToOther;
+        NetworkManager.Instance().gameResultShow -= ResultUI_gameResultShow;
+        SceneManager.LoadScene(1);
     }
     #endregion
 
 
     #region UnityMethod
-    void Awake()
+    void Start()
     {
         GameManager.Instance().m_resultUI = this;
+        // 내 정보가 넘어왔다.
+        NetworkManager.Instance().gameResultInfoToMe += ResultUI_gameResultInfoToMe;
+        // 다른 사람 정보가 넘어왔다.
+        NetworkManager.Instance().gameResultInfoToOther += ResultUI_gameResultInfoToOther;
+
+        // 이제 결과를 띄우셔도 좋습니다.
+        NetworkManager.Instance().gameResultShow += ResultUI_gameResultShow;
         gameObject.SetActive(false);
     }
+
+    private void ResultUI_gameResultShow()
+    {
+        SettingEnd();
+
+        InvokeRepeating("ResultCheck" , Time.deltaTime , Time.deltaTime);
+    }
+
+    private void ResultUI_gameResultInfoToOther(string name , int state)
+    {
+        AddResultOtherProfileInfo(name , state);
+    }
+
+    private void ResultUI_gameResultInfoToMe(string gameMode , int winState , int playTime , int kills , int assists , int death , int getMoney)
+    {
+        SetProfileInfo(gameMode , winState , playTime , kills , assists , death , getMoney);
+    }
+
+    void ResultCheck()
+    {
+        if(RESULT_UI_ALREADY)
+        {
+            CancelInvoke("ResultCheck");
+            gameObject.SetActive(true);
+        }
+    }
+
     #endregion
 }

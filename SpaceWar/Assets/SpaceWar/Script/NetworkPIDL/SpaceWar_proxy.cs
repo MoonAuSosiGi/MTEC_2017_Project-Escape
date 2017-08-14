@@ -619,7 +619,7 @@ SP_Marshaler.Write(__msg, rot);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_RequestWorldCreateItem, Common.RequestWorldCreateItem);
 }
-public bool RequestPlayerDamage(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage)
+public bool RequestPlayerDamage(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage, UnityEngine.Vector3 dir)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -630,6 +630,7 @@ public bool RequestPlayerDamage(Nettention.Proud.HostID remote,Nettention.Proud.
 		SP_Marshaler.Write(__msg, name);
 		SP_Marshaler.Write(__msg, weaponName);
 		SP_Marshaler.Write(__msg, damage);
+		SP_Marshaler.Write(__msg, dir);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -638,7 +639,7 @@ public bool RequestPlayerDamage(Nettention.Proud.HostID remote,Nettention.Proud.
 		RmiName_RequestPlayerDamage, Common.RequestPlayerDamage);
 }
 
-public bool RequestPlayerDamage(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage)
+public bool RequestPlayerDamage(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, int targetHostID, string name, string weaponName, float damage, UnityEngine.Vector3 dir)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -649,6 +650,7 @@ SP_Marshaler.Write(__msg, targetHostID);
 SP_Marshaler.Write(__msg, name);
 SP_Marshaler.Write(__msg, weaponName);
 SP_Marshaler.Write(__msg, damage);
+SP_Marshaler.Write(__msg, dir);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_RequestPlayerDamage, Common.RequestPlayerDamage);
@@ -1173,7 +1175,7 @@ SP_Marshaler.Write(__msg, rot);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerUnEquipItem, Common.NotifyPlayerUnEquipItem);
 }
-public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -1192,7 +1194,7 @@ public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID remote,Nettention.P
 		RmiName_NotifyPlayerBulletCreate, Common.NotifyPlayerBulletCreate);
 }
 
-public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, int bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -1301,7 +1303,7 @@ SP_Marshaler.Write(__msg, aniValue);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerAnimation, Common.NotifyPlayerAnimation);
 }
-public bool NotifyPlayerChangeHP(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp)
+public bool NotifyPlayerChangeHP(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp, UnityEngine.Vector3 dir)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -1312,6 +1314,7 @@ public bool NotifyPlayerChangeHP(Nettention.Proud.HostID remote,Nettention.Proud
 		SP_Marshaler.Write(__msg, hp);
 		SP_Marshaler.Write(__msg, prevhp);
 		SP_Marshaler.Write(__msg, maxhp);
+		SP_Marshaler.Write(__msg, dir);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -1320,7 +1323,7 @@ public bool NotifyPlayerChangeHP(Nettention.Proud.HostID remote,Nettention.Proud
 		RmiName_NotifyPlayerChangeHP, Common.NotifyPlayerChangeHP);
 }
 
-public bool NotifyPlayerChangeHP(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp)
+public bool NotifyPlayerChangeHP(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string name, float hp, float prevhp, float maxhp, UnityEngine.Vector3 dir)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -1331,6 +1334,7 @@ SP_Marshaler.Write(__msg, name);
 SP_Marshaler.Write(__msg, hp);
 SP_Marshaler.Write(__msg, prevhp);
 SP_Marshaler.Write(__msg, maxhp);
+SP_Marshaler.Write(__msg, dir);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerChangeHP, Common.NotifyPlayerChangeHP);

@@ -660,7 +660,7 @@ __msg << rot;
 			RmiName_RequestWorldCreateItem, (::Proud::RmiID)Rmi_RequestWorldCreateItem);
 	}
         
-	bool Proxy::RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage)	{
+	bool Proxy::RequestPlayerDamage ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage,  const Proud::Vector3 & dir)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -673,12 +673,13 @@ __msg << targetHostID;
 __msg << name;
 __msg << weaponName;
 __msg << damage;
+__msg << dir;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_RequestPlayerDamage, (::Proud::RmiID)Rmi_RequestPlayerDamage);
 	}
 
-	bool Proxy::RequestPlayerDamage ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage)  	{
+	bool Proxy::RequestPlayerDamage ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & targetHostID,  const string & name,  const string & weaponName,  const float & damage,  const Proud::Vector3 & dir)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -691,6 +692,7 @@ __msg << targetHostID;
 __msg << name;
 __msg << weaponName;
 __msg << damage;
+__msg << dir;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_RequestPlayerDamage, (::Proud::RmiID)Rmi_RequestPlayerDamage);
@@ -1250,7 +1252,7 @@ __msg << rot;
 			RmiName_NotifyPlayerUnEquipItem, (::Proud::RmiID)Rmi_NotifyPlayerUnEquipItem);
 	}
         
-	bool Proxy::NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
+	bool Proxy::NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1268,7 +1270,7 @@ __msg << rot;
 			RmiName_NotifyPlayerBulletCreate, (::Proud::RmiID)Rmi_NotifyPlayerBulletCreate);
 	}
 
-	bool Proxy::NotifyPlayerBulletCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
+	bool Proxy::NotifyPlayerBulletCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1386,7 +1388,7 @@ __msg << aniValue;
 			RmiName_NotifyPlayerAnimation, (::Proud::RmiID)Rmi_NotifyPlayerAnimation);
 	}
         
-	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp)	{
+	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp,  const Proud::Vector3 & dir)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1399,12 +1401,13 @@ __msg << name;
 __msg << hp;
 __msg << prevhp;
 __msg << maxhp;
+__msg << dir;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyPlayerChangeHP, (::Proud::RmiID)Rmi_NotifyPlayerChangeHP);
 	}
 
-	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp)  	{
+	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp,  const Proud::Vector3 & dir)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1417,6 +1420,7 @@ __msg << name;
 __msg << hp;
 __msg << prevhp;
 __msg << maxhp;
+__msg << dir;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyPlayerChangeHP, (::Proud::RmiID)Rmi_NotifyPlayerChangeHP);

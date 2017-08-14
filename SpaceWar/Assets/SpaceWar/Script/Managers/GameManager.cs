@@ -37,79 +37,25 @@ public class GameManager : Singletone<GameManager> {
         get { return m_playerInfo; }
         set { m_playerInfo = value; }
     }
+    #region NetworkObject
+    public GameObject m_spaceShipParent = null;
+    public GameObject m_shelterParent = null;
+    public GameObject m_oxyChargerParent = null;
+    public GameObject m_itemBoxParent = null;
+    #endregion
 
     // result ------------------------------------------------------------------------------//
     #region RESULT 
     public ResultUI m_resultUI;
     private bool m_winner = false;
     public bool WINNER { get { return m_winner; } set { m_winner = value; } }
-    private string m_resultMode = null;
-    private int m_resultWinState = 0;
-    private int m_resultPlayTime = 0;
-    private int m_resultKills = 0;
-    private int m_resultAssists = 0;
-    private int m_resultDeath = 0;
-    private int m_resultMoney = 0;
 
-    private bool m_resultUIAlready = false;
     public void ResultUIAlready()
     {
-        Debug.Log("Already!!");
-        m_resultUIAlready = true;
+        Debug.Log("RRRRRRRRRRRRRRRRRRRRRRRRRRRRR "+ (m_resultUI == null));
+        m_resultUI.RESULT_UI_ALREADY = true;
     }
 
-    public class UserInformation
-    {
-        public string m_name = null;
-        public int m_state = 0;
-        public int m_team = 0;
-
-        public UserInformation(string name , int state , int team)
-        {
-            m_name = name;
-            m_state = state;
-            m_team = team;
-        }
-    }
-
-    public List<UserInformation> m_infoList = new List<UserInformation>();
-
-    public void SetResultProfileInfo(string mode,int winState,int playTime,int kill,int assist,int death,int money)
-    {
-        m_resultMode = mode;
-        m_resultWinState = winState;
-        m_resultPlayTime = playTime;
-        m_resultKills = kill;
-        m_resultAssists = assist;
-        m_resultDeath = death;
-        m_resultMoney = money;
-    }
-
-    public void AddResultOtherProfileInfo(string userName , int state , int team = 0)
-    {
-        m_infoList.Add(new GameManager.UserInformation(userName , state , team));
-    }
-
-    public void GameResultShow()
-    {
-        m_resultUI.SetProfileInfo(m_resultMode,m_resultWinState, m_resultPlayTime , m_resultKills , m_resultAssists , m_resultDeath , m_resultMoney);
-        m_resultUI.SettingEnd();
-
-        if (m_resultUIAlready)
-            m_resultUI.gameObject.SetActive(true);
-        else
-            InvokeRepeating("ResultShowCheck" , 0.5f , 0.5f);
-    }
-
-    void ResultShowCheck()
-    {
-        Debug.Log("TTT " + m_resultUIAlready);
-        if (m_resultUIAlready)
-        {
-            m_resultUI.gameObject.SetActive(true);
-            CancelInvoke("ResultShowCheck");
-        }
-    }
 
     #endregion
     // -------------------------------------------------------------------------------------//
@@ -123,38 +69,39 @@ public class GameManager : Singletone<GameManager> {
         public string m_name = "";
         public float m_hp = 100.0f;
         public float m_oxy = 100.0f;
-        public Player m_player = null;
+        public PlayerController m_player = null;
     }
     #endregion
 
     #region UnityMethod
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
-        m_playerInfo.m_name = "Test";
-        //PhotonNetwork.playerName = "Test" + Random.Range(0 , 22);
-        //PhotonNetwork.ConnectUsingSettings("0.1");
+        // DontDestroyOnLoad(this.gameObject);
 
-        
-        AnchorPlanet.PlanetAnchor = PlanetAnchor;
-        AnchorPlanet.Planet = Plant.transform;
-        AnchorPlanet.GM = this.transform;
-        
-        
+        if (GravityManager.Instance() == null)
+            return;
+
+        m_playerInfo.m_name = NetworkManager.Instance().USER_NAME;
+       
+
+        float planetScale = Plant.transform.localScale.x + 12.8f;
+        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
+            //GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
 
     public float PLANET_XANGLE = 0.0f;
     public float PLANET_ZANGLE = 0.0f;
+
     void Update()
     {
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (m_InventoryUI.INVEN_OPENSTATE)
-                m_InventoryUI.CloseInventory();
-            else
-                m_InventoryUI.OpenInventory();
-        }
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    if (m_InventoryUI.INVEN_OPENSTATE)
+        //        m_InventoryUI.CloseInventory();
+        //    else
+        //        m_InventoryUI.OpenInventory();
+        //}
     //    float planetScale = Plant.transform.localScale.x + 12.8f;
     //    Debug.DrawLine(transform.position , GetPlanetPosition(planetScale , PLANET_XANGLE , PLANET_ZANGLE) , Color.red);
       
@@ -182,12 +129,13 @@ public class GameManager : Singletone<GameManager> {
     {
         Debug.Log("CommandItemCreate.. " + itemCID + " pos " + rot);
         int index = CreateWeaponList.Count;
-        CreateWeaponList.Add(Instantiate(Item[itemCID] , pos ,
+        CreateWeaponList.Add(Instantiate(Item[itemCID-1] , pos ,
                 Quaternion.Euler(rot.x , rot.y , rot.z)));
         CreateWeaponList[index].transform.position = pos;
         CreateWeaponList[index].transform.eulerAngles = rot;
-        CreateWeaponList[index].GetComponent<Weapon>().WeaponID = itemID;
-        CreateWeaponList[index].GetComponent<Weapon>().CID = itemCID;
+        
+        CreateWeaponList[index].GetComponent<WeaponItem>().ITEM_NETWORK_ID = itemID;
+        
         CreateWeaponList[index].layer = 2;
 
         return CreateWeaponList[index];
@@ -201,8 +149,9 @@ public class GameManager : Singletone<GameManager> {
 
         for (int i = 0; i < Num; i++)
         {
-            int CID = Random.Range(0 , Item.Length - 1);
+            int CID = Random.Range(1 , 3);
 
+            Debug.Log("Item Create " + CID + " item Name " +Item[CID-1]);
             //ItemCreaterAnchor.Rotate(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
 
 
@@ -228,15 +177,16 @@ public class GameManager : Singletone<GameManager> {
 
             }
             
-            CreateWeaponList.Add(Instantiate(Item[CID] , SponeHitInfo.point , 
+            CreateWeaponList.Add(Instantiate(Item[CID-1] , SponeHitInfo.point , 
                 Quaternion.Euler(SponeHitInfo.normal.x + 45 , SponeHitInfo.normal.y + 45 , 
                 SponeHitInfo.normal.z + 90)));
           //  CreateWeaponList[i].transform.parent = m_itemParent.transform;
-            CreateWeaponList[i].GetComponent<Weapon>().WeaponID = i;
-            CreateWeaponList[i].GetComponent<Weapon>().CID = CID;
+          //  CreateWeaponList[i].GetComponent<WeaponItem>().ITEM_ID = CID;
             CreateWeaponList[i].layer = 2;
 
-            Vector3 SponeRot = (CreateWeaponList[i].transform.position - AnchorPlanet.PlanetAnchor.position).normalized;
+            CreateWeaponList[i].GetComponent<WeaponItem>().ITEM_NETWORK_ID = i;
+
+            Vector3 SponeRot = (CreateWeaponList[i].transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized;
 
             //SponeRot += CreateWeaponList[i].GetComponent<Weapon>().SponeRot;
 
@@ -246,7 +196,7 @@ public class GameManager : Singletone<GameManager> {
 
             CreateWeaponList[i].transform.rotation = targetRotation;
 
-            CreateWeaponList[i].transform.Rotate(CreateWeaponList[i].GetComponent<Weapon>().SponeRot);
+            CreateWeaponList[i].transform.Rotate(CreateWeaponList[i].GetComponent<WeaponItem>().SPONE_ROTATITON);
 
             CreateWeaponList[i].transform.Translate(Vector3.right * SponHeight);
 
@@ -259,9 +209,11 @@ public class GameManager : Singletone<GameManager> {
 
         for (int i = 0; i < CreateWeaponList.Count; i++)
         {
-            NetworkManager.Instance().C2SRequestItemCreate(CreateWeaponList[i].GetComponent<Weapon>().CID , i , CreateWeaponList[i].transform.position ,
+            NetworkManager.Instance().C2SRequestItemCreate(CreateWeaponList[i].GetComponent<WeaponItem>().ITEM_ID ,
+                i , CreateWeaponList[i].transform.position ,
                 CreateWeaponList[i].transform.eulerAngles);
-            NetworkManager.Instance().m_networkItemList.Add(CreateWeaponList[i].GetComponent<Weapon>().WeaponID , CreateWeaponList[i]);
+            NetworkManager.Instance().m_networkItemList.Add(i, 
+                CreateWeaponList[i]);
         }
 
     }
@@ -317,8 +269,8 @@ public class GameManager : Singletone<GameManager> {
 
         Vector3 scale = obj.transform.localScale;
         obj.transform.localScale = new Vector3(0.0f , 0.0f , 0.0f);
-        CreateWeaponList[CreateWeaponList.Count - 1].GetComponent<Weapon>().WeaponID = CreateWeaponList.Count - 1;
-        CreateWeaponList[CreateWeaponList.Count - 1].GetComponent<Weapon>().CID = itemCID;
+        CreateWeaponList[CreateWeaponList.Count - 1].GetComponent<WeaponItem>().ITEM_NETWORK_ID = CreateWeaponList.Count - 1;
+        
         CreateWeaponList[CreateWeaponList.Count - 1].layer = 2;
 
         
@@ -340,11 +292,11 @@ public class GameManager : Singletone<GameManager> {
 
         NetworkManager.Instance().C2SRequestItemCreate(
             CreateWeaponList[index]
-            .GetComponent<Weapon>().CID , index ,
+            .GetComponent<WeaponItem>().ITEM_ID , index ,
             CreateWeaponList[index].transform.position ,
                 CreateWeaponList[index].transform.eulerAngles);
         NetworkManager.Instance().m_networkItemList.Add(
-            CreateWeaponList[index].GetComponent<Weapon>().WeaponID ,
+            CreateWeaponList[index].GetComponent<WeaponItem>().ITEM_NETWORK_ID ,
             CreateWeaponList[index]);
     }
 
@@ -361,41 +313,57 @@ public class GameManager : Singletone<GameManager> {
 
         if (me)
         {
-            if(NetworkManager.Instance().IS_HOST)
+            NetworkManager.Instance().m_itemBoxParent = m_itemBoxParent;
+            NetworkManager.Instance().m_spaceShipParent = m_spaceShipParent;
+            NetworkManager.Instance().m_oxyChargerParent = m_oxyChargerParent;
+            NetworkManager.Instance().m_shelterParent = m_shelterParent;
+
+            NetworkManager.Instance().NetworkObjectSetup();
+
+            if (NetworkManager.Instance().IS_HOST)
+            {
                 StartCoroutine(CreateItem(CreateItemNum));
+                NetworkManager.Instance().NetworkShelterServerSetup();
+            }
+            
 
             GameManager.Instance().PLAYER.m_name = name;
-            
-            MP.GetComponent<Player>().enabled = true;
 
-            MP.AddComponent<Rigidbody>();
+            PlayerController player = MP.GetComponent<PlayerController>();
+
+            //MP.AddComponent<Rigidbody>();
             MP.GetComponent<Rigidbody>().freezeRotation = true;
             MP.GetComponent<Rigidbody>().useGravity = false;
 
-            MainCam.GetComponent<CamRotate>().Player = MP.transform;
-            MainCam.GetComponent<CamRotate>().CamAnchor[0] = MP.transform.GetChild(1);
-            MainCam.GetComponent<CamRotate>().CamAnchor[1] = MP.transform.GetChild(1).GetChild(0);
-            MainCam.GetComponent<CamRotate>().CamAnchor[2] = MP.transform.GetChild(1).GetChild(0).GetChild(0);
-            MainCam.GetComponent<CamRotate>().CamAnchor[3] = MP.transform.GetChild(1).GetChild(0).GetChild(1);
-            MainCam.GetComponent<CamRotate>().enabled = true;
+
+            GravityManager.Instance().SetGravityTarget(MP.GetComponent<Rigidbody>());
+
+            player.enabled = true;
+            player.SetCameraThirdPosition();
 
 
-            Plant.GetComponent<Gravity>().TargetObject = MP.GetComponent<Rigidbody>();
 
-            AnchorPlanet.PlayerCharacter = MP.transform;
-            GameManager.Instance().PLAYER.m_player = MP.GetComponent<Player>();
+            //Plant.GetComponent<Gravity>().TargetObject = MP.GetComponent<Rigidbody>();
 
-            NetworkManager.Instance().C2SRequestClientJoin(
-                GameManager.Instance().PLAYER.m_name , MP.transform.position);
+            //AnchorPlanet.PlayerCharacter = MP.transform;
+            GameManager.Instance().PLAYER.m_player = player;
+
+            //NetworkManager.Instance().C2SRequestClientJoin(
+            //    GameManager.Instance().PLAYER.m_name , MP.transform.position);
+
+            NetworkManager.Instance().RequestGameSceneJoin(startPos);
+            m_inGameUI.gameObject.SetActive(true);
         }
         else
         {
             // 네트워크 플레이일 경우 
-            Player l = MP.GetComponent<Player>();
+            PlayerController l = MP.GetComponent<PlayerController>();
             NetworkPlayer p = MP.AddComponent<NetworkPlayer>();
-            p.PlayerAnim = MP.GetComponent<Player>().PlayerAnim;
-            p.m_weaponAnchor = l.WeaponAnchor;
-            MP.GetComponent<Player>().enabled = false;
+            p.PlayerAnim = l.ANIMATOR;
+            p.m_weaponAnchor = l.WEAPON_ANCHOR;
+           // MP.GetComponent<CapsuleCollider>().enabled = false;
+            //MP.GetComponent<CapsuleCollider>().isTrigger = true;
+            MP.GetComponent<PlayerController>().enabled = false;
             NetworkManager.Instance().NETWORK_PLAYERS.Add(p);
         }
 
@@ -407,11 +375,11 @@ public class GameManager : Singletone<GameManager> {
     {
         m_playerInfo.m_hp = curHp;
         if (m_playerInfo.m_hp > 0.0f)
-            m_playerInfo.m_player.AnimationSettingAndSend("Damage" , 1234);
+            m_playerInfo.m_player.AnimationPlay("Damage");
         else
         {
-            m_playerInfo.m_player.IsMoveable = false;
-            m_playerInfo.m_player.AnimationSettingAndSend("Dead" , 1234);
+            m_playerInfo.m_player.IS_MOVE_ABLE = false;
+            m_playerInfo.m_player.AnimationPlay("Dead");
         }
         m_inGameUI.PlayerHPUpdate(curHp , prevHp , maxHp);
     }
