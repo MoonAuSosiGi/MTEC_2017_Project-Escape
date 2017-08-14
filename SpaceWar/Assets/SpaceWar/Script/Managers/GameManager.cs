@@ -44,6 +44,9 @@ public class GameManager : Singletone<GameManager> {
     public GameObject m_itemBoxParent = null;
     #endregion
 
+    // 메테오 떨어지는 시간
+    private int m_meteorTime = 30;
+
     // result ------------------------------------------------------------------------------//
     #region RESULT 
     public ResultUI m_resultUI;
@@ -52,7 +55,6 @@ public class GameManager : Singletone<GameManager> {
 
     public void ResultUIAlready()
     {
-        Debug.Log("RRRRRRRRRRRRRRRRRRRRRRRRRRRRR "+ (m_resultUI == null));
         m_resultUI.RESULT_UI_ALREADY = true;
     }
 
@@ -84,9 +86,9 @@ public class GameManager : Singletone<GameManager> {
         m_playerInfo.m_name = NetworkManager.Instance().USER_NAME;
        
 
-        float planetScale = Plant.transform.localScale.x + 12.8f;
-        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
-            //GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 12.8f;
+        OnJoinedRoom(m_playerInfo.m_name , true ,// new Vector3(9.123454f , 48.63797f , -32.4867f));
+            GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
 
     public float PLANET_XANGLE = 0.0f;
@@ -243,7 +245,23 @@ public class GameManager : Singletone<GameManager> {
         test.transform.position = pos;
         test.transform.rotation = Quaternion.LookRotation((pos - Vector3.zero).normalized);
 
+        m_meteorTime = 30;
+        m_inGameUI.RecvMeteorInfo(m_meteorTime);
+        m_inGameUI.StartMeteor();
+        InvokeRepeating("MeteorTimer" , 1.0f , 1.0f);
 
+    }
+
+    void MeteorTimer()
+    {
+        m_meteorTime--;
+        m_inGameUI.RecvMeteorInfo(m_meteorTime);
+
+        if(m_meteorTime < 0)
+        {
+            m_inGameUI.StopMeteor();
+            CancelInvoke("MeteorTimer");
+        }
     }
 
     public Vector3 GetPlanetPosition(float scale,float anglex,float anglez)

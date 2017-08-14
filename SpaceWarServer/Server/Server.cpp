@@ -5,6 +5,7 @@
 #include "Server.h"
 
 Server server;
+bool s_GameRunning = false;
 
 int main()
 {
@@ -18,9 +19,11 @@ int main()
 
 void MeteorLoop(void*)
 {
+	if (s_GameRunning == false)
+		return;
 	s_meteorCommingSec--;
 
-	if(s_meteorCommingSec % 5 == 0)
+	if(s_meteorCommingSec % 5 == 0 && s_meteorCommingSec >= 0)
 		cout << "메테오 " << s_meteorCommingSec << " 초 남음 " << endl;
 
 	
@@ -41,7 +44,7 @@ void MeteorLoop(void*)
 		{
 			if (s_meteorCommingSec == -60)
 			{
-				s_meteorCommingSec = 10;
+				s_meteorCommingSec = 30;
 			}
 		}
 	}
@@ -58,9 +61,9 @@ void Server::ServerRun()
 //	typedef void(*ThreadProc)(void* ctx);
 	void(*func)(void*);
 	func = &MeteorLoop;
-	//CTimerThread meteorThread(func, 1000, nullptr);
+	CTimerThread meteorThread(func, 1000, nullptr);
 	//
-	//meteorThread.Start();
+	meteorThread.Start();
 
 	// -- 서버 파라매터 지정 ( 프로토콜 / 포트 지정 ) ---------------------------//
 	CStartServerParameter pl;
@@ -88,7 +91,7 @@ void Server::ServerRun()
 		return;
 	}
 
-	m_gameStartTime = m_netServer->GetTimeMs();
+	
 	// 클라이언트가 들어왔다 
 	m_netServer->OnClientJoin = [this](CNetClientInfo *clientInfo) { OnClientJoin(clientInfo); };
 
@@ -132,7 +135,7 @@ void Server::ServerRun()
 
 	string line;
 	getline(std::cin, line);
-	//meteorThread.Stop();
+	meteorThread.Stop();
 }
 
 void Server::ResetUsers()
@@ -370,7 +373,8 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 	else
 	{
 		// 이녀석은 어시스트 체크를 해야함
-		m_clientMap[(HostID)targetHostID]->DamageClient((int)sendHostID,m_netServer->GetTimeMs());
+		if(targetHostID != sendHostID)
+			m_clientMap[(HostID)targetHostID]->DamageClient((int)sendHostID,m_netServer->GetTimeMs());
 	}
 
 
@@ -513,7 +517,7 @@ DEFRMI_SpaceWar_RequestSpaceShip(Server)
 DEFRMI_SpaceWar_RequestGameEnd(Server)
 {
 	cout << "RequestGameEnd -- 게임 종료  - " << endl;
-
+	s_GameRunning = false;
 	if (m_clientMap[remote]->m_state != SPACESHIP)
 		return true;
 
@@ -681,7 +685,8 @@ DEFRMI_SpaceWar_RequestNetworkGameStart(Server)
 	//	return true;
 	//	
 	//}
-
+	m_gameStartTime = m_netServer->GetTimeMs();
+	s_GameRunning = true;
 	auto iter = m_clientMap.begin();
 	while (iter != m_clientMap.end())
 	{

@@ -333,7 +333,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         {
             foreach (NetworkPlayer p in m_players)
             {
-                if (p.m_userName.Equals(name))
+                if (p.HOST_ID == (HostID)sendHostID)
                 {
                     p.RecvNetworkMove(new UnityEngine.Vector3(curX , curY , curZ) ,
                        new UnityEngine.Vector3(velocityX , velocityY , velocityZ) ,
@@ -524,7 +524,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             {
                 if(oxygen <= 0)
                 {
-                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" , 1.0f,UnityEngine.Vector3.zero);
+                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" , 5.0f,UnityEngine.Vector3.zero);
                 }
                 GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);
             }
@@ -595,12 +595,12 @@ public class NetworkManager : Singletone<NetworkManager> {
                 return true;
             if (time >= 0)
             {
-                GameManager.Instance().m_inGameUI.StartMeteor();
-                GameManager.Instance().m_inGameUI.RecvMeteorInfo(time);
+              //  GameManager.Instance().m_inGameUI.StartMeteor();
+              //  GameManager.Instance().m_inGameUI.RecvMeteorInfo(time);
             }
             else if (time < -1)
             {
-                GameManager.Instance().m_inGameUI.StopMeteor();
+              //  GameManager.Instance().m_inGameUI.StopMeteor();
             }
             return true;
         };

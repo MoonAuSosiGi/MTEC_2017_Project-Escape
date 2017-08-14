@@ -95,8 +95,22 @@ public class PlayerController : MonoBehaviour {
     {
         if(NetworkManager.Instance() != null)
         {
-            float useOxy = UnityEngine.Random.Range(0.1f , 10.0f);
-            if(GameManager.Instance().PLAYER.m_hp - useOxy > 0.0f)
+            float useOxy = 0.1f;//UnityEngine.Random.Range(0.1f , 10.0f);
+
+            bool idle = (m_currentDir == PlayerMoveDir.NONE);
+            bool run = (m_currentDir == PlayerMoveDir.RUN_BACK || m_currentDir == PlayerMoveDir.RUN_LEFT
+                || m_currentDir == PlayerMoveDir.RUN_RIGHT || m_currentDir == PlayerMoveDir.RUN_FOWARD || m_currentDir == PlayerMoveDir.RUN_FOWARD_LEFT || m_currentDir == PlayerMoveDir.RUN_FOWARD_RIGHT
+                || m_currentDir == PlayerMoveDir.RUN_BACK_LEFT || m_currentDir == PlayerMoveDir.RUN_BACK_RIGHT);
+            if (idle)// && m_currentWeapon == null)
+            {
+                useOxy = 0.1f;
+            }
+            else if (run )//&& m_currentWeapon == null)
+                useOxy = 1.5f;
+            else if (idle == false && run == false)
+                useOxy = 0.2f;
+
+            if (GameManager.Instance().PLAYER.m_hp - useOxy > 0.0f)
                 NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , useOxy);
         }
     }
@@ -170,7 +184,7 @@ public class PlayerController : MonoBehaviour {
         m_rigidBody = this.GetComponent<Rigidbody>();
 
         GravityManager.Instance().SetGravityTarget(m_rigidBody);
-        InvokeRepeating("UseOxy" , 2.0f , 2.0f);
+        InvokeRepeating("UseOxy" , 1.0f , 1.0f);
         if (m_signleMode)
             SetCameraThirdPosition();
     }
