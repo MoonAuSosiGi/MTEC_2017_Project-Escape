@@ -8,7 +8,6 @@ public class Shelter : MonoBehaviour {
     // animation 은 0 닫힘 1 열어라 2 불까지 꺼라
 
     private bool m_hasPlayer = false;
-    private Player m_player = null;
     public bool HAS_PLAYER { get { return m_hasPlayer; } set { m_hasPlayer = value; } }
 
     private int m_shelterID = 0;

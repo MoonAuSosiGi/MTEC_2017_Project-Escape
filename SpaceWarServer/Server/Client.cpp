@@ -41,6 +41,7 @@ void Client::PlayerDead(float deadTime)
 {
 	cout << "사망시 어시스트 체크" << endl;
 	m_state = DEATH;
+	m_deathCount++;
 	// 어시스트의 목록을 만들어야 함
 	auto iter = m_assistCheck.begin();
 	

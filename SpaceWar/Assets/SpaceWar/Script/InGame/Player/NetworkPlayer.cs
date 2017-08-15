@@ -58,12 +58,27 @@ public class NetworkPlayer : MonoBehaviour {
     public void RecvNetworkAnimation(string animationName,int aniValue)
     {
         //test code
-        if(aniValue == 1234)
+        if (aniValue == 1234)
         {
             PlayerAnim.Play(animationName);
         }
         else
+        {
             PlayerAnim.SetInteger(animationName , aniValue);
+
+            if (m_weapon == null)
+                return;
+
+            // 근거리 무기용
+            if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
+            {
+                m_weapon.Attack(transform);
+            }
+            else if (animationName.Equals("ATTACK") && aniValue == 0 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
+            {
+                m_weapon.AnimationEventAttackEnd();
+            }
+        }
     }
 
     void NetworkMoveUpdate()
@@ -131,6 +146,7 @@ public class NetworkPlayer : MonoBehaviour {
             {
                 case WeaponItem.WeaponType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
                 case WeaponItem.WeaponType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
+                case WeaponItem.WeaponType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
             }
         }
     }

@@ -349,12 +349,17 @@ DEFRMI_SpaceWar_NotifyPlayerEquipItem(Server)
 DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 {
 	cout << "Request Player Damage 때린놈 " << sendHostID << " 맞은놈 " << targetHostID << " 데미지 " << damage << endl;
+	cout << "현재 총인원 " << m_clientMap.size() << endl;
+
+	if (m_clientMap[(HostID)targetHostID]->m_state == DEATH)
+		return true;
 	
 	float prevHp = m_clientMap[(HostID)targetHostID]->hp;
 	m_clientMap[(HostID)targetHostID]->hp -= damage;
 
 	if (m_clientMap[(HostID)targetHostID]->hp <= 0.0f)
 	{
+		m_clientMap[(HostID)targetHostID]->hp = 0.0f;
 		m_clientMap[(HostID)targetHostID]->PlayerDead(m_netServer->GetTimeMs());
 		cout << " 죽었다 " + targetHostID << endl;
 		// 죽은 후에 어시스트 목록 갱신
@@ -367,7 +372,9 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 			m_clientMap[(HostID)value]->m_assistCount++;
 			m_proxy.NotifyKillInfo((HostID)value, RmiContext::ReliableSend, m_clientMap[(HostID)targetHostID]->m_userName, false, m_clientMap[(HostID)value]->m_killCount, m_clientMap[(HostID)value]->m_assistCount);
 		}
+		cout << "sendhost " << m_clientMap[(HostID)sendHostID]->m_killCount << endl;
 		m_clientMap[(HostID)sendHostID]->m_killCount++;
+		cout << "sendhost2 " << m_clientMap[(HostID)sendHostID]->m_killCount << endl;
 		m_proxy.NotifyKillInfo((HostID)sendHostID, RmiContext::ReliableSend, m_clientMap[(HostID)targetHostID]->m_userName, true, m_clientMap[(HostID)sendHostID]->m_killCount, m_clientMap[(HostID)sendHostID]->m_assistCount);
 	}
 	else
@@ -428,7 +435,7 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 		// 첫 사용
 		m_itemBoxMap[itemBoxIndex] = sendHostID;
 
-		int itemCode = (int)RandomRange(1,3); // 여기서 줘야함
+		int itemCode = (int)RandomRange(1,5); // 여기서 줘야함
 		cout << "item Code " << itemCode << endl;
 		m_proxy.NotifyUseItemBox(m_playerP2PGroup, RmiContext::ReliableSend,
 			sendHostID, itemBoxIndex, itemCode);

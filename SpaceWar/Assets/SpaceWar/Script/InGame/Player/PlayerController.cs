@@ -556,10 +556,14 @@ public class PlayerController : MonoBehaviour {
 
             m_useEffect.SetActive(false);
 
-            if (m_currentWeapon.WEAPON_TYPE == WeaponItem.WeaponType.GUN)
-                SetAnimation(AnimationType.ANI_GUN01);
-            else if(m_currentWeapon.WEAPON_TYPE == WeaponItem.WeaponType.RIFLE)
-                SetAnimation(AnimationType.ANI_GUN02);
+            switch(m_currentWeapon.WEAPON_TYPE)
+            {
+                case WeaponItem.WeaponType.GUN:                 SetAnimation(AnimationType.ANI_GUN01);  break;
+                case WeaponItem.WeaponType.RIFLE:               SetAnimation(AnimationType.ANI_GUN02);  break;
+                case WeaponItem.WeaponType.MELEE:               SetAnimation(AnimationType.ANI_MELEE);  break;
+                case WeaponItem.WeaponType.ROCKETLAUNCHER:         break;
+                    
+            }
 
             if (GameManager.Instance() != null)
                 GameManager.Instance().EquipWeapon(m_currentWeapon.ITEM_ID , 0 , 0);
@@ -592,7 +596,7 @@ public class PlayerController : MonoBehaviour {
         Vector3 sponRot = (m_currentWeapon.transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized;
         Quaternion targetRot = Quaternion.FromToRotation(m_currentWeapon.transform.up , sponRot) * m_currentWeapon.transform.rotation;
 
-        m_currentWeapon.transform.rotation = targetRot;
+      //  m_currentWeapon.transform.rotation = targetRot;
         m_currentWeapon.transform.Rotate(m_currentWeapon.SPONE_ROTATITON);
         m_currentWeapon.transform.Translate(Vector3.right * 0.15f);
         m_currentWeapon.UnEquipWeapon();
@@ -703,6 +707,8 @@ public class PlayerController : MonoBehaviour {
         if (value == 0)
             m_isMoveAble = true;
         m_animator.SetInteger("ATTACK" , value);
+        if (m_currentWeapon != null)
+            m_currentWeapon.AnimationEventAttackEnd();
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestPlayerAnimation(
                 NetworkManager.Instance().USER_NAME , "ATTACK" , value);
