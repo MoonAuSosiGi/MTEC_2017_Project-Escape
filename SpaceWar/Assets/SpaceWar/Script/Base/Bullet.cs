@@ -228,7 +228,6 @@ public class Bullet : MonoBehaviour {
                 // 기타 오브젝트
                 if (m_shotEffect != null)
                     m_shotEffect.SetActive(true);
-                Debug.Log("p " + other.tag + " / " + transform.name + " col name " + other.transform.name +"  "+other.transform.position.z);
             }
 
             
