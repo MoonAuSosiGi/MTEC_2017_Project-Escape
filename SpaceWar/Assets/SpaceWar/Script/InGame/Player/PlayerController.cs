@@ -561,7 +561,7 @@ public class PlayerController : MonoBehaviour {
                 case WeaponItem.WeaponType.GUN:                 SetAnimation(AnimationType.ANI_GUN01);  break;
                 case WeaponItem.WeaponType.RIFLE:               SetAnimation(AnimationType.ANI_GUN02);  break;
                 case WeaponItem.WeaponType.MELEE:               SetAnimation(AnimationType.ANI_MELEE);  break;
-                case WeaponItem.WeaponType.ROCKETLAUNCHER:         break;
+                case WeaponItem.WeaponType.ROCKETLAUNCHER:      SetAnimation(AnimationType.ANI_ROCKETLAUNCHER);   break;
                     
             }
 

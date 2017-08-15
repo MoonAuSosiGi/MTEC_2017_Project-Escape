@@ -433,7 +433,6 @@ public class NetworkManager : Singletone<NetworkManager> {
             NetworkLog("Bullet Create " + sendHostID + " t " + (int)m_hostID);
 
             Bullet b = GetNetworkBullet(bulletID);
-            Debug.Log("B  BB " + (b == null));
             
             if (b != null && b.ITEM_CODE == bulletCode)
             {
@@ -455,6 +454,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 {
                     case 1: path = "Bullet/Gun01/Gun01_01"; break;
                     case 2: path = "Bullet/Gun02/Gun02_02"; break;
+                    case 5: path = "Bullet/RocketLauncher/Rocket_Bazooka"; break;
                 }
 
                bullet = GameObject.Instantiate(Resources.Load(path)) as GameObject;
@@ -464,7 +464,6 @@ public class NetworkManager : Singletone<NetworkManager> {
                 b = bullet.GetComponent<Bullet>();
                 b.ITEM_CODE = bulletCode;
                 b.NETWORK_ID = bulletID;
-                Debug.Log("ddddddddddddddddddddddddddddd " + bulletID);
                 b.IS_REMOTE = true;
                 b.enabled = true;
                 b.NetworkBulletEnable();

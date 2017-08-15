@@ -435,7 +435,7 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 		// 첫 사용
 		m_itemBoxMap[itemBoxIndex] = sendHostID;
 
-		int itemCode = (int)RandomRange(1,5); // 여기서 줘야함
+		int itemCode = (int)RandomRange(1,6); // 여기서 줘야함
 		cout << "item Code " << itemCode << endl;
 		m_proxy.NotifyUseItemBox(m_playerP2PGroup, RmiContext::ReliableSend,
 			sendHostID, itemBoxIndex, itemCode);

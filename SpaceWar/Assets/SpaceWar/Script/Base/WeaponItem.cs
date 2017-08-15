@@ -79,6 +79,10 @@ public class WeaponItem : Item {
                 if(m_attackTiming == AttackTiming.SCRIPT_ONLY)
                     GunAttack(character);
                 break;
+            case WeaponType.ROCKETLAUNCHER:
+                if (m_attackTiming == AttackTiming.SCRIPT_ONLY)
+                    RocketAttack(character);
+                    break;
             case WeaponType.MELEE:
                 EnableMeleeColider();
                 break;
@@ -95,6 +99,7 @@ public class WeaponItem : Item {
             case WeaponType.RIFLE:
                 GunAttack(m_player);
                 break;
+                
         }
     }
 
@@ -141,7 +146,39 @@ public class WeaponItem : Item {
             m_currentBulletIndex++;
     }
 
+    void RocketAttack(Transform character)
+    {
+        if(m_effects[0] != null)
+        {
+            m_effects[0].transform.position = m_firePoint.position;
+            m_effects[0].SetActive(true);
+        }
+        
 
+        GameObject bullet = m_bullets[m_currentBulletIndex];
+        bullet.transform.parent = null;
+        bullet.transform.position = m_firePoint.position;
+        bullet.transform.rotation = character.rotation;
+        RocketBullet b = bullet.GetComponent<RocketBullet>();
+
+        // 네트워크 총알이 아니므로
+        b.IS_REMOTE = false;
+
+        if (NetworkManager.Instance() != null)
+        {
+            // 식별 아이디
+            b.NETWORK_ID = NetworkManager.Instance().m_hostID + "_" + m_itemID + "_" + m_currentBulletIndex;
+            // 생성 명령
+            NetworkManager.Instance().C2SRequestBulletCreate(b.NETWORK_ID , m_firePoint.position , bullet.transform.localEulerAngles , m_itemID);
+        }
+        bullet.SetActive(true);
+        b.BulletSetup();
+
+        if (m_currentBulletIndex == m_bullets.Length - 1)
+            m_currentBulletIndex = 0;
+        else
+            m_currentBulletIndex++;
+    }
 
     #endregion
 

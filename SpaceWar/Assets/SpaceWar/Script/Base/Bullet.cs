@@ -9,9 +9,9 @@ public class Bullet : MonoBehaviour {
 
     #region Network
     // 네트워크의 접속을 받는 놈인가
-    private bool m_isRemote = false;
+    protected bool m_isRemote = false;
     // 네트워크 식별 아이디
-    private string m_networkID = "";
+    protected string m_networkID = "";
     // 어떤놈의 총알인가
     private int m_itemCode = -1;
     public int ITEM_CODE { get { return m_itemCode; } set { m_itemCode = value; } }
@@ -19,15 +19,14 @@ public class Bullet : MonoBehaviour {
     public bool IS_REMOTE { get { return m_isRemote; } set { m_isRemote = value; } }
     public string NETWORK_ID { get { return m_networkID; } set { m_networkID = value; } }
 
-    private PositionFollower m_positionFollower = null;
-    private AngleFollower m_angleFollowerX = null;
-    private AngleFollower m_angleFollowerY = null;
-    private AngleFollower m_angleFollowerZ = null;
+    protected PositionFollower m_positionFollower = null;
+    protected AngleFollower m_angleFollowerX = null;
+    protected AngleFollower m_angleFollowerY = null;
+    protected AngleFollower m_angleFollowerZ = null;
     #endregion
 
     // 기본 정보들
-    [SerializeField] private float m_speed = 0.0f;
-    [SerializeField] private float m_duringTime = 0.0f;
+    [SerializeField] protected float m_speed = 0.0f;
 
     private UnityEngine.Vector3 m_prevPos = UnityEngine.Vector3.zero;
 
@@ -36,12 +35,12 @@ public class Bullet : MonoBehaviour {
     private float m_tick = 0.0f;
 
     [SerializeField] private GameObject[] m_effects;
-    [SerializeField] private GameObject m_bulletTrailEffect = null;
-    [SerializeField] private GameObject m_shotEffect = null;
-    [SerializeField] private GameObject m_shotOtherObjectEffect = null;
+    [SerializeField] protected GameObject m_bulletTrailEffect = null;
+    [SerializeField] protected GameObject m_shotEffect = null;
+    [SerializeField] protected GameObject m_shotOtherObjectEffect = null;
 
     private bool m_hitEnemy = false;
-    private Quaternion m_shotRot;
+    protected Quaternion m_shotRot;
 
     #endregion
 
@@ -142,7 +141,7 @@ public class Bullet : MonoBehaviour {
     #endregion
 
     #region Bullet Method --------------------------------------------------------------------------
-    public void BulletSetup()
+    public virtual void BulletSetup()
     {
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(true);
@@ -169,9 +168,9 @@ public class Bullet : MonoBehaviour {
         
     }
     
-    public void BulletMove()
+    public virtual void BulletMove()
     {
-        // this.transform.Translate(Vector3.forward * Speed);
+        //this.transform.Translate(Vector3.forward * Speed);
         //this.transform.rotation = AnchorPlanet.PlayerCharacter.rotation;
 
         this.transform.RotateAround(
@@ -181,7 +180,7 @@ public class Bullet : MonoBehaviour {
         MoveSend();
     }
 
-    void MoveSend()
+    protected void MoveSend()
     {
         UnityEngine.Vector3 velo = GetComponent<Rigidbody>().velocity;//(transform.position - m_prevPos) / Time.deltaTime;
         if(NetworkManager.Instance() != null)
@@ -196,10 +195,10 @@ public class Bullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Weapon"))
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet"))
         {
             m_hitEnemy= true;
-
+            
             
             if (other.CompareTag("PlayerCharacter"))
             {
@@ -209,6 +208,7 @@ public class Bullet : MonoBehaviour {
                 {
                     if (m_shotEffect != null)
                         m_shotEffect.SetActive(true);
+                    
                     NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f),m_startPos);
                 }
                 else
@@ -228,9 +228,10 @@ public class Bullet : MonoBehaviour {
                 // 기타 오브젝트
                 if (m_shotEffect != null)
                     m_shotEffect.SetActive(true);
+                Debug.Log("p " + other.tag + " / " + transform.name + " col name " + other.transform.name +"  "+other.transform.position.z);
             }
 
-            //   Debug.Log(other.tag);
+            
 
             BulletDelete();
             if(NetworkManager.Instance() != null)

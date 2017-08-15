@@ -87,8 +87,8 @@ public class GameManager : Singletone<GameManager> {
        
 
         float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 12.8f;
-        OnJoinedRoom(m_playerInfo.m_name , true , //new Vector3(9.123454f , 48.63797f , -32.4867f));
-            GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
+           // GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
 
     public float PLANET_XANGLE = 0.0f;
@@ -151,7 +151,7 @@ public class GameManager : Singletone<GameManager> {
 
         for (int i = 0; i < Num; i++)
         {
-            int CID =  Random.Range(1 ,Item.Length+1);
+            int CID = 5;// Random.Range(1 ,Item.Length+1);
 
             Debug.Log("Item Create " + CID + " item Name " +Item[CID-1]);
             //ItemCreaterAnchor.Rotate(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
