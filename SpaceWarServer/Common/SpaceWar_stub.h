@@ -20,6 +20,16 @@ namespace SpaceWar
 	{
 	public:
                
+		virtual bool RequestGameExit ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestGameExit bool RequestGameExit ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestGameExit(DerivedClass) bool DerivedClass::RequestGameExit ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_RequestGameExit RequestGameExit ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_RequestGameExit ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
 		virtual bool RequestServerConnect ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & )		{ 
 			return false;
 		} 
@@ -310,6 +320,16 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestShelterEnter RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
 #define PARAM_SpaceWar_RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
                
+		virtual bool RequestItemDelete ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestItemDelete bool RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestItemDelete(DerivedClass) bool DerivedClass::RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)
+#define CALL_SpaceWar_RequestItemDelete RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)
+#define PARAM_SpaceWar_RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)
+               
 		virtual bool NotifyLoginSuccess ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
 			return false;
 		} 
@@ -540,6 +560,56 @@ namespace SpaceWar
 #define CALL_SpaceWar_NotifySpaceShipEngineCharge NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel)
 #define PARAM_SpaceWar_NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel)
                
+		virtual bool NotifyGrenadeCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const Proud::Vector3 & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyGrenadeCreate bool NotifyGrenadeCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyGrenadeCreate(DerivedClass) bool DerivedClass::NotifyGrenadeCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos)
+#define CALL_SpaceWar_NotifyGrenadeCreate NotifyGrenadeCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos)
+#define PARAM_SpaceWar_NotifyGrenadeCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos)
+               
+		virtual bool NotifyGrenadeMove ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ,  const Proud::Vector3 & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyGrenadeMove bool NotifyGrenadeMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyGrenadeMove(DerivedClass) bool DerivedClass::NotifyGrenadeMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)
+#define CALL_SpaceWar_NotifyGrenadeMove NotifyGrenadeMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)
+#define PARAM_SpaceWar_NotifyGrenadeMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)
+               
+		virtual bool NotifyGrenadeBoom ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyGrenadeBoom bool NotifyGrenadeBoom ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const bool & isStone) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyGrenadeBoom(DerivedClass) bool DerivedClass::NotifyGrenadeBoom ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const bool & isStone)
+#define CALL_SpaceWar_NotifyGrenadeBoom NotifyGrenadeBoom ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const bool & isStone)
+#define PARAM_SpaceWar_NotifyGrenadeBoom ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const bool & isStone)
+               
+		virtual bool NotifyGrenadeRemove ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyGrenadeRemove bool NotifyGrenadeRemove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyGrenadeRemove(DerivedClass) bool DerivedClass::NotifyGrenadeRemove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
+#define CALL_SpaceWar_NotifyGrenadeRemove NotifyGrenadeRemove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
+#define PARAM_SpaceWar_NotifyGrenadeRemove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
+               
+		virtual bool RequestHpUpdate ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestHpUpdate bool RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestHpUpdate(DerivedClass) bool DerivedClass::RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp)
+#define CALL_SpaceWar_RequestHpUpdate RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp)
+#define PARAM_SpaceWar_RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp)
+               
 		virtual bool RequestSpaceShip ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
 		} 
@@ -599,8 +669,59 @@ namespace SpaceWar
 #define DEFRMI_SpaceWar_NotifyGameResultShow(DerivedClass) bool DerivedClass::NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
 #define CALL_SpaceWar_NotifyGameResultShow NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
 #define PARAM_SpaceWar_NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
+		virtual bool RequestSpaceShipSetup ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestSpaceShipSetup bool RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestSpaceShipSetup(DerivedClass) bool DerivedClass::RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)
+#define CALL_SpaceWar_RequestSpaceShipSetup RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)
+#define PARAM_SpaceWar_RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)
+               
+		virtual bool NotifyDeathZoneCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyDeathZoneCreate bool NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyDeathZoneCreate(DerivedClass) bool DerivedClass::NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex)
+#define CALL_SpaceWar_NotifyDeathZoneCreate NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex)
+#define PARAM_SpaceWar_NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex)
+               
+		virtual bool RequestDeathZoneMoveIndex ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestDeathZoneMoveIndex bool RequestDeathZoneMoveIndex ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveIndex) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestDeathZoneMoveIndex(DerivedClass) bool DerivedClass::RequestDeathZoneMoveIndex ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveIndex)
+#define CALL_SpaceWar_RequestDeathZoneMoveIndex RequestDeathZoneMoveIndex ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveIndex)
+#define PARAM_SpaceWar_RequestDeathZoneMoveIndex ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveIndex)
+               
+		virtual bool NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyDeathZoneMoveHostAndIndexSetup bool NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveHostID,  const int & currentIndex) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyDeathZoneMoveHostAndIndexSetup(DerivedClass) bool DerivedClass::NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveHostID,  const int & currentIndex)
+#define CALL_SpaceWar_NotifyDeathZoneMoveHostAndIndexSetup NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveHostID,  const int & currentIndex)
+#define PARAM_SpaceWar_NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveHostID,  const int & currentIndex)
+               
+		virtual bool NotifyDeathZoneMove ( ::Proud::HostID, ::Proud::RmiContext& ,  const Proud::Vector3 & ,  const Proud::Vector3 & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyDeathZoneMove bool NotifyDeathZoneMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyDeathZoneMove(DerivedClass) bool DerivedClass::NotifyDeathZoneMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity)
+#define CALL_SpaceWar_NotifyDeathZoneMove NotifyDeathZoneMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity)
+#define PARAM_SpaceWar_NotifyDeathZoneMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity)
  
 		virtual bool ProcessReceivedMessage(::Proud::CReceivedMessage &pa, void* hostTag) PN_OVERRIDE;
+		static const PNTCHAR* RmiName_RequestGameExit;
 		static const PNTCHAR* RmiName_RequestServerConnect;
 		static const PNTCHAR* RmiName_RequestLobbyConnect;
 		static const PNTCHAR* RmiName_RequestNetworkGameTeamSelect;
@@ -630,6 +751,7 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_RequestShelterStartSetup;
 		static const PNTCHAR* RmiName_RequestShelterDoorControl;
 		static const PNTCHAR* RmiName_RequestShelterEnter;
+		static const PNTCHAR* RmiName_RequestItemDelete;
 		static const PNTCHAR* RmiName_NotifyLoginSuccess;
 		static const PNTCHAR* RmiName_NotifyLoginFailed;
 		static const PNTCHAR* RmiName_NotifyOtherClientJoin;
@@ -653,12 +775,22 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
 		static const PNTCHAR* RmiName_NotifyMeteorCreate;
 		static const PNTCHAR* RmiName_NotifySpaceShipEngineCharge;
+		static const PNTCHAR* RmiName_NotifyGrenadeCreate;
+		static const PNTCHAR* RmiName_NotifyGrenadeMove;
+		static const PNTCHAR* RmiName_NotifyGrenadeBoom;
+		static const PNTCHAR* RmiName_NotifyGrenadeRemove;
+		static const PNTCHAR* RmiName_RequestHpUpdate;
 		static const PNTCHAR* RmiName_RequestSpaceShip;
 		static const PNTCHAR* RmiName_RequestGameEnd;
 		static const PNTCHAR* RmiName_NotifyKillInfo;
 		static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
 		static const PNTCHAR* RmiName_NotifyGameResultInfoOther;
 		static const PNTCHAR* RmiName_NotifyGameResultShow;
+		static const PNTCHAR* RmiName_RequestSpaceShipSetup;
+		static const PNTCHAR* RmiName_NotifyDeathZoneCreate;
+		static const PNTCHAR* RmiName_RequestDeathZoneMoveIndex;
+		static const PNTCHAR* RmiName_NotifyDeathZoneMoveHostAndIndexSetup;
+		static const PNTCHAR* RmiName_NotifyDeathZoneMove;
 		static const PNTCHAR* RmiName_First;
 		virtual ::Proud::RmiID* GetRmiIDList() PN_OVERRIDE { return g_RmiIDList; }
 		virtual int GetRmiIDListCount() PN_OVERRIDE { return g_RmiIDListCount; }
@@ -669,6 +801,15 @@ namespace SpaceWar
 	class StubFunctional : public Stub 
 	{
 	public:
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > RequestGameExit_Function;
+		virtual bool RequestGameExit ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (RequestGameExit_Function==nullptr) 
+				return true; 
+			return RequestGameExit_Function(remote,rmiContext); 
+		}
+
                
 		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ) > RequestServerConnect_Function;
 		virtual bool RequestServerConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & id) 
@@ -931,6 +1072,15 @@ namespace SpaceWar
 		}
 
                
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestItemDelete_Function;
+		virtual bool RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID) 
+		{ 
+			if (RequestItemDelete_Function==nullptr) 
+				return true; 
+			return RequestItemDelete_Function(remote,rmiContext, itemID); 
+		}
+
+               
 		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & ) > NotifyLoginSuccess_Function;
 		virtual bool NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host) 
 		{ 
@@ -1138,6 +1288,51 @@ namespace SpaceWar
 		}
 
                
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const Proud::Vector3 & ) > NotifyGrenadeCreate_Function;
+		virtual bool NotifyGrenadeCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos) 
+		{ 
+			if (NotifyGrenadeCreate_Function==nullptr) 
+				return true; 
+			return NotifyGrenadeCreate_Function(remote,rmiContext, sendHostID, networkID, pos); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ) > NotifyGrenadeMove_Function;
+		virtual bool NotifyGrenadeMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot) 
+		{ 
+			if (NotifyGrenadeMove_Function==nullptr) 
+				return true; 
+			return NotifyGrenadeMove_Function(remote,rmiContext, sendHostID, networkID, pos, velocity, rot); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const bool & ) > NotifyGrenadeBoom_Function;
+		virtual bool NotifyGrenadeBoom ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const bool & isStone) 
+		{ 
+			if (NotifyGrenadeBoom_Function==nullptr) 
+				return true; 
+			return NotifyGrenadeBoom_Function(remote,rmiContext, sendHostID, networkID, isStone); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ) > NotifyGrenadeRemove_Function;
+		virtual bool NotifyGrenadeRemove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID) 
+		{ 
+			if (NotifyGrenadeRemove_Function==nullptr) 
+				return true; 
+			return NotifyGrenadeRemove_Function(remote,rmiContext, networkID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & ) > RequestHpUpdate_Function;
+		virtual bool RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp) 
+		{ 
+			if (RequestHpUpdate_Function==nullptr) 
+				return true; 
+			return RequestHpUpdate_Function(remote,rmiContext, hp); 
+		}
+
+               
 		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestSpaceShip_Function;
 		virtual bool RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) 
 		{ 
@@ -1189,6 +1384,51 @@ namespace SpaceWar
 			if (NotifyGameResultShow_Function==nullptr) 
 				return true; 
 			return NotifyGameResultShow_Function(remote,rmiContext); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestSpaceShipSetup_Function;
+		virtual bool RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount) 
+		{ 
+			if (RequestSpaceShipSetup_Function==nullptr) 
+				return true; 
+			return RequestSpaceShipSetup_Function(remote,rmiContext, spaceShipCount); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > NotifyDeathZoneCreate_Function;
+		virtual bool NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex) 
+		{ 
+			if (NotifyDeathZoneCreate_Function==nullptr) 
+				return true; 
+			return NotifyDeathZoneCreate_Function(remote,rmiContext, spaceShipIndex); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestDeathZoneMoveIndex_Function;
+		virtual bool RequestDeathZoneMoveIndex ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveIndex) 
+		{ 
+			if (RequestDeathZoneMoveIndex_Function==nullptr) 
+				return true; 
+			return RequestDeathZoneMoveIndex_Function(remote,rmiContext, moveIndex); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ) > NotifyDeathZoneMoveHostAndIndexSetup_Function;
+		virtual bool NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveHostID,  const int & currentIndex) 
+		{ 
+			if (NotifyDeathZoneMoveHostAndIndexSetup_Function==nullptr) 
+				return true; 
+			return NotifyDeathZoneMoveHostAndIndexSetup_Function(remote,rmiContext, moveHostID, currentIndex); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const Proud::Vector3 & ,  const Proud::Vector3 & ) > NotifyDeathZoneMove_Function;
+		virtual bool NotifyDeathZoneMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity) 
+		{ 
+			if (NotifyDeathZoneMove_Function==nullptr) 
+				return true; 
+			return NotifyDeathZoneMove_Function(remote,rmiContext, pos, velocity); 
 		}
 
 	};

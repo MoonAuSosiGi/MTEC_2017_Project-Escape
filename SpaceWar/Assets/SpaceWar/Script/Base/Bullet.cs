@@ -41,7 +41,7 @@ public class Bullet : MonoBehaviour {
 
     private bool m_hitEnemy = false;
     protected Quaternion m_shotRot;
-
+    public Quaternion SHOT_ROTATION { get { return m_shotRot; } }
     #endregion
 
     #region Network Method -----------------------------------------------------------------
@@ -183,19 +183,16 @@ public class Bullet : MonoBehaviour {
     protected void MoveSend()
     {
         UnityEngine.Vector3 velo = GetComponent<Rigidbody>().velocity;//(transform.position - m_prevPos) / Time.deltaTime;
+        Debug.Log("VEC :" + velo);
         if(NetworkManager.Instance() != null)
         NetworkManager.Instance().C2SRequestBulletMove(m_networkID ,
             transform.position , velo , transform.localEulerAngles);
     }
 
 
-  
-
-
-
     void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet"))
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
         {
             m_hitEnemy= true;
             

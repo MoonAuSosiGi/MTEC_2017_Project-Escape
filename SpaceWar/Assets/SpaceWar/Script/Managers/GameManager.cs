@@ -47,6 +47,12 @@ public class GameManager : Singletone<GameManager> {
     // 메테오 떨어지는 시간
     private int m_meteorTime = 30;
 
+    #region Slider UI Menu -------------------------------------------------------------------
+    [SerializeField] private SliderMenuUI m_sliderUI = null;
+    public SliderMenuUI SLIDER_UI { get { return m_sliderUI; } }
+
+    #endregion
+
     // result ------------------------------------------------------------------------------//
     #region RESULT 
     public ResultUI m_resultUI;
@@ -80,15 +86,15 @@ public class GameManager : Singletone<GameManager> {
     {
         // DontDestroyOnLoad(this.gameObject);
 
-        if (GravityManager.Instance() == null)
+        if (GravityManager.Instance() == null || NetworkManager.Instance() == null)
             return;
 
         m_playerInfo.m_name = NetworkManager.Instance().USER_NAME;
        
 
         float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 12.8f;
-        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
-           // GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        OnJoinedRoom(m_playerInfo.m_name , true , //new Vector3(9.123454f , 48.63797f , -32.4867f));
+            GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
 
     public float PLANET_XANGLE = 0.0f;
@@ -151,7 +157,7 @@ public class GameManager : Singletone<GameManager> {
 
         for (int i = 0; i < Num; i++)
         {
-            int CID = 5;// Random.Range(1 ,Item.Length+1);
+            int CID =  Random.Range(1 ,Item.Length+1);
 
             Debug.Log("Item Create " + CID + " item Name " +Item[CID-1]);
             //ItemCreaterAnchor.Rotate(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
@@ -230,9 +236,7 @@ public class GameManager : Singletone<GameManager> {
         Vector3 pos = GetPlanetPosition(planetScale , anglex , anglez);
         Vector3 pos2 = GetPlanetPosition(planetScale + 30.0f , anglex , anglez);
 
-        Physics.Raycast(Vector3.zero , (pos - Vector3.zero).normalized , out SponeHitInfo , 40.0f);
-
-
+        
         GameObject obj = Instantiate(m_meteorPrefab , new Vector3(pos.x,pos.y,pos.z),Quaternion.Euler(0.0f,0.0f,0.0f));
         
         obj.transform.rotation = Quaternion.LookRotation((pos - Vector3.zero).normalized);
@@ -398,6 +402,7 @@ public class GameManager : Singletone<GameManager> {
         {
             m_playerInfo.m_player.IS_MOVE_ABLE = false;
             m_playerInfo.m_player.AnimationPlay("Dead");
+
         }
         m_inGameUI.PlayerHPUpdate(curHp , prevHp , maxHp);
     }
@@ -412,11 +417,15 @@ public class GameManager : Singletone<GameManager> {
     #region EquipEvent
     public void EquipWeapon(int itemCID,int cur,int max)
     {
+        if (m_inGameUI == null)
+            return;
         m_inGameUI.EquipWeapon(itemCID , cur , max);
     }
 
     public void UnEquipWeapon(int itemCID,int cur,int max)
     {
+        if (m_inGameUI == null)
+            return;
         m_inGameUI.UnEquipWeapon(itemCID , cur , max);
     }
     #endregion

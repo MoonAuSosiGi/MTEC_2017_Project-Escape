@@ -4,6 +4,23 @@ using UnityEngine;
 
 public class SpaceShipResult : MonoBehaviour {
 
+    [SerializeField] private Camera m_camera = null;
+
+    void Start()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        if (NetworkManager.Instance().IS_LOSE)
+        {
+            
+            ResultAnimationStart();
+            ResultUIAlready();
+            m_camera.gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
+
     public void ResultAnimationStart()
     {
         NetworkManager.Instance().C2SRequestGameEnd();

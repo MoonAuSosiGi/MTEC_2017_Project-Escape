@@ -51,6 +51,23 @@ public class GravityManager : Singletone<GravityManager> {
     {
         m_targetObject = target;
     }
+
+    public Vector3 GetPlanetPosition(float offset, float anglex , float anglez)
+    {
+        float scale = CurrentPlanet.transform.localScale.x + offset;
+        float x = scale * Mathf.Sin(anglex * Mathf.Deg2Rad) * Mathf.Cos(anglez * Mathf.Deg2Rad);
+        float y = scale * Mathf.Sin(anglex * Mathf.Deg2Rad) * Mathf.Sin(anglez * Mathf.Deg2Rad);
+        float z = scale * Mathf.Cos(anglex * Mathf.Deg2Rad);
+        return new Vector3(x , y , z);
+    }
+
+    public Vector2 GetPositionAngle(Vector3 pos, float offset)
+    {
+        float r = CurrentPlanet.transform.localScale.x + offset;
+        float angle1 = Mathf.Acos(pos.z / r);
+        float angle2 = Mathf.Atan(pos.y / pos.x);
+        return new Vector2(angle1 , angle2);
+    }
     #endregion
 
 }

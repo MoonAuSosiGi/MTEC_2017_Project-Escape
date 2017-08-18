@@ -8,6 +8,8 @@ namespace SpaceWar
 {
 	::Proud::RmiID g_RmiIDList[] = {
                
+		Rmi_RequestGameExit,
+               
 		Rmi_RequestServerConnect,
                
 		Rmi_RequestLobbyConnect,
@@ -66,6 +68,8 @@ namespace SpaceWar
                
 		Rmi_RequestShelterEnter,
                
+		Rmi_RequestItemDelete,
+               
 		Rmi_NotifyLoginSuccess,
                
 		Rmi_NotifyLoginFailed,
@@ -112,6 +116,16 @@ namespace SpaceWar
                
 		Rmi_NotifySpaceShipEngineCharge,
                
+		Rmi_NotifyGrenadeCreate,
+               
+		Rmi_NotifyGrenadeMove,
+               
+		Rmi_NotifyGrenadeBoom,
+               
+		Rmi_NotifyGrenadeRemove,
+               
+		Rmi_RequestHpUpdate,
+               
 		Rmi_RequestSpaceShip,
                
 		Rmi_RequestGameEnd,
@@ -123,7 +137,17 @@ namespace SpaceWar
 		Rmi_NotifyGameResultInfoOther,
                
 		Rmi_NotifyGameResultShow,
+               
+		Rmi_RequestSpaceShipSetup,
+               
+		Rmi_NotifyDeathZoneCreate,
+               
+		Rmi_RequestDeathZoneMoveIndex,
+               
+		Rmi_NotifyDeathZoneMoveHostAndIndexSetup,
+               
+		Rmi_NotifyDeathZoneMove,
 	};
 
-	int g_RmiIDListCount = 58;
+	int g_RmiIDListCount = 70;
 }

@@ -12,6 +12,32 @@
 namespace SpaceWar
 {
         
+	bool Proxy::RequestGameExit ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameExit;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestGameExit, (::Proud::RmiID)Rmi_RequestGameExit);
+	}
+
+	bool Proxy::RequestGameExit ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestGameExit;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestGameExit, (::Proud::RmiID)Rmi_RequestGameExit);
+	}
+        
 	bool Proxy::RequestServerConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & id)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -884,6 +910,34 @@ __msg << enter;
 			RmiName_RequestShelterEnter, (::Proud::RmiID)Rmi_RequestShelterEnter);
 	}
         
+	bool Proxy::RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestItemDelete;
+__msg.Write(__msgid); 
+	
+__msg << itemID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestItemDelete, (::Proud::RmiID)Rmi_RequestItemDelete);
+	}
+
+	bool Proxy::RequestItemDelete ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & itemID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestItemDelete;
+__msg.Write(__msgid); 
+	
+__msg << itemID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestItemDelete, (::Proud::RmiID)Rmi_RequestItemDelete);
+	}
+        
 	bool Proxy::NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -1648,6 +1702,162 @@ __msg << fuel;
 			RmiName_NotifySpaceShipEngineCharge, (::Proud::RmiID)Rmi_NotifySpaceShipEngineCharge);
 	}
         
+	bool Proxy::NotifyGrenadeCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGrenadeCreate;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << networkID;
+__msg << pos;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyGrenadeCreate, (::Proud::RmiID)Rmi_NotifyGrenadeCreate);
+	}
+
+	bool Proxy::NotifyGrenadeCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGrenadeCreate;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << networkID;
+__msg << pos;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyGrenadeCreate, (::Proud::RmiID)Rmi_NotifyGrenadeCreate);
+	}
+        
+	bool Proxy::NotifyGrenadeMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGrenadeMove;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << networkID;
+__msg << pos;
+__msg << velocity;
+__msg << rot;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyGrenadeMove, (::Proud::RmiID)Rmi_NotifyGrenadeMove);
+	}
+
+	bool Proxy::NotifyGrenadeMove ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGrenadeMove;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << networkID;
+__msg << pos;
+__msg << velocity;
+__msg << rot;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyGrenadeMove, (::Proud::RmiID)Rmi_NotifyGrenadeMove);
+	}
+        
+	bool Proxy::NotifyGrenadeBoom ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const bool & isStone)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGrenadeBoom;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << networkID;
+__msg << isStone;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyGrenadeBoom, (::Proud::RmiID)Rmi_NotifyGrenadeBoom);
+	}
+
+	bool Proxy::NotifyGrenadeBoom ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & networkID,  const bool & isStone)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGrenadeBoom;
+__msg.Write(__msgid); 
+	
+__msg << sendHostID;
+__msg << networkID;
+__msg << isStone;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyGrenadeBoom, (::Proud::RmiID)Rmi_NotifyGrenadeBoom);
+	}
+        
+	bool Proxy::NotifyGrenadeRemove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGrenadeRemove;
+__msg.Write(__msgid); 
+	
+__msg << networkID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyGrenadeRemove, (::Proud::RmiID)Rmi_NotifyGrenadeRemove);
+	}
+
+	bool Proxy::NotifyGrenadeRemove ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & networkID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyGrenadeRemove;
+__msg.Write(__msgid); 
+	
+__msg << networkID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyGrenadeRemove, (::Proud::RmiID)Rmi_NotifyGrenadeRemove);
+	}
+        
+	bool Proxy::RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestHpUpdate;
+__msg.Write(__msgid); 
+	
+__msg << hp;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestHpUpdate, (::Proud::RmiID)Rmi_RequestHpUpdate);
+	}
+
+	bool Proxy::RequestHpUpdate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & hp)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestHpUpdate;
+__msg.Write(__msgid); 
+	
+__msg << hp;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestHpUpdate, (::Proud::RmiID)Rmi_RequestHpUpdate);
+	}
+        
 	bool Proxy::RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -1831,6 +2041,155 @@ __msg.Write(__msgid);
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyGameResultShow, (::Proud::RmiID)Rmi_NotifyGameResultShow);
 	}
+        
+	bool Proxy::RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShipSetup;
+__msg.Write(__msgid); 
+	
+__msg << spaceShipCount;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestSpaceShipSetup, (::Proud::RmiID)Rmi_RequestSpaceShipSetup);
+	}
+
+	bool Proxy::RequestSpaceShipSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipCount)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShipSetup;
+__msg.Write(__msgid); 
+	
+__msg << spaceShipCount;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestSpaceShipSetup, (::Proud::RmiID)Rmi_RequestSpaceShipSetup);
+	}
+        
+	bool Proxy::NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeathZoneCreate;
+__msg.Write(__msgid); 
+	
+__msg << spaceShipIndex;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyDeathZoneCreate, (::Proud::RmiID)Rmi_NotifyDeathZoneCreate);
+	}
+
+	bool Proxy::NotifyDeathZoneCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipIndex)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeathZoneCreate;
+__msg.Write(__msgid); 
+	
+__msg << spaceShipIndex;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyDeathZoneCreate, (::Proud::RmiID)Rmi_NotifyDeathZoneCreate);
+	}
+        
+	bool Proxy::RequestDeathZoneMoveIndex ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveIndex)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestDeathZoneMoveIndex;
+__msg.Write(__msgid); 
+	
+__msg << moveIndex;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestDeathZoneMoveIndex, (::Proud::RmiID)Rmi_RequestDeathZoneMoveIndex);
+	}
+
+	bool Proxy::RequestDeathZoneMoveIndex ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & moveIndex)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestDeathZoneMoveIndex;
+__msg.Write(__msgid); 
+	
+__msg << moveIndex;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestDeathZoneMoveIndex, (::Proud::RmiID)Rmi_RequestDeathZoneMoveIndex);
+	}
+        
+	bool Proxy::NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveHostID,  const int & currentIndex)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeathZoneMoveHostAndIndexSetup;
+__msg.Write(__msgid); 
+	
+__msg << moveHostID;
+__msg << currentIndex;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyDeathZoneMoveHostAndIndexSetup, (::Proud::RmiID)Rmi_NotifyDeathZoneMoveHostAndIndexSetup);
+	}
+
+	bool Proxy::NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & moveHostID,  const int & currentIndex)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeathZoneMoveHostAndIndexSetup;
+__msg.Write(__msgid); 
+	
+__msg << moveHostID;
+__msg << currentIndex;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyDeathZoneMoveHostAndIndexSetup, (::Proud::RmiID)Rmi_NotifyDeathZoneMoveHostAndIndexSetup);
+	}
+        
+	bool Proxy::NotifyDeathZoneMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeathZoneMove;
+__msg.Write(__msgid); 
+	
+__msg << pos;
+__msg << velocity;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyDeathZoneMove, (::Proud::RmiID)Rmi_NotifyDeathZoneMove);
+	}
+
+	bool Proxy::NotifyDeathZoneMove ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeathZoneMove;
+__msg.Write(__msgid); 
+	
+__msg << pos;
+__msg << velocity;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyDeathZoneMove, (::Proud::RmiID)Rmi_NotifyDeathZoneMove);
+	}
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestGameExit =_PNT("RequestGameExit");
+#else
+const PNTCHAR* Proxy::RmiName_RequestGameExit =_PNT("");
+#endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestServerConnect =_PNT("RequestServerConnect");
 #else
@@ -1977,6 +2336,11 @@ const PNTCHAR* Proxy::RmiName_RequestShelterEnter =_PNT("RequestShelterEnter");
 const PNTCHAR* Proxy::RmiName_RequestShelterEnter =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestItemDelete =_PNT("RequestItemDelete");
+#else
+const PNTCHAR* Proxy::RmiName_RequestItemDelete =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyLoginSuccess =_PNT("NotifyLoginSuccess");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyLoginSuccess =_PNT("");
@@ -2092,6 +2456,31 @@ const PNTCHAR* Proxy::RmiName_NotifySpaceShipEngineCharge =_PNT("NotifySpaceShip
 const PNTCHAR* Proxy::RmiName_NotifySpaceShipEngineCharge =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyGrenadeCreate =_PNT("NotifyGrenadeCreate");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyGrenadeCreate =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyGrenadeMove =_PNT("NotifyGrenadeMove");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyGrenadeMove =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyGrenadeBoom =_PNT("NotifyGrenadeBoom");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyGrenadeBoom =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyGrenadeRemove =_PNT("NotifyGrenadeRemove");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyGrenadeRemove =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestHpUpdate =_PNT("RequestHpUpdate");
+#else
+const PNTCHAR* Proxy::RmiName_RequestHpUpdate =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("RequestSpaceShip");
 #else
 const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("");
@@ -2121,6 +2510,31 @@ const PNTCHAR* Proxy::RmiName_NotifyGameResultShow =_PNT("NotifyGameResultShow")
 #else
 const PNTCHAR* Proxy::RmiName_NotifyGameResultShow =_PNT("");
 #endif
-const PNTCHAR* Proxy::RmiName_First = RmiName_RequestServerConnect;
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestSpaceShipSetup =_PNT("RequestSpaceShipSetup");
+#else
+const PNTCHAR* Proxy::RmiName_RequestSpaceShipSetup =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyDeathZoneCreate =_PNT("NotifyDeathZoneCreate");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyDeathZoneCreate =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestDeathZoneMoveIndex =_PNT("RequestDeathZoneMoveIndex");
+#else
+const PNTCHAR* Proxy::RmiName_RequestDeathZoneMoveIndex =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyDeathZoneMoveHostAndIndexSetup =_PNT("NotifyDeathZoneMoveHostAndIndexSetup");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyDeathZoneMoveHostAndIndexSetup =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyDeathZoneMove =_PNT("NotifyDeathZoneMove");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyDeathZoneMove =_PNT("");
+#endif
+const PNTCHAR* Proxy::RmiName_First = RmiName_RequestGameExit;
 }
 

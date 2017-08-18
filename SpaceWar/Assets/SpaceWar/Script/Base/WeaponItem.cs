@@ -12,7 +12,8 @@ public class WeaponItem : Item {
         RIFLE,
         MELEE,
         ROCKETLAUNCHER,
-        SKILLWEAPON
+        ETC_GRENADE,
+        ETC_RECOVERY // 이친구 임시다 웨폰 아이템 아니다 
     }
 
     [SerializeField] private WeaponType m_type = WeaponType.NONE;
@@ -61,9 +62,16 @@ public class WeaponItem : Item {
 
     private int m_currentBulletIndex = 0;
 
+    //수류탄 전용
+    private bool m_isGrenadeStart = false;
+
+
     // 총알 나가는 위치
     [SerializeField] private Transform m_firePoint = null;
     public Transform FIRE_POS { get { return m_firePoint; } set { m_firePoint = value; } }
+
+    //임시
+    float m_recoveryKitValue = 0.0f;
     
     #endregion
 
@@ -85,6 +93,9 @@ public class WeaponItem : Item {
                     break;
             case WeaponType.MELEE:
                 EnableMeleeColider();
+                break;
+            case WeaponType.ETC_GRENADE:
+                GrenadeAttack();
                 break;
         }
     }
@@ -116,6 +127,7 @@ public class WeaponItem : Item {
         }
     }
 
+    #region Guns Weapon Attack
     void GunAttack(Transform character)
     {
         m_effects[0].transform.position = m_firePoint.position;
@@ -179,6 +191,7 @@ public class WeaponItem : Item {
         else
             m_currentBulletIndex++;
     }
+    #endregion
 
     #endregion
 
@@ -197,7 +210,7 @@ public class WeaponItem : Item {
     #region MELEE_ATTACK
     void OnTriggerEnter(Collider col)
     {
-        if (col.CompareTag("Weapon"))
+        if (col.CompareTag("Weapon") && col.CompareTag("DeathZone"))
             return;
         // 애니메이션 중일 때만 
         if(m_meleeAttackAble)
@@ -268,6 +281,53 @@ public class WeaponItem : Item {
     {
         m_swordHitEffect.transform.SetParent(transform , false);
         m_swordHitEffect.SetActive(false);
+    }
+    #endregion
+
+    #region ETC Weapons Attack
+    void GrenadeAttack()
+    {
+        if (m_isGrenadeStart)
+            return;
+
+        Grenade g = this.GetComponent<Grenade>();
+        g.GrenadeSetup(m_player.transform.GetChild(0).rotation);
+        g.enabled = true;
+        m_isGrenadeStart = true;
+        if (NetworkManager.Instance() == null)
+            return;
+
+        
+        g.NETWORK_ID = NetworkManager.Instance().m_hostID + "_" + m_itemID + "_" + this.GetHashCode();
+        NetworkManager.Instance().RequestGrenadeCreate(g.NETWORK_ID , g.transform.position);
+    }
+
+    // 임시로직
+    public void Recovery(PlayerController player)
+    {
+        // 여기서 게이지를 넣자
+
+        // 다되면 힐
+        GameManager.Instance().SLIDER_UI.ShowSlider();
+
+        m_recoveryKitValue += 1f * Time.deltaTime;
+
+        GameManager.Instance().SLIDER_UI.SliderProcess(m_recoveryKitValue);
+
+        if(m_recoveryKitValue >= 1.0f)
+        {
+            player.RecoveryItemUseEnd();
+            GameManager.Instance().SLIDER_UI.HideSlider();
+            if (NetworkManager.Instance() != null)
+                NetworkManager.Instance().RequestHpUpdate(GameManager.Instance().PLAYER.m_hp + 30.0f);
+        }
+
+    }
+    public void RecoveryUp()
+    {
+        m_recoveryKitValue = 0.0f;
+        GameManager.Instance().SLIDER_UI.Reset();
+        GameManager.Instance().SLIDER_UI.HideSlider();
     }
     #endregion
 }

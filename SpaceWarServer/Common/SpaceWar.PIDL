@@ -17,6 +17,8 @@ using(cs) Nettention.Proud;
 [marshaler(cs)=SP_Marshaler]
 global SpaceWar 3141
 {
+		// TEST CODE
+	RequestGameExit();
 	// Room Logic -----------------------------------------------------
 	
 	// Connect - 방 입장 
@@ -113,6 +115,9 @@ global SpaceWar 3141
 	// 쉘터를 들어오고 나갔다 // false 면 나갔다
 	RequestShelterEnter([in]int sendHostID,[in]int shelterID,[in]bool enter);
 
+	// 아이템 삭제 요청을 보냈다.
+	RequestItemDelete([in]int itemID);
+
 	//S2C -------------------------------------------------------------
 	NotifyLoginSuccess([in]int hostID,[in]bool host);
 	NotifyLoginFailed([in]string reason);
@@ -186,6 +191,18 @@ global SpaceWar 3141
 	// 누군가가 우주선 조작중
 	NotifySpaceShipEngineCharge([in]int spaceShipID,[in]float fuel);
 
+	// 유저끼리 날리는 메시지 - 수류탄 생성해라
+	NotifyGrenadeCreate([in]int sendHostID,[in]string networkID,[in]Proud::Vector3 pos);
+	// 유저끼리 날리는 메시지 - 수류탄 이동 동기화
+	NotifyGrenadeMove([in]int sendHostID,[in]string networkID,[in]Proud::Vector3 pos,[in]Proud::Vector3 velocity,[in]Proud::Vector3 rot);
+	// 유저끼리 날리는 메시지 - 수류탄 폭발 애니메이션
+	NotifyGrenadeBoom([in]int sendHostID,[in]string networkID,[in]bool isStone);
+	// 유저끼리 날리는 메시지 - 수류탄 삭제
+	NotifyGrenadeRemove([in]string networkID);
+
+	// 서버에게 - 나 체력 회복했엉
+	RequestHpUpdate([in]float hp);
+	
 	// RESULT -------------------------------------------------------------------------
 	
 	// 우주선 타서 연료 다채웠을 경우 보냄
@@ -200,4 +217,18 @@ global SpaceWar 3141
 	NotifyGameResultInfoMe([in]string gameMode,[in]int winState,[in]int playTime,[in]int kills,[in]int assists,[in]int death,[in]int getMoney); 
 	NotifyGameResultInfoOther([in]string name,[in]int state);
 	NotifyGameResultShow();
+
+
+	// DeathZone ------------------------------------------------------------------------------------------------
+	// 우주선이 총 몇개 있는지 세팅 
+	RequestSpaceShipSetup([in]int spaceShipCount);
+	// 데스존 생성 통보
+	NotifyDeathZoneCreate([in]int spaceShipIndex); 
+	// 데스존이 가고 있는 행성 단계를 알려줘야함
+	RequestDeathZoneMoveIndex([in]int moveIndex);
+	// 데스존이 가고 있는 행성 단계 통보 + 누가 움직이는 주체인지도 통보
+	NotifyDeathZoneMoveHostAndIndexSetup([in]int moveHostID,[in]int currentIndex);
+	// 데스존 이동 통보 - 이건 클라에서 보내는 것
+	NotifyDeathZoneMove([in]Proud::Vector3 pos,[in]Proud::Vector3 velocity);
+
 }

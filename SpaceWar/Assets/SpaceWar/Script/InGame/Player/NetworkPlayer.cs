@@ -13,6 +13,21 @@ public class NetworkPlayer : MonoBehaviour {
     public WeaponItem m_weapon = null;
     public GameObject m_weaponAnchor;
 
+    public WeaponItem HAS_WEAPON
+    {
+        get { return m_weapon; }
+        set {
+            m_weapon = value;
+
+            if(m_weapon == null)
+            {
+                // 수류탄이었으므로 애니메이션 변경
+                PlayerController p = this.GetComponent<PlayerController>();
+                PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
+            }
+        }
+    }
+
     PositionFollower m_positionFollower = new PositionFollower();
     AngleFollower m_playerCamSeeX = new AngleFollower();
     AngleFollower m_playerCamSeeY = new AngleFollower();
@@ -147,6 +162,8 @@ public class NetworkPlayer : MonoBehaviour {
                 case WeaponItem.WeaponType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
                 case WeaponItem.WeaponType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
                 case WeaponItem.WeaponType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
+                case WeaponItem.WeaponType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                case WeaponItem.WeaponType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
             }
         }
     }

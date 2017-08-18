@@ -16,6 +16,8 @@ namespace SpaceWar
 	class Proxy : public ::Proud::IRmiProxy
 	{
 	public:
+	virtual bool RequestGameExit ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_SEALED; 
+	virtual bool RequestGameExit ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)   PN_SEALED;  
 	virtual bool RequestServerConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & id) PN_SEALED; 
 	virtual bool RequestServerConnect ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & id)   PN_SEALED;  
 	virtual bool RequestLobbyConnect ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_SEALED; 
@@ -74,6 +76,8 @@ namespace SpaceWar
 	virtual bool RequestShelterDoorControl ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & shelterID,  const bool & doorState)   PN_SEALED;  
 	virtual bool RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter) PN_SEALED; 
 	virtual bool RequestShelterEnter ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & shelterID,  const bool & enter)   PN_SEALED;  
+	virtual bool RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID) PN_SEALED; 
+	virtual bool RequestItemDelete ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & itemID)   PN_SEALED;  
 	virtual bool NotifyLoginSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const bool & host) PN_SEALED; 
 	virtual bool NotifyLoginSuccess ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const bool & host)   PN_SEALED;  
 	virtual bool NotifyLoginFailed ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & reason) PN_SEALED; 
@@ -120,6 +124,16 @@ namespace SpaceWar
 	virtual bool NotifyMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & anglex,  const float & anglez)   PN_SEALED;  
 	virtual bool NotifySpaceShipEngineCharge ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID,  const float & fuel) PN_SEALED; 
 	virtual bool NotifySpaceShipEngineCharge ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipID,  const float & fuel)   PN_SEALED;  
+	virtual bool NotifyGrenadeCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos) PN_SEALED; 
+	virtual bool NotifyGrenadeCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos)   PN_SEALED;  
+	virtual bool NotifyGrenadeMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot) PN_SEALED; 
+	virtual bool NotifyGrenadeMove ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)   PN_SEALED;  
+	virtual bool NotifyGrenadeBoom ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & networkID,  const bool & isStone) PN_SEALED; 
+	virtual bool NotifyGrenadeBoom ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & networkID,  const bool & isStone)   PN_SEALED;  
+	virtual bool NotifyGrenadeRemove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID) PN_SEALED; 
+	virtual bool NotifyGrenadeRemove ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & networkID)   PN_SEALED;  
+	virtual bool RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp) PN_SEALED; 
+	virtual bool RequestHpUpdate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & hp)   PN_SEALED;  
 	virtual bool RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) PN_SEALED; 
 	virtual bool RequestSpaceShip ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & winPlayerID)   PN_SEALED;  
 	virtual bool RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_SEALED; 
@@ -132,6 +146,17 @@ namespace SpaceWar
 	virtual bool NotifyGameResultInfoOther ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & name,  const int & state)   PN_SEALED;  
 	virtual bool NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_SEALED; 
 	virtual bool NotifyGameResultShow ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)   PN_SEALED;  
+	virtual bool RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount) PN_SEALED; 
+	virtual bool RequestSpaceShipSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipCount)   PN_SEALED;  
+	virtual bool NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex) PN_SEALED; 
+	virtual bool NotifyDeathZoneCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipIndex)   PN_SEALED;  
+	virtual bool RequestDeathZoneMoveIndex ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveIndex) PN_SEALED; 
+	virtual bool RequestDeathZoneMoveIndex ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & moveIndex)   PN_SEALED;  
+	virtual bool NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & moveHostID,  const int & currentIndex) PN_SEALED; 
+	virtual bool NotifyDeathZoneMoveHostAndIndexSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & moveHostID,  const int & currentIndex)   PN_SEALED;  
+	virtual bool NotifyDeathZoneMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity) PN_SEALED; 
+	virtual bool NotifyDeathZoneMove ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity)   PN_SEALED;  
+static const PNTCHAR* RmiName_RequestGameExit;
 static const PNTCHAR* RmiName_RequestServerConnect;
 static const PNTCHAR* RmiName_RequestLobbyConnect;
 static const PNTCHAR* RmiName_RequestNetworkGameTeamSelect;
@@ -161,6 +186,7 @@ static const PNTCHAR* RmiName_RequestUseItemBox;
 static const PNTCHAR* RmiName_RequestShelterStartSetup;
 static const PNTCHAR* RmiName_RequestShelterDoorControl;
 static const PNTCHAR* RmiName_RequestShelterEnter;
+static const PNTCHAR* RmiName_RequestItemDelete;
 static const PNTCHAR* RmiName_NotifyLoginSuccess;
 static const PNTCHAR* RmiName_NotifyLoginFailed;
 static const PNTCHAR* RmiName_NotifyOtherClientJoin;
@@ -184,12 +210,22 @@ static const PNTCHAR* RmiName_NotifyShelterInfo;
 static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
 static const PNTCHAR* RmiName_NotifyMeteorCreate;
 static const PNTCHAR* RmiName_NotifySpaceShipEngineCharge;
+static const PNTCHAR* RmiName_NotifyGrenadeCreate;
+static const PNTCHAR* RmiName_NotifyGrenadeMove;
+static const PNTCHAR* RmiName_NotifyGrenadeBoom;
+static const PNTCHAR* RmiName_NotifyGrenadeRemove;
+static const PNTCHAR* RmiName_RequestHpUpdate;
 static const PNTCHAR* RmiName_RequestSpaceShip;
 static const PNTCHAR* RmiName_RequestGameEnd;
 static const PNTCHAR* RmiName_NotifyKillInfo;
 static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
 static const PNTCHAR* RmiName_NotifyGameResultInfoOther;
 static const PNTCHAR* RmiName_NotifyGameResultShow;
+static const PNTCHAR* RmiName_RequestSpaceShipSetup;
+static const PNTCHAR* RmiName_NotifyDeathZoneCreate;
+static const PNTCHAR* RmiName_RequestDeathZoneMoveIndex;
+static const PNTCHAR* RmiName_NotifyDeathZoneMoveHostAndIndexSetup;
+static const PNTCHAR* RmiName_NotifyDeathZoneMove;
 static const PNTCHAR* RmiName_First;
 		Proxy()
 		{

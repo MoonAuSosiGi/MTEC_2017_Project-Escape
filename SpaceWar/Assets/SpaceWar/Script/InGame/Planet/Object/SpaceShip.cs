@@ -44,8 +44,9 @@ public class SpaceShip : MonoBehaviour {
 
     public void SpaceShipEngineChargeProcess()
     {
-        if(IsInvoking("ChargeProcess") == false)
-            InvokeRepeating("ChargeProcess" , Time.deltaTime , Time.deltaTime);
+        //if(IsInvoking("ChargeProcess") == false)
+        //    InvokeRepeating("ChargeProcess" , Time.deltaTime , Time.deltaTime);
+        ChargeProcess();
     }
     
     public void SpaceShipEngineChargerProcessCancel()
@@ -59,7 +60,7 @@ public class SpaceShip : MonoBehaviour {
 
     void ChargeProcess()
     {
-        SpaceShipEngineCharge(0.001f , true);
+        SpaceShipEngineCharge(0.1f * Time.deltaTime , true);
     }
     
     public void SpaceShipEngineCharge(float t,bool me)

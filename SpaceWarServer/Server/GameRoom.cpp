@@ -102,6 +102,16 @@ void GameRoom::ClearRoom()
 	m_teamMode = false;
 }
 
+void GameRoom::ResetGame()
+{
+	auto iter = m_clientMap.begin();
+	while (iter != m_clientMap.end())
+	{
+		iter->second->GameReset();
+		iter++;
+	}
+}
+
 forward_list<HostID> GameRoom::GetOtherClients(HostID hostID)
 {
 	forward_list<HostID> list;

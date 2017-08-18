@@ -139,7 +139,9 @@ public class ResultUI : MonoBehaviour {
         NetworkManager.Instance().gameResultInfoToMe -= ResultUI_gameResultInfoToMe;
         NetworkManager.Instance().gameResultInfoToOther -= ResultUI_gameResultInfoToOther;
         NetworkManager.Instance().gameResultShow -= ResultUI_gameResultShow;
-        SceneManager.LoadScene(1);
+        NetworkManager.Instance().RequestGameExit();
+        GameObject.Destroy(NetworkManager.Instance().gameObject);
+        SceneManager.LoadScene(0);
     }
     #endregion
 

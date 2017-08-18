@@ -26,13 +26,14 @@ public class OxyCharger : MonoBehaviour {
     #endregion
 
     #region OxyControl
-    public void UseOxy()
+    public void UseOxy(float oxy)
     {
         if (!m_isAlive)
             return;
         if (GameManager.Instance().PLAYER.m_oxy >= 100.0f)
             return;
-        NetworkManager.Instance().C2SRequestPlayerUseOxyCharger(this , 10.0f);
+        
+        NetworkManager.Instance().C2SRequestPlayerUseOxyCharger(this , oxy);
     }
 
     public void RecvOxy(float oxy)

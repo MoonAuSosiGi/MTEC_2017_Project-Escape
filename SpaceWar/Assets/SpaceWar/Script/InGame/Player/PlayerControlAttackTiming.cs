@@ -15,6 +15,6 @@ public class PlayerControlAttackTiming : MonoBehaviour {
 
     public void AttackEnd()
     {
-        m_player.AttackAnimation(0);
+        m_player.AttackAnimationEnd();
     }
 }

@@ -16,13 +16,24 @@
 #include "../Common/SpaceWar_common.cpp"
 
 // 메테오까지 남은시간
-int s_meteorCommingSec = 11;
+int s_meteorCommingSec = 60;
+// 데스존 까지 남은 시간
+int s_deathZoneCommingSec = 30;
 
+// 데스존이 진행하고 있는 인덱스
+int s_deathZoneIndex = 0;
+
+// 데스존을 움직이는 주체
+int s_deathZoneHostID = -1;
 
 class Server : public SpaceWar::Stub
 {
 public:
-	Server() { m_gameRoom = make_shared <GameRoom>(); }
+	Server() 
+	{ 
+		m_gameRoom = make_shared <GameRoom>(); 
+		m_spaceshipCount = 0;
+	}
 	~Server() {}
 
 public:
@@ -61,6 +72,9 @@ public:
 	// 쉘터 입장 퇴장
 	DECRMI_SpaceWar_RequestShelterEnter;
 
+	// 서버야 나 체력 회복했어
+	DECRMI_SpaceWar_RequestHpUpdate;
+
 
 	// 우주선 탔음 
 	DECRMI_SpaceWar_RequestSpaceShip;
@@ -87,12 +101,20 @@ public:
 	// 게임 씬에 들어왔다는 것을 알려야지
 	DECRMI_SpaceWar_RequestGameSceneJoin;
 
+	// 우주선 몇개 있는지 세팅
+	DECRMI_SpaceWar_RequestSpaceShipSetup;
+
+	// 데스존이 이동하고 있는 단계를 통보해줘라
+	DECRMI_SpaceWar_RequestDeathZoneMoveIndex;
+
+	// 게임 끝났음을 알림 ( 호스트가 보낸다 ))
+	DECRMI_SpaceWar_RequestGameExit;
+
 	// 서버 이벤트 로직
 	void OnClientJoin(CNetClientInfo* clientInfo);
 	void OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, const ByteArray& comment);
 
-	// 메테오 루프
-//	void MeteorLoop(void*);
+	int GetSpaceShipCount() { return m_spaceshipCount; }
 
 private:
 	// 아이템 박스 등 상호작용 오브젝트의 경우 동시접근을 막아야 하므로
@@ -105,6 +127,9 @@ private:
 
 	// 플레이 타임
 	int m_gameStartTime;
+
+	// 현재 게임의 우주선 갯수
+	int m_spaceshipCount;
 public:
 	// 전송 프록시
 	SpaceWar::Proxy m_proxy;

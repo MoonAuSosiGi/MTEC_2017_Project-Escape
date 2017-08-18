@@ -74,6 +74,12 @@ public:
 	HostID GetHostID() { return m_hostID; }
 	string GetName() { return m_userName; }
 
+	void GameReset()
+	{
+		m_isGameScene = false;
+		m_isReady = false;
+		m_isLobby = false;
+	}
 
 
 };
@@ -125,6 +131,9 @@ public:
 
 	// 클리어
 	void ClearRoom();
+
+	//다시 재게임시 리셋
+	void ResetGame();
 
 	// 모두 준비가 되었는지 
 	bool IsGameSceneAllReady();

@@ -19,13 +19,19 @@ int main()
 
 void MeteorLoop(void*)
 {
+
 	if (s_GameRunning == false)
 		return;
 	s_meteorCommingSec--;
 
+	if(s_deathZoneCommingSec > 0)
+		s_deathZoneCommingSec--;
+
+
 	if(s_meteorCommingSec % 5 == 0 && s_meteorCommingSec >= 0)
 		cout << "메테오 " << s_meteorCommingSec << " 초 남음 " << endl;
-
+	if (s_deathZoneCommingSec % 5 == 0)
+		cout << "<Server> Death Zone 생성까지 " << s_deathZoneCommingSec << " 초 남았습니다." << endl;
 	
 	server.m_proxy.NotifyMeteorCreateTime(server.m_playerP2PGroup, RmiContext::UnreliableSend, s_meteorCommingSec);
 
@@ -45,6 +51,62 @@ void MeteorLoop(void*)
 			if (s_meteorCommingSec == -60)
 			{
 				s_meteorCommingSec = 30;
+			}
+		}
+	}
+
+	// 여기는 데스존 체크
+	if (s_deathZoneCommingSec == 0)
+	{
+		int index = (int)RandomRange(0, server.GetSpaceShipCount());
+		
+		// 생성
+		server.m_proxy.NotifyDeathZoneCreate(server.m_playerP2PGroup, RmiContext::ReliableSend, index);
+
+		// 움직이는 주체 설정
+		auto iter = server.m_clientMap.begin();
+		while (iter != server.m_clientMap.end())
+		{
+			if (iter->second->m_state == ALIVE)
+			{
+				// 움직이는 주체 통보
+				server.m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(
+					server.m_playerP2PGroup,
+					RmiContext::ReliableSend,
+					(int)iter->second->m_hostID, 
+					s_deathZoneIndex);
+				s_deathZoneHostID = (int)iter->second->m_hostID;
+				break;
+			}
+			iter++;
+		}
+		s_deathZoneCommingSec--;
+	}
+	// 데스존이 움직이는 루프 
+	else if (s_deathZoneCommingSec == -1)
+	{
+		if(server.m_clientMap.size() <= 0)
+			return;
+		if (server.m_clientMap.find((HostID)s_deathZoneHostID) == server.m_clientMap.end())
+			return;
+		if (server.m_clientMap[(HostID)s_deathZoneHostID]->m_state != ALIVE)
+		{
+			// 움직이는 주체 설정
+			auto iter = server.m_clientMap.begin();
+			while (iter != server.m_clientMap.end())
+			{
+				if (iter->second->m_state == ALIVE)
+				{
+					// 움직이는 주체 통보
+					server.m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(
+						server.m_playerP2PGroup,
+						RmiContext::ReliableSend,
+						(int)iter->second->m_hostID,
+						s_deathZoneIndex);
+					s_deathZoneHostID = (int)iter->second->m_hostID;
+					break;
+				}
+				iter++;
 			}
 		}
 	}
@@ -222,7 +284,8 @@ DEFRMI_SpaceWar_RequestServerConnect(Server)
 
 	m_proxy.NotifyLoginSuccess(remote, RmiContext::ReliableSend,(int)remote,(count == 1));
 	
-	if (m_gameRoom != nullptr)
+	// 로비에서 처리하는걸로
+	/*if (m_gameRoom != nullptr)
 	{
 		forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
 		auto iter = list.begin();
@@ -232,7 +295,7 @@ DEFRMI_SpaceWar_RequestServerConnect(Server)
 			m_proxy.NotifyNetworkConnectUser(*iter, RmiContext::ReliableSend, (int)remote, id);
 			iter++;
 		}
-	}
+	}*/
 	return true;
 }
 
@@ -385,7 +448,34 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 	}
 
 
-	m_proxy.NotifyPlayerChangeHP(m_playerP2PGroup, RmiContext::ReliableSend, targetHostID, m_clientMap[(HostID)targetHostID]->m_userName, m_clientMap[(HostID)targetHostID]->hp, prevHp, MAX_HP,dir);
+	m_proxy.NotifyPlayerChangeHP(m_playerP2PGroup, RmiContext::ReliableSend, targetHostID, weaponName, m_clientMap[(HostID)targetHostID]->hp, prevHp, MAX_HP,dir);
+	return true;
+}
+
+DEFRMI_SpaceWar_RequestHpUpdate(Server)
+{
+	cout << "HP Update 요청 " << endl;
+
+	auto iter = m_clientMap.begin();
+
+	float prevHp = 0.0f;
+	while (iter != m_clientMap.end())
+	{
+		if (iter->second->m_hostID == remote)
+		{
+			prevHp = iter->second->hp;
+			iter->second->hp = hp;
+			break;
+		}
+		iter++;
+	}
+
+	iter = m_clientMap.begin();
+	while (iter != m_clientMap.end())
+	{
+		m_proxy.NotifyPlayerChangeHP(iter->second->m_hostID, RmiContext::ReliableSend, (int)remote, "HpUpdate", hp, prevHp, MAX_HP, Vector3(0.0, 0.0, 0.0));
+		iter++;
+	}
 	return true;
 }
 
@@ -435,7 +525,7 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 		// 첫 사용
 		m_itemBoxMap[itemBoxIndex] = sendHostID;
 
-		int itemCode = (int)RandomRange(1,6); // 여기서 줘야함
+		int itemCode = (int)RandomRange(1,7); // 여기서 줘야함
 		cout << "item Code " << itemCode << endl;
 		m_proxy.NotifyUseItemBox(m_playerP2PGroup, RmiContext::ReliableSend,
 			sendHostID, itemBoxIndex, itemCode);
@@ -525,6 +615,11 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 {
 	cout << "RequestGameEnd -- 게임 종료  - " << endl;
 	s_GameRunning = false;
+
+	
+
+	// 여기서 문제  생겼었음
+
 	if (m_clientMap[remote]->m_state != SPACESHIP)
 		return true;
 
@@ -559,8 +654,9 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 
 		iter++;
 	}
-	ResetUsers();
+	
 
+	
 	return true;
 }
 #pragma endregion
@@ -585,6 +681,9 @@ DEFRMI_SpaceWar_RequestLobbyConnect(Server)
 	while (iter != list.end())
 	{
 		m_proxy.NotifyNetworkUserSetup(remote, RmiContext::ReliableSend, (int)iter->GetHostID(),iter->GetName(), iter->IsReady(), iter->IsRedTeam());
+
+		if (remote != iter->GetHostID())
+			m_proxy.NotifyNetworkConnectUser(iter->GetHostID(), RmiContext::ReliableSend, remote, m_gameRoom->GetClient(remote)->GetName());
 		iter++;
 	}
 	return true;
@@ -739,6 +838,8 @@ DEFRMI_SpaceWar_RequestGameSceneJoin(Server)
 	client->SetPosition(pos);
 
 	// 모든 클라이언트가 준비되었는지 확인 
+
+	cout << "우와 " << m_gameRoom->IsGameSceneAllReady() << endl;
 	if (m_gameRoom->IsGameSceneAllReady())
 	{
 		// 이 경우 이제 모든 클라에게 접속 정보를 보낸다.
@@ -778,4 +879,36 @@ DEFRMI_SpaceWar_RequestGameSceneJoin(Server)
 	return true;
 }
 
+#pragma endregion
+
+DEFRMI_SpaceWar_RequestGameExit(Server)
+{
+	s_GameRunning = false;
+	m_gameRoom->ClearRoom();
+	m_clientMap.clear();
+	m_itemMap.clear();
+	m_itemBoxMap.clear();
+	//m_oxyChargerMap.clear();
+	s_deathZoneCommingSec = 11;
+	return true;
+}
+
+#pragma region Death Zone
+DEFRMI_SpaceWar_RequestSpaceShipSetup(Server)
+{
+	cout << "우주선의 갯수가 세팅됩니다.." << spaceShipCount << endl;
+	m_spaceshipCount = spaceShipCount;
+	return true;
+};
+
+DEFRMI_SpaceWar_RequestDeathZoneMoveIndex(Server)
+{
+	cout << "Death Zone Move Target Index " << moveIndex << endl;
+	s_deathZoneIndex = moveIndex;
+
+	// 바뀔때 통보도 해주어야함
+	m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(m_playerP2PGroup, RmiContext::ReliableSend, s_deathZoneHostID, s_deathZoneIndex);
+
+	return true;
+};
 #pragma endregion
