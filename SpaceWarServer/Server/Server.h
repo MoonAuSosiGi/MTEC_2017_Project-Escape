@@ -16,9 +16,9 @@
 #include "../Common/SpaceWar_common.cpp"
 
 // 메테오까지 남은시간
-int s_meteorCommingSec = 60;
+int s_meteorCommingSec = 90;
 // 데스존 까지 남은 시간
-int s_deathZoneCommingSec = 30;
+int s_deathZoneCommingSec = 180;
 
 // 데스존이 진행하고 있는 인덱스
 int s_deathZoneIndex = 0;

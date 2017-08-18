@@ -48,9 +48,9 @@ void MeteorLoop(void*)
 
 		else if (s_meteorCommingSec < 0)
 		{
-			if (s_meteorCommingSec == -60)
+			//if (s_meteorCommingSec == -120)
 			{
-				s_meteorCommingSec = 30;
+				s_meteorCommingSec = 90;
 			}
 		}
 	}
@@ -889,7 +889,7 @@ DEFRMI_SpaceWar_RequestGameExit(Server)
 	m_itemMap.clear();
 	m_itemBoxMap.clear();
 	//m_oxyChargerMap.clear();
-	s_deathZoneCommingSec = 11;
+	s_deathZoneCommingSec = 180;
 	return true;
 }
 
