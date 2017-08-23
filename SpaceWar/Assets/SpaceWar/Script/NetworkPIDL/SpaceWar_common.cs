@@ -74,17 +74,19 @@ namespace SpaceWar
 			public const Nettention.Proud.RmiID NotifyGrenadeBoom = (Nettention.Proud.RmiID)3141+57;
 			public const Nettention.Proud.RmiID NotifyGrenadeRemove = (Nettention.Proud.RmiID)3141+58;
 			public const Nettention.Proud.RmiID RequestHpUpdate = (Nettention.Proud.RmiID)3141+59;
-			public const Nettention.Proud.RmiID RequestSpaceShip = (Nettention.Proud.RmiID)3141+60;
-			public const Nettention.Proud.RmiID RequestGameEnd = (Nettention.Proud.RmiID)3141+61;
-			public const Nettention.Proud.RmiID NotifyKillInfo = (Nettention.Proud.RmiID)3141+62;
-			public const Nettention.Proud.RmiID NotifyGameResultInfoMe = (Nettention.Proud.RmiID)3141+63;
-			public const Nettention.Proud.RmiID NotifyGameResultInfoOther = (Nettention.Proud.RmiID)3141+64;
-			public const Nettention.Proud.RmiID NotifyGameResultShow = (Nettention.Proud.RmiID)3141+65;
-			public const Nettention.Proud.RmiID RequestSpaceShipSetup = (Nettention.Proud.RmiID)3141+66;
-			public const Nettention.Proud.RmiID NotifyDeathZoneCreate = (Nettention.Proud.RmiID)3141+67;
-			public const Nettention.Proud.RmiID RequestDeathZoneMoveIndex = (Nettention.Proud.RmiID)3141+68;
-			public const Nettention.Proud.RmiID NotifyDeathZoneMoveHostAndIndexSetup = (Nettention.Proud.RmiID)3141+69;
-			public const Nettention.Proud.RmiID NotifyDeathZoneMove = (Nettention.Proud.RmiID)3141+70;
+			public const Nettention.Proud.RmiID NotifyDrawGame = (Nettention.Proud.RmiID)3141+60;
+			public const Nettention.Proud.RmiID RequestDrawGameResult = (Nettention.Proud.RmiID)3141+61;
+			public const Nettention.Proud.RmiID RequestSpaceShip = (Nettention.Proud.RmiID)3141+62;
+			public const Nettention.Proud.RmiID RequestGameEnd = (Nettention.Proud.RmiID)3141+63;
+			public const Nettention.Proud.RmiID NotifyKillInfo = (Nettention.Proud.RmiID)3141+64;
+			public const Nettention.Proud.RmiID NotifyGameResultInfoMe = (Nettention.Proud.RmiID)3141+65;
+			public const Nettention.Proud.RmiID NotifyGameResultInfoOther = (Nettention.Proud.RmiID)3141+66;
+			public const Nettention.Proud.RmiID NotifyGameResultShow = (Nettention.Proud.RmiID)3141+67;
+			public const Nettention.Proud.RmiID RequestSpaceShipSetup = (Nettention.Proud.RmiID)3141+68;
+			public const Nettention.Proud.RmiID NotifyDeathZoneCreate = (Nettention.Proud.RmiID)3141+69;
+			public const Nettention.Proud.RmiID RequestDeathZoneMoveIndex = (Nettention.Proud.RmiID)3141+70;
+			public const Nettention.Proud.RmiID NotifyDeathZoneMoveHostAndIndexSetup = (Nettention.Proud.RmiID)3141+71;
+			public const Nettention.Proud.RmiID NotifyDeathZoneMove = (Nettention.Proud.RmiID)3141+72;
 		// List that has RMI ID.
 		public static Nettention.Proud.RmiID[] RmiIDList = new Nettention.Proud.RmiID[] {
 			RequestGameExit,
@@ -146,6 +148,8 @@ namespace SpaceWar
 			NotifyGrenadeBoom,
 			NotifyGrenadeRemove,
 			RequestHpUpdate,
+			NotifyDrawGame,
+			RequestDrawGameResult,
 			RequestSpaceShip,
 			RequestGameEnd,
 			NotifyKillInfo,

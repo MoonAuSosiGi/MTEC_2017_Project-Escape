@@ -14,9 +14,11 @@ public class NetworkManager : Singletone<NetworkManager> {
     public HostID m_hostID;
     public HostID m_p2pID;
 
-    #region 임시 패배
+    #region 임시 패배 , 드로우
     private bool m_isLose = false;
     public bool IS_LOSE { get { return m_isLose; } }
+    private bool m_isDraw = false;
+    public bool IS_DRAW {  get { return m_isDraw; } }
     #endregion
 
     // 서버 guid 
@@ -657,8 +659,20 @@ public class NetworkManager : Singletone<NetworkManager> {
             {
                 if (hp <= 0.0f)
                     m_isLose = true;
-                GameManager.Instance().ChangeHP(hp , prevhp , maxhp);
-                GameManager.Instance().PLAYER.m_player.Damage(dir,(string.IsNullOrEmpty(name)) ? null : name);
+
+                // 10% 체크
+                if(hp <= maxhp * 0.1f)
+                {
+                    GameManager.Instance().PLAYER.m_player.NotEnoughHp();
+                }
+                else if(prevhp <= maxhp * 0.1f && hp > maxhp * 0.1f)
+                {
+                    GameManager.Instance().PLAYER.m_player.HealHPAndOxy();
+                }
+
+                GameManager.Instance().ChangeHP(hp , prevhp , maxhp, (string.IsNullOrEmpty(name)) ? null : name);
+                if(prevhp > hp)
+                    GameManager.Instance().PLAYER.m_player.Damage(dir,(string.IsNullOrEmpty(name)) ? null : name);
             }
             return true;
         };
@@ -669,7 +683,17 @@ public class NetworkManager : Singletone<NetworkManager> {
         {
             if ((int)m_hostID == targetHostID)
             {
-                if(oxygen <= 0)
+                // 10% 체크
+                if (oxygen <= maxoxy * 0.1f)
+                {
+                    GameManager.Instance().PLAYER.m_player.NotEnoughOxy();
+                }
+                else if (prevoxy <= maxoxy * 0.1f && oxygen > maxoxy * 0.1f)
+                {
+                    GameManager.Instance().PLAYER.m_player.HealHPAndOxy();
+                }
+
+                if (oxygen <= 0)
                 {
                     C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" , 5.0f,UnityEngine.Vector3.zero);
                 }
@@ -798,6 +822,16 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // -- 게임 결과에 관련된 것들
         #region ResultStub 
+
+        // Draw Game
+        m_s2cStub.NotifyDrawGame = (HostID remote , RmiContext rmiContext) =>
+        {
+            m_isDraw = true;
+            // 씬 이동
+            SceneManager.LoadScene("Space_1Result");
+            return true;
+        };
+
         // 게임 결과 // 자기 자신
         m_s2cStub.NotifyGameResultInfoMe = (HostID remote , RmiContext rmiContext ,
             string gameMode , int winState , int playTime , int kills , int assists ,
@@ -1424,6 +1458,13 @@ public class NetworkManager : Singletone<NetworkManager> {
     {
         m_isGameRunning = false;
         m_c2sProxy.RequestGameEnd(HostID.HostID_Server , RmiContext.ReliableSend);
+    }
+
+    // 네트워크 드로우 결과 요청
+    public void RequestDrawGame()
+    {
+        Debug.Log("DrawGame Result 요청 !!");
+        m_c2sProxy.RequestDrawGameResult(HostID.HostID_Server , RmiContext.ReliableSend);
     }
 
     #endregion

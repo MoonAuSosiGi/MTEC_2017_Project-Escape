@@ -422,9 +422,10 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 
 	if (m_clientMap[(HostID)targetHostID]->hp <= 0.0f)
 	{
+		cout << " 죽었다 " + targetHostID << endl;
 		m_clientMap[(HostID)targetHostID]->hp = 0.0f;
 		m_clientMap[(HostID)targetHostID]->PlayerDead(m_netServer->GetTimeMs());
-		cout << " 죽었다 " + targetHostID << endl;
+		
 		// 죽은 후에 어시스트 목록 갱신
 		forward_list<int> list = m_clientMap[(HostID)targetHostID]->GetAssistClientList();
 		for (auto value : list)
@@ -435,10 +436,32 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 			m_clientMap[(HostID)value]->m_assistCount++;
 			m_proxy.NotifyKillInfo((HostID)value, RmiContext::ReliableSend, m_clientMap[(HostID)targetHostID]->m_userName, false, m_clientMap[(HostID)value]->m_killCount, m_clientMap[(HostID)value]->m_assistCount);
 		}
-		cout << "sendhost " << m_clientMap[(HostID)sendHostID]->m_killCount << endl;
-		m_clientMap[(HostID)sendHostID]->m_killCount++;
-		cout << "sendhost2 " << m_clientMap[(HostID)sendHostID]->m_killCount << endl;
+
+		if(sendHostID != targetHostID)
+			m_clientMap[(HostID)sendHostID]->m_killCount++;
+
 		m_proxy.NotifyKillInfo((HostID)sendHostID, RmiContext::ReliableSend, m_clientMap[(HostID)targetHostID]->m_userName, true, m_clientMap[(HostID)sendHostID]->m_killCount, m_clientMap[(HostID)sendHostID]->m_assistCount);
+
+		// 이 부분에서 다 죽었는지 체크
+		int deadCheck = 0;
+		auto iter = m_clientMap.begin();
+		while (iter != m_clientMap.end())
+		{
+			deadCheck += (iter->second->m_state == DEATH) ? 0 : 1;
+			iter++;
+		}
+
+		// 다죽음 - 즉 드로우 게임 
+		if (deadCheck == 0)
+		{
+			iter = m_clientMap.begin();
+			while (iter != m_clientMap.end())
+			{
+				// 드로우 게임임을 날린다
+				m_proxy.NotifyDrawGame(iter->second->m_hostID, RmiContext::ReliableSend);
+				iter++;
+			}
+		}
 	}
 	else
 	{
@@ -608,6 +631,43 @@ DEFRMI_SpaceWar_RequestSpaceShip(Server)
 {
 	cout << "이친구 우주선 탔다 " << winPlayerID << endl;
 	m_clientMap[(HostID)winPlayerID]->PlayerWin();
+	return true;
+}
+
+DEFRMI_SpaceWar_RequestDrawGameResult(Server)
+{
+	cout << "드로우 결과 요청 " << endl;
+	auto iter = m_clientMap.begin();
+
+	float playTime = m_netServer->GetTimeMs() - m_gameStartTime;
+
+	while (iter != m_clientMap.end())
+	{
+
+		HostID targetID = iter->first;
+
+		int winState = 2;
+
+		m_proxy.NotifyGameResultInfoMe(targetID, RmiContext::ReliableSend, "test", winState,
+			playTime, iter->second->m_killCount, iter->second->m_assistCount, iter->second->m_deathCount, 100);
+
+		auto resultIter = m_clientMap.begin();
+		while (resultIter != m_clientMap.end())
+		{
+			if (resultIter->first != iter->first)
+			{
+				cout << " 정보 보내기 " << endl;
+				m_proxy.NotifyGameResultInfoOther(targetID, RmiContext::ReliableSend,
+					resultIter->second->m_userName, resultIter->second->m_state);
+			}
+
+			resultIter++;
+		}
+		m_proxy.NotifyGameResultShow(targetID, RmiContext::ReliableSend);
+
+		iter++;
+	}
+
 	return true;
 }
 

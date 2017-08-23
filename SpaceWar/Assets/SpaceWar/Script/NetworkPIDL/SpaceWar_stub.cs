@@ -313,6 +313,16 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
+		public delegate bool NotifyDrawGameDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext);  
+		public NotifyDrawGameDelegate NotifyDrawGame = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext)
+		{ 
+			return false;
+		};
+		public delegate bool RequestDrawGameResultDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext);  
+		public RequestDrawGameResultDelegate RequestDrawGameResult = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext)
+		{ 
+			return false;
+		};
 		public delegate bool RequestSpaceShipDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID);  
 		public RequestSpaceShipDelegate RequestSpaceShip = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
 		{ 
@@ -3587,6 +3597,104 @@ core.PostCheckReadMessage(__msg, RmiName_RequestHpUpdate);
 		}
 	}
 	break;
+case Common.NotifyDrawGame:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		core.PostCheckReadMessage(__msg, RmiName_NotifyDrawGame);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+						NotifyCallFromStub(Common.NotifyDrawGame, RmiName_NotifyDrawGame,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyDrawGame;
+			summary.rmiName = RmiName_NotifyDrawGame;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyDrawGame (remote,ctx  );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyDrawGame);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyDrawGame;
+			summary.rmiName = RmiName_NotifyDrawGame;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.RequestDrawGameResult:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		core.PostCheckReadMessage(__msg, RmiName_RequestDrawGameResult);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+						NotifyCallFromStub(Common.RequestDrawGameResult, RmiName_RequestDrawGameResult,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.RequestDrawGameResult;
+			summary.rmiName = RmiName_RequestDrawGameResult;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=RequestDrawGameResult (remote,ctx  );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_RequestDrawGameResult);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.RequestDrawGameResult;
+			summary.rmiName = RmiName_RequestDrawGameResult;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
 case Common.RequestSpaceShip:
 	{
 		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
@@ -4240,6 +4348,8 @@ const string RmiName_NotifyGrenadeMove="NotifyGrenadeMove";
 const string RmiName_NotifyGrenadeBoom="NotifyGrenadeBoom";
 const string RmiName_NotifyGrenadeRemove="NotifyGrenadeRemove";
 const string RmiName_RequestHpUpdate="RequestHpUpdate";
+const string RmiName_NotifyDrawGame="NotifyDrawGame";
+const string RmiName_RequestDrawGameResult="RequestDrawGameResult";
 const string RmiName_RequestSpaceShip="RequestSpaceShip";
 const string RmiName_RequestGameEnd="RequestGameEnd";
 const string RmiName_NotifyKillInfo="NotifyKillInfo";
@@ -4315,6 +4425,8 @@ const string RmiName_NotifyGrenadeMove="";
 const string RmiName_NotifyGrenadeBoom="";
 const string RmiName_NotifyGrenadeRemove="";
 const string RmiName_RequestHpUpdate="";
+const string RmiName_NotifyDrawGame="";
+const string RmiName_RequestDrawGameResult="";
 const string RmiName_RequestSpaceShip="";
 const string RmiName_RequestGameEnd="";
 const string RmiName_NotifyKillInfo="";

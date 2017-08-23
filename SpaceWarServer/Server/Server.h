@@ -74,8 +74,9 @@ public:
 
 	// 서버야 나 체력 회복했어
 	DECRMI_SpaceWar_RequestHpUpdate;
-
-
+	
+	// 드로우 결과 요청
+	DECRMI_SpaceWar_RequestDrawGameResult;
 	// 우주선 탔음 
 	DECRMI_SpaceWar_RequestSpaceShip;
 	//게임 끝

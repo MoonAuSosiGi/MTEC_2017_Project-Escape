@@ -29,6 +29,57 @@ public class RocketBullet : Bullet {
         m_gravityPower = 0.0f;
         m_gravityPosition = GravityManager.Instance().transform.position;
     }
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
+        {
+            m_hitEnemy = true;
+            // 상관 없는 이펙트 
+            if (m_shotEffect != null)
+                m_shotEffect.SetActive(true);
+            if(m_hitMain != null)
+            {
+                m_bulletAudioSource.clip = m_hitMain;
+                m_bulletAudioSource.Play();
+            }
+            
+
+            if (other.CompareTag("PlayerCharacter"))
+            {
+                NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
+
+                if (p != null)
+                {
+
+                    NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f) , m_startPos);
+                }
+                else
+                {
+                    m_hitEnemy = false;
+                    return;
+                }
+            }
+            else if (string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
+            {
+                // 여기에 부딪치면 다른 이펙트를 보여준다.
+                if (m_shotOtherObjectEffect != null)
+                    m_shotOtherObjectEffect.SetActive(true);
+            }
+            else
+            {
+                // 기타 오브젝트
+                if (m_shotEffect != null)
+                    m_shotEffect.SetActive(true);
+            }
+
+
+
+            BulletDelete();
+            if (NetworkManager.Instance() != null)
+                NetworkManager.Instance().C2SRequestBulletRemove(m_networkID);
+        }
+
+    }
     #endregion
 
 }

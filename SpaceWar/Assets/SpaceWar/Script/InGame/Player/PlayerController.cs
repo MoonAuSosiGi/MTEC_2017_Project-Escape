@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerController : MonoBehaviour {
 
@@ -40,6 +41,9 @@ public class PlayerController : MonoBehaviour {
     // 무기 앵커
     [SerializeField] private GameObject m_weaponEquipAnchor = null;
     public GameObject WEAPON_ANCHOR { get { return m_weaponEquipAnchor; } }
+
+    // 무기
+    public WeaponItem CURRENT_WEAPON { get { return m_currentWeapon; } }
 
     // 공격 쿨타임
     private float m_lastCoolTime = 0.0f;
@@ -111,7 +115,7 @@ public class PlayerController : MonoBehaviour {
             {
                 useOxy = 0.1f;
             }
-            else if (run )//&& m_currentWeapon == null)
+            else if (run)//&& m_currentWeapon == null)
                 useOxy = 1.5f;
             else if (idle == false && run == false)
                 useOxy = 0.2f;
@@ -194,12 +198,14 @@ public class PlayerController : MonoBehaviour {
             m_attackAniVal = value;
 
             // 공격 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
-            if(m_attackAniVal != 0)
+            if (m_attackAniVal != 0)
             {
                 WALK_ANI_VALUE = 0;
                 JUMP_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
+            else
+                m_isAttackAble = true;
 
             AttackAnimation(m_attackAniVal);
         }
@@ -211,6 +217,8 @@ public class PlayerController : MonoBehaviour {
         get { return m_walkAniVal; }
         set
         {
+            if (m_isJumpAble == false)
+                return;
             m_walkAniVal = value;
 
             // 이동 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
@@ -265,6 +273,39 @@ public class PlayerController : MonoBehaviour {
     #region Player Oxy Charger 
     private float m_targetOxy = 0.0f;
     private float m_plusOxy = 0.0f;
+    #endregion
+
+
+    #region SOUND----------------------------------------------------------------------------------------------------
+    public AudioSource m_playerSoundSource = null;
+    public AudioSource m_playerLoopSource = null;
+    public AudioClip m_oxyChargerUseSound = null;
+    public AudioClip m_shelterUseSound = null;
+    public AudioClip m_weaponUseSound = null;
+
+    // 줍는 사운드
+    public AudioClip m_pickSound = null;
+
+    // 데미지 사운드
+    public AudioClip m_damageHit = null;
+    // 죽는 사운드
+    public AudioClip m_deadSound = null;
+    // 산소 부족 / 체력 부족 사운드
+    public AudioClip m_notEnoughHPSound = null;
+    public AudioClip m_notEnoughOxySound = null;
+    // 부족 -> 회복 사운드
+    public AudioClip m_healSound = null;
+    // 산소 회복 소리
+    public AudioClip m_oxyChargeSound = null;
+    // 산소 충전기 ㅈㅈ 
+    public AudioClip m_oxyChargeDown = null;
+
+    // 우주선 관련 사운드
+    #region Space Ship Sound -------
+    public AudioClip m_spaceShipChargeSound = null;
+    public AudioClip m_spaceShipChargeFail = null;
+
+    #endregion
     #endregion
 
     #endregion
@@ -328,8 +369,8 @@ public class PlayerController : MonoBehaviour {
         bool dash = Input.GetKey(m_Dash);
         float horizontalSpeed = 0.0f, verticalSpeed = 0.0f;
 
-        if (Input.GetKey(m_AttackKey))
-            return;
+        //if (Input.GetKey(m_AttackKey))
+        //    return;
 
         // 가로 이동
         if(Input.GetKey(m_Left))    horizontalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
@@ -556,7 +597,8 @@ public class PlayerController : MonoBehaviour {
         {
             if (Input.GetKey(m_AttackKey) && m_lastCoolTime <= 0.0f && IS_JUMP_ABLE)
             {
-                m_isMoveAble = false;
+                m_isAttackAble = false;
+                //     m_isMoveAble = false;
                 //   AttackAnimation(1);
                 ATTACK_ANI_VALUE = 1;
 
@@ -600,7 +642,7 @@ public class PlayerController : MonoBehaviour {
             SetAnimation(AnimationType.ANI_BAREHAND);
         }
 
-        AttackAnimation(0);
+        ATTACK_ANI_VALUE = 0;
     }
     #endregion
 
@@ -658,6 +700,7 @@ public class PlayerController : MonoBehaviour {
 
     void HideUseEffect(Collider col)
     {
+        LoopAudioStop();
         if (col.CompareTag("Weapon"))
         {
             m_nearWeapon = null;
@@ -702,7 +745,12 @@ public class PlayerController : MonoBehaviour {
 
     void ControlWeaponObjectProcess()
     {
-        if(Input.GetKey(m_Get) && m_nearWeapon != null)
+        if (Input.GetKeyDown(m_Get) && m_nearWeapon != null)
+        {
+            AudioPlay(m_weaponUseSound);
+        }
+
+        if (Input.GetKey(m_Get) && m_nearWeapon != null)
         {
             if (m_currentWeapon != null)
                 ThrowWeapon();
@@ -811,9 +859,17 @@ public class PlayerController : MonoBehaviour {
     {
          if(Input.GetKeyDown(m_Get))
         {
-            
-            if (m_nearItemBox != null) m_nearItemBox.UseItemBox();
-            if (m_nearShelter != null) m_nearShelter.DoorControl();
+
+            if (m_nearItemBox != null)
+            {
+                AudioPlay(m_pickSound);
+                m_nearItemBox.UseItemBox();
+            }
+            if (m_nearShelter != null)
+            {
+                AudioPlay(m_shelterUseSound);
+                m_nearShelter.DoorControl();
+            }
             if (m_nearSpaceShip != null)
             {
                 if(m_currentWeapon != null)
@@ -822,6 +878,7 @@ public class PlayerController : MonoBehaviour {
                 INTERACTION_ANI_VALUE = 1;
                 IS_MOVE_ABLE = false;
                 m_nearSpaceShip.StartSpaceShipEngineCharge();
+                AudioPlay(m_spaceShipChargeSound);
             }
             
         }
@@ -845,6 +902,7 @@ public class PlayerController : MonoBehaviour {
                 }
                     
                 m_nearSpaceShip.StopSpaceShipEngineCharge();
+                AudioPlay(m_spaceShipChargeFail);
             }
         }
          
@@ -859,7 +917,8 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown(m_Get))
         {
-
+            AudioPlay(m_oxyChargerUseSound);
+            LoopAudioPlay(m_oxyChargeSound);
             m_targetOxy = 100.0f - GameManager.Instance().PLAYER.m_oxy;
             m_plusOxy = 0.0f;
             SetAnimation(AnimationType.ANI_ETC);
@@ -879,7 +938,23 @@ public class PlayerController : MonoBehaviour {
             float oxy = 10.0f * Time.deltaTime;
             m_plusOxy += oxy;
             GameManager.Instance().SLIDER_UI.SliderProcess(m_plusOxy / m_targetOxy);
-            m_nearOxyCharger.UseOxy(oxy);
+
+            if(m_nearOxyCharger.CURRENT_OXY > 0.0f)
+                m_nearOxyCharger.UseOxy(oxy);
+            else
+            {
+                AudioPlay(m_oxyChargeDown);
+                LoopAudioStop();
+                INTERACTION_ANI_VALUE = 0;
+                m_targetOxy = 0.0f;
+                if (m_currentWeapon != null)
+                {
+                    m_currentWeapon.gameObject.SetActive(true);
+                    WeaponAnimationChange();
+                }
+                GameManager.Instance().SLIDER_UI.HideSlider();
+                return;
+            }
 
             if(GameManager.Instance().PLAYER.m_oxy >= 100.0f)
             {
@@ -895,6 +970,7 @@ public class PlayerController : MonoBehaviour {
         }
         if(Input.GetKeyUp(m_Get))
         {
+            LoopAudioStop();
             INTERACTION_ANI_VALUE = 0;
             m_targetOxy = 0.0f;
             if (m_currentWeapon != null)
@@ -910,8 +986,10 @@ public class PlayerController : MonoBehaviour {
     // 메테오 데미지
     void MeteorDamage(Collider col)
     {
-        if(col.CompareTag("Meteor") && IS_SHELTER == false)
+        
+        if (col.CompareTag("Meteor") && IS_SHELTER == false)
         {
+            AudioPlay(m_damageHit);
             if (m_meteorCoolTime > 0.0f)
                 return;
 
@@ -935,6 +1013,7 @@ public class PlayerController : MonoBehaviour {
 
     public void Damage(Vector3 dir,string reason = null)
     {
+        AudioPlay(m_damageHit);
         if (m_nearSpaceShip != null && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
             m_nearSpaceShip.StopSpaceShipEngineCharge();
 
@@ -965,6 +1044,11 @@ public class PlayerController : MonoBehaviour {
         //    InvokeRepeating("DamageAniCheck" , 0.5f , Time.deltaTime);
     }
 
+    public void Dead()
+    {
+        AudioPlay(m_deadSound);
+    }
+
     void DamageAniCheck()
     {
         if(m_animator.GetCurrentAnimatorStateInfo(0).IsName("Damage") == false)
@@ -979,7 +1063,7 @@ public class PlayerController : MonoBehaviour {
 
     #region Animation Function
 
-    void WeaponAnimationChange()
+    public void WeaponAnimationChange()
     {
         switch (m_currentWeapon.WEAPON_TYPE)
         {
@@ -1097,5 +1181,48 @@ public class PlayerController : MonoBehaviour {
         return null;
     }
 
+    #endregion
+
+    #region Audio Control -----------------------------------------------------------------------------------------
+
+    // 주인공 체력 / 산소 부족시 재생시켜라
+    public void NotEnoughHp()
+    {
+        LoopAudioPlay(m_notEnoughHPSound);
+    }
+
+    public void NotEnoughOxy()
+    {
+        Debug.Log("NotEnoughOxy");
+        LoopAudioPlay(m_notEnoughOxySound);
+    }
+    // 막 회복되었을 때
+    public void HealHPAndOxy()
+    {
+        AudioPlay(m_healSound);
+    }
+
+    void AudioPlay(AudioClip clip)
+    {
+        if (m_playerSoundSource.clip != null && m_playerSoundSource.isPlaying == true)
+            m_playerSoundSource.Stop();
+        m_playerSoundSource.clip = clip;
+        m_playerSoundSource.Play();
+    }
+
+    void LoopAudioPlay(AudioClip clip)
+    {
+        if (m_playerLoopSource.clip != null && m_playerLoopSource.clip == clip && m_playerLoopSource.isPlaying == true)
+            return;
+        Debug.Log("재생 ");
+        m_playerLoopSource.clip = clip;
+        m_playerLoopSource.Play();
+    }
+
+    void LoopAudioStop()
+    {
+        if (m_playerLoopSource.clip != null && m_playerLoopSource.isPlaying == true)
+            m_playerLoopSource.Stop();
+    }
     #endregion
 }

@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour {
     private UnityEngine.Vector3 m_prevPos = UnityEngine.Vector3.zero;
 
     //네트워크 총알 아닐 때 체크용
-    private UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero;
+    protected UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero;
     private float m_tick = 0.0f;
 
     [SerializeField] private GameObject[] m_effects;
@@ -39,9 +39,15 @@ public class Bullet : MonoBehaviour {
     [SerializeField] protected GameObject m_shotEffect = null;
     [SerializeField] protected GameObject m_shotOtherObjectEffect = null;
 
-    private bool m_hitEnemy = false;
+    protected bool m_hitEnemy = false;
     protected Quaternion m_shotRot;
     public Quaternion SHOT_ROTATION { get { return m_shotRot; } }
+
+    #region Sound Play ---------------------------------------------------------------------
+    [SerializeField] protected AudioClip m_hitMain = null;
+    [SerializeField] protected AudioClip m_hitOther = null;
+    protected AudioSource m_bulletAudioSource = null;
+    #endregion
     #endregion
 
     #region Network Method -----------------------------------------------------------------
@@ -122,6 +128,11 @@ public class Bullet : MonoBehaviour {
     #endregion
 
     #region Unity Method -------------------------------------------------------------------------
+
+    void Start()
+    {
+        m_bulletAudioSource = this.GetComponent<AudioSource>();
+    }
       // Update is called once per frame
     void Update()
     {
@@ -183,14 +194,14 @@ public class Bullet : MonoBehaviour {
     protected void MoveSend()
     {
         UnityEngine.Vector3 velo = GetComponent<Rigidbody>().velocity;//(transform.position - m_prevPos) / Time.deltaTime;
-        Debug.Log("VEC :" + velo);
+        
         if(NetworkManager.Instance() != null)
         NetworkManager.Instance().C2SRequestBulletMove(m_networkID ,
             transform.position , velo , transform.localEulerAngles);
     }
 
 
-    void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
         {
@@ -205,6 +216,12 @@ public class Bullet : MonoBehaviour {
                 {
                     if (m_shotEffect != null)
                         m_shotEffect.SetActive(true);
+
+                    if(m_hitMain != null)
+                    {
+                        m_bulletAudioSource.clip = m_hitMain;
+                        m_bulletAudioSource.Play();
+                    }
                     
                     NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f),m_startPos);
                 }
@@ -219,6 +236,13 @@ public class Bullet : MonoBehaviour {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
                 if (m_shotOtherObjectEffect != null)
                     m_shotOtherObjectEffect.SetActive(true);
+
+                if(m_hitOther != null)
+                {
+                    m_bulletAudioSource.clip = m_hitOther;
+                    m_bulletAudioSource.Play();
+                }
+                
             }
             else
             {

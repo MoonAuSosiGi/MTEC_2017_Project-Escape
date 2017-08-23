@@ -126,6 +126,10 @@ namespace SpaceWar
                
 		Rmi_RequestHpUpdate,
                
+		Rmi_NotifyDrawGame,
+               
+		Rmi_RequestDrawGameResult,
+               
 		Rmi_RequestSpaceShip,
                
 		Rmi_RequestGameEnd,
@@ -149,5 +153,5 @@ namespace SpaceWar
 		Rmi_NotifyDeathZoneMove,
 	};
 
-	int g_RmiIDListCount = 70;
+	int g_RmiIDListCount = 72;
 }

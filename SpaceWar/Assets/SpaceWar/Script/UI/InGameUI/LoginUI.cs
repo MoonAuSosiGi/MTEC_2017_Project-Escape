@@ -12,10 +12,12 @@ public class LoginUI : MonoBehaviour {
 
     void Start()
     {
+        m_inputLabel.text = NetworkManager.Instance().SERVER_IP;
         NetworkManager.Instance().loginResult += (bool result) =>
         {
             if(result)
             {
+                NetworkManager.Instance().SERVER_IP = m_inputLabel.text;
                 gameObject.SetActive(false);
 
                 // 로비

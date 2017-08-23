@@ -93,8 +93,8 @@ public class GameManager : Singletone<GameManager> {
        
 
         float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 12.8f;
-        OnJoinedRoom(m_playerInfo.m_name , true , //new Vector3(9.123454f , 48.63797f , -32.4867f));
-            GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
+          //  GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
 
     public float PLANET_XANGLE = 0.0f;
@@ -342,6 +342,8 @@ public class GameManager : Singletone<GameManager> {
 
             NetworkManager.Instance().NetworkObjectSetup();
 
+            MP.AddComponent<AudioListener>();
+
             if (NetworkManager.Instance().IS_HOST)
             {
                 StartCoroutine(CreateItem(CreateItemNum));
@@ -387,24 +389,33 @@ public class GameManager : Singletone<GameManager> {
             //MP.GetComponent<CapsuleCollider>().isTrigger = true;
             MP.GetComponent<PlayerController>().enabled = false;
             NetworkManager.Instance().NETWORK_PLAYERS.Add(p);
+            
         }
 
         return MP;
     }
 
     #region NetworkInfoChange
-    public void ChangeHP(float curHp , float prevHp , float maxHp)
+    public void ChangeHP(float curHp , float prevHp , float maxHp,string reason = null)
     {
         m_playerInfo.m_hp = curHp;
+        m_inGameUI.PlayerHPUpdate(curHp , prevHp , maxHp);
+
+        // 얘넨 애니메이션 재생 필요 없음
+        if (reason.Equals("oxy") || reason.Equals("Meteor"))
+            return;
+
+        // 애니메이션 재생
         if (m_playerInfo.m_hp > 0.0f)
             m_playerInfo.m_player.AnimationPlay("Damage");
         else
         {
             m_playerInfo.m_player.IS_MOVE_ABLE = false;
             m_playerInfo.m_player.AnimationPlay("Dead");
+            m_playerInfo.m_player.Dead();
 
         }
-        m_inGameUI.PlayerHPUpdate(curHp , prevHp , maxHp);
+       
     }
 
     public void ChangeOxy(float curOxy,float prevOxy,float maxOxy)

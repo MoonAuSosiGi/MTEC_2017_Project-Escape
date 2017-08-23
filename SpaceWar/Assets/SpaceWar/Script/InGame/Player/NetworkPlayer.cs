@@ -84,6 +84,9 @@ public class NetworkPlayer : MonoBehaviour {
             if (m_weapon == null)
                 return;
 
+       //     if (m_weapon.ATTACK_TIMING == WeaponItem.AttackTiming.SCRIPT_ONLY)
+                m_weapon.SoundPlay();
+
             // 근거리 무기용
             if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
             {
@@ -157,11 +160,13 @@ public class NetworkPlayer : MonoBehaviour {
             m_weapon.GetComponent<SphereCollider>().enabled = false;
 
             PlayerController p = this.GetComponent<PlayerController>();
+            p.WeaponAnimationChange();
             switch (m_weapon.WEAPON_TYPE)
             {
                 case WeaponItem.WeaponType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
                 case WeaponItem.WeaponType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
                 case WeaponItem.WeaponType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
+                case WeaponItem.WeaponType.ROCKETLAUNCHER: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ROCKETLAUNCHER); break;
                 case WeaponItem.WeaponType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
                 case WeaponItem.WeaponType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
             }

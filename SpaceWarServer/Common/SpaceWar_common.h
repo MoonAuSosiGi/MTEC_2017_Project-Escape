@@ -122,27 +122,31 @@ namespace SpaceWar
                
     static const ::Proud::RmiID Rmi_RequestHpUpdate = (::Proud::RmiID)(3141+59);
                
-    static const ::Proud::RmiID Rmi_RequestSpaceShip = (::Proud::RmiID)(3141+60);
+    static const ::Proud::RmiID Rmi_NotifyDrawGame = (::Proud::RmiID)(3141+60);
                
-    static const ::Proud::RmiID Rmi_RequestGameEnd = (::Proud::RmiID)(3141+61);
+    static const ::Proud::RmiID Rmi_RequestDrawGameResult = (::Proud::RmiID)(3141+61);
                
-    static const ::Proud::RmiID Rmi_NotifyKillInfo = (::Proud::RmiID)(3141+62);
+    static const ::Proud::RmiID Rmi_RequestSpaceShip = (::Proud::RmiID)(3141+62);
                
-    static const ::Proud::RmiID Rmi_NotifyGameResultInfoMe = (::Proud::RmiID)(3141+63);
+    static const ::Proud::RmiID Rmi_RequestGameEnd = (::Proud::RmiID)(3141+63);
                
-    static const ::Proud::RmiID Rmi_NotifyGameResultInfoOther = (::Proud::RmiID)(3141+64);
+    static const ::Proud::RmiID Rmi_NotifyKillInfo = (::Proud::RmiID)(3141+64);
                
-    static const ::Proud::RmiID Rmi_NotifyGameResultShow = (::Proud::RmiID)(3141+65);
+    static const ::Proud::RmiID Rmi_NotifyGameResultInfoMe = (::Proud::RmiID)(3141+65);
                
-    static const ::Proud::RmiID Rmi_RequestSpaceShipSetup = (::Proud::RmiID)(3141+66);
+    static const ::Proud::RmiID Rmi_NotifyGameResultInfoOther = (::Proud::RmiID)(3141+66);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneCreate = (::Proud::RmiID)(3141+67);
+    static const ::Proud::RmiID Rmi_NotifyGameResultShow = (::Proud::RmiID)(3141+67);
                
-    static const ::Proud::RmiID Rmi_RequestDeathZoneMoveIndex = (::Proud::RmiID)(3141+68);
+    static const ::Proud::RmiID Rmi_RequestSpaceShipSetup = (::Proud::RmiID)(3141+68);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneMoveHostAndIndexSetup = (::Proud::RmiID)(3141+69);
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneCreate = (::Proud::RmiID)(3141+69);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneMove = (::Proud::RmiID)(3141+70);
+    static const ::Proud::RmiID Rmi_RequestDeathZoneMoveIndex = (::Proud::RmiID)(3141+70);
+               
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneMoveHostAndIndexSetup = (::Proud::RmiID)(3141+71);
+               
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneMove = (::Proud::RmiID)(3141+72);
 
 	// List that has RMI ID.
 	extern ::Proud::RmiID g_RmiIDList[];

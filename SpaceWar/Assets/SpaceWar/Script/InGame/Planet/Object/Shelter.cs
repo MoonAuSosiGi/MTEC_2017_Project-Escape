@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shelter : MonoBehaviour {
+public class Shelter : MonoBehaviour
+{
 
     #region Shelter_INFO
     // animation 은 0 닫힘 1 열어라 2 불까지 꺼라
@@ -19,6 +20,13 @@ public class Shelter : MonoBehaviour {
         set { m_shelterID = value; }
     }
 
+    public AudioSource m_shelterSoundSource = null;
+    public AudioSource m_shelterInOutSource = null;
+    public AudioClip m_openSound = null;
+    public AudioClip m_closeSound = null;
+    public AudioClip m_inIdleSound = null;
+    public AudioClip m_outIdleSound = null;
+
     #endregion
 
     #region UnityMethod
@@ -26,7 +34,7 @@ public class Shelter : MonoBehaviour {
     {
         m_shelterID = NetworkManager.Instance().GetShelterIndex(this);
     }
-    
+
 
     #endregion
 
@@ -63,10 +71,16 @@ public class Shelter : MonoBehaviour {
             return;
         Debug.Log("OpenDoor");
         m_curState = true;
-      
+
+        m_shelterSoundSource.clip = m_openSound;
+        m_shelterSoundSource.Play();
+
+
+
+
         // 열렸다.
         GetComponent<Animator>().SetInteger("DOOR_OPEN_STATE" , 1);
-        if(networkOrder == false)
+        if (networkOrder == false)
             NetworkManager.Instance().C2SRequestShelterDoorControl(m_shelterID , true);
     }
 
@@ -76,25 +90,41 @@ public class Shelter : MonoBehaviour {
             return;
         Debug.Log("CloseDoor");
         m_curState = false;
+
+        m_shelterSoundSource.clip = m_closeSound;
+        m_shelterSoundSource.Play();
         // 닫혔다
         GetComponent<Animator>().SetInteger("DOOR_OPEN_STATE" , 2);
-        if(networkOrder == false)
+        if (networkOrder == false)
             NetworkManager.Instance().C2SRequestShelterDoorControl(m_shelterID , false);
     }
 
     public void LightOn()
     {
         Debug.Log("LightOn");
-     //   GetComponent<Animator>().Play("LightON");
+        //   GetComponent<Animator>().Play("LightON");
         GetComponent<Animator>().SetInteger("LIGHT_STATE" , 1);
+
+        if (GameManager.Instance().PLAYER.m_player.IS_SHELTER)
+        {
+            m_shelterSoundSource.clip = m_inIdleSound;
+            m_shelterSoundSource.Play();
+        }
+        else
+        {
+            m_shelterSoundSource.clip = m_outIdleSound;
+            m_shelterSoundSource.Play();
+        }
     }
 
     public void LightOff()
     {
         Debug.Log("LightOff");
         // 아무도 없다
-      //  GetComponent<Animator>().Play("LightOFF");
+        //  GetComponent<Animator>().Play("LightOFF");
         GetComponent<Animator>().SetInteger("LIGHT_STATE" , 2);
+        m_shelterSoundSource.clip = null;
+        m_shelterSoundSource.Stop();
     }
 
     #endregion

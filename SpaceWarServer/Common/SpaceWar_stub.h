@@ -610,6 +610,26 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestHpUpdate RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp)
 #define PARAM_SpaceWar_RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp)
                
+		virtual bool NotifyDrawGame ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyDrawGame bool NotifyDrawGame ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyDrawGame(DerivedClass) bool DerivedClass::NotifyDrawGame ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_NotifyDrawGame NotifyDrawGame ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_NotifyDrawGame ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
+		virtual bool RequestDrawGameResult ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestDrawGameResult bool RequestDrawGameResult ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestDrawGameResult(DerivedClass) bool DerivedClass::RequestDrawGameResult ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define CALL_SpaceWar_RequestDrawGameResult RequestDrawGameResult ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+#define PARAM_SpaceWar_RequestDrawGameResult ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
 		virtual bool RequestSpaceShip ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
 		} 
@@ -780,6 +800,8 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyGrenadeBoom;
 		static const PNTCHAR* RmiName_NotifyGrenadeRemove;
 		static const PNTCHAR* RmiName_RequestHpUpdate;
+		static const PNTCHAR* RmiName_NotifyDrawGame;
+		static const PNTCHAR* RmiName_RequestDrawGameResult;
 		static const PNTCHAR* RmiName_RequestSpaceShip;
 		static const PNTCHAR* RmiName_RequestGameEnd;
 		static const PNTCHAR* RmiName_NotifyKillInfo;
@@ -1330,6 +1352,24 @@ namespace SpaceWar
 			if (RequestHpUpdate_Function==nullptr) 
 				return true; 
 			return RequestHpUpdate_Function(remote,rmiContext, hp); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > NotifyDrawGame_Function;
+		virtual bool NotifyDrawGame ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (NotifyDrawGame_Function==nullptr) 
+				return true; 
+			return NotifyDrawGame_Function(remote,rmiContext); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ) > RequestDrawGameResult_Function;
+		virtual bool RequestDrawGameResult ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) 
+		{ 
+			if (RequestDrawGameResult_Function==nullptr) 
+				return true; 
+			return RequestDrawGameResult_Function(remote,rmiContext); 
 		}
 
                

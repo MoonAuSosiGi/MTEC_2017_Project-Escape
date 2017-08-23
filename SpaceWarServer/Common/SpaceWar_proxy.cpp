@@ -1858,6 +1858,58 @@ __msg << hp;
 			RmiName_RequestHpUpdate, (::Proud::RmiID)Rmi_RequestHpUpdate);
 	}
         
+	bool Proxy::NotifyDrawGame ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDrawGame;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyDrawGame, (::Proud::RmiID)Rmi_NotifyDrawGame);
+	}
+
+	bool Proxy::NotifyDrawGame ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDrawGame;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyDrawGame, (::Proud::RmiID)Rmi_NotifyDrawGame);
+	}
+        
+	bool Proxy::RequestDrawGameResult ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestDrawGameResult;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestDrawGameResult, (::Proud::RmiID)Rmi_RequestDrawGameResult);
+	}
+
+	bool Proxy::RequestDrawGameResult ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestDrawGameResult;
+__msg.Write(__msgid); 
+	
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestDrawGameResult, (::Proud::RmiID)Rmi_RequestDrawGameResult);
+	}
+        
 	bool Proxy::RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -2479,6 +2531,16 @@ const PNTCHAR* Proxy::RmiName_NotifyGrenadeRemove =_PNT("");
 const PNTCHAR* Proxy::RmiName_RequestHpUpdate =_PNT("RequestHpUpdate");
 #else
 const PNTCHAR* Proxy::RmiName_RequestHpUpdate =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyDrawGame =_PNT("NotifyDrawGame");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyDrawGame =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestDrawGameResult =_PNT("RequestDrawGameResult");
+#else
+const PNTCHAR* Proxy::RmiName_RequestDrawGameResult =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("RequestSpaceShip");

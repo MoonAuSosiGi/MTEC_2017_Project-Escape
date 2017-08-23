@@ -1743,6 +1743,54 @@ SP_Marshaler.Write(__msg, hp);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_RequestHpUpdate, Common.RequestHpUpdate);
 }
+public bool NotifyDrawGame(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.NotifyDrawGame;
+		__msg.Write(__msgid);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_NotifyDrawGame, Common.NotifyDrawGame);
+}
+
+public bool NotifyDrawGame(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.NotifyDrawGame;
+__msg.Write(__msgid);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_NotifyDrawGame, Common.NotifyDrawGame);
+}
+public bool RequestDrawGameResult(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.RequestDrawGameResult;
+		__msg.Write(__msgid);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_RequestDrawGameResult, Common.RequestDrawGameResult);
+}
+
+public bool RequestDrawGameResult(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.RequestDrawGameResult;
+__msg.Write(__msgid);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_RequestDrawGameResult, Common.RequestDrawGameResult);
+}
 public bool RequestSpaceShip(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int winPlayerID)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
@@ -2111,6 +2159,8 @@ const string RmiName_NotifyGrenadeMove="NotifyGrenadeMove";
 const string RmiName_NotifyGrenadeBoom="NotifyGrenadeBoom";
 const string RmiName_NotifyGrenadeRemove="NotifyGrenadeRemove";
 const string RmiName_RequestHpUpdate="RequestHpUpdate";
+const string RmiName_NotifyDrawGame="NotifyDrawGame";
+const string RmiName_RequestDrawGameResult="RequestDrawGameResult";
 const string RmiName_RequestSpaceShip="RequestSpaceShip";
 const string RmiName_RequestGameEnd="RequestGameEnd";
 const string RmiName_NotifyKillInfo="NotifyKillInfo";
@@ -2186,6 +2236,8 @@ const string RmiName_NotifyGrenadeMove="";
 const string RmiName_NotifyGrenadeBoom="";
 const string RmiName_NotifyGrenadeRemove="";
 const string RmiName_RequestHpUpdate="";
+const string RmiName_NotifyDrawGame="";
+const string RmiName_RequestDrawGameResult="";
 const string RmiName_RequestSpaceShip="";
 const string RmiName_RequestGameEnd="";
 const string RmiName_NotifyKillInfo="";

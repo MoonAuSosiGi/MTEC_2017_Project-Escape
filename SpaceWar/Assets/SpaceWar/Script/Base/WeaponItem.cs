@@ -70,12 +70,32 @@ public class WeaponItem : Item {
     [SerializeField] private Transform m_firePoint = null;
     public Transform FIRE_POS { get { return m_firePoint; } set { m_firePoint = value; } }
 
+    // 무기 발사 소리
+    private AudioSource m_source = null;
+    [SerializeField] private AudioClip m_weaponShootSound = null;
+
     //임시
     float m_recoveryKitValue = 0.0f;
-    
+
+    #endregion
+
+    #region Unity Method 
+    void Start()
+    {
+        m_source = this.GetComponent<AudioSource>();
+    }
     #endregion
 
     #region Weapon Method
+    public void SoundPlay()
+    {
+        if (m_weaponShootSound != null)
+        {
+            m_source.clip = m_weaponShootSound;
+            m_source.Play();
+        }
+    }
+
     public void Attack(Transform character)
     {
         m_player = character;
@@ -130,6 +150,7 @@ public class WeaponItem : Item {
     #region Guns Weapon Attack
     void GunAttack(Transform character)
     {
+        SoundPlay();
         m_effects[0].transform.position = m_firePoint.position;
         m_effects[0].SetActive(true);
 
@@ -160,7 +181,8 @@ public class WeaponItem : Item {
 
     void RocketAttack(Transform character)
     {
-        if(m_effects[0] != null)
+        SoundPlay();
+        if (m_effects[0] != null)
         {
             m_effects[0].transform.position = m_firePoint.position;
             m_effects[0].SetActive(true);
@@ -254,8 +276,8 @@ public class WeaponItem : Item {
             this.GetComponent<BoxCollider>().enabled = true;
             m_meleeAttackAble = true;
             m_swordAniEffect.SetActive(true);
-
-            if(m_swordHitEffect.transform.parent != transform)
+            SoundPlay();
+            if (m_swordHitEffect.transform.parent != transform)
             {
                 m_swordHitEffect.transform.SetParent(transform,false);
                 m_swordHitEffect.gameObject.SetActive(false);

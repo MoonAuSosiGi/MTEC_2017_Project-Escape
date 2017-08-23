@@ -18,6 +18,8 @@ public class SpaceShip : MonoBehaviour {
         set { m_spaceShipID = value; }
     }
 
+    public AudioSource m_spaceShipSource = null;
+
     #endregion
 
     #region UnityMethod
@@ -93,7 +95,7 @@ public class SpaceShip : MonoBehaviour {
                 Camera.main.transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
                 GameManager.Instance().PLAYER.m_player.gameObject.SetActive(false);
             }
-          
+            m_spaceShipSource.Play();
             m_isEnd = true;
         }
     }
