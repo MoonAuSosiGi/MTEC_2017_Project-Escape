@@ -139,7 +139,7 @@ public class DeathZone : MonoBehaviour {
         hitEffect.SetActive(true);
         
 
-        if(hitPlayer.GetComponent<NetworkPlayer>() == null)
+        if(hitPlayer.GetComponent<NetworkPlayer>() == null && hitPlayer.GetComponent<PlayerController>()  != null && hitPlayer.GetComponent<PlayerController>().enabled == true)
         {
             if (NetworkManager.Instance() != null)
                 NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , "" , "DeathZone" , 5.0f , Vector3.zero);

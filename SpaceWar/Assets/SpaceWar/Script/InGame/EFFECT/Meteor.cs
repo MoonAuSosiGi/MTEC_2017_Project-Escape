@@ -34,6 +34,7 @@ public class Meteor : MonoBehaviour {
     public void MeteorAnimationEnd()
     {
         Camera.main.GetComponent<UBER_GlobalParams>().enabled = false;
+        transform.GetChild(0).GetComponent<SphereCollider>().enabled = false;
 
         GameObject.Destroy(transform.parent.gameObject);
     }

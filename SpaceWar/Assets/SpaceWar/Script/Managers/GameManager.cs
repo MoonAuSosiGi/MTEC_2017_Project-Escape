@@ -92,9 +92,9 @@ public class GameManager : Singletone<GameManager> {
         m_playerInfo.m_name = NetworkManager.Instance().USER_NAME;
        
 
-        float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 12.8f;
-        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
-          //  GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 20.8f;
+        OnJoinedRoom(m_playerInfo.m_name , true , //new Vector3(9.123454f , 48.63797f , -32.4867f));
+            GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
 
     public float PLANET_XANGLE = 0.0f;
@@ -226,8 +226,6 @@ public class GameManager : Singletone<GameManager> {
 
     }
 
-    public GameObject test;
-
     // 메테오 생성
     public void CreateMeteor(float anglex,float anglez)
     {
@@ -245,9 +243,7 @@ public class GameManager : Singletone<GameManager> {
 
         obj.transform.parent = m_meteorParent.transform;
 
-        // 테스트용 위치 확인
-        test.transform.position = pos;
-        test.transform.rotation = Quaternion.LookRotation((pos - Vector3.zero).normalized);
+ 
 
         m_meteorTime = 30;
         m_inGameUI.RecvMeteorInfo(m_meteorTime);

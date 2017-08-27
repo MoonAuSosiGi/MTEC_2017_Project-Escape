@@ -21,6 +21,7 @@ public class NetworkPlayer : MonoBehaviour {
 
             if(m_weapon == null)
             {
+                Debug.Log("설마");
                 // 수류탄이었으므로 애니메이션 변경
                 PlayerController p = this.GetComponent<PlayerController>();
                 PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
@@ -152,7 +153,7 @@ public class NetworkPlayer : MonoBehaviour {
         if(weapon != null)
         {
             m_weapon = weapon.GetComponent<WeaponItem>() ;
-
+            Debug.Log("Weapon " + m_weapon.ITEM_NETWORK_ID + " type " + m_weapon.WEAPON_TYPE + " name " + m_weapon.name);
             m_weapon.transform.parent = m_weaponAnchor.transform;
             m_weapon.transform.localPosition = m_weapon.LOCAL_SET_POS;
             m_weapon.transform.localRotation = Quaternion.Euler(m_weapon.LOCAL_SET_ROT);
@@ -160,7 +161,8 @@ public class NetworkPlayer : MonoBehaviour {
             m_weapon.GetComponent<SphereCollider>().enabled = false;
 
             PlayerController p = this.GetComponent<PlayerController>();
-            p.WeaponAnimationChange();
+            
+            Debug.Log("prev " + PlayerAnim.runtimeAnimatorController.name);
             switch (m_weapon.WEAPON_TYPE)
             {
                 case WeaponItem.WeaponType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
@@ -170,6 +172,7 @@ public class NetworkPlayer : MonoBehaviour {
                 case WeaponItem.WeaponType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
                 case WeaponItem.WeaponType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
             }
+            Debug.Log("result " + PlayerAnim.runtimeAnimatorController.name);
         }
     }
 
@@ -185,6 +188,7 @@ public class NetworkPlayer : MonoBehaviour {
 
             PlayerController p = this.GetComponent<PlayerController>();
 
+            Debug.Log("UnEquip ");
             PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
         }
     }

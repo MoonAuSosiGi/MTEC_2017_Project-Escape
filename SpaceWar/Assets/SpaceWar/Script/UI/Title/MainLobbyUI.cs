@@ -24,7 +24,7 @@ public class MainLobbyUI : MonoBehaviour {
     void Start()
     {
         // 게임 설정 --
-        Application.targetFrameRate = -1;
+        Application.targetFrameRate = 60;
         Screen.SetResolution(1920 , 1080 , false);
         Application.runInBackground = true;
     }

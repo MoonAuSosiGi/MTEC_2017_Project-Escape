@@ -884,6 +884,13 @@ DEFRMI_SpaceWar_RequestNetworkHostOut(Server)
 	}
 
 	m_gameRoom->ClearRoom();
+	s_GameRunning = false;
+	m_gameRoom->ClearRoom();
+	m_clientMap.clear();
+	m_itemMap.clear();
+	m_itemBoxMap.clear();
+	//m_oxyChargerMap.clear();
+	s_deathZoneCommingSec = 180;
 
 	cout << "호스트가 나갔으므로 게임 룸 클리어 " << endl;
 

@@ -26,6 +26,7 @@ public class DeathZoneCollider : MonoBehaviour {
         {
             HitObject obj = m_hitList[i];
             m_hitList[i] = new HitObject(obj.hitObj , obj.tick - Time.deltaTime);
+         // Debug.Log("hit " + m_hitList[i].tick);
         }
     }
 
@@ -44,6 +45,7 @@ public class DeathZoneCollider : MonoBehaviour {
                     check = true;
                     if (tick <= 0.0f)
                     {
+                        Debug.Log("TTTSHOT ");
                         // 생성
                         m_targetZone.DeathZoneHit(col.gameObject);
                         m_hitList[i] = new HitObject(m_hitList[i].hitObj , 1.0f);

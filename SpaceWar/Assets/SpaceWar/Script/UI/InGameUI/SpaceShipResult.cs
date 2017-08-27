@@ -23,6 +23,11 @@ public class SpaceShipResult : MonoBehaviour {
             m_camera.gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
+        else
+        {
+           // win
+            GameManager.Instance().GetComponent<AudioSource>().Play();
+        }
     }
 
     public void ResultAnimationStart()

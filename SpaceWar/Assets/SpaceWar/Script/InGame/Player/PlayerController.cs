@@ -341,6 +341,8 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f)
+            return;
 
         if (IS_MOVE_ABLE)
             MoveProcess();
@@ -373,7 +375,7 @@ public class PlayerController : MonoBehaviour {
         //    return;
 
         // 가로 이동
-        if(Input.GetKey(m_Left))    horizontalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
+        if (Input.GetKey(m_Left))    horizontalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
         if(Input.GetKey(m_Right))   horizontalSpeed = (dash) ? m_runSpeed : m_walkSpeed;
 
         // 세로 이동
@@ -489,6 +491,23 @@ public class PlayerController : MonoBehaviour {
             Quaternion.Euler(angle) , rotateSpeed);
 
         #endregion
+
+        // space ship 조작시
+        if (m_nearSpaceShip != null && (Mathf.Abs(verticalSpeed) > 0.0f || Mathf.Abs(horizontalSpeed) > 0.0f))
+            m_nearSpaceShip.StopSpaceShipEngineCharge();
+        // oxy charger
+        if (m_nearOxyCharger != null && (Mathf.Abs(verticalSpeed) > 0.0f || Mathf.Abs(horizontalSpeed) > 0.0f))
+        {
+            LoopAudioStop();
+            INTERACTION_ANI_VALUE = 0;
+            m_targetOxy = 0.0f;
+            if (m_currentWeapon != null)
+            {
+                m_currentWeapon.gameObject.SetActive(true);
+                WeaponAnimationChange();
+            }
+            GameManager.Instance().SLIDER_UI.HideSlider();
+        }
         MoveSend();
     }
 
@@ -620,7 +639,7 @@ public class PlayerController : MonoBehaviour {
         m_currentWeapon.gameObject.SetActive(false);
         // 이부분에서 삭제요청
         m_currentWeapon = null;
-        InteractionAnimation(0);
+        INTERACTION_ANI_VALUE = 0;
 
         //이부분에서 전에 들고있는 무기 체크 
         SetAnimation(AnimationType.ANI_BAREHAND);
@@ -750,7 +769,7 @@ public class PlayerController : MonoBehaviour {
             AudioPlay(m_weaponUseSound);
         }
 
-        if (Input.GetKey(m_Get) && m_nearWeapon != null)
+        if (Input.GetKeyDown(m_Get) && m_nearWeapon != null)
         {
             if (m_currentWeapon != null)
                 ThrowWeapon();
@@ -958,7 +977,7 @@ public class PlayerController : MonoBehaviour {
 
             if(GameManager.Instance().PLAYER.m_oxy >= 100.0f)
             {
-                InteractionAnimation(0);
+                INTERACTION_ANI_VALUE = 0;
                 if(m_currentWeapon != null)
                 {
                     m_currentWeapon.gameObject.SetActive(true);
@@ -1026,7 +1045,8 @@ public class PlayerController : MonoBehaviour {
                 m_currentWeapon.gameObject.SetActive(true);
                 WeaponAnimationChange();
             }
-            GameManager.Instance().SLIDER_UI.HideSlider(); InteractionAnimation(0);
+            GameManager.Instance().SLIDER_UI.HideSlider();
+            
             if (m_currentWeapon != null)
             {
                 m_currentWeapon.gameObject.SetActive(true);

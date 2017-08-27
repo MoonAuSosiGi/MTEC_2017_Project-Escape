@@ -62,7 +62,8 @@ public class CameraManager : Singletone<CameraManager>{
 
     void Update()
     {
-
+        if ((GameManager.Instance() != null && GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f))
+            return;
 
         if (RotateNow)
         {
