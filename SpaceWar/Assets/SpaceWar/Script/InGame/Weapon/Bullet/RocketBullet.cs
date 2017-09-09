@@ -6,6 +6,7 @@ public class RocketBullet : Bullet {
 
     #region RocketBullet_INFO
     private float m_gravityPower = 0.0f;
+    public float GRAVITY_POWER { get { return m_gravityPower; } set { m_gravityPower = value; } }
     private Vector3 m_gravityPosition = Vector3.zero;
     #endregion
 
@@ -35,13 +36,14 @@ public class RocketBullet : Bullet {
         {
             m_hitEnemy = true;
             // 상관 없는 이펙트 
-            if (m_shotEffect != null)
-                m_shotEffect.SetActive(true);
+         
             if(m_hitMain != null)
             {
                 m_bulletAudioSource.clip = m_hitMain;
                 m_bulletAudioSource.Play();
             }
+
+            
             
 
             if (other.CompareTag("PlayerCharacter"))
@@ -50,8 +52,10 @@ public class RocketBullet : Bullet {
 
                 if (p != null)
                 {
-
-                    NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f) , m_startPos);
+                    if (m_shotEffect != null)
+                        m_shotEffect.SetActive(true);
+                    BULLET_TRAIL_EFFECT.SetActive(false);
+                    //NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f) , m_startPos);
                 }
                 else
                 {
@@ -64,19 +68,18 @@ public class RocketBullet : Bullet {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
                 if (m_shotOtherObjectEffect != null)
                     m_shotOtherObjectEffect.SetActive(true);
+                BULLET_TRAIL_EFFECT.SetActive(false);
             }
             else
             {
                 // 기타 오브젝트
                 if (m_shotEffect != null)
                     m_shotEffect.SetActive(true);
+                BULLET_TRAIL_EFFECT.SetActive(false);
             }
-
-
-
-            BulletDelete();
-            if (NetworkManager.Instance() != null)
-                NetworkManager.Instance().C2SRequestBulletRemove(m_networkID);
+            
+            this.GetComponent<SphereCollider>().enabled = false;
+            Invoke("BulletDelete" , 1.5f);
         }
 
     }

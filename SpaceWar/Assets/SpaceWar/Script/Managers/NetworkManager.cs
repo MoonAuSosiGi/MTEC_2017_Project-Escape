@@ -21,6 +21,8 @@ public class NetworkManager : Singletone<NetworkManager> {
     public bool IS_DRAW {  get { return m_isDraw; } }
     #endregion
 
+   
+
     // 서버 guid 
     System.Guid m_protocolVersion = new System.Guid("{0xa1152276,0xe4a,0x416c,{0x97,0xba,0xa1,0x1a,0x3e,0xd0,0xea,0x55}}");
 
@@ -84,27 +86,13 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     #region Network 에서 동기화 되어야 하는 오브젝트들
     #region Network Item 행성 랜덤 배치 , 아이템 박스 열어서 획득 등
-    public Dictionary<int , GameObject> m_networkItemList = new Dictionary<int , GameObject>();
 
-    public GameObject GetNetworkItem(int itemID)
-    {
-        if (m_networkItemList.ContainsKey(itemID))
-            return m_networkItemList[itemID];
-        else
-            return null;
-    }
     #endregion
 
-    #region 총알 / 수류탄 오브젝트
-    // 총알
-    public Dictionary<string , Bullet> m_bulletList = new Dictionary<string , Bullet>();
-    public Bullet GetNetworkBullet(string bulletID)
-    {
-        if (m_bulletList.ContainsKey(bulletID))
-            return m_bulletList[bulletID];
-        else
-            return null;
-    }
+    #region 모든 행성에 떨어져있는 아이템들
+    private Dictionary<string, Item> m_itemDict = new Dictionary<string , Item>();
+    public Dictionary<string , Item> ITEM_DICT { get { return m_itemDict; } }
+
 
     public Dictionary<string , Grenade> m_grenadeList = new Dictionary<string , Grenade>();
     public Grenade GetNetworkGrenade(string grenadeID)
@@ -359,18 +347,24 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 아이템 생성 로직
         m_s2cStub.NotifyCreateItem = (HostID remote , RmiContext rmiContext , int sendHostID ,
-            int itemCID , int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
+            string itemID,string networkID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
-            NetworkLog("NotifyCreateItem .." + itemCID);
+            NetworkLog("NotifyCreateItem .." + itemID);
 
             // 아이템 등록 
-            m_networkItemList.Add(itemID , GameManager.Instance().CommandItemCreate(itemCID , itemID , pos , rot));
+            m_itemDict.Add(networkID, GameManager.Instance().CommandItemCreate(itemID,networkID , pos , rot).GetComponent<Item>());
             return true;
         };
 
         // 아이템 삭제 로직
-        m_s2cStub.NotifyDeleteItem = (HostID remote , RmiContext rmiContext , int itemID) =>
+        m_s2cStub.NotifyDeleteItem = (HostID remote , RmiContext rmiContext ,string networkID) =>
         {
+            if(m_itemDict.ContainsKey(networkID))
+            {
+                GameObject obj = m_itemDict[networkID].gameObject;
+                m_itemDict.Remove(networkID);
+                GameObject.Destroy(obj);
+            }
             return true;
         };
 
@@ -428,10 +422,11 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 아이템을 장비했다 ( 다른 플레이어 )
         m_s2cStub.NotifyPlayerEquipItem = (HostID remote , RmiContext rmiContext , int hostID ,
-            int itemCID , int itemID) =>
+            string itemID , string networkID) =>
         {
+            Debug.Log("Equip Check " + m_itemDict.ContainsKey(networkID));
 
-            GameObject item = GetNetworkItem(itemID);
+            GameObject item = m_itemDict[networkID].gameObject;
             NetworkLog("NotifyPlayerEquipItem " + itemID + " null ? " + (item == null));
 
             if (item != null)
@@ -449,10 +444,10 @@ public class NetworkManager : Singletone<NetworkManager> {
             return true;
         };
         // 아이템을 해제했다 ( 다른 플레이어 )
-        m_s2cStub.NotifyPlayerUnEquipItem = (HostID remote , RmiContext rmiContext , int hostID , int itemCID ,
-            int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
+        m_s2cStub.NotifyPlayerUnEquipItem = (HostID remote , RmiContext rmiContext , int hostID,
+            string itemID,string networkID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
-            GameObject item = GetNetworkItem(itemID);
+            GameObject item = m_itemDict[networkID].gameObject;
 
             if (item != null) 
             {
@@ -471,50 +466,17 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 총알 생성해라
         m_s2cStub.NotifyPlayerBulletCreate = (HostID remote , RmiContext rmiContext ,
-            int sendHostID , int bulletCode , string bulletID ,
+            int sendHostID ,string bulletID, string weaponID ,
             UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
             NetworkLog("Bullet Create " + sendHostID + " t " + (int)m_hostID);
 
-            Bullet b = GetNetworkBullet(bulletID);
-            
-            if (b != null && b.ITEM_CODE == bulletCode)
-            {
-                // 이미 생성되어 있는 것
-                // 재활용ㅋ
-                b.NetworkReset(new Nettention.Proud.Vector3(pos.x,pos.y,pos.z));
-                b.transform.position = pos;
-                b.transform.eulerAngles = rot;
-                b.NETWORK_ID = bulletID;
-                b.IS_REMOTE = true;
-                
-            }
-            else
-            {
-                GameObject bullet = null;
-                string path = "";
-                // 타입 검사 후 생성하는 로직 -현재 임시로직
-                switch (bulletCode)
-                {
-                    case 1: path = "Bullet/Gun01/Gun01_01"; break;
-                    case 2: path = "Bullet/Gun02/Gun02_02"; break;
-                    case 5: path = "Bullet/RocketLauncher/Rocket_Bazooka"; break;
-                }
+            // 추후 여기서 타입 변경
 
-               bullet = GameObject.Instantiate(Resources.Load(path)) as GameObject;
-                bullet.transform.parent = transform;
-                bullet.transform.position = pos;
-                bullet.transform.localEulerAngles = rot;
-                b = bullet.GetComponent<Bullet>();
-                b.ITEM_CODE = bulletCode;
-                b.NETWORK_ID = bulletID;
-                b.IS_REMOTE = true;
-                b.enabled = true;
-                b.NetworkBulletEnable();
-                bullet.SetActive(true);
-                m_bulletList.Add(bulletID , b);
-            }
-
+            WeaponManager.Instance().NetworkBulletCreateRequest(bulletID , 
+                weaponID,  // <-----------------이부분 변경해야함
+                new UnityEngine.Vector3(pos.x,pos.y,pos.z), 
+                new UnityEngine.Vector3(rot.x,rot.y,rot.z));
 
             return true;
         };
@@ -523,26 +485,15 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyPlayerBulletMove = (HostID remote , RmiContext rmiContext ,
             int sendHostID , string bulletID , UnityEngine.Vector3 pos , UnityEngine.Vector3 velocity , UnityEngine.Vector3 rot) =>
         {
-            Bullet b = GetNetworkBullet(bulletID);
-
-            if (b == null)
-                NetworkLog("ERROR bulletID 미등록 " + bulletID);
-            else
-            {
-                b.NetworkMoveRecv(pos , velocity , rot);
-            }
+            WeaponManager.Instance().NetworkBulletMoveRecv(bulletID , pos , velocity , rot);
             return true;
         };
 
         // 총알 부딪혀서 삭제해라
         m_s2cStub.NotifyPlayerBulletDelete = (HostID remote , RmiContext rmiContext , int sendHostID , string bulletID) =>
         {
-            Bullet b = GetNetworkBullet(bulletID);
+            WeaponManager.Instance().NetworkBulletRemoveRequest(bulletID);
 
-            if (b == null)
-                NetworkLog("ERROR bulletID 미등록");
-            else
-                b.NetworkRemoveEvent();
             return true;
         };
 
@@ -695,7 +646,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
                 if (oxygen <= 0)
                 {
-                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" , 5.0f,UnityEngine.Vector3.zero);
+                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" , GameManager.Instance().GetGameTableValue(GameManager.OXY_DAMAGE),UnityEngine.Vector3.zero);
                 }
                 GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);
             }
@@ -715,7 +666,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // itemBox 조작 이벤트 ( 아이템 박스 사용 결과와 생성할 아이템 코드가 날아옴 )
         m_s2cStub.NotifyUseItemBox = (HostID remote , RmiContext rmiContext ,
-            int sendHostID , int itemBoxIndex , int itemID) =>
+            int sendHostID , int itemBoxIndex , string itemID,string networkID) =>
         {
             if (itemBoxIndex < 0 || m_itemBoxList.Count <= itemBoxIndex)
             {
@@ -732,8 +683,10 @@ public class NetworkManager : Singletone<NetworkManager> {
             {
                 // 같을 경우 
                 Debug.Log("얻었다 ! " + itemID + "를!");
+
+                string id = (itemID.Equals("temp")) ? WeaponManager.Instance().GetRandomWeaponID() : itemID;
                 //임의
-                GameManager.Instance().RecvItem(itemID-1 , box.transform.GetChild(3).gameObject);
+                GameManager.Instance().RecvItem(id ,networkID, box.transform.GetChild(3).gameObject);
             }
 
             return true;
@@ -1255,42 +1208,43 @@ public class NetworkManager : Singletone<NetworkManager> {
     }
 
     // item Equip Send
-    public void C2SRequestEquipItem(int itemCID , int itemID)
+    public void C2SRequestEquipItem(string itemID , string networkID)
     {
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
         sendOption.enableLoopback = false;
-        m_c2sProxy.NotifyPlayerEquipItem(m_p2pID , sendOption , (int)m_hostID , itemCID , itemID);
+        m_c2sProxy.NotifyPlayerEquipItem(m_p2pID , sendOption , (int)m_hostID , itemID , networkID);
     }
 
     //item UnEquip Send
-    public void C2SRequestUnEquipItem(int itemCID , int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot)
+    public void C2SRequestUnEquipItem(string itemID , string networkID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot)
     {
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
         sendOption.enableLoopback = false;
-        m_c2sProxy.NotifyPlayerUnEquipItem(m_p2pID , sendOption , (int)m_hostID , itemCID , itemID , pos , rot);
+        m_c2sProxy.NotifyPlayerUnEquipItem(m_p2pID , sendOption , (int)m_hostID , itemID ,networkID, pos , rot);
     }
 
     // item Create Command
-    public void C2SRequestItemCreate(int itemCID , int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot)
+    public void C2SRequestItemCreate(string itemID,string networkID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot)
     {
         NetworkLog("ItemCreate " + pos + " rot " + rot);
         m_c2sProxy.RequestWorldCreateItem(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID ,
-            itemCID , itemID , pos , rot);
+            itemID,networkID , pos , rot);
     }
     #endregion
 
     #region Bullet / Grenade Create Move Remove
     
     //bullet Create Send
-    public void C2SRequestBulletCreate(string bulletID,UnityEngine.Vector3 pos,UnityEngine.Vector3 rot,int bulletCode)
+    public void C2SRequestBulletCreate(string bulletID,string weaponID,UnityEngine.Vector3 pos,UnityEngine.Vector3 rot)
     {
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
         //sendOption.maxDirectP2PMulticastCount = 30;
         sendOption.enableLoopback = false;
-        m_c2sProxy.NotifyPlayerBulletCreate(m_p2pID , sendOption , (int)m_hostID , bulletCode , bulletID , pos , rot);
+        //TODO
+        m_c2sProxy.NotifyPlayerBulletCreate(m_p2pID , sendOption , (int)m_hostID ,bulletID, weaponID, pos , rot);
     }
 
     // bullet move

@@ -128,8 +128,8 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool RequestWorldCreateItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
-		public RequestWorldCreateItemDelegate RequestWorldCreateItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+		public delegate bool RequestWorldCreateItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
+		public RequestWorldCreateItemDelegate RequestWorldCreateItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 		{ 
 			return false;
 		};
@@ -198,13 +198,13 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool NotifyDeleteItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int itemID);  
-		public NotifyDeleteItemDelegate NotifyDeleteItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int itemID)
+		public delegate bool NotifyDeleteItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID);  
+		public NotifyDeleteItemDelegate NotifyDeleteItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID)
 		{ 
 			return false;
 		};
-		public delegate bool NotifyCreateItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
-		public NotifyCreateItemDelegate NotifyCreateItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+		public delegate bool NotifyCreateItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
+		public NotifyCreateItemDelegate NotifyCreateItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 		{ 
 			return false;
 		};
@@ -218,18 +218,18 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool NotifyPlayerEquipItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID);  
-		public NotifyPlayerEquipItemDelegate NotifyPlayerEquipItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID)
+		public delegate bool NotifyPlayerEquipItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID);  
+		public NotifyPlayerEquipItemDelegate NotifyPlayerEquipItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID)
 		{ 
 			return false;
 		};
-		public delegate bool NotifyPlayerUnEquipItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
-		public NotifyPlayerUnEquipItemDelegate NotifyPlayerUnEquipItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+		public delegate bool NotifyPlayerUnEquipItemDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
+		public NotifyPlayerUnEquipItemDelegate NotifyPlayerUnEquipItem = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 		{ 
 			return false;
 		};
-		public delegate bool NotifyPlayerBulletCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
-		public NotifyPlayerBulletCreateDelegate NotifyPlayerBulletCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+		public delegate bool NotifyPlayerBulletCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletID, string weaponID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
+		public NotifyPlayerBulletCreateDelegate NotifyPlayerBulletCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletID, string weaponID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 		{ 
 			return false;
 		};
@@ -263,8 +263,8 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool NotifyUseItemBoxDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex, int itemID);  
-		public NotifyUseItemBoxDelegate NotifyUseItemBox = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex, int itemID)
+		public delegate bool NotifyUseItemBoxDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex, string itemID, string networkID);  
+		public NotifyUseItemBoxDelegate NotifyUseItemBox = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex, string itemID, string networkID)
 		{ 
 			return false;
 		};
@@ -1548,8 +1548,8 @@ case Common.RequestWorldCreateItem:
 		ctx.compressMode = pa.CompressMode;
 			
 		int hostID; SP_Marshaler.Read(__msg,out hostID);	
-int itemCID; SP_Marshaler.Read(__msg,out itemCID);	
-int itemID; SP_Marshaler.Read(__msg,out itemID);	
+string itemID; SP_Marshaler.Read(__msg,out itemID);	
+string networkID; SP_Marshaler.Read(__msg,out networkID);	
 UnityEngine.Vector3 pos; SP_Marshaler.Read(__msg,out pos);	
 UnityEngine.Vector3 rot; SP_Marshaler.Read(__msg,out rot);	
 core.PostCheckReadMessage(__msg, RmiName_RequestWorldCreateItem);
@@ -1557,8 +1557,8 @@ core.PostCheckReadMessage(__msg, RmiName_RequestWorldCreateItem);
 		{
 			string parameterString="";
 			parameterString+=hostID.ToString()+",";
-parameterString+=itemCID.ToString()+",";
 parameterString+=itemID.ToString()+",";
+parameterString+=networkID.ToString()+",";
 parameterString+=pos.ToString()+",";
 parameterString+=rot.ToString()+",";
 			NotifyCallFromStub(Common.RequestWorldCreateItem, RmiName_RequestWorldCreateItem,parameterString);
@@ -1577,7 +1577,7 @@ parameterString+=rot.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=RequestWorldCreateItem (remote,ctx , hostID, itemCID, itemID, pos, rot );
+		bool __ret=RequestWorldCreateItem (remote,ctx , hostID, itemID, networkID, pos, rot );
 			
 		if(__ret==false)
 		{
@@ -2333,12 +2333,12 @@ case Common.NotifyDeleteItem:
 		ctx.encryptMode = pa.EncryptMode;
 		ctx.compressMode = pa.CompressMode;
 			
-		int itemID; SP_Marshaler.Read(__msg,out itemID);	
+		string networkID; SP_Marshaler.Read(__msg,out networkID);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyDeleteItem);
 		if(enableNotifyCallFromStub==true)
 		{
 			string parameterString="";
-			parameterString+=itemID.ToString()+",";
+			parameterString+=networkID.ToString()+",";
 			NotifyCallFromStub(Common.NotifyDeleteItem, RmiName_NotifyDeleteItem,parameterString);
 		}
 			
@@ -2355,7 +2355,7 @@ core.PostCheckReadMessage(__msg, RmiName_NotifyDeleteItem);
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyDeleteItem (remote,ctx , itemID );
+		bool __ret=NotifyDeleteItem (remote,ctx , networkID );
 			
 		if(__ret==false)
 		{
@@ -2385,8 +2385,8 @@ case Common.NotifyCreateItem:
 		ctx.compressMode = pa.CompressMode;
 			
 		int hostID; SP_Marshaler.Read(__msg,out hostID);	
-int itemCID; SP_Marshaler.Read(__msg,out itemCID);	
-int itemID; SP_Marshaler.Read(__msg,out itemID);	
+string itemID; SP_Marshaler.Read(__msg,out itemID);	
+string networkID; SP_Marshaler.Read(__msg,out networkID);	
 UnityEngine.Vector3 pos; SP_Marshaler.Read(__msg,out pos);	
 UnityEngine.Vector3 rot; SP_Marshaler.Read(__msg,out rot);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyCreateItem);
@@ -2394,8 +2394,8 @@ core.PostCheckReadMessage(__msg, RmiName_NotifyCreateItem);
 		{
 			string parameterString="";
 			parameterString+=hostID.ToString()+",";
-parameterString+=itemCID.ToString()+",";
 parameterString+=itemID.ToString()+",";
+parameterString+=networkID.ToString()+",";
 parameterString+=pos.ToString()+",";
 parameterString+=rot.ToString()+",";
 			NotifyCallFromStub(Common.NotifyCreateItem, RmiName_NotifyCreateItem,parameterString);
@@ -2414,7 +2414,7 @@ parameterString+=rot.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyCreateItem (remote,ctx , hostID, itemCID, itemID, pos, rot );
+		bool __ret=NotifyCreateItem (remote,ctx , hostID, itemID, networkID, pos, rot );
 			
 		if(__ret==false)
 		{
@@ -2550,15 +2550,15 @@ case Common.NotifyPlayerEquipItem:
 		ctx.compressMode = pa.CompressMode;
 			
 		int hostID; SP_Marshaler.Read(__msg,out hostID);	
-int itemCID; SP_Marshaler.Read(__msg,out itemCID);	
-int itemID; SP_Marshaler.Read(__msg,out itemID);	
+string itemID; SP_Marshaler.Read(__msg,out itemID);	
+string networkID; SP_Marshaler.Read(__msg,out networkID);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyPlayerEquipItem);
 		if(enableNotifyCallFromStub==true)
 		{
 			string parameterString="";
 			parameterString+=hostID.ToString()+",";
-parameterString+=itemCID.ToString()+",";
 parameterString+=itemID.ToString()+",";
+parameterString+=networkID.ToString()+",";
 			NotifyCallFromStub(Common.NotifyPlayerEquipItem, RmiName_NotifyPlayerEquipItem,parameterString);
 		}
 			
@@ -2575,7 +2575,7 @@ parameterString+=itemID.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyPlayerEquipItem (remote,ctx , hostID, itemCID, itemID );
+		bool __ret=NotifyPlayerEquipItem (remote,ctx , hostID, itemID, networkID );
 			
 		if(__ret==false)
 		{
@@ -2605,8 +2605,8 @@ case Common.NotifyPlayerUnEquipItem:
 		ctx.compressMode = pa.CompressMode;
 			
 		int hostID; SP_Marshaler.Read(__msg,out hostID);	
-int itemCID; SP_Marshaler.Read(__msg,out itemCID);	
-int itemID; SP_Marshaler.Read(__msg,out itemID);	
+string itemID; SP_Marshaler.Read(__msg,out itemID);	
+string networkID; SP_Marshaler.Read(__msg,out networkID);	
 UnityEngine.Vector3 pos; SP_Marshaler.Read(__msg,out pos);	
 UnityEngine.Vector3 rot; SP_Marshaler.Read(__msg,out rot);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyPlayerUnEquipItem);
@@ -2614,8 +2614,8 @@ core.PostCheckReadMessage(__msg, RmiName_NotifyPlayerUnEquipItem);
 		{
 			string parameterString="";
 			parameterString+=hostID.ToString()+",";
-parameterString+=itemCID.ToString()+",";
 parameterString+=itemID.ToString()+",";
+parameterString+=networkID.ToString()+",";
 parameterString+=pos.ToString()+",";
 parameterString+=rot.ToString()+",";
 			NotifyCallFromStub(Common.NotifyPlayerUnEquipItem, RmiName_NotifyPlayerUnEquipItem,parameterString);
@@ -2634,7 +2634,7 @@ parameterString+=rot.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyPlayerUnEquipItem (remote,ctx , hostID, itemCID, itemID, pos, rot );
+		bool __ret=NotifyPlayerUnEquipItem (remote,ctx , hostID, itemID, networkID, pos, rot );
 			
 		if(__ret==false)
 		{
@@ -2664,8 +2664,8 @@ case Common.NotifyPlayerBulletCreate:
 		ctx.compressMode = pa.CompressMode;
 			
 		int sendHostID; SP_Marshaler.Read(__msg,out sendHostID);	
-int bulletType; SP_Marshaler.Read(__msg,out bulletType);	
 string bulletID; SP_Marshaler.Read(__msg,out bulletID);	
+string weaponID; SP_Marshaler.Read(__msg,out weaponID);	
 UnityEngine.Vector3 pos; SP_Marshaler.Read(__msg,out pos);	
 UnityEngine.Vector3 rot; SP_Marshaler.Read(__msg,out rot);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyPlayerBulletCreate);
@@ -2673,8 +2673,8 @@ core.PostCheckReadMessage(__msg, RmiName_NotifyPlayerBulletCreate);
 		{
 			string parameterString="";
 			parameterString+=sendHostID.ToString()+",";
-parameterString+=bulletType.ToString()+",";
 parameterString+=bulletID.ToString()+",";
+parameterString+=weaponID.ToString()+",";
 parameterString+=pos.ToString()+",";
 parameterString+=rot.ToString()+",";
 			NotifyCallFromStub(Common.NotifyPlayerBulletCreate, RmiName_NotifyPlayerBulletCreate,parameterString);
@@ -2693,7 +2693,7 @@ parameterString+=rot.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyPlayerBulletCreate (remote,ctx , sendHostID, bulletType, bulletID, pos, rot );
+		bool __ret=NotifyPlayerBulletCreate (remote,ctx , sendHostID, bulletID, weaponID, pos, rot );
 			
 		if(__ret==false)
 		{
@@ -3068,7 +3068,8 @@ case Common.NotifyUseItemBox:
 			
 		int sendHostID; SP_Marshaler.Read(__msg,out sendHostID);	
 int itemBoxIndex; SP_Marshaler.Read(__msg,out itemBoxIndex);	
-int itemID; SP_Marshaler.Read(__msg,out itemID);	
+string itemID; SP_Marshaler.Read(__msg,out itemID);	
+string networkID; SP_Marshaler.Read(__msg,out networkID);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyUseItemBox);
 		if(enableNotifyCallFromStub==true)
 		{
@@ -3076,6 +3077,7 @@ core.PostCheckReadMessage(__msg, RmiName_NotifyUseItemBox);
 			parameterString+=sendHostID.ToString()+",";
 parameterString+=itemBoxIndex.ToString()+",";
 parameterString+=itemID.ToString()+",";
+parameterString+=networkID.ToString()+",";
 			NotifyCallFromStub(Common.NotifyUseItemBox, RmiName_NotifyUseItemBox,parameterString);
 		}
 			
@@ -3092,7 +3094,7 @@ parameterString+=itemID.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyUseItemBox (remote,ctx , sendHostID, itemBoxIndex, itemID );
+		bool __ret=NotifyUseItemBox (remote,ctx , sendHostID, itemBoxIndex, itemID, networkID );
 			
 		if(__ret==false)
 		{

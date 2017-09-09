@@ -5,8 +5,8 @@
 class Item
 {
 public:
-	int m_itemCID;
-	int m_itemID;
+	string m_itemID;
+	string m_networkID;
 	
 	//test
 	int m_count;

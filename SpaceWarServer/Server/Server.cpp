@@ -19,7 +19,6 @@ int main()
 
 void MeteorLoop(void*)
 {
-
 	if (s_GameRunning == false)
 		return;
 	s_meteorCommingSec--;
@@ -340,22 +339,22 @@ DEFRMI_SpaceWar_RequestClientJoin(Server)
 
 DEFRMI_SpaceWar_RequestWorldCreateItem(Server)
 {
-	cout << "RequestWorldCreateItem  item CID : " << itemCID << " item ID " << itemID << " x : "<< pos.x << " y : " << pos.y << " z : "<<pos.z  << endl;
+	cout << "RequestWorldCreateItem  itemID : " << itemID  << " x : "<< pos.x << " y : " << pos.y << " z : "<<pos.z  << endl;
 	auto iter = m_clientMap.find((HostID)hostID);
 
 	{
 		// 추가로직
 		CriticalSectionLock lock(m_critSec, true);
 		auto newItem = make_shared<Item>();
-		newItem->m_itemCID = itemCID;
 		newItem->m_itemID = itemID;
+		newItem->m_networkID = networkID;
 		newItem->pos.x = pos.x;
 		newItem->pos.y = pos.y;
 		newItem->pos.z = pos.z;
 		newItem->rot.x = rot.x;
 		newItem->rot.y = rot.y;
 		newItem->rot.z = rot.z;
-		m_itemMap[itemID] = newItem;
+		m_itemMap[networkID] = newItem;
 	}
 
 	if (iter == m_clientMap.end())
@@ -369,7 +368,7 @@ DEFRMI_SpaceWar_RequestWorldCreateItem(Server)
 		if (c.first != iter->first)
 		{
 			m_proxy.NotifyCreateItem(c.first, RmiContext::ReliableSend, 
-				(int)(iter->first), itemCID,itemID, pos, rot);
+				(int)(iter->first),itemID,networkID, pos, rot);
 		}
 	}
 	return true;
@@ -377,9 +376,9 @@ DEFRMI_SpaceWar_RequestWorldCreateItem(Server)
 
 DEFRMI_SpaceWar_NotifyDeleteItem(Server)
 {
-	cout << "NotifyDeleteItem " << itemID << endl;
+	cout << "NotifyDeleteItem " << networkID << endl;
 
-	auto iter = m_itemMap.find(itemID);
+	auto iter = m_itemMap.find(networkID);
 	
 	if (iter == m_itemMap.end())
 	{
@@ -548,10 +547,12 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 		// 첫 사용
 		m_itemBoxMap[itemBoxIndex] = sendHostID;
 
-		int itemCode = (int)RandomRange(1,7); // 여기서 줘야함
-		cout << "item Code " << itemCode << endl;
+		string itemID = "temp"; // 여기서 줘야하는데 일단은 클라에서 주는 것으로..
+		cout << "item Code " << itemID << endl;
+		string networkID = "server_" + m_itemBoxCreateItemIndex;
+		
 		m_proxy.NotifyUseItemBox(m_playerP2PGroup, RmiContext::ReliableSend,
-			sendHostID, itemBoxIndex, itemCode);
+			sendHostID, itemBoxIndex, itemID, networkID);
 		return true;
 	}
 
@@ -933,7 +934,7 @@ DEFRMI_SpaceWar_RequestGameSceneJoin(Server)
 				for each(auto item in m_itemMap)
 				{
 					m_proxy.NotifyCreateItem(*iter, RmiContext::ReliableSend, (int)HostID_Server,
-						item.second->m_itemCID, item.second->m_itemID, item.second->pos, item.second->rot);
+						item.second->m_itemID,item.second->m_networkID, item.second->pos, item.second->rot);
 				}
 			}
 			

@@ -131,6 +131,9 @@ private:
 
 	// 현재 게임의 우주선 갯수
 	int m_spaceshipCount;
+	
+	// 아이템박스 인덱스
+	int m_itemBoxCreateItemIndex;
 public:
 	// 전송 프록시
 	SpaceWar::Proxy m_proxy;
@@ -143,7 +146,7 @@ public:
 	unordered_map<HostID, shared_ptr<Client>> m_clientMap;
 	
 	// 아이템 리스트
-	unordered_map<int, shared_ptr<Item>> m_itemMap;
+	unordered_map<string, shared_ptr<Item>> m_itemMap;
 
 	// 게임 룸
 	shared_ptr<GameRoom> m_gameRoom;

@@ -31,7 +31,7 @@ public class OxyCharger : MonoBehaviour {
     {
         if (!m_isAlive)
             return;
-        if (GameManager.Instance().PLAYER.m_oxy >= 100.0f)
+        if (GameManager.Instance().PLAYER.m_oxy >= GameManager.Instance().GetGameTableValue(GameManager.FULL_OXY))
             return;
         float useOxy = (m_oxy < oxy) ? oxy - m_oxy : oxy;
 
@@ -46,7 +46,7 @@ public class OxyCharger : MonoBehaviour {
 
     void UIUpdate()
     {
-        float percent = m_oxy / 250.0f;
+        float percent = m_oxy / GameManager.Instance().GetGameTableValue(GameManager.OXY_CHARGER_FULL);
         
         transform.GetChild(0).GetChild(0).transform.localScale = new Vector3(1.0f , percent , 1.0f);
 

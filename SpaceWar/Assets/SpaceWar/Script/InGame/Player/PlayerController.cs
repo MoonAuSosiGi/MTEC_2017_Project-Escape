@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private GameObject m_modeObject = null;
     [SerializeField] private float m_walkSpeed;
     [SerializeField] private float m_runSpeed;
-    [SerializeField] private float m_jumpSpeed;
     [SerializeField] private float m_jumpHeight = 3.0f;
     [SerializeField] private float m_jumpTick = 1.0f;
     [SerializeField] private AnimationCurve m_jumpCurve = null;
@@ -47,6 +46,9 @@ public class PlayerController : MonoBehaviour {
 
     // 공격 쿨타임
     private float m_lastCoolTime = 0.0f;
+
+    // 데미지 쿨타임
+    private float m_damageCoolTime = 0.0f;
 
     // 메테오 데미지 쿨타임
     private float m_meteorCoolTime = 0.0f;
@@ -101,6 +103,11 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     #region OXY -----------------------------------------------------------------------------------------------------------
+    private float m_useOxyIDLE = 0.1f;
+    private float m_useOxyWALK = 0.2f;
+    private float m_useOxyRUN = 1.5f;
+    private float m_chargeOxy = 10.0f;
+    
     void UseOxy()
     {
         if(NetworkManager.Instance() != null)
@@ -113,12 +120,12 @@ public class PlayerController : MonoBehaviour {
                 || m_currentDir == PlayerMoveDir.RUN_BACK_LEFT || m_currentDir == PlayerMoveDir.RUN_BACK_RIGHT);
             if (idle)// && m_currentWeapon == null)
             {
-                useOxy = 0.1f;
+                useOxy = m_useOxyIDLE;
             }
             else if (run)//&& m_currentWeapon == null)
-                useOxy = 1.5f;
+                useOxy = m_useOxyRUN;
             else if (idle == false && run == false)
-                useOxy = 0.2f;
+                useOxy = m_useOxyWALK;
 
             if (GameManager.Instance().PLAYER.m_hp - useOxy > 0.0f)
                 NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , useOxy);
@@ -308,11 +315,30 @@ public class PlayerController : MonoBehaviour {
     #endregion
     #endregion
 
+    #region Meteor Damage -----------------------------------------------------------------------------------------
+    private float m_meteorHitDamage = 100.0f; // 메테오 직격타 데미지
+    private float m_meteorDamage = 10.0f; // 메테오 공간에 있을 때 데미지 
+    #endregion
+
     #endregion
 
     #region Unity Method
     void Start()
     {
+        #region Table Data Setup
+        m_walkSpeed = GameManager.Instance().GetGameTableValue(GameManager.WALK_SPEED);
+        m_runSpeed = GameManager.Instance().GetGameTableValue(GameManager.RUN_SPEED);
+        m_jumpHeight = GameManager.Instance().GetGameTableValue(GameManager.JUMP_POWER);
+        m_jumpTick = GameManager.Instance().GetGameTableValue(GameManager.JUMP_TICK);
+        m_useOxyIDLE = GameManager.Instance().GetGameTableValue(GameManager.USEOXY_IDLE);
+        m_useOxyRUN = GameManager.Instance().GetGameTableValue(GameManager.USEOXY_RUN);
+        m_useOxyWALK = GameManager.Instance().GetGameTableValue(GameManager.USEOXY_WALK);
+        m_chargeOxy = GameManager.Instance().GetGameTableValue(GameManager.OXY_CHARGER_USE);
+        m_meteorHitDamage = GameManager.Instance().GetGameTableValue(GameManager.METEOR_HIT_DAMAGE);
+        m_meteorDamage = GameManager.Instance().GetGameTableValue(GameManager.METEOR_DAMAGE);
+        m_damageCoolTime = GameManager.Instance().GetGameTableValue(GameManager.DAMAGE_COOLTIME);
+        #endregion
+
         m_characterController = this.GetComponent<CharacterController>();
         m_camera = Camera.main;
 
@@ -792,8 +818,9 @@ public class PlayerController : MonoBehaviour {
 
             if (GameManager.Instance() != null)
                 GameManager.Instance().EquipWeapon(m_currentWeapon.ITEM_ID , 0 , 0);
-            if (NetworkManager.Instance() != null)
-                NetworkManager.Instance().C2SRequestEquipItem(m_currentWeapon.ITEM_ID , m_currentWeapon.ITEM_NETWORK_ID);
+            if (NetworkManager.Instance() != null) // TODO
+                NetworkManager.Instance().C2SRequestEquipItem(m_currentWeapon.ITEM_ID ,
+                    m_currentWeapon.ITEM_NETWORK_ID);
             
         }
     }
@@ -832,11 +859,11 @@ public class PlayerController : MonoBehaviour {
 
         SetAnimation(AnimationType.ANI_BAREHAND);
         
-        if(GameManager.Instance() != null)
-            GameManager.Instance().UnEquipWeapon(m_currentWeapon.ITEM_ID , 0 , 0);
-        if (NetworkManager.Instance() != null)
-            NetworkManager.Instance().C2SRequestUnEquipItem(m_currentWeapon.ITEM_ID , m_currentWeapon.ITEM_ID ,
-                m_currentWeapon.transform.position , m_currentWeapon.transform.eulerAngles);
+        //if(GameManager.Instance() != null)
+        //    GameManager.Instance().UnEquipWeapon(m_currentWeapon.ITEM_ID , 0 , 0);
+        //if (NetworkManager.Instance() != null)
+        //    NetworkManager.Instance().C2SRequestUnEquipItem(m_currentWeapon.ITEM_ID , m_currentWeapon.ITEM_ID ,
+        //        m_currentWeapon.transform.position , m_currentWeapon.transform.eulerAngles);
         m_currentWeapon = null;
     }
 
@@ -938,7 +965,7 @@ public class PlayerController : MonoBehaviour {
         {
             AudioPlay(m_oxyChargerUseSound);
             LoopAudioPlay(m_oxyChargeSound);
-            m_targetOxy = 100.0f - GameManager.Instance().PLAYER.m_oxy;
+            m_targetOxy = GameManager.Instance().PLAYER.m_fullOxy - GameManager.Instance().PLAYER.m_oxy;
             m_plusOxy = 0.0f;
             SetAnimation(AnimationType.ANI_ETC);
             if (m_currentWeapon != null)
@@ -954,7 +981,7 @@ public class PlayerController : MonoBehaviour {
 
         if(Input.GetKey(m_Get))
         {
-            float oxy = 10.0f * Time.deltaTime;
+            float oxy = m_chargeOxy * Time.deltaTime;
             m_plusOxy += oxy;
             GameManager.Instance().SLIDER_UI.SliderProcess(m_plusOxy / m_targetOxy);
 
@@ -975,7 +1002,7 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
 
-            if(GameManager.Instance().PLAYER.m_oxy >= 100.0f)
+            if(GameManager.Instance().PLAYER.m_oxy >= GameManager.Instance().PLAYER.m_fullOxy)
             {
                 INTERACTION_ANI_VALUE = 0;
                 if(m_currentWeapon != null)
@@ -1014,20 +1041,16 @@ public class PlayerController : MonoBehaviour {
 
             if (NetworkManager.Instance() != null)
                 NetworkManager.Instance().C2SRequestPlayerDamage(
-                    (int)NetworkManager.Instance().m_hostID , "" , "Meteor" , 10.0f,Vector3.zero);
-            m_meteorCoolTime = 0.5f;
-            InvokeRepeating("MeteorCoolTimeChecker" , 0.1f , 0.1f);
+                    (int)NetworkManager.Instance().m_hostID , "" , "Meteor" , m_meteorDamage , Vector3.zero);
+            m_meteorCoolTime = m_damageCoolTime;
+            Invoke("MeteorCoolTimeChecker" , m_meteorCoolTime);
         }
     }
 
     void MeteorCoolTimeChecker()
     {
-        m_meteorCoolTime -= 0.1f;
-        if(m_meteorCoolTime <= 0.0f)
-        {
-            m_meteorCoolTime = -1.0f;
-            CancelInvoke("MeteorCoolTimeChecker");
-        }
+        m_meteorCoolTime = -1.0f;
+        CancelInvoke("MeteorCoolTimeChecker");     
     }
 
     public void Damage(Vector3 dir,string reason = null)

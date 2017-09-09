@@ -91,11 +91,12 @@ public class NetworkPlayer : MonoBehaviour {
             // 근거리 무기용
             if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
             {
-                m_weapon.Attack(transform);
+                m_weapon.PLAYER = transform;
+                m_weapon.AttackSword();
             }
             else if (animationName.Equals("ATTACK") && aniValue == 0 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
             {
-                m_weapon.AnimationEventAttackEnd();
+                m_weapon.AttackSwordEnd();
             }
         }
     }

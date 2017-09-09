@@ -90,7 +90,7 @@ global SpaceWar 3141
 	RequestClientJoin([in]int hostID,[in]string name,[in]float x,[in]float y,[in]float z);
 	
 	// 월드에 아이템 생성 요청 //
-	RequestWorldCreateItem([in]int hostID,[in]int itemCID,[in]int itemID,[in] Proud::Vector3 pos,[in]Proud::Vector3 rot);
+	RequestWorldCreateItem([in]int hostID,[in]string itemID,[in]string networkID,[in] Proud::Vector3 pos,[in]Proud::Vector3 rot);
 
 	
 	// 플레이어가 맞았다
@@ -135,10 +135,10 @@ global SpaceWar 3141
 	[in]float rx,[in]float ry, [in]float rz);
 
 	// 월드 아이템 삭제
-	NotifyDeleteItem([in]int itemID);
+	NotifyDeleteItem([in]string networkID);
 
 	// 아이템 생성하는 명령
-	NotifyCreateItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
+	NotifyCreateItem([in]int hostID,[in]string itemID,[in]string networkID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
 	
 	// 처음 접속시 산소 충전기의 상태를 전송하는 명령
 	NotifyStartOxyChargerState([in]int oxyChargerID,[in]float oxy);
@@ -149,14 +149,13 @@ global SpaceWar 3141
 	// 플레이어가 아이템을 먹었다. // 임시로 없음
 
 	// 플레이어가 아이템을 장비했다.
-	NotifyPlayerEquipItem([in]int hostID,[in]int itemCID,[in]int itemID);
+	NotifyPlayerEquipItem([in]int hostID,[in]string itemID,[in]string networkID);
 
 	// 플레이어가 아이템을 해제했다.
-	NotifyPlayerUnEquipItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
-	////NotifyPlayerUnEquipItem([in]int hostID,[in]int itemCID,[in]int itemID,[in]float x,[in]float y,[in]float z,[in]float rx,[in]float ry,[in]float rz);
+	NotifyPlayerUnEquipItem([in]int hostID,[in]string itemID,[in]string networkID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
 
 	// 플레이어의 총알 생성
-	NotifyPlayerBulletCreate([in]int sendHostID,[in]int bulletType,[in]string bulletID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
+	NotifyPlayerBulletCreate([in]int sendHostID,[in]string bulletID,[in]string weaponID ,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
 
 	// 플레이어의 총알 동기화
 	NotifyPlayerBulletMove([in]int sendHostID,[in]string bulletID,[in]Proud::Vector3 pos,[in]Proud::Vector3 velocity,[in]Proud::Vector3 rot);
@@ -177,7 +176,7 @@ global SpaceWar 3141
 	NotifyUseOxyCharger([in]int sendHostID,[in]int oxyChargerIndex,[in]float userOxy);
 
 	// 아이템 박스 조작
-	NotifyUseItemBox([in]int sendHostID,[in]int itemBoxIndex,[in]int itemID);
+	NotifyUseItemBox([in]int sendHostID,[in]int itemBoxIndex,[in]string itemID,[in]string networkID);
 
 	// 쉘터의 상태 정보
 	NotifyShelterInfo([in]int sendHostID,[in]int shelterID,[in]bool doorState,[in]bool lightState);

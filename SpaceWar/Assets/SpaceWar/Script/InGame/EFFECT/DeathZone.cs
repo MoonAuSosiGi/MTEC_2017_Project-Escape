@@ -46,8 +46,13 @@ public class DeathZone : MonoBehaviour {
 
     void Start()
     {
-     
-        if(m_test != null)
+        m_deathZoneSpeed[0] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED1);
+        m_deathZoneSpeed[1] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED2);
+        m_deathZoneSpeed[2] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED3);
+        m_deathZoneSpeed[3] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED4);
+        m_deathZoneSpeed[4] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED5);
+
+        if (m_test != null)
         DeathZoneSetup(m_test.transform.position);
         for(int i = 0; i < m_planetLevelZoneObject.transform.childCount; i++)
         {
@@ -142,7 +147,7 @@ public class DeathZone : MonoBehaviour {
         if(hitPlayer.GetComponent<NetworkPlayer>() == null && hitPlayer.GetComponent<PlayerController>()  != null && hitPlayer.GetComponent<PlayerController>().enabled == true)
         {
             if (NetworkManager.Instance() != null)
-                NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , "" , "DeathZone" , 5.0f , Vector3.zero);
+                NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , "" , "DeathZone" , GameManager.Instance().GetGameTableValue(GameManager.DZ_DAMAGE) , Vector3.zero);
         }
     }
 

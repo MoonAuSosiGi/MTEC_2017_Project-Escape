@@ -650,7 +650,7 @@ __msg << z;
 			RmiName_RequestClientJoin, (::Proud::RmiID)Rmi_RequestClientJoin);
 	}
         
-	bool Proxy::RequestWorldCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
+	bool Proxy::RequestWorldCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & itemID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -659,8 +659,8 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
-__msg << itemCID;
 __msg << itemID;
+__msg << networkID;
 __msg << pos;
 __msg << rot;
 		
@@ -668,7 +668,7 @@ __msg << rot;
 			RmiName_RequestWorldCreateItem, (::Proud::RmiID)Rmi_RequestWorldCreateItem);
 	}
 
-	bool Proxy::RequestWorldCreateItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
+	bool Proxy::RequestWorldCreateItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const string & itemID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -677,8 +677,8 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
-__msg << itemCID;
 __msg << itemID;
+__msg << networkID;
 __msg << pos;
 __msg << rot;
 		
@@ -1114,7 +1114,7 @@ __msg << rz;
 			RmiName_NotifyPlayerMove, (::Proud::RmiID)Rmi_NotifyPlayerMove);
 	}
         
-	bool Proxy::NotifyDeleteItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)	{
+	bool Proxy::NotifyDeleteItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1122,13 +1122,13 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 ::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeleteItem;
 __msg.Write(__msgid); 
 	
-__msg << itemID;
+__msg << networkID;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyDeleteItem, (::Proud::RmiID)Rmi_NotifyDeleteItem);
 	}
 
-	bool Proxy::NotifyDeleteItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & itemID)  	{
+	bool Proxy::NotifyDeleteItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & networkID)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1136,13 +1136,13 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 ::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeleteItem;
 __msg.Write(__msgid); 
 	
-__msg << itemID;
+__msg << networkID;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyDeleteItem, (::Proud::RmiID)Rmi_NotifyDeleteItem);
 	}
         
-	bool Proxy::NotifyCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
+	bool Proxy::NotifyCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & itemID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1151,8 +1151,8 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
-__msg << itemCID;
 __msg << itemID;
+__msg << networkID;
 __msg << pos;
 __msg << rot;
 		
@@ -1160,7 +1160,7 @@ __msg << rot;
 			RmiName_NotifyCreateItem, (::Proud::RmiID)Rmi_NotifyCreateItem);
 	}
 
-	bool Proxy::NotifyCreateItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
+	bool Proxy::NotifyCreateItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const string & itemID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1169,8 +1169,8 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
-__msg << itemCID;
 __msg << itemID;
+__msg << networkID;
 __msg << pos;
 __msg << rot;
 		
@@ -1238,7 +1238,7 @@ __msg << openState;
 			RmiName_NotifyStartItemBoxState, (::Proud::RmiID)Rmi_NotifyStartItemBoxState);
 	}
         
-	bool Proxy::NotifyPlayerEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID)	{
+	bool Proxy::NotifyPlayerEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & itemID,  const string & networkID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1247,14 +1247,14 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
-__msg << itemCID;
 __msg << itemID;
+__msg << networkID;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyPlayerEquipItem, (::Proud::RmiID)Rmi_NotifyPlayerEquipItem);
 	}
 
-	bool Proxy::NotifyPlayerEquipItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const int & itemCID,  const int & itemID)  	{
+	bool Proxy::NotifyPlayerEquipItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const string & itemID,  const string & networkID)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1263,14 +1263,14 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
-__msg << itemCID;
 __msg << itemID;
+__msg << networkID;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyPlayerEquipItem, (::Proud::RmiID)Rmi_NotifyPlayerEquipItem);
 	}
         
-	bool Proxy::NotifyPlayerUnEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
+	bool Proxy::NotifyPlayerUnEquipItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & itemID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1279,8 +1279,8 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
-__msg << itemCID;
 __msg << itemID;
+__msg << networkID;
 __msg << pos;
 __msg << rot;
 		
@@ -1288,7 +1288,7 @@ __msg << rot;
 			RmiName_NotifyPlayerUnEquipItem, (::Proud::RmiID)Rmi_NotifyPlayerUnEquipItem);
 	}
 
-	bool Proxy::NotifyPlayerUnEquipItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const int & itemCID,  const int & itemID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
+	bool Proxy::NotifyPlayerUnEquipItem ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & hostID,  const string & itemID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1297,8 +1297,8 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << hostID;
-__msg << itemCID;
 __msg << itemID;
+__msg << networkID;
 __msg << pos;
 __msg << rot;
 		
@@ -1306,7 +1306,7 @@ __msg << rot;
 			RmiName_NotifyPlayerUnEquipItem, (::Proud::RmiID)Rmi_NotifyPlayerUnEquipItem);
 	}
         
-	bool Proxy::NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
+	bool Proxy::NotifyPlayerBulletCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & bulletID,  const string & weaponID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1315,8 +1315,8 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << sendHostID;
-__msg << bulletType;
 __msg << bulletID;
+__msg << weaponID;
 __msg << pos;
 __msg << rot;
 		
@@ -1324,7 +1324,7 @@ __msg << rot;
 			RmiName_NotifyPlayerBulletCreate, (::Proud::RmiID)Rmi_NotifyPlayerBulletCreate);
 	}
 
-	bool Proxy::NotifyPlayerBulletCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & bulletType,  const string & bulletID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
+	bool Proxy::NotifyPlayerBulletCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const string & bulletID,  const string & weaponID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1333,8 +1333,8 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << sendHostID;
-__msg << bulletType;
 __msg << bulletID;
+__msg << weaponID;
 __msg << pos;
 __msg << rot;
 		
@@ -1548,7 +1548,7 @@ __msg << userOxy;
 			RmiName_NotifyUseOxyCharger, (::Proud::RmiID)Rmi_NotifyUseOxyCharger);
 	}
         
-	bool Proxy::NotifyUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)	{
+	bool Proxy::NotifyUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex,  const string & itemID,  const string & networkID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1559,12 +1559,13 @@ __msg.Write(__msgid);
 __msg << sendHostID;
 __msg << itemBoxIndex;
 __msg << itemID;
+__msg << networkID;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyUseItemBox, (::Proud::RmiID)Rmi_NotifyUseItemBox);
 	}
 
-	bool Proxy::NotifyUseItemBox ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & itemBoxIndex,  const int & itemID)  	{
+	bool Proxy::NotifyUseItemBox ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & sendHostID,  const int & itemBoxIndex,  const string & itemID,  const string & networkID)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1575,6 +1576,7 @@ __msg.Write(__msgid);
 __msg << sendHostID;
 __msg << itemBoxIndex;
 __msg << itemID;
+__msg << networkID;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyUseItemBox, (::Proud::RmiID)Rmi_NotifyUseItemBox);

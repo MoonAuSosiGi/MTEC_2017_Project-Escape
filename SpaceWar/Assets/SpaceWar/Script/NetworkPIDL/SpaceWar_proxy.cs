@@ -609,15 +609,15 @@ SP_Marshaler.Write(__msg, z);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_RequestClientJoin, Common.RequestClientJoin);
 }
-public bool RequestWorldCreateItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool RequestWorldCreateItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
 		Nettention.Proud.RmiID __msgid= Common.RequestWorldCreateItem;
 		__msg.Write(__msgid);
 		SP_Marshaler.Write(__msg, hostID);
-		SP_Marshaler.Write(__msg, itemCID);
 		SP_Marshaler.Write(__msg, itemID);
+		SP_Marshaler.Write(__msg, networkID);
 		SP_Marshaler.Write(__msg, pos);
 		SP_Marshaler.Write(__msg, rot);
 		
@@ -628,15 +628,15 @@ public bool RequestWorldCreateItem(Nettention.Proud.HostID remote,Nettention.Pro
 		RmiName_RequestWorldCreateItem, Common.RequestWorldCreateItem);
 }
 
-public bool RequestWorldCreateItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool RequestWorldCreateItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
 Nettention.Proud.RmiID __msgid= Common.RequestWorldCreateItem;
 __msg.Write(__msgid);
 SP_Marshaler.Write(__msg, hostID);
-SP_Marshaler.Write(__msg, itemCID);
 SP_Marshaler.Write(__msg, itemID);
+SP_Marshaler.Write(__msg, networkID);
 SP_Marshaler.Write(__msg, pos);
 SP_Marshaler.Write(__msg, rot);
 		
@@ -1045,13 +1045,13 @@ SP_Marshaler.Write(__msg, rz);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerMove, Common.NotifyPlayerMove);
 }
-public bool NotifyDeleteItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int itemID)
+public bool NotifyDeleteItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
 		Nettention.Proud.RmiID __msgid= Common.NotifyDeleteItem;
 		__msg.Write(__msgid);
-		SP_Marshaler.Write(__msg, itemID);
+		SP_Marshaler.Write(__msg, networkID);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -1060,26 +1060,26 @@ public bool NotifyDeleteItem(Nettention.Proud.HostID remote,Nettention.Proud.Rmi
 		RmiName_NotifyDeleteItem, Common.NotifyDeleteItem);
 }
 
-public bool NotifyDeleteItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int itemID)
+public bool NotifyDeleteItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, string networkID)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
 Nettention.Proud.RmiID __msgid= Common.NotifyDeleteItem;
 __msg.Write(__msgid);
-SP_Marshaler.Write(__msg, itemID);
+SP_Marshaler.Write(__msg, networkID);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyDeleteItem, Common.NotifyDeleteItem);
 }
-public bool NotifyCreateItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool NotifyCreateItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
 		Nettention.Proud.RmiID __msgid= Common.NotifyCreateItem;
 		__msg.Write(__msgid);
 		SP_Marshaler.Write(__msg, hostID);
-		SP_Marshaler.Write(__msg, itemCID);
 		SP_Marshaler.Write(__msg, itemID);
+		SP_Marshaler.Write(__msg, networkID);
 		SP_Marshaler.Write(__msg, pos);
 		SP_Marshaler.Write(__msg, rot);
 		
@@ -1090,15 +1090,15 @@ public bool NotifyCreateItem(Nettention.Proud.HostID remote,Nettention.Proud.Rmi
 		RmiName_NotifyCreateItem, Common.NotifyCreateItem);
 }
 
-public bool NotifyCreateItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool NotifyCreateItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
 Nettention.Proud.RmiID __msgid= Common.NotifyCreateItem;
 __msg.Write(__msgid);
 SP_Marshaler.Write(__msg, hostID);
-SP_Marshaler.Write(__msg, itemCID);
 SP_Marshaler.Write(__msg, itemID);
+SP_Marshaler.Write(__msg, networkID);
 SP_Marshaler.Write(__msg, pos);
 SP_Marshaler.Write(__msg, rot);
 		
@@ -1161,15 +1161,15 @@ SP_Marshaler.Write(__msg, openState);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyStartItemBoxState, Common.NotifyStartItemBoxState);
 }
-public bool NotifyPlayerEquipItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID)
+public bool NotifyPlayerEquipItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
 		Nettention.Proud.RmiID __msgid= Common.NotifyPlayerEquipItem;
 		__msg.Write(__msgid);
 		SP_Marshaler.Write(__msg, hostID);
-		SP_Marshaler.Write(__msg, itemCID);
 		SP_Marshaler.Write(__msg, itemID);
+		SP_Marshaler.Write(__msg, networkID);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -1178,28 +1178,28 @@ public bool NotifyPlayerEquipItem(Nettention.Proud.HostID remote,Nettention.Prou
 		RmiName_NotifyPlayerEquipItem, Common.NotifyPlayerEquipItem);
 }
 
-public bool NotifyPlayerEquipItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID)
+public bool NotifyPlayerEquipItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
 Nettention.Proud.RmiID __msgid= Common.NotifyPlayerEquipItem;
 __msg.Write(__msgid);
 SP_Marshaler.Write(__msg, hostID);
-SP_Marshaler.Write(__msg, itemCID);
 SP_Marshaler.Write(__msg, itemID);
+SP_Marshaler.Write(__msg, networkID);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerEquipItem, Common.NotifyPlayerEquipItem);
 }
-public bool NotifyPlayerUnEquipItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool NotifyPlayerUnEquipItem(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
 		Nettention.Proud.RmiID __msgid= Common.NotifyPlayerUnEquipItem;
 		__msg.Write(__msgid);
 		SP_Marshaler.Write(__msg, hostID);
-		SP_Marshaler.Write(__msg, itemCID);
 		SP_Marshaler.Write(__msg, itemID);
+		SP_Marshaler.Write(__msg, networkID);
 		SP_Marshaler.Write(__msg, pos);
 		SP_Marshaler.Write(__msg, rot);
 		
@@ -1210,30 +1210,30 @@ public bool NotifyPlayerUnEquipItem(Nettention.Proud.HostID remote,Nettention.Pr
 		RmiName_NotifyPlayerUnEquipItem, Common.NotifyPlayerUnEquipItem);
 }
 
-public bool NotifyPlayerUnEquipItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int hostID, int itemCID, int itemID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool NotifyPlayerUnEquipItem(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int hostID, string itemID, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
 Nettention.Proud.RmiID __msgid= Common.NotifyPlayerUnEquipItem;
 __msg.Write(__msgid);
 SP_Marshaler.Write(__msg, hostID);
-SP_Marshaler.Write(__msg, itemCID);
 SP_Marshaler.Write(__msg, itemID);
+SP_Marshaler.Write(__msg, networkID);
 SP_Marshaler.Write(__msg, pos);
 SP_Marshaler.Write(__msg, rot);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyPlayerUnEquipItem, Common.NotifyPlayerUnEquipItem);
 }
-public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletID, string weaponID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
 		Nettention.Proud.RmiID __msgid= Common.NotifyPlayerBulletCreate;
 		__msg.Write(__msgid);
 		SP_Marshaler.Write(__msg, sendHostID);
-		SP_Marshaler.Write(__msg, bulletType);
 		SP_Marshaler.Write(__msg, bulletID);
+		SP_Marshaler.Write(__msg, weaponID);
 		SP_Marshaler.Write(__msg, pos);
 		SP_Marshaler.Write(__msg, rot);
 		
@@ -1244,15 +1244,15 @@ public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID remote,Nettention.P
 		RmiName_NotifyPlayerBulletCreate, Common.NotifyPlayerBulletCreate);
 }
 
-public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, int bulletType, string bulletID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+public bool NotifyPlayerBulletCreate(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, string bulletID, string weaponID, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
 Nettention.Proud.RmiID __msgid= Common.NotifyPlayerBulletCreate;
 __msg.Write(__msgid);
 SP_Marshaler.Write(__msg, sendHostID);
-SP_Marshaler.Write(__msg, bulletType);
 SP_Marshaler.Write(__msg, bulletID);
+SP_Marshaler.Write(__msg, weaponID);
 SP_Marshaler.Write(__msg, pos);
 SP_Marshaler.Write(__msg, rot);
 		
@@ -1453,7 +1453,7 @@ SP_Marshaler.Write(__msg, userOxy);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyUseOxyCharger, Common.NotifyUseOxyCharger);
 }
-public bool NotifyUseItemBox(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex, int itemID)
+public bool NotifyUseItemBox(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex, string itemID, string networkID)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -1462,6 +1462,7 @@ public bool NotifyUseItemBox(Nettention.Proud.HostID remote,Nettention.Proud.Rmi
 		SP_Marshaler.Write(__msg, sendHostID);
 		SP_Marshaler.Write(__msg, itemBoxIndex);
 		SP_Marshaler.Write(__msg, itemID);
+		SP_Marshaler.Write(__msg, networkID);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -1470,7 +1471,7 @@ public bool NotifyUseItemBox(Nettention.Proud.HostID remote,Nettention.Proud.Rmi
 		RmiName_NotifyUseItemBox, Common.NotifyUseItemBox);
 }
 
-public bool NotifyUseItemBox(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex, int itemID)
+public bool NotifyUseItemBox(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex, string itemID, string networkID)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
@@ -1479,6 +1480,7 @@ __msg.Write(__msgid);
 SP_Marshaler.Write(__msg, sendHostID);
 SP_Marshaler.Write(__msg, itemBoxIndex);
 SP_Marshaler.Write(__msg, itemID);
+SP_Marshaler.Write(__msg, networkID);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyUseItemBox, Common.NotifyUseItemBox);

@@ -1736,8 +1736,8 @@ namespace SpaceWar
 					
 					
 					int hostID; __msg >> hostID;
-					int itemCID; __msg >> itemCID;
-					int itemID; __msg >> itemID;
+					string itemID; __msg >> itemID;
+					string networkID; __msg >> networkID;
 					Proud::Vector3 pos; __msg >> pos;
 					Proud::Vector3 rot; __msg >> rot;
 					m_core->PostCheckReadMessage(__msg,RmiName_RequestWorldCreateItem);
@@ -1750,10 +1750,10 @@ namespace SpaceWar
 						::Proud::AppendTextOut(parameterString,hostID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,itemCID);	
+						::Proud::AppendTextOut(parameterString,itemID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,itemID);	
+						::Proud::AppendTextOut(parameterString,networkID);	
 										
 						parameterString += _PNT(", ");
 						::Proud::AppendTextOut(parameterString,pos);	
@@ -1791,7 +1791,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = RequestWorldCreateItem (remote,ctx , hostID, itemCID, itemID, pos, rot );
+					bool __ret = RequestWorldCreateItem (remote,ctx , hostID, itemID, networkID, pos, rot );
 						
 					if(__ret==false)
 					{
@@ -2915,7 +2915,7 @@ namespace SpaceWar
 					ctx.m_compressMode = pa.GetCompressMode();
 					
 					
-					int itemID; __msg >> itemID;
+					string networkID; __msg >> networkID;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyDeleteItem);
 					
 			
@@ -2923,7 +2923,7 @@ namespace SpaceWar
 					{
 						::Proud::String parameterString;
 						
-						::Proud::AppendTextOut(parameterString,itemID);	
+						::Proud::AppendTextOut(parameterString,networkID);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyDeleteItem, 
 							RmiName_NotifyDeleteItem,parameterString);
@@ -2955,7 +2955,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyDeleteItem (remote,ctx , itemID );
+					bool __ret = NotifyDeleteItem (remote,ctx , networkID );
 						
 					if(__ret==false)
 					{
@@ -2990,8 +2990,8 @@ namespace SpaceWar
 					
 					
 					int hostID; __msg >> hostID;
-					int itemCID; __msg >> itemCID;
-					int itemID; __msg >> itemID;
+					string itemID; __msg >> itemID;
+					string networkID; __msg >> networkID;
 					Proud::Vector3 pos; __msg >> pos;
 					Proud::Vector3 rot; __msg >> rot;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyCreateItem);
@@ -3004,10 +3004,10 @@ namespace SpaceWar
 						::Proud::AppendTextOut(parameterString,hostID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,itemCID);	
+						::Proud::AppendTextOut(parameterString,itemID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,itemID);	
+						::Proud::AppendTextOut(parameterString,networkID);	
 										
 						parameterString += _PNT(", ");
 						::Proud::AppendTextOut(parameterString,pos);	
@@ -3045,7 +3045,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyCreateItem (remote,ctx , hostID, itemCID, itemID, pos, rot );
+					bool __ret = NotifyCreateItem (remote,ctx , hostID, itemID, networkID, pos, rot );
 						
 					if(__ret==false)
 					{
@@ -3236,8 +3236,8 @@ namespace SpaceWar
 					
 					
 					int hostID; __msg >> hostID;
-					int itemCID; __msg >> itemCID;
-					int itemID; __msg >> itemID;
+					string itemID; __msg >> itemID;
+					string networkID; __msg >> networkID;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyPlayerEquipItem);
 					
 			
@@ -3248,10 +3248,10 @@ namespace SpaceWar
 						::Proud::AppendTextOut(parameterString,hostID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,itemCID);	
+						::Proud::AppendTextOut(parameterString,itemID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,itemID);	
+						::Proud::AppendTextOut(parameterString,networkID);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyPlayerEquipItem, 
 							RmiName_NotifyPlayerEquipItem,parameterString);
@@ -3283,7 +3283,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyPlayerEquipItem (remote,ctx , hostID, itemCID, itemID );
+					bool __ret = NotifyPlayerEquipItem (remote,ctx , hostID, itemID, networkID );
 						
 					if(__ret==false)
 					{
@@ -3318,8 +3318,8 @@ namespace SpaceWar
 					
 					
 					int hostID; __msg >> hostID;
-					int itemCID; __msg >> itemCID;
-					int itemID; __msg >> itemID;
+					string itemID; __msg >> itemID;
+					string networkID; __msg >> networkID;
 					Proud::Vector3 pos; __msg >> pos;
 					Proud::Vector3 rot; __msg >> rot;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyPlayerUnEquipItem);
@@ -3332,10 +3332,10 @@ namespace SpaceWar
 						::Proud::AppendTextOut(parameterString,hostID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,itemCID);	
+						::Proud::AppendTextOut(parameterString,itemID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,itemID);	
+						::Proud::AppendTextOut(parameterString,networkID);	
 										
 						parameterString += _PNT(", ");
 						::Proud::AppendTextOut(parameterString,pos);	
@@ -3373,7 +3373,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyPlayerUnEquipItem (remote,ctx , hostID, itemCID, itemID, pos, rot );
+					bool __ret = NotifyPlayerUnEquipItem (remote,ctx , hostID, itemID, networkID, pos, rot );
 						
 					if(__ret==false)
 					{
@@ -3408,8 +3408,8 @@ namespace SpaceWar
 					
 					
 					int sendHostID; __msg >> sendHostID;
-					int bulletType; __msg >> bulletType;
 					string bulletID; __msg >> bulletID;
+					string weaponID; __msg >> weaponID;
 					Proud::Vector3 pos; __msg >> pos;
 					Proud::Vector3 rot; __msg >> rot;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyPlayerBulletCreate);
@@ -3422,10 +3422,10 @@ namespace SpaceWar
 						::Proud::AppendTextOut(parameterString,sendHostID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,bulletType);	
+						::Proud::AppendTextOut(parameterString,bulletID);	
 										
 						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,bulletID);	
+						::Proud::AppendTextOut(parameterString,weaponID);	
 										
 						parameterString += _PNT(", ");
 						::Proud::AppendTextOut(parameterString,pos);	
@@ -3463,7 +3463,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyPlayerBulletCreate (remote,ctx , sendHostID, bulletType, bulletID, pos, rot );
+					bool __ret = NotifyPlayerBulletCreate (remote,ctx , sendHostID, bulletID, weaponID, pos, rot );
 						
 					if(__ret==false)
 					{
@@ -4019,7 +4019,8 @@ namespace SpaceWar
 					
 					int sendHostID; __msg >> sendHostID;
 					int itemBoxIndex; __msg >> itemBoxIndex;
-					int itemID; __msg >> itemID;
+					string itemID; __msg >> itemID;
+					string networkID; __msg >> networkID;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyUseItemBox);
 					
 			
@@ -4034,6 +4035,9 @@ namespace SpaceWar
 										
 						parameterString += _PNT(", ");
 						::Proud::AppendTextOut(parameterString,itemID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,networkID);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyUseItemBox, 
 							RmiName_NotifyUseItemBox,parameterString);
@@ -4065,7 +4069,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyUseItemBox (remote,ctx , sendHostID, itemBoxIndex, itemID );
+					bool __ret = NotifyUseItemBox (remote,ctx , sendHostID, itemBoxIndex, itemID, networkID );
 						
 					if(__ret==false)
 					{

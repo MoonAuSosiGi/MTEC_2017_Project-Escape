@@ -189,12 +189,12 @@ public class InGameUI : MonoBehaviour
     #endregion
 
     #region EquipWeapon
-    public void EquipWeapon(int itemCID,int curCount,int maxCount)
+    public void EquipWeapon(string itemID,int curCount,int maxCount)
     {
         m_equipInfo.SetActive(true);
     }
 
-    public void UnEquipWeapon(int itemCID,int curCount,int maxCount)
+    public void UnEquipWeapon(string itemID,int curCount,int maxCount)
     {
         m_equipInfo.SetActive(false);
     }

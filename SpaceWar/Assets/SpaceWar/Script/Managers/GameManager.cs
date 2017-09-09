@@ -5,6 +5,36 @@ using UnityEngine;
 public class GameManager : Singletone<GameManager> {
 
     #region GameManager_INFO
+
+    #region Table
+    [SerializeField] GameTable m_gameTable = null;
+
+    #region GameTable Tag
+    public const string FULL_HP = "FullHP";
+    public const string FULL_OXY = "FullOXY";
+    public const string OXY_DAMAGE = "OxyDamage";
+    public const string WALK_SPEED = "WalkSpeed";
+    public const string RUN_SPEED = "RunSpeed";
+    public const string JUMP_POWER = "JumpPower";
+    public const string JUMP_TICK = "JumpTick";
+    public const string USEOXY_IDLE = "UseOxy_IDLE";
+    public const string USEOXY_RUN = "UseOxy_RUN";
+    public const string USEOXY_WALK = "UseOxy_WALK";
+    public const string OXY_CHARGER_FULL = "OxyCharger_FullOxy";
+    public const string OXY_CHARGER_USE = "OxyCharger_UseOxy";
+    public const string METEOR_HIT_DAMAGE = "Meteor_HitDamage";
+    public const string METEOR_DAMAGE = "Meteor_Damage";
+    public const string DAMAGE_COOLTIME = "Damage_CoolTime";
+    public const string DZ_SPEED1 = "DeathZoneSpeed_Level1";
+    public const string DZ_SPEED2 = "DeathZoneSpeed_Level2";
+    public const string DZ_SPEED3 = "DeathZoneSpeed_Level3";
+    public const string DZ_SPEED4 = "DeathZoneSpeed_Level4";
+    public const string DZ_SPEED5 = "DeathZoneSpeed_Level5";
+    public const string DZ_DAMAGE = "DeathZoneDamage";
+    #endregion
+    #endregion
+
+    #region Game Manager Main
     // -- 게임 매니저 전반적인 것들을 관리합니다 ------------------------------------------//
     public GameObject PlayerPref;
     public GameObject MainCam;
@@ -37,6 +67,13 @@ public class GameManager : Singletone<GameManager> {
         get { return m_playerInfo; }
         set { m_playerInfo = value; }
     }
+
+    #region Network Item 
+    [SerializeField] private Transform m_networkItemParent = null;
+    [SerializeField] private List<GameObject> m_itemList = new List<GameObject>();
+    #endregion
+    #endregion
+
     #region NetworkObject
     public GameObject m_spaceShipParent = null;
     public GameObject m_shelterParent = null;
@@ -77,6 +114,8 @@ public class GameManager : Singletone<GameManager> {
         public string m_name = "";
         public float m_hp = 100.0f;
         public float m_oxy = 100.0f;
+        public float m_fullHp = 100.0f;
+        public float m_fullOxy = 100.0f;
         public PlayerController m_player = null;
     }
     #endregion
@@ -90,9 +129,13 @@ public class GameManager : Singletone<GameManager> {
             return;
 
         m_playerInfo.m_name = NetworkManager.Instance().USER_NAME;
-       
+        m_playerInfo.m_hp = GetGameTableValue(FULL_HP);
+        m_playerInfo.m_oxy = GetGameTableValue(FULL_OXY);
+        m_playerInfo.m_fullHp = GetGameTableValue(FULL_HP);
+        m_playerInfo.m_fullOxy = GetGameTableValue(FULL_OXY);
 
         float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 20.8f;
+
         OnJoinedRoom(m_playerInfo.m_name , true , //new Vector3(9.123454f , 48.63797f , -32.4867f));
             GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
@@ -133,20 +176,13 @@ public class GameManager : Singletone<GameManager> {
 
     #endregion
 
-    public GameObject CommandItemCreate(int itemCID,int itemID,Vector3 pos,Vector3 rot)
+    public GameObject CommandItemCreate(string itemID,string networkID,Vector3 pos,Vector3 rot)
     {
-        Debug.Log("CommandItemCreate.. " + itemCID + " pos " + rot);
-        int index = CreateWeaponList.Count;
-        CreateWeaponList.Add(Instantiate(Item[itemCID-1] , pos ,
-                Quaternion.Euler(rot.x , rot.y , rot.z)));
-        CreateWeaponList[index].transform.position = pos;
-        CreateWeaponList[index].transform.eulerAngles = rot;
-        
-        CreateWeaponList[index].GetComponent<WeaponItem>().ITEM_NETWORK_ID = itemID;
-        
-        CreateWeaponList[index].layer = 2;
-
-        return CreateWeaponList[index];
+        Debug.Log("CommandItemCreate.. " + itemID + " pos " + rot);
+        GameObject weapon = WeaponManager.Instance().CreateWeapon(itemID);
+        weapon.transform.position = pos;
+        weapon.transform.localEulerAngles = rot;
+        return weapon;
     }
 
     IEnumerator CreateItem(int Num)
@@ -157,9 +193,7 @@ public class GameManager : Singletone<GameManager> {
 
         for (int i = 0; i < Num; i++)
         {
-            int CID =  Random.Range(1 ,Item.Length+1);
-
-            Debug.Log("Item Create " + CID + " item Name " +Item[CID-1]);
+            
             //ItemCreaterAnchor.Rotate(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
 
 
@@ -184,46 +218,34 @@ public class GameManager : Singletone<GameManager> {
                     ItemCreaterAnchor.rotation * Vector3.forward , out SponeHitInfo , 30f);
 
             }
+
+            // 웨폰 생성 리스트의 관리는 ?
+            string id = WeaponManager.Instance().GetRandomWeaponID();
+            GameObject weapon = WeaponManager.Instance().CreateWeapon(id);
+            weapon.transform.position = ItemCreaterAnchor.GetChild(0).position;
+            Item item = weapon.GetComponent<Item>();
+            item.ITEM_NETWORK_ID = NetworkManager.Instance().m_hostID + "_" + i + "_" + id;
+            NetworkManager.Instance().ITEM_DICT.Add(
+                item.ITEM_NETWORK_ID,item);
+
+            NetworkManager.Instance().C2SRequestItemCreate(
+                item.ITEM_ID , item.ITEM_NETWORK_ID,
+                item.transform.position , item.transform.localEulerAngles);
+            // CreateWeaponList[i].layer = 2;
             
-            CreateWeaponList.Add(Instantiate(Item[CID-1] , SponeHitInfo.point , 
-                Quaternion.Euler(SponeHitInfo.normal.x + 45 , SponeHitInfo.normal.y + 45 , 
-                SponeHitInfo.normal.z + 90)));
-          //  CreateWeaponList[i].transform.parent = m_itemParent.transform;
-          //  CreateWeaponList[i].GetComponent<WeaponItem>().ITEM_ID = CID;
-            CreateWeaponList[i].layer = 2;
-
-            CreateWeaponList[i].GetComponent<WeaponItem>().ITEM_NETWORK_ID = i;
-
-            Vector3 SponeRot = (CreateWeaponList[i].transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized;
+            Vector3 SponeRot = (weapon.transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized;
 
             //SponeRot += CreateWeaponList[i].GetComponent<Weapon>().SponeRot;
 
-            Quaternion targetRotation = Quaternion.FromToRotation(CreateWeaponList[i].transform.up , SponeRot) * CreateWeaponList[i].transform.rotation;
-
-
-
-       //    CreateWeaponList[i].transform.rotation = targetRotation;
-
-            CreateWeaponList[i].transform.Rotate(CreateWeaponList[i].GetComponent<WeaponItem>().SPONE_ROTATITON);
-
-            CreateWeaponList[i].transform.Translate(Vector3.right * SponHeight);
-
+            Quaternion targetRotation = Quaternion.FromToRotation(weapon.transform.up , SponeRot) * weapon.transform.rotation;
             
+            //    CreateWeaponList[i].transform.rotation = targetRotation;
+            weapon.transform.Rotate(weapon.GetComponent<Item>().SPONE_ROTATITON);
+            weapon.transform.Translate(Vector3.right * SponHeight);
 
             yield return new WaitForSeconds(0.001f);
 
         }
-
-
-        for (int i = 0; i < CreateWeaponList.Count; i++)
-        {
-            NetworkManager.Instance().C2SRequestItemCreate(CreateWeaponList[i].GetComponent<WeaponItem>().ITEM_ID ,
-                i , CreateWeaponList[i].transform.position ,
-                CreateWeaponList[i].transform.eulerAngles);
-            NetworkManager.Instance().m_networkItemList.Add(i, 
-                CreateWeaponList[i]);
-        }
-
     }
 
     // 메테오 생성
@@ -272,50 +294,49 @@ public class GameManager : Singletone<GameManager> {
         return new Vector3(x,y,z); 
     }
     
-    public void RecvItem(int itemCID,GameObject box)
+    public void RecvItem(string itemID,string networkID,GameObject box)
     {
         Vector3 boxPos = box.transform.position;
-        CreateWeaponList.Add(Instantiate(
-                Item[itemCID] ,SponeHitInfo.point ,
-                Quaternion.Euler(SponeHitInfo.normal.x + 45 , SponeHitInfo.normal.y + 45 ,
-                SponeHitInfo.normal.z + 90)));
-
-        GameObject obj = CreateWeaponList[CreateWeaponList.Count - 1];
-
+        GameObject weapon = WeaponManager.Instance().CreateWeapon(itemID);
+        //CreateWeaponList.Add(Instantiate(
+        //        Item[itemCID] ,SponeHitInfo.point ,
+        //        Quaternion.Euler(SponeHitInfo.normal.x + 45 , SponeHitInfo.normal.y + 45 ,
+        //        SponeHitInfo.normal.z + 90)));
+        
         //obj.transform.parent = box.transform ;
-        obj.transform.position = boxPos;
+        weapon.transform.position = boxPos;
 
-        Vector3 scale = obj.transform.localScale;
-        obj.transform.localScale = new Vector3(0.0f , 0.0f , 0.0f);
-        CreateWeaponList[CreateWeaponList.Count - 1].GetComponent<WeaponItem>().ITEM_NETWORK_ID = CreateWeaponList.Count - 1;
-        
-        CreateWeaponList[CreateWeaponList.Count - 1].layer = 2;
+        // TODO NetworkID 등록
 
-        
-        iTween.ScaleTo(obj , iTween.Hash(
+        Vector3 scale = weapon.transform.localScale;
+        weapon.transform.localScale = new Vector3(0.0f , 0.0f , 0.0f);
+        Item item = weapon.GetComponent<Item>();
+        item.ITEM_NETWORK_ID = networkID;
+        //CreateWeaponList[CreateWeaponList.Count - 1].GetComponent<WeaponItem>().ITEM_NETWORK_ID = CreateWeaponList.Count - 1;
+
+        //CreateWeaponList[CreateWeaponList.Count - 1].layer = 2;
+        NetworkManager.Instance().ITEM_DICT.Add(networkID, item);
+
+        iTween.ScaleTo(weapon , iTween.Hash(
             "x" , scale.x , "y" , scale.y , "z" , scale.z ,
             "oncompletetarget" , gameObject ,
             "easeType","easeOutCubic",
             "speed",300.0f,
             "oncomplete" , "RecvItemTweenEnd", 
-            "oncompleteparams", (CreateWeaponList.Count - 1)));
+            "oncompleteparams", networkID));
         
 
     }
     
-    void RecvItemTweenEnd(int index)
+    void RecvItemTweenEnd(string networkID)
     {
-        
         // 딱히 하는거 없음 
-
+        Item item = NetworkManager.Instance().ITEM_DICT[networkID];
         NetworkManager.Instance().C2SRequestItemCreate(
-            CreateWeaponList[index]
-            .GetComponent<WeaponItem>().ITEM_ID , index ,
-            CreateWeaponList[index].transform.position ,
-                CreateWeaponList[index].transform.eulerAngles);
-        NetworkManager.Instance().m_networkItemList.Add(
-            CreateWeaponList[index].GetComponent<WeaponItem>().ITEM_NETWORK_ID ,
-            CreateWeaponList[index]);
+            item.ITEM_ID,
+            networkID,
+            item.transform.position,
+            item.transform.localEulerAngles);
     }
 
     public GameObject OnJoinedRoom(string name,bool me,Vector3 startPos)
@@ -422,21 +443,44 @@ public class GameManager : Singletone<GameManager> {
     #endregion
 
     #region EquipEvent
-    public void EquipWeapon(int itemCID,int cur,int max)
+    public void EquipWeapon(string itemID , int cur , int max)
     {
         if (m_inGameUI == null)
             return;
-        m_inGameUI.EquipWeapon(itemCID , cur , max);
+        m_inGameUI.EquipWeapon(itemID , cur , max);
     }
 
-    public void UnEquipWeapon(int itemCID,int cur,int max)
+    public void UnEquipWeapon(string itemID , int cur , int max)
     {
         if (m_inGameUI == null)
             return;
-        m_inGameUI.UnEquipWeapon(itemCID , cur , max);
+        m_inGameUI.UnEquipWeapon(itemID , cur , max);
     }
     #endregion
-    
 
+    #region Table Info Message
+    public float GetGameTableValue(string id)
+    {
+        for(int i = 0; i < m_gameTable.dataArray.Length; i++)
+        {
+            GameTableData data = m_gameTable.dataArray[i];
+
+            if(data.Id.Equals(id))
+            {
+                return data.Realvalue;
+            }
+        }
+        return 0.0f;
+    }
+    #endregion
+
+    #region Network Item Logic 
+
+    // 서버에서 생성 명령이 왔다.
+    public void RecvCreateItem(string itemCode,float angleX,float angleZ)
+    {
+        Vector3 targetPos = GravityManager.Instance().GetPlanetPosition(12.8f , angleX , angleZ);
+    }
+    #endregion 
 
 }
