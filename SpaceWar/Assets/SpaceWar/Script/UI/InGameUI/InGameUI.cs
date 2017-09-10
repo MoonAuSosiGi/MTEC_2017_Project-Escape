@@ -16,6 +16,8 @@ public class InGameUI : MonoBehaviour
     public GameObject m_North = null;
 
     public GameObject m_equipInfo = null;
+    public UILabel m_curAmmo = null;
+    public UILabel m_maxAmmo = null;
 
     public GameObject m_spaceShipUI = null;
 
@@ -192,6 +194,13 @@ public class InGameUI : MonoBehaviour
     public void EquipWeapon(string itemID,int curCount,int maxCount)
     {
         m_equipInfo.SetActive(true);
+        UpdateWeapon(curCount , maxCount);
+    }
+
+    public void UpdateWeapon(int curCount,int maxCount)
+    {
+        m_curAmmo.text = curCount.ToString();
+        m_maxAmmo.text = maxCount.ToString();
     }
 
     public void UnEquipWeapon(string itemID,int curCount,int maxCount)

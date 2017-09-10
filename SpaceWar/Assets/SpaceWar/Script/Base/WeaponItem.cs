@@ -46,23 +46,12 @@ public class WeaponItem : Item {
     [SerializeField] private float m_coolTime = 0.0f;
 
     public float COOL_TIME { get { return m_coolTime; } set { m_coolTime = value; } }
-
-
-    // 근거리 전용 이펙트
-    // 휘두르기 모션
-    [SerializeField] private GameObject m_swordAniEffect = null;
-    // 피격 모션
-    [SerializeField] private GameObject m_swordHitEffect = null;
-    // 다른 곳에 부딪칠 경우 
-    [SerializeField] private GameObject m_swordOtherHitEffect = null;
-    // 근거리 무기 애니메이션 재생중인지
-    private bool m_meleeAttackAble = false;
-
-    // 근거리 무기용 테스트 로직
-    private bool m_isNetwork = false;
-    public bool IS_NETWORK { get { return m_isNetwork; } set { m_isNetwork = value; } }
-
+    
     private int m_currentBulletIndex = 0;
+
+    // 원거리 무기 전용
+    private int m_ammo = 0;
+    public int AMMO { get { return m_ammo; } set { m_ammo = value; } }
 
     //수류탄 전용
     private bool m_isGrenadeStart = false;
@@ -170,10 +159,19 @@ public class WeaponItem : Item {
     #region Guns Weapon Attack
     void GunAttack(Transform character)
     {
+        if (AMMO <= 0)
+        {
+            // 여기는 더이상 쏠 수 없다는 것을 알려야함
+            return;
+        }
+
+        int maxBullet = WeaponManager.Instance().GetWeaponData(ITEM_ID).Bulletcount;
+        AMMO--;
+        GameManager.Instance().UpdateWeapon(AMMO , maxBullet);
+
         SoundPlay();
         m_shotEffect.transform.position = m_firePoint.position;
         m_shotEffect.SetActive(true);
-
         
         string hostID = (NetworkManager.Instance() != null) ?  NetworkManager.Instance().m_hostID.ToString() : "1";
         string networkID = hostID + "_" + m_itemID + "_" + m_currentBulletIndex;
@@ -186,6 +184,16 @@ public class WeaponItem : Item {
 
     void RocketAttack(Transform character)
     {
+        if (AMMO <= 0)
+        {
+            // 여기는 더이상 쏠 수 없다는 것을 알려야함
+            return;
+        }
+
+        int maxBullet = WeaponManager.Instance().GetWeaponData(ITEM_ID).Bulletcount;
+        AMMO--;
+        GameManager.Instance().UpdateWeapon(AMMO , maxBullet);
+
         SoundPlay();
         if (m_shotEffect != null)
         {
@@ -218,81 +226,6 @@ public class WeaponItem : Item {
     #endregion
 
     #region MELEE_ATTACK
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.CompareTag("Weapon") && col.CompareTag("DeathZone"))
-            return;
-        //// 애니메이션 중일 때만 
-        //if(m_meleeAttackAble)
-        //{
-        //    Debug.Log("col " + col.tag);
-        //    if (col.CompareTag("PlayerCharacter"))
-        //    {
-                
-        //        // 데미지다!!
-        //        NetworkPlayer p = col.transform.GetComponent<NetworkPlayer>();
-        //        if(p != null && IS_NETWORK == false)
-        //        {
-        //            NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName ,ITEM_ID.ToString() , Random.Range(10.0f , 15.0f) , transform.position);
-        //        }
-        //        m_swordHitEffect.transform.SetParent(m_player.transform , false);
-        //        m_swordHitEffect.transform.position = col.transform.position;
-        //        m_swordHitEffect.SetActive(true);
-                
-        //    }
-        //    else if (col.CompareTag("Untagged") == false && col.CompareTag("NonSpone"))
-        //    {
-        //        // 먼가에 맞음!
-        //        m_swordOtherHitEffect.SetActive(true);
-        //    }
-        //    else 
-        //    {
-        //        m_swordHitEffect.transform.SetParent(m_player.transform , false);
-        //        m_swordHitEffect.transform.position = col.transform.position;
-        //        m_swordHitEffect.SetActive(true);
-        //    }
-            
-        //}
-    }
-
-    // 공격 가능 상태
-    public void EnableMeleeColider()
-    {
-        if (m_type == WeaponType.MELEE)
-        {
-            m_swordAniEffect.transform.SetParent(m_player.transform.GetChild(0) , false);
-            this.GetComponent<BoxCollider>().enabled = true;
-            m_meleeAttackAble = true;
-            m_swordAniEffect.SetActive(true);
-            SoundPlay();
-            if (m_swordHitEffect.transform.parent != transform)
-            {
-                m_swordHitEffect.transform.SetParent(transform,false);
-                m_swordHitEffect.gameObject.SetActive(false);
-            }
-        }
-    }
-    // 공격 불가 상태
-    public void DisableMeleeColider()
-    {
-        if (m_type == WeaponType.MELEE)
-        {
-            this.GetComponent<BoxCollider>().enabled = false;
-            m_meleeAttackAble = false;
-            m_player = null;
-            m_swordAniEffect.transform.SetParent(transform , false);
-            m_swordAniEffect.SetActive(false);
-            
-            m_swordOtherHitEffect.SetActive(false);
-        }
-    }
-
-    public void SwordHitEffectEnd()
-    {
-        m_swordHitEffect.transform.SetParent(transform , false);
-        m_swordHitEffect.SetActive(false);
-    }
-
     // 신상 칼질
     public void AttackSword()
     {

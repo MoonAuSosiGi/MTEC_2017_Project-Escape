@@ -473,8 +473,10 @@ public class NetworkManager : Singletone<NetworkManager> {
 
             // 추후 여기서 타입 변경
 
-            WeaponManager.Instance().NetworkBulletCreateRequest(bulletID , 
-                weaponID,  // <-----------------이부분 변경해야함
+            WeaponManager.Instance().NetworkBulletCreateRequest(
+                (int)remote,
+                bulletID , 
+                weaponID,  
                 new UnityEngine.Vector3(pos.x,pos.y,pos.z), 
                 new UnityEngine.Vector3(rot.x,rot.y,rot.z));
 

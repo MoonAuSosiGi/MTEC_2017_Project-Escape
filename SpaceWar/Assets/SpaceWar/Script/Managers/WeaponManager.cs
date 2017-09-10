@@ -74,7 +74,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         return m_weaponTable.dataArray.Length;
     }
 
-    private WeaponTableData GetWeaponData(string id)
+    public WeaponTableData GetWeaponData(string id)
     {
         if (m_weaponDict.Count == 0)
             LoadTable();
@@ -86,7 +86,7 @@ public class WeaponManager : Singletone<WeaponManager> {
     // 여기 메소드들은 NetworkManager 에서만 호출이 가능하다
     #region Network Message Recv Function ------------------------------------------------------------------
     // 생성 요청
-    public void NetworkBulletCreateRequest(string bulletID,string weaponID ,Vector3 pos,Vector3 rot)
+    public void NetworkBulletCreateRequest(int hostID, string bulletID,string weaponID ,Vector3 pos,Vector3 rot)
     {
         // 생성을 할때 기존 네트워크 사망 총알리스트에서 가용한 게 있는지 확인
         // 가용한 것이라 함은 ALIVE 가  FALSE 인 총알들
@@ -95,7 +95,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         int index = -1;
         for(int i = 0; i < m_networkDeadBulletList.Count; i++)
         {
-            if (m_networkDeadBulletList[i].WEAPON_ID.Equals(weaponID))
+            if (!m_networkDeadBulletList[i].WEAPON_ID.Equals(weaponID))
                 continue;
 
             bullet = m_networkDeadBulletList[i];
@@ -120,11 +120,12 @@ public class WeaponManager : Singletone<WeaponManager> {
             bullet.NetworkBulletEnable();
         }
 
-        
+        bullet.BULLET_TRAIL_EFFECT.GetComponentInChildren<TrailRenderer>().Clear();
         bullet.NETWORK_ID = bulletID;
 
         bullet.IS_REMOTE = true;
         bullet.IS_ALIVE = true;
+        
         m_networkAliveBulletList.Add(bullet);
 
         // 위치 변경
@@ -133,6 +134,8 @@ public class WeaponManager : Singletone<WeaponManager> {
         bullet.transform.localEulerAngles = rot;
         bullet.transform.parent = m_aliveNetworkBulletParent;
         bullet.gameObject.SetActive(true);
+
+        bullet.TARGET_ID = hostID;
         // 정상 생성 되었는지 확인용
         Debug.Log("총알 정상 생성 여부 " + (bullet != null));
     }
@@ -407,6 +410,8 @@ public class WeaponManager : Singletone<WeaponManager> {
 
         if((WeaponType)data.Type != WeaponType.SWORD)
         {
+            // AMMO
+            item.AMMO = data.Bulletcount;
             // 파이어 포인트 삽입
             GameObject firePoint = new GameObject("firePoint");
             firePoint.transform.position = new Vector3(data.Firepoint_x , data.Firepoint_y , data.Firepoint_z);

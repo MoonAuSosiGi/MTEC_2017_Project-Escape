@@ -136,8 +136,8 @@ public class GameManager : Singletone<GameManager> {
 
         float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 20.8f;
 
-        OnJoinedRoom(m_playerInfo.m_name , true , //new Vector3(9.123454f , 48.63797f , -32.4867f));
-            GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
+          //  GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
 
     public float PLANET_XANGLE = 0.0f;
@@ -180,6 +180,7 @@ public class GameManager : Singletone<GameManager> {
     {
         Debug.Log("CommandItemCreate.. " + itemID + " pos " + rot);
         GameObject weapon = WeaponManager.Instance().CreateWeapon(itemID);
+        weapon.GetComponent<Item>().ITEM_NETWORK_ID = networkID;
         weapon.transform.position = pos;
         weapon.transform.localEulerAngles = rot;
         return weapon;
@@ -194,15 +195,12 @@ public class GameManager : Singletone<GameManager> {
         for (int i = 0; i < Num; i++)
         {
             
-            //ItemCreaterAnchor.Rotate(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
-
-
             ItemCreaterAnchor.rotation = Quaternion.Euler(Random.Range(-360f , 360f) , Random.Range(-360f , 360f) , Random.Range(-360f , 360f));
             
 
             ItemCreaterAnchor.GetChild(0).LookAt(ItemCreaterAnchor);
 
-            Physics.Raycast(ItemCreaterAnchor.GetChild(0).position , ItemCreaterAnchor.rotation * Vector3.forward , out SponeHitInfo , 30f);
+            Physics.Raycast(ItemCreaterAnchor.GetChild(0).position , ItemCreaterAnchor.rotation * Vector3.forward , out SponeHitInfo, 30.0f);
 
 
 
@@ -215,34 +213,34 @@ public class GameManager : Singletone<GameManager> {
                 ItemCreaterAnchor.GetChild(0).LookAt(ItemCreaterAnchor);
 
                 Physics.Raycast(ItemCreaterAnchor.GetChild(0).position , 
-                    ItemCreaterAnchor.rotation * Vector3.forward , out SponeHitInfo , 30f);
+                    ItemCreaterAnchor.rotation * Vector3.forward , out SponeHitInfo, 30.0f);
 
             }
 
             // 웨폰 생성 리스트의 관리는 ?
             string id = WeaponManager.Instance().GetRandomWeaponID();
             GameObject weapon = WeaponManager.Instance().CreateWeapon(id);
-            weapon.transform.position = ItemCreaterAnchor.GetChild(0).position;
+            weapon.transform.position = SponeHitInfo.point; //new Vector3(SponeHitInfo.normal.x + 45.0f , SponeHitInfo.normal.y + 45.0f , SponeHitInfo.normal.z + 90.0f); //ItemCreaterAnchor.GetChild(0).position;
             Item item = weapon.GetComponent<Item>();
             item.ITEM_NETWORK_ID = NetworkManager.Instance().m_hostID + "_" + i + "_" + id;
             NetworkManager.Instance().ITEM_DICT.Add(
                 item.ITEM_NETWORK_ID,item);
+            weapon.layer = 2;
 
-            NetworkManager.Instance().C2SRequestItemCreate(
-                item.ITEM_ID , item.ITEM_NETWORK_ID,
-                item.transform.position , item.transform.localEulerAngles);
             // CreateWeaponList[i].layer = 2;
             
             Vector3 SponeRot = (weapon.transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized;
 
-            //SponeRot += CreateWeaponList[i].GetComponent<Weapon>().SponeRot;
+           // SponeRot += item.SPONE_ROTATITON;
 
             Quaternion targetRotation = Quaternion.FromToRotation(weapon.transform.up , SponeRot) * weapon.transform.rotation;
             
-            //    CreateWeaponList[i].transform.rotation = targetRotation;
+            weapon.transform.rotation = targetRotation;
             weapon.transform.Rotate(weapon.GetComponent<Item>().SPONE_ROTATITON);
             weapon.transform.Translate(Vector3.right * SponHeight);
-
+            NetworkManager.Instance().C2SRequestItemCreate(
+                item.ITEM_ID , item.ITEM_NETWORK_ID ,
+                item.transform.position , item.transform.localEulerAngles);
             yield return new WaitForSeconds(0.001f);
 
         }
@@ -448,6 +446,11 @@ public class GameManager : Singletone<GameManager> {
         if (m_inGameUI == null)
             return;
         m_inGameUI.EquipWeapon(itemID , cur , max);
+    }
+
+    public void UpdateWeapon(int cur,int max)
+    {
+        m_inGameUI.UpdateWeapon(cur , max);
     }
 
     public void UnEquipWeapon(string itemID , int cur , int max)

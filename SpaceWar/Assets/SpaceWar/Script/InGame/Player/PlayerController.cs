@@ -32,7 +32,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float m_jumpTick = 1.0f;
     [SerializeField] private AnimationCurve m_jumpCurve = null;
     [SerializeField] private GameObject m_useEffect = null;
-    
+
+    // 콜라이더
+    CapsuleCollider m_collider = null;
 
     // USE EFFECT ANCHOR
     [SerializeField] private GameObject m_useEffectHeadAnchor = null;
@@ -343,6 +345,7 @@ public class PlayerController : MonoBehaviour {
         m_camera = Camera.main;
 
         m_rigidBody = this.GetComponent<Rigidbody>();
+        m_collider = this.GetComponent<CapsuleCollider>();
 
         GravityManager.Instance().SetGravityTarget(m_rigidBody);
         InvokeRepeating("UseOxy" , 1.0f , 1.0f);
@@ -382,6 +385,7 @@ public class PlayerController : MonoBehaviour {
             
         }
 
+        SphereCastAll();
         ControlWeaponObjectProcess();
         ControlWeaponObjectThrowProcess();
         ControlObjectProcess();
@@ -587,10 +591,31 @@ public class PlayerController : MonoBehaviour {
 
     #region Player Trigger Collider ------------------------------------------------------------------------
     
+    void OnDrawGizmos()
+    {
+        //Vector3 dir = transform.forward;
+        //RaycastHit[] hits = Physics.SphereCastAll(m_collider.center , m_collider.radius , dir , 300);
+
+
+
+        //for (int i = 0; i < hits.Length; i++)
+        //{
+        //    Debug.Log("hits " + hits[i].transform.name);
+        //    //ShowUseEffect(hits[i].transform.GetComponent<Collider>());
+        //    Gizmos.DrawWireSphere(transform.position + transform.forward * hits[i].distance , 3.0f);
+        //}
+        
+    }
+    void SphereCastAll()
+    {
+        
+    }
+
     void OnTriggerEnter(Collider col)
     {
         if (this.enabled == false)
             return;
+        
         // -- F 키를 띄워야 한다. // 근처에 있다면!
         ShowUseEffect(col);
         
@@ -602,6 +627,7 @@ public class PlayerController : MonoBehaviour {
         if (this.enabled == false)
             return;
         RotateUseEffect();
+        ShowUseEffect(col);
         MeteorDamage(col);
     }
 
@@ -696,6 +722,11 @@ public class PlayerController : MonoBehaviour {
 
     void ShowUseEffect(Collider col)
     {
+        if (m_useEffect.activeSelf)
+        {
+            
+        }
+
         if (col.CompareTag("Weapon"))
         {
             m_nearWeapon = col.gameObject;
@@ -817,8 +848,8 @@ public class PlayerController : MonoBehaviour {
             WeaponAnimationChange();
 
             if (GameManager.Instance() != null)
-                GameManager.Instance().EquipWeapon(m_currentWeapon.ITEM_ID , 0 , 0);
-            if (NetworkManager.Instance() != null) // TODO
+                GameManager.Instance().EquipWeapon(m_currentWeapon.ITEM_ID , m_currentWeapon.AMMO , WeaponManager.Instance().GetWeaponData(m_currentWeapon.ITEM_ID).Bulletcount);
+            if (NetworkManager.Instance() != null)
                 NetworkManager.Instance().C2SRequestEquipItem(m_currentWeapon.ITEM_ID ,
                     m_currentWeapon.ITEM_NETWORK_ID);
             
@@ -858,12 +889,12 @@ public class PlayerController : MonoBehaviour {
         m_currentWeapon.UnEquipWeapon();
 
         SetAnimation(AnimationType.ANI_BAREHAND);
-        
-        //if(GameManager.Instance() != null)
-        //    GameManager.Instance().UnEquipWeapon(m_currentWeapon.ITEM_ID , 0 , 0);
-        //if (NetworkManager.Instance() != null)
-        //    NetworkManager.Instance().C2SRequestUnEquipItem(m_currentWeapon.ITEM_ID , m_currentWeapon.ITEM_ID ,
-        //        m_currentWeapon.transform.position , m_currentWeapon.transform.eulerAngles);
+
+        if (GameManager.Instance() != null)
+            GameManager.Instance().UnEquipWeapon(m_currentWeapon.ITEM_ID , m_currentWeapon.AMMO , WeaponManager.Instance().GetWeaponData(m_currentWeapon.ITEM_ID).Bulletcount);
+        if (NetworkManager.Instance() != null)
+            NetworkManager.Instance().C2SRequestUnEquipItem(m_currentWeapon.ITEM_ID , m_currentWeapon.ITEM_NETWORK_ID ,
+                m_currentWeapon.transform.position , m_currentWeapon.transform.eulerAngles);
         m_currentWeapon = null;
     }
 

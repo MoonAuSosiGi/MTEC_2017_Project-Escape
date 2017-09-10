@@ -27,10 +27,10 @@ void MeteorLoop(void*)
 		s_deathZoneCommingSec--;
 
 
-	if(s_meteorCommingSec % 5 == 0 && s_meteorCommingSec >= 0)
-		cout << "메테오 " << s_meteorCommingSec << " 초 남음 " << endl;
-	if (s_deathZoneCommingSec % 5 == 0)
-		cout << "<Server> Death Zone 생성까지 " << s_deathZoneCommingSec << " 초 남았습니다." << endl;
+	//if(s_meteorCommingSec % 5 == 0 && s_meteorCommingSec >= 0)
+	//	cout << "메테오 " << s_meteorCommingSec << " 초 남음 " << endl;
+	//if (s_deathZoneCommingSec % 5 == 0)
+	//	cout << "<Server> Death Zone 생성까지 " << s_deathZoneCommingSec << " 초 남았습니다." << endl;
 	
 	server.m_proxy.NotifyMeteorCreateTime(server.m_playerP2PGroup, RmiContext::UnreliableSend, s_meteorCommingSec);
 

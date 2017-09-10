@@ -44,18 +44,20 @@ public class RocketBullet : Bullet {
             }
 
             
-            
-
             if (other.CompareTag("PlayerCharacter"))
             {
                 NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
 
                 if (p != null)
                 {
+                    if (IS_REMOTE == true && TARGET_ID == (int)p.HOST_ID)
+                        return;
+
                     if (m_shotEffect != null)
                         m_shotEffect.SetActive(true);
                     BULLET_TRAIL_EFFECT.SetActive(false);
-                    //NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f) , m_startPos);
+                    if (IS_REMOTE == false)
+                        NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage , m_startPos);
                 }
                 else
                 {

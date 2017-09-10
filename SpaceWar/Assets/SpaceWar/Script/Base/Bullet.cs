@@ -40,6 +40,13 @@ public class Bullet : MonoBehaviour {
     [SerializeField] protected float m_speed = 0.0f;
     public float SPEED { get { return m_speed; } set { m_speed = value; } }
 
+    protected int m_targetID = -1;
+    public int TARGET_ID
+    {
+        get { return m_targetID; }
+        set { m_targetID = value; }
+    }
+
     //네트워크 총알 아닐 때 체크용
     protected UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero;
     private float m_tick = 0.0f;
@@ -66,13 +73,13 @@ public class Bullet : MonoBehaviour {
     #region Network Method -----------------------------------------------------------------
     public void NetworkBulletEnable()
     {
-
+        m_targetID = -1;
         m_positionFollower = new PositionFollower();
         m_angleFollowerX = new AngleFollower();
         m_angleFollowerY = new AngleFollower();
         m_angleFollowerZ = new AngleFollower();
         
-        this.GetComponent<SphereCollider>().enabled = false;
+        //this.GetComponent<SphereCollider>().enabled = false;
 
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(true);
@@ -132,10 +139,17 @@ public class Bullet : MonoBehaviour {
 
     public void NetworkReset(Nettention.Proud.Vector3 pos)
     {
+        m_positionFollower = new PositionFollower();
+        m_angleFollowerX = new AngleFollower();
+        m_angleFollowerY = new AngleFollower();
+        m_angleFollowerZ = new AngleFollower();
+        m_targetID = -1;
+
         m_positionFollower.SetTarget(pos , new Nettention.Proud.Vector3(0.0f , 0.0f , 0.0f));
         m_angleFollowerX.TargetAngle = 0.0f;
         m_angleFollowerY.TargetAngle = 0.0f;
         m_angleFollowerZ.TargetAngle = 0.0f;
+        transform.position = new UnityEngine.Vector3((float)pos.x , (float)pos.y , (float)pos.z);
         BulletSetup();
     }
     #endregion
@@ -168,11 +182,9 @@ public class Bullet : MonoBehaviour {
     {
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(true);
-        if(!m_isRemote)
-            this.GetComponent<SphereCollider>().enabled = true;
-        else
-            this.GetComponent<SphereCollider>().enabled = false;
-
+        
+        this.GetComponent<SphereCollider>().enabled = true;
+        
         m_shotRot = GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation;
         m_startPos = GravityManager.Instance().GRAVITY_TARGET.transform.position;
         if (m_shotOtherObjectEffect != null)
@@ -186,8 +198,8 @@ public class Bullet : MonoBehaviour {
     {
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(false);
-        if (!m_isRemote)
-            this.GetComponent<SphereCollider>().enabled = false;
+        
+        this.GetComponent<SphereCollider>().enabled = false;
         gameObject.SetActive(false);
         if (IS_REMOTE == false)
             WeaponManager.Instance().RequestBulletRemove(this);
@@ -195,14 +207,12 @@ public class Bullet : MonoBehaviour {
     
     public virtual void BulletMove()
     {
-        //this.transform.Translate(Vector3.forward * Speed);
-        //this.transform.rotation = AnchorPlanet.PlayerCharacter.rotation;
-
         this.transform.RotateAround(
             GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * UnityEngine.Vector3.right , 
             m_speed * Time.deltaTime);
 
-        MoveSend();
+        if(!m_isRemote)
+            MoveSend();
     }
 
     protected void MoveSend()
@@ -222,13 +232,15 @@ public class Bullet : MonoBehaviour {
             Debug.Log("other " + other.name + " tag " + other.tag);
             m_hitEnemy= true;
             
-            
             if (other.CompareTag("PlayerCharacter"))
             {
                 NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
-
+                
                 if (p != null)
                 {
+                    if (IS_REMOTE == true && TARGET_ID == (int)p.HOST_ID)
+                        return;
+
                     if (m_shotEffect != null)
                         m_shotEffect.SetActive(true);
                     BULLET_TRAIL_EFFECT.SetActive(false);
