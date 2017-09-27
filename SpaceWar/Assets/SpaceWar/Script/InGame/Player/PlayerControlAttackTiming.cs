@@ -36,4 +36,9 @@ public class PlayerControlAttackTiming : MonoBehaviour {
         m_walkSource.Play();
 
     }
+
+    public void DashAnimationEnd()
+    {
+        m_player.DashAnimationEnd();
+    }
 }

@@ -140,13 +140,15 @@ namespace SpaceWar
                
     static const ::Proud::RmiID Rmi_RequestSpaceShipSetup = (::Proud::RmiID)(3141+68);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneCreate = (::Proud::RmiID)(3141+69);
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneCommingTime = (::Proud::RmiID)(3141+69);
                
-    static const ::Proud::RmiID Rmi_RequestDeathZoneMoveIndex = (::Proud::RmiID)(3141+70);
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneCreate = (::Proud::RmiID)(3141+70);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneMoveHostAndIndexSetup = (::Proud::RmiID)(3141+71);
+    static const ::Proud::RmiID Rmi_RequestDeathZoneMoveIndex = (::Proud::RmiID)(3141+71);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneMove = (::Proud::RmiID)(3141+72);
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneMoveHostAndIndexSetup = (::Proud::RmiID)(3141+72);
+               
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneMove = (::Proud::RmiID)(3141+73);
 
 	// List that has RMI ID.
 	extern ::Proud::RmiID g_RmiIDList[];

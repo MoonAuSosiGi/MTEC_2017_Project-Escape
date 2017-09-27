@@ -15,6 +15,21 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Animator m_animator = null;
     public Animator ANIMATOR { get { return m_animator; } }
 
+    [SerializeField]
+    private SkinnedMeshRenderer m_renderer = null;
+
+    [SerializeField] private Material m_hitMaterial = null;
+    [SerializeField] private Material m_originMaterial = null;
+
+    public Material HIT_MATERIAL { get { return m_hitMaterial; } }
+    public Material ORIGIN_MATERIAL { get { return m_originMaterial; } }
+
+    #region Equip Inven System ---------------------------------------------------------------------------
+    [SerializeField] Item[] m_equipItems = new Item[4];
+    private int m_prevEquipItem = -1;
+    private int m_curEquipItem = 0;
+    #endregion
+
     #region Camera Anchor
     //public Transform m_ThirdAnchor = null;
     //public Transform m_FpsAnchor = null;
@@ -22,16 +37,22 @@ public class PlayerController : MonoBehaviour {
     public Transform m_camAnchor2 = null;
     public Transform m_camAnchor3 = null;
     public Transform m_camAnchor4 = null;
+    public Animator m_camAnimator = null;
     #endregion
 
     #region Player Info --------------------------------------------------------------------------------------------------
     [SerializeField] private GameObject m_modeObject = null;
     [SerializeField] private float m_walkSpeed;
     [SerializeField] private float m_runSpeed;
+    [SerializeField] private float m_dashSpeed = 3.0f;
+    [SerializeField] private float m_dashTick = 1.0f;
     [SerializeField] private float m_jumpHeight = 3.0f;
     [SerializeField] private float m_jumpTick = 1.0f;
     [SerializeField] private AnimationCurve m_jumpCurve = null;
+    [SerializeField] private AnimationCurve m_dashCurve = null;
     [SerializeField] private GameObject m_useEffect = null;
+    [SerializeField] private TextMesh m_nearText = null;
+    [SerializeField] private Transform m_forward = null;
 
     // 콜라이더
     CapsuleCollider m_collider = null;
@@ -90,17 +111,17 @@ public class PlayerController : MonoBehaviour {
     // 상호작용 오브젝트와 관련된 것
     private GameObject m_nearWeapon = null;
     private GameObject m_nearItem = null;
-    private RecoverykitItem m_nearRecoveryKit = null;
+    private HealPackItem m_nearRecoveryKit = null;
     private OxyCharger m_nearOxyCharger = null;
     private ItemBox m_nearItemBox = null;
     private Shelter m_nearShelter = null;
     private SpaceShip m_nearSpaceShip = null;
-    
+
     #endregion
 
-    // 착용중인 것
+
     private WeaponItem m_currentWeapon = null;
-    private RecoverykitItem m_currentRecoveryKit = null;
+    private HealPackItem m_currentRecoveryKit = null;
 
     #endregion
 
@@ -144,6 +165,15 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private KeyCode m_Right    = KeyCode.D;
     [SerializeField] private KeyCode m_Get      = KeyCode.F;
     [SerializeField] private KeyCode m_throwKey = KeyCode.T;
+
+    // 대쉬
+    [SerializeField] private KeyCode m_dashKey = KeyCode.LeftControl;
+
+    // 인벤토리
+    [SerializeField] private KeyCode m_inven1 = KeyCode.Alpha1;
+    [SerializeField] private KeyCode m_inven2 = KeyCode.Alpha2;
+    [SerializeField] private KeyCode m_inven3 = KeyCode.Alpha3;
+    [SerializeField] private KeyCode m_inven4 = KeyCode.Alpha4;
 
     // 점프
     [SerializeField] private KeyCode m_Jump     = KeyCode.Space;
@@ -226,8 +256,8 @@ public class PlayerController : MonoBehaviour {
         get { return m_walkAniVal; }
         set
         {
-            if (m_isJumpAble == false)
-                return;
+            //if (m_isJumpAble == false)
+            //    return;
             m_walkAniVal = value;
 
             // 이동 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
@@ -252,7 +282,7 @@ public class PlayerController : MonoBehaviour {
             // 점프 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
             if(m_jumpAniVal != 0)
             {
-                ATTACK_ANI_VALUE = 0;
+              //  ATTACK_ANI_VALUE = 0;
                 WALK_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
@@ -324,10 +354,9 @@ public class PlayerController : MonoBehaviour {
 
     #endregion
 
-    #region Unity Method
-    void Start()
+    #region Table Setup
+    public void Setup()
     {
-        #region Table Data Setup
         m_walkSpeed = GameManager.Instance().GetGameTableValue(GameManager.WALK_SPEED);
         m_runSpeed = GameManager.Instance().GetGameTableValue(GameManager.RUN_SPEED);
         m_jumpHeight = GameManager.Instance().GetGameTableValue(GameManager.JUMP_POWER);
@@ -339,8 +368,13 @@ public class PlayerController : MonoBehaviour {
         m_meteorHitDamage = GameManager.Instance().GetGameTableValue(GameManager.METEOR_HIT_DAMAGE);
         m_meteorDamage = GameManager.Instance().GetGameTableValue(GameManager.METEOR_DAMAGE);
         m_damageCoolTime = GameManager.Instance().GetGameTableValue(GameManager.DAMAGE_COOLTIME);
-        #endregion
+        
+    }
+    #endregion
 
+    #region Unity Method
+    void Start()
+    {
         m_characterController = this.GetComponent<CharacterController>();
         m_camera = Camera.main;
 
@@ -362,9 +396,15 @@ public class PlayerController : MonoBehaviour {
         CameraManager.Instance().CamAnchor[3] = m_camAnchor4;
         CameraManager.Instance().CamSet();
 
-        //m_camera.transform.SetParent(m_ThirdAnchor , false);
-        //m_camera.transform.localEulerAngles = new Vector3(0.0f , 0.0f , 0.0f);
-        //m_camera.transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
+        ////m_camera.transform.SetParent(m_ThirdAnchor , false);
+        ////m_camera.transform.localEulerAngles = new Vector3(0.0f , 0.0f , 0.0f);
+        ////m_camera.transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
+        //m_mat.EnableKeyword("_Emission");
+        //temp = m_mat.GetTexture("_EmissionTexture");
+        //m_mat.SetTexture("_EmissionTexture" , null);
+
+        //m_mat.SetColor("_ALBEDO" , Color.red);
+
     }
 
 
@@ -374,22 +414,34 @@ public class PlayerController : MonoBehaviour {
             return;
 
         if (IS_MOVE_ABLE)
+        {
             MoveProcess();
+            DashProcess();
+        }
 
         if (IS_JUMP_ABLE)
             JumpProcess();
 
-        if (IS_ATTACK_ABLE && m_currentWeapon != null && m_currentWeapon.gameObject.activeSelf == true)
+        if (IS_ATTACK_ABLE && m_equipItems[m_curEquipItem] != null && m_equipItems[m_curEquipItem].EQUIP_STATE == true 
+            && m_equipItems[m_curEquipItem].ITEM_TYPE != Item.ItemType.ETC_RECOVERY)
         {
             AttackProcess();
             
         }
 
+        if (Input.GetKeyDown(KeyCode.K))
+            DamageEffect();
+
+        HealPackProcess();
         SphereCastAll();
-        ControlWeaponObjectProcess();
+        GetItemProcess();
+        ChangeItemProcess();
+        //ControlWeaponObjectProcess();
         ControlWeaponObjectThrowProcess();
         ControlObjectProcess();
-
+        Vector3 dir = m_forward.position - transform.GetChild(0).position;
+        dir.Normalize();
+        Debug.DrawLine(transform.position , dir , Color.red);
 
     }
     #endregion
@@ -399,11 +451,21 @@ public class PlayerController : MonoBehaviour {
     void MoveProcess()
     {
         bool dash = Input.GetKey(m_Dash);
+        bool realDash = Input.GetKeyDown(m_dashKey);
         float horizontalSpeed = 0.0f, verticalSpeed = 0.0f;
 
-        //if (Input.GetKey(m_AttackKey))
-        //    return;
-
+        if(realDash && WALK_ANI_VALUE != 3)
+        {
+            transform.GetChild(0).localRotation =
+                Quaternion.Slerp(transform.GetChild(0).localRotation ,
+                Quaternion.Euler(GetCurrentAngle()) , 0.23f);
+            StartCoroutine(DashCall());
+            //transform.Translate(Vector3.forward * m_dashSpeed * Time.deltaTime);
+            WALK_ANI_VALUE = 3;
+            return;
+        }
+        if (WALK_ANI_VALUE == 3)
+            return;
         // 가로 이동
         if (Input.GetKey(m_Left))    horizontalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
         if(Input.GetKey(m_Right))   horizontalSpeed = (dash) ? m_runSpeed : m_walkSpeed;
@@ -418,7 +480,7 @@ public class PlayerController : MonoBehaviour {
         float weaponWeight = 0.0f;
 
         // -- 애니메이션 세팅 --
-        if (Mathf.Abs(verticalSpeed) > 0.0f || Mathf.Abs(horizontalSpeed) > 0.0f)
+        if (( Mathf.Abs(verticalSpeed) > 0.0f || Mathf.Abs(horizontalSpeed) > 0.0f) )
             WALK_ANI_VALUE = (dash) ? 2 : 1;
         //  WalkAnimation((dash) ? 2 : 1);
         else
@@ -493,32 +555,11 @@ public class PlayerController : MonoBehaviour {
         #endregion
 
         float rotateSpeed = 0.23f;
-        Vector3 angle = Vector3.zero;
-        // 이제 회전
-        switch(m_currentDir)
-        {
-            case PlayerMoveDir.NONE:                                                           break;
-            case PlayerMoveDir.WALK_FOWARD:         angle = Vector3.zero;                       break;
-            case PlayerMoveDir.WALK_BACK:           angle = new Vector3(0.0f , 180.0f , 0.0f);  break;
-            case PlayerMoveDir.WALK_LEFT:           angle = new Vector3(0.0f , -90.0f , 0.0f);  break;
-            case PlayerMoveDir.WALK_RIGHT:          angle = new Vector3(0.0f , 90.0f , 0.0f);   break;
-            case PlayerMoveDir.WALK_FOWARD_LEFT:    angle = new Vector3(0.0f , -45.0f , 0.0f);  break;
-            case PlayerMoveDir.WALK_FOWARD_RIGHT:   angle = new Vector3(0.0f , 45.0f , 0.0f);   break;
-            case PlayerMoveDir.WALK_BACK_LEFT:      angle = new Vector3(0.0f , -135.0f , 0.0f); break;
-            case PlayerMoveDir.WALK_BACK_RIGHT:     angle = new Vector3(0.0f , 135.0f , 0.0f);  break;
-            case PlayerMoveDir.RUN_FOWARD:          angle = new Vector3(0.0f , 0.0f , 0.0f);    break;
-            case PlayerMoveDir.RUN_BACK:            angle = new Vector3(0.0f , 180.0f , 0.0f);  break;
-            case PlayerMoveDir.RUN_LEFT:            angle = new Vector3(0.0f , -90.0f , 0.0f);  break;
-            case PlayerMoveDir.RUN_RIGHT:           angle = new Vector3(0.0f , 90.0f , 0.0f);   break;
-            case PlayerMoveDir.RUN_FOWARD_LEFT:     angle = new Vector3(0.0f , -45.0f , 0.0f);  break;
-            case PlayerMoveDir.RUN_FOWARD_RIGHT:    angle = new Vector3(0.0f , 45.0f , 0.0f);   break;
-            case PlayerMoveDir.RUN_BACK_LEFT:       angle = new Vector3(0.0f , -135.0f , 0.0f); break;
-            case PlayerMoveDir.RUN_BACK_RIGHT:      angle = new Vector3(0.0f , 135.0f , 0.0f);  break;
-        }
+       
        // if(m_currentDir != PlayerMoveDir.NONE)
         transform.GetChild(0).localRotation = 
             Quaternion.Slerp(transform.GetChild(0).localRotation , 
-            Quaternion.Euler(angle) , rotateSpeed);
+            Quaternion.Euler(GetCurrentAngle()) , rotateSpeed);
 
         #endregion
 
@@ -534,11 +575,44 @@ public class PlayerController : MonoBehaviour {
             if (m_currentWeapon != null)
             {
                 m_currentWeapon.gameObject.SetActive(true);
-                WeaponAnimationChange();
+                WeaponAnimationChange(m_currentWeapon);
             }
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
         MoveSend();
+    }
+
+    public void DashAnimationEnd()
+    {
+       // if (WALK_ANI_VALUE == 3)
+        WALK_ANI_VALUE = 0;
+    }
+
+    Vector3 GetCurrentAngle()
+    {
+        Vector3 angle = Vector3.zero;
+        // 이제 회전
+        switch (m_currentDir)
+        {
+            case PlayerMoveDir.NONE: break;
+            case PlayerMoveDir.WALK_FOWARD: angle = Vector3.zero; break;
+            case PlayerMoveDir.WALK_BACK: angle = new Vector3(0.0f , 180.0f , 0.0f); break;
+            case PlayerMoveDir.WALK_LEFT: angle = new Vector3(0.0f , -90.0f , 0.0f); break;
+            case PlayerMoveDir.WALK_RIGHT: angle = new Vector3(0.0f , 90.0f , 0.0f); break;
+            case PlayerMoveDir.WALK_FOWARD_LEFT: angle = new Vector3(0.0f , -45.0f , 0.0f); break;
+            case PlayerMoveDir.WALK_FOWARD_RIGHT: angle = new Vector3(0.0f , 45.0f , 0.0f); break;
+            case PlayerMoveDir.WALK_BACK_LEFT: angle = new Vector3(0.0f , -135.0f , 0.0f); break;
+            case PlayerMoveDir.WALK_BACK_RIGHT: angle = new Vector3(0.0f , 135.0f , 0.0f); break;
+            case PlayerMoveDir.RUN_FOWARD: angle = new Vector3(0.0f , 0.0f , 0.0f); break;
+            case PlayerMoveDir.RUN_BACK: angle = new Vector3(0.0f , 180.0f , 0.0f); break;
+            case PlayerMoveDir.RUN_LEFT: angle = new Vector3(0.0f , -90.0f , 0.0f); break;
+            case PlayerMoveDir.RUN_RIGHT: angle = new Vector3(0.0f , 90.0f , 0.0f); break;
+            case PlayerMoveDir.RUN_FOWARD_LEFT: angle = new Vector3(0.0f , -45.0f , 0.0f); break;
+            case PlayerMoveDir.RUN_FOWARD_RIGHT: angle = new Vector3(0.0f , 45.0f , 0.0f); break;
+            case PlayerMoveDir.RUN_BACK_LEFT: angle = new Vector3(0.0f , -135.0f , 0.0f); break;
+            case PlayerMoveDir.RUN_BACK_RIGHT: angle = new Vector3(0.0f , 135.0f , 0.0f); break;
+        }
+        return angle;
     }
 
     void JumpProcess()
@@ -552,6 +626,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void DashProcess()
+    {
+        if(Input.GetKeyDown(m_dashKey))
+        {
+            WALK_ANI_VALUE = 3;
+        }
+    }
+
     IEnumerator JumpCall()
     {
         float startTime = Time.time;
@@ -559,7 +641,8 @@ public class PlayerController : MonoBehaviour {
         //중력 적용 안함
         GravityManager.Instance().GRAVITY_POWER = 0.0f;
         //JumpAnimation(1);
-        JUMP_ANI_VALUE = 1;
+        
+       JUMP_ANI_VALUE = 1;
         while (Time.time - startTime < m_jumpTick)
         {
             float nowTick = (Time.time - startTime) / m_jumpTick;
@@ -571,6 +654,25 @@ public class PlayerController : MonoBehaviour {
         JUMP_ANI_VALUE = 2;
         GravityManager.Instance().GRAVITY_POWER = 100.0f;
         m_isJumpAble = true;
+        
+    }
+
+    IEnumerator DashCall()
+    {
+        float startTime = Time.time;
+
+        Vector3 dir = transform.GetChild(0).forward;
+
+        while (Time.time - startTime < m_dashTick)
+        {
+            float nowTick = (Time.time - startTime) / m_dashTick;
+            this.transform.RotateAround(
+                GravityManager.Instance().CurrentPlanet.transform.position , GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right,
+                (m_dashSpeed * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick))));
+            //transform.Translate(dir *
+            //    (m_dashSpeed * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick))));
+            yield return new WaitForFixedUpdate();
+        }
         
     }
 
@@ -593,7 +695,7 @@ public class PlayerController : MonoBehaviour {
     
     void OnDrawGizmos()
     {
-        //Vector3 dir = transform.forward;
+        
         //RaycastHit[] hits = Physics.SphereCastAll(m_collider.center , m_collider.radius , dir , 300);
 
 
@@ -644,57 +746,44 @@ public class PlayerController : MonoBehaviour {
     #region Player Attack --------------------------------------------------------------------------------
     void AttackProcess()
     {
-        if(m_currentWeapon.WEAPON_TYPE == WeaponItem.WeaponType.ETC_RECOVERY)
+
+        if (Input.GetKey(m_AttackKey) && m_lastCoolTime <= 0.0f)
         {
-            if(Input.GetKey(m_AttackKey) && m_currentWeapon != null)
-            {
-                if(m_interactionAniVal != 1)
-                {
-                    INTERACTION_ANI_VALUE = 1;
-                }
-                m_currentWeapon.Recovery(this);
-                
-            }
+            m_isAttackAble = false;
+            //     m_isMoveAble = false;
+            //   AttackAnimation(1);
+            ATTACK_ANI_VALUE = 1;
 
-            if(Input.GetKeyUp(m_AttackKey) && m_currentWeapon != null)
-            {
-                //애니메이션 끝 
-                INTERACTION_ANI_VALUE = 0;
+            // 공격할땐 정면을 보고 공격
+            this.transform.GetChild(0).localRotation = Quaternion.Euler(Vector3.zero);
 
-                m_currentWeapon.RecoveryUp();
-            }
-        }
-        else
-        {
-            if (Input.GetKey(m_AttackKey) && m_lastCoolTime <= 0.0f && IS_JUMP_ABLE)
-            {
-                m_isAttackAble = false;
-                //     m_isMoveAble = false;
-                //   AttackAnimation(1);
-                ATTACK_ANI_VALUE = 1;
+            WeaponItem item = (m_equipItems[m_curEquipItem] as WeaponItem);
+            if(item != null)
+                item.Attack(transform);
 
-                // 공격할땐 정면을 보고 공격
-                this.transform.GetChild(0).localRotation = Quaternion.Euler(Vector3.zero);
-                m_currentWeapon.Attack(transform);
-
-                m_lastCoolTime = m_currentWeapon.COOL_TIME;
-                Invoke("AttackCoolTime" , m_lastCoolTime);
-            }
+            m_lastCoolTime = item.COOL_TIME;
+            Invoke("AttackCoolTime" , m_lastCoolTime);
         }
 
-       
+
+
     }
 
     public void RecoveryItemUseEnd()
     {
         // 리커버리 끝
-        m_currentWeapon.gameObject.SetActive(false);
+        (m_equipItems[m_curEquipItem]).gameObject.SetActive(false);
         // 이부분에서 삭제요청
-        m_currentWeapon = null;
+        m_equipItems[m_curEquipItem] = null;
         INTERACTION_ANI_VALUE = 0;
 
         //이부분에서 전에 들고있는 무기 체크 
-        SetAnimation(AnimationType.ANI_BAREHAND);
+        if(m_equipItems[m_prevEquipItem] != null)
+        {
+            EquipItem(m_equipItems[m_prevEquipItem]);
+        }
+        else
+         SetAnimation(AnimationType.ANI_BAREHAND);
     }
 
     void AttackCoolTime()
@@ -707,9 +796,9 @@ public class PlayerController : MonoBehaviour {
         if (enabled == false)
             return;
 
-        if(m_currentWeapon.WEAPON_TYPE == WeaponItem.WeaponType.ETC_GRENADE)
+        if(m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_GRENADE)
         {
-            m_currentWeapon = null;
+            m_equipItems[m_curEquipItem] = null;
             SetAnimation(AnimationType.ANI_BAREHAND);
         }
 
@@ -729,9 +818,12 @@ public class PlayerController : MonoBehaviour {
 
         if (col.CompareTag("Weapon"))
         {
-            m_nearWeapon = col.gameObject;
+            m_nearItem = col.gameObject;
+            //m_nearWeapon = col.gameObject;
             m_useEffect.SetActive(true);
-            m_useEffect.transform.position = m_nearWeapon.transform.position;
+            m_useEffect.transform.position = m_nearItem.transform.position;
+            m_nearText.gameObject.SetActive(true);
+            m_nearText.text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<WeaponItem>().ITEM_ID).Name_kr;
 
         }
         else if (col.CompareTag("OxyCharger"))
@@ -768,9 +860,9 @@ public class PlayerController : MonoBehaviour {
         }
         else if(col.CompareTag("Recoverykit"))
         {
-            m_nearRecoveryKit = col.GetComponent<RecoverykitItem>();
+            m_nearItem = col.gameObject;//col.GetComponent<HealPackItem>();
             m_useEffect.SetActive(true);
-            m_useEffect.transform.position = m_nearRecoveryKit.transform.position;
+            m_useEffect.transform.position = m_nearItem.transform.position;
         }
     }
 
@@ -779,8 +871,9 @@ public class PlayerController : MonoBehaviour {
         LoopAudioStop();
         if (col.CompareTag("Weapon"))
         {
-            m_nearWeapon = null;
+            m_nearItem = null;
             m_useEffect.SetActive(false);
+            m_nearText.gameObject.SetActive(false);
         }
         else if (col.CompareTag("OxyCharger"))
         {
@@ -807,7 +900,7 @@ public class PlayerController : MonoBehaviour {
         }
         else if (col.CompareTag("Recoverykit"))
         {
-            m_nearRecoveryKit = null;
+            m_nearItem = null;
             m_useEffect.SetActive(false);
         }
 
@@ -819,118 +912,169 @@ public class PlayerController : MonoBehaviour {
             m_useEffect.transform.GetChild(0).GetChild(0).rotation = this.transform.rotation;
     }
 
-    void ControlWeaponObjectProcess()
+    void ChangeItemProcess()
     {
-        if (Input.GetKeyDown(m_Get) && m_nearWeapon != null)
+        int index = -1;
+
+        if (Input.GetKeyDown(m_inven1)) index = 0;
+        if (Input.GetKeyDown(m_inven2)) index = 1;
+        if (Input.GetKeyDown(m_inven3)) index = 2;
+        if (Input.GetKeyDown(m_inven4)) index = 3;
+
+        if(index != -1 && m_equipItems[index] != null)
         {
-            AudioPlay(m_weaponUseSound);
+            if (m_equipItems[m_curEquipItem] != null)
+            {
+                m_equipItems[m_curEquipItem].EQUIP_STATE = false;
+                m_equipItems[m_curEquipItem].gameObject.SetActive(false);
+            }
+            EquipItem(m_equipItems[index]);
+
         }
 
-        if (Input.GetKeyDown(m_Get) && m_nearWeapon != null)
+    }
+    
+
+    // 새로운 줍는 로직
+    void GetItemProcess()
+    {
+        if (Input.GetKeyDown(m_Get) && m_nearItem != null)
         {
-            if (m_currentWeapon != null)
-                ThrowWeapon();
-            m_currentWeapon = m_nearWeapon.GetComponent<WeaponItem>();
-            m_nearWeapon.transform.parent = m_weaponEquipAnchor.transform;
-            m_nearWeapon.transform.localPosition = m_currentWeapon.LOCAL_SET_POS;
-            m_nearWeapon.transform.localRotation = Quaternion.Euler(m_currentWeapon.LOCAL_SET_ROT);
-            m_nearWeapon.transform.localScale = m_currentWeapon.LOCAL_SET_SCALE;
-
-            m_nearWeapon = null;
-            m_useEffect.SetActive(false);
-
-            // 기존 코드에 이부분에 무기 발사 앵커를 세팅해주는게 있었지만 무기마다 다르니 무기껄로 쓰기로
-
-            m_currentWeapon.EquipWeapon();
-
-            m_useEffect.SetActive(false);
-
-            WeaponAnimationChange();
-
-            if (GameManager.Instance() != null)
-                GameManager.Instance().EquipWeapon(m_currentWeapon.ITEM_ID , m_currentWeapon.AMMO , WeaponManager.Instance().GetWeaponData(m_currentWeapon.ITEM_ID).Bulletcount);
-            if (NetworkManager.Instance() != null)
-                NetworkManager.Instance().C2SRequestEquipItem(m_currentWeapon.ITEM_ID ,
-                    m_currentWeapon.ITEM_NETWORK_ID);
-            
+            EquipItem(m_nearItem.GetComponent<Item>());
+            m_nearItem = null;
         }
     }
+
+    int GetEquipItemIndex(Item.ItemType type)
+    {
+        switch(type)
+        {
+            case Item.ItemType.NONE: return -1;
+            case Item.ItemType.MELEE: return 0;
+            case Item.ItemType.GUN: 
+            case Item.ItemType.RIFLE:
+            case Item.ItemType.ROCKETLAUNCHER: return 1;
+            default: return 2;
+        }
+    }
+
+    void HealPackProcess()
+    {
+        if (m_equipItems[m_curEquipItem] != null && m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_RECOVERY)
+        {
+            if (Input.GetKey(m_AttackKey))
+            {
+             //   WeaponAnimationChange(m_currentRecoveryKit);
+
+                if (m_interactionAniVal != 1)
+                {
+                    INTERACTION_ANI_VALUE = 1;
+                }
+                (m_equipItems[m_curEquipItem] as HealPackItem).Recovery(this);
+
+            }
+
+            if (Input.GetKeyUp(m_AttackKey))
+            {
+                //애니메이션 끝 
+                INTERACTION_ANI_VALUE = 0;
+
+                (m_equipItems[m_curEquipItem] as HealPackItem).RecoveryUp();
+            }
+        }
+    }
+
     void ControlWeaponObjectThrowProcess()
     {
-        if (Input.GetKey(m_throwKey) && m_currentWeapon != null)
+        if (Input.GetKey(m_throwKey) && m_equipItems[m_curEquipItem] != null)
         {
-            ThrowWeapon();
+            UnEquipItem(m_equipItems[m_curEquipItem],m_curEquipItem);
         }
     }
-    void ThrowWeapon()
+   
+    void EquipItem(Item item)
     {
+        // 해당 아이템 인덱스 받기
+        int index = GetEquipItemIndex(item.ITEM_TYPE);
+
+        // 기존 장비가 타입이 다르면 일단 꺼야함
+        if (m_equipItems[m_curEquipItem] != null && m_curEquipItem != index)
+        {
+            m_equipItems[m_curEquipItem].gameObject.SetActive(false);
+        }
+
+        // 해당 인덱스 장비 있으면 해제
+        if (m_equipItems[index] != null)
+        {
+            UnEquipItem(m_equipItems[index] , index);
+        }
+
+        m_prevEquipItem = m_curEquipItem;
+        m_equipItems[index] = item;
+        m_curEquipItem = index;
+
+        item.EQUIP_STATE = true;
+
+        item.transform.parent = m_weaponEquipAnchor.transform;
+        item.transform.localPosition = item.LOCAL_SET_POS;
+        item.transform.localRotation = Quaternion.Euler(item.LOCAL_SET_ROT);
+        item.transform.localScale = item.LOCAL_SET_SCALE;
+
+        m_nearWeapon = null;
+        m_useEffect.SetActive(false);
+
+        // 기존 코드에 이부분에 무기 발사 앵커를 세팅해주는게 있었지만 무기마다 다르니 무기껄로 쓰기로
+
+        item.EQUIP_STATE = true;
+
+        m_useEffect.SetActive(false);
+
+        WeaponAnimationChange(item);
+
+        if (NetworkManager.Instance() != null)
+            NetworkManager.Instance().C2SRequestEquipItem(item.ITEM_ID ,
+                item.ITEM_NETWORK_ID);
+    }
+    
+    void UnEquipItem(Item item,int index)
+    {
+        //장비 해제해야함
+        item.gameObject.SetActive(true);
+        item.EQUIP_STATE = false;
+
         RaycastHit throwRayHit;
         Physics.Raycast(transform.position + (transform.rotation * (Vector3.up + Vector3.forward)) ,
             (transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized * -3.0f , out throwRayHit , 10.0f);
 
-        if(m_currentWeapon.WEAPON_TYPE == WeaponItem.WeaponType.ETC_RECOVERY)
+        if (item.ITEM_TYPE == Item.ItemType.ETC_RECOVERY)
             GameManager.Instance().SLIDER_UI.HideSlider();
 
         SetAnimation(AnimationType.ANI_BAREHAND);
         ATTACK_ANI_VALUE = 0;
-        //test
-        //if (throwRayHit.collider != null && throwRayHit.collider.CompareTag("NonSpone"))
-        //    return;
 
-        m_currentWeapon.transform.parent = null;
-        m_currentWeapon.transform.position = throwRayHit.point;
+        item.transform.parent = null;
+        item.transform.position = throwRayHit.point;
 
-        Vector3 sponRot = (m_currentWeapon.transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized;
-        Quaternion targetRot = Quaternion.FromToRotation(m_currentWeapon.transform.up , sponRot) * m_currentWeapon.transform.rotation;
+        Vector3 sponRot = (item.transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized;
+        Quaternion targetRot = Quaternion.FromToRotation(item.transform.up , sponRot) * item.transform.rotation;
 
-      //  m_currentWeapon.transform.rotation = targetRot;
-        m_currentWeapon.transform.Rotate(m_currentWeapon.SPONE_ROTATITON);
-        m_currentWeapon.transform.Translate(Vector3.right * 0.15f);
-        m_currentWeapon.UnEquipWeapon();
+        //  m_currentWeapon.transform.rotation = targetRot;
+        item.transform.Rotate(item.SPONE_ROTATITON);
+        item.transform.Translate(Vector3.right * 0.15f);
+        item.EQUIP_STATE = false;
 
         SetAnimation(AnimationType.ANI_BAREHAND);
 
         if (GameManager.Instance() != null)
-            GameManager.Instance().UnEquipWeapon(m_currentWeapon.ITEM_ID , m_currentWeapon.AMMO , WeaponManager.Instance().GetWeaponData(m_currentWeapon.ITEM_ID).Bulletcount);
+            GameManager.Instance().UnEquipWeapon();
         if (NetworkManager.Instance() != null)
-            NetworkManager.Instance().C2SRequestUnEquipItem(m_currentWeapon.ITEM_ID , m_currentWeapon.ITEM_NETWORK_ID ,
-                m_currentWeapon.transform.position , m_currentWeapon.transform.eulerAngles);
-        m_currentWeapon = null;
+            NetworkManager.Instance().C2SRequestUnEquipItem(item.ITEM_ID , item.ITEM_NETWORK_ID ,
+                item.transform.position , item.transform.eulerAngles);
+
+        m_equipItems[index] = null;
     }
 
-    // 일단 리커버리를 임시로 무기 아이템으로 처리한다.
-
-    //// 리커버리 장착키 누름
-    //void ControlRecoveryObjectProcess()
-    //{
-    //    if(Input.GetKeyDown(m_Get) && m_nearRecoveryKit != null)
-    //    {
-    //        m_currentRecoveryKit = m_nearRecoveryKit;
-    //        m_currentRecoveryKit.transform.parent = m_weaponEquipAnchor.transform;
-    //        m_currentRecoveryKit.transform.localPosition = m_currentRecoveryKit.LOCAL_SET_POS;
-    //        m_currentRecoveryKit.transform.localRotation = Quaternion.Euler(m_currentRecoveryKit.LOCAL_SET_ROT);
-    //        m_currentRecoveryKit.transform.localScale = m_currentRecoveryKit.LOCAL_SET_SCALE;
-
-    //        m_currentRecoveryKit.EquipRecoveryKit();
-    //        m_nearRecoveryKit = null;
-
-    //        SetAnimation(AnimationType.ANI_ETC);
-    //    }
-    //}
-
-    //// 리커버리 장착한 상태로 해제키 누름
-    //void DropRecoveryObjectProcess()
-    //{
-    //    if(Input.GetKeyDown(m_Get) && m_currentRecoveryKit != null)
-    //    {
-    //        RaycastHit throwRayHit;
-    //        Physics.Raycast(transform.position + (transform.rotation * (Vector3.up + Vector3.forward)) ,
-    //            (transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized * -3.0f , out throwRayHit , 10.0f);
-
-    //        // 여기서 들고 있던 아이템이 있을 경우 해당 무기로 변경  처리를 넣자
-    //        SetAnimation(AnimationType.ANI_BAREHAND);
-    //    }
-    //}
+   
 
     void ControlObjectProcess()
     {
@@ -947,6 +1091,7 @@ public class PlayerController : MonoBehaviour {
                 AudioPlay(m_shelterUseSound);
                 m_nearShelter.DoorControl();
             }
+
             if (m_nearSpaceShip != null)
             {
                 if(m_currentWeapon != null)
@@ -975,7 +1120,7 @@ public class PlayerController : MonoBehaviour {
                 if (m_currentWeapon != null)
                 {
                     m_currentWeapon.gameObject.SetActive(true);
-                    WeaponAnimationChange();
+                    WeaponAnimationChange(m_currentWeapon);
                 }
                     
                 m_nearSpaceShip.StopSpaceShipEngineCharge();
@@ -1027,7 +1172,7 @@ public class PlayerController : MonoBehaviour {
                 if (m_currentWeapon != null)
                 {
                     m_currentWeapon.gameObject.SetActive(true);
-                    WeaponAnimationChange();
+                    WeaponAnimationChange(m_currentWeapon);
                 }
                 GameManager.Instance().SLIDER_UI.HideSlider();
                 return;
@@ -1039,7 +1184,7 @@ public class PlayerController : MonoBehaviour {
                 if(m_currentWeapon != null)
                 {
                     m_currentWeapon.gameObject.SetActive(true);
-                    WeaponAnimationChange();
+                    WeaponAnimationChange(m_currentWeapon);
                     
                 }
                 GameManager.Instance().SLIDER_UI.HideSlider();
@@ -1053,7 +1198,7 @@ public class PlayerController : MonoBehaviour {
             if (m_currentWeapon != null)
             {
                 m_currentWeapon.gameObject.SetActive(true);
-                WeaponAnimationChange();
+                WeaponAnimationChange(m_currentWeapon);
             }
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
@@ -1084,8 +1229,24 @@ public class PlayerController : MonoBehaviour {
         CancelInvoke("MeteorCoolTimeChecker");     
     }
 
+    public void DamageEffect()
+    {
+        CameraManager.Instance().ShowHitEffect();
+        m_renderer.material = HIT_MATERIAL;
+        m_camAnimator.SetInteger("DAMAGE" , 1);
+        Invoke("DamgeEffectEnd" , 0.1f);
+    }
+
+    public void CameraDamageAnimationEnd()
+    {
+        m_camAnimator.SetInteger("DAMAGE" , 0);
+    }
+
     public void Damage(Vector3 dir,string reason = null)
     {
+        Debug.Log("Damage");
+        DamageEffect();
+
         AudioPlay(m_damageHit);
         if (m_nearSpaceShip != null && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
             m_nearSpaceShip.StopSpaceShipEngineCharge();
@@ -1097,14 +1258,14 @@ public class PlayerController : MonoBehaviour {
             if (m_currentWeapon != null)
             {
                 m_currentWeapon.gameObject.SetActive(true);
-                WeaponAnimationChange();
+                WeaponAnimationChange(m_currentWeapon);
             }
             GameManager.Instance().SLIDER_UI.HideSlider();
             
             if (m_currentWeapon != null)
             {
                 m_currentWeapon.gameObject.SetActive(true);
-                WeaponAnimationChange();
+                WeaponAnimationChange(m_currentWeapon);
             }
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
@@ -1116,6 +1277,13 @@ public class PlayerController : MonoBehaviour {
 
         //if (IsInvoking("DamageAniCheck") == false)
         //    InvokeRepeating("DamageAniCheck" , 0.5f , Time.deltaTime);
+
+        
+    }
+
+    void DamgeEffectEnd()
+    {
+        m_renderer.material = ORIGIN_MATERIAL;
     }
 
     public void Dead()
@@ -1137,25 +1305,25 @@ public class PlayerController : MonoBehaviour {
 
     #region Animation Function
 
-    public void WeaponAnimationChange()
+    public void WeaponAnimationChange(Item item)
     {
-        switch (m_currentWeapon.WEAPON_TYPE)
+        switch (item.ITEM_TYPE)
         {
-            case WeaponItem.WeaponType.GUN: SetAnimation(AnimationType.ANI_GUN01); break;
-            case WeaponItem.WeaponType.RIFLE: SetAnimation(AnimationType.ANI_GUN02); break;
-            case WeaponItem.WeaponType.MELEE: SetAnimation(AnimationType.ANI_MELEE); break;
-            case WeaponItem.WeaponType.ROCKETLAUNCHER: SetAnimation(AnimationType.ANI_ROCKETLAUNCHER); break;
-            case WeaponItem.WeaponType.ETC_GRENADE: SetAnimation(AnimationType.ANI_ETC); break;
-            case WeaponItem.WeaponType.ETC_RECOVERY: SetAnimation(AnimationType.ANI_ETC); break;
+            case Item.ItemType.GUN: SetAnimation(AnimationType.ANI_GUN01); break;
+            case Item.ItemType.RIFLE: SetAnimation(AnimationType.ANI_GUN02); break;
+            case Item.ItemType.MELEE: SetAnimation(AnimationType.ANI_MELEE); break;
+            case Item.ItemType.ROCKETLAUNCHER: SetAnimation(AnimationType.ANI_ROCKETLAUNCHER); break;
+            case Item.ItemType.ETC_GRENADE: SetAnimation(AnimationType.ANI_ETC); break;
+            case Item.ItemType.ETC_RECOVERY: SetAnimation(AnimationType.ANI_ETC); break;
         }
     }
 
     public void AttackAnimationEvent()
     {
         // 애니메이션 상에서 어택 시점을 조절해야 할 경우 여기로 들어옴
-        if(m_currentWeapon != null)
+        if(m_equipItems[m_curEquipItem] != null)
         {
-            m_currentWeapon.AnimationEventAttack();
+            (m_equipItems[m_curEquipItem] as WeaponItem).AnimationEventAttack();
         }
     }
 
@@ -1186,8 +1354,8 @@ public class PlayerController : MonoBehaviour {
         if (value == 0)
             m_isMoveAble = true;
         m_animator.SetInteger("ATTACK" , value);
-        if (m_currentWeapon != null)
-            m_currentWeapon.AnimationEventAttackEnd();
+        if (m_equipItems[m_curEquipItem] != null)
+            (m_equipItems[m_curEquipItem] as WeaponItem).AnimationEventAttackEnd();
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestPlayerAnimation(
                 NetworkManager.Instance().USER_NAME , "ATTACK" , value);

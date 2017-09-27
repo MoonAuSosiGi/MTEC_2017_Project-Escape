@@ -25,7 +25,7 @@ public class ItemBox : MonoBehaviour {
     #region UnityMethod
     void Start()
     {
-        m_itemBoxID = NetworkManager.Instance().GetItemBoxIndex(this);
+        //m_itemBoxID = NetworkManager.Instance().GetItemBoxIndex(this);
     }
     #endregion
 

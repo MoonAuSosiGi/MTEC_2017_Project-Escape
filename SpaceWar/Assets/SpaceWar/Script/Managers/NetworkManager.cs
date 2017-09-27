@@ -94,14 +94,7 @@ public class NetworkManager : Singletone<NetworkManager> {
     public Dictionary<string , Item> ITEM_DICT { get { return m_itemDict; } }
 
 
-    public Dictionary<string , Grenade> m_grenadeList = new Dictionary<string , Grenade>();
-    public Grenade GetNetworkGrenade(string grenadeID)
-    {
-        if (m_grenadeList.ContainsKey(grenadeID))
-            return m_grenadeList[grenadeID];
-        else
-            return null;
-    }
+
 
     #endregion
     #endregion
@@ -359,6 +352,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         // 아이템 삭제 로직
         m_s2cStub.NotifyDeleteItem = (HostID remote , RmiContext rmiContext ,string networkID) =>
         {
+            // 추후 코루틴으로 삭제하도록 하자
             if(m_itemDict.ContainsKey(networkID))
             {
                 GameObject obj = m_itemDict[networkID].gameObject;
@@ -502,36 +496,14 @@ public class NetworkManager : Singletone<NetworkManager> {
         // 수류탄 생성 요청
         m_s2cStub.NotifyGrenadeCreate = (HostID remote , RmiContext rmiContext , int sendHostID , string networkID , UnityEngine.Vector3 pos) =>
         {
-            Debug.Log("수류탄 생성 !!! " + sendHostID);
-            Grenade grenade = GetNetworkGrenade(networkID);
-
-            if (grenade != null)
+            Debug.Log("수류탄 생성 !!! " + sendHostID + " pos " + pos);
+            Grenade g = (m_itemDict[networkID] as Grenade);
+            if (g.IS_NETWORK == true)
                 return true;
-            // 해당 플레이어에게서 가져온다.
-            for (int i = 0; i < m_players.Count; i++)
-            {
-                NetworkPlayer p = m_players[i];
-                if ((int)p.HOST_ID == sendHostID)
-                {
-                    if (p.HAS_WEAPON != null)
-                    {
-                        p.HAS_WEAPON.transform.parent = transform;
-                        grenade = p.HAS_WEAPON.GetComponent<Grenade>();
-                        p.HAS_WEAPON = null;
-                        grenade.IS_NETWORK = true;
-                        grenade.NETWORK_ID = networkID;
-                        m_grenadeList.Add(networkID , grenade);
-                    }
-                    break;
-                }
-            }
-            grenade.transform.position = pos;
-
-            grenade.IS_NETWORK = true;
-            grenade.NETWORK_ID = networkID;
-            grenade.NetworkGrenadeEnable();
-
-            m_grenadeList.Add(networkID , grenade);
+            g.IS_NETWORK = true;
+            g.transform.parent = null;
+            g.transform.position = pos;
+            g.NetworkGrenadeEnable();
             return true;
         };
 
@@ -539,64 +511,24 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyGrenadeMove = (HostID remote , RmiContext rmiContext , int sendHostID , string networkID ,
             UnityEngine.Vector3 pos ,UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot) =>
         {
-            Grenade grenade = GetNetworkGrenade(networkID);
-
-            if(grenade == null)
-            {
-                // 해당 플레이어에게서 가져온다.
-                for(int i = 0; i < m_players.Count; i++)
-                {
-                    NetworkPlayer p = m_players[i];
-                    if((int)p.HOST_ID == sendHostID)
-                    {
-                        if(p.HAS_WEAPON != null)
-                        {
-                            p.HAS_WEAPON.transform.parent = transform;
-                            
-                            grenade = p.HAS_WEAPON.GetComponent<Grenade>();
-                            p.HAS_WEAPON = null;
-                            grenade.IS_NETWORK = true;
-                            grenade.NETWORK_ID = networkID;
-                            m_grenadeList.Add(networkID , grenade);
-                        }
-                        break;
-                    }
-                }
-            }
-
-            if (grenade == null)
-            {
-                NetworkLog("잘못된 수류탄 아이디 " + networkID);
-                return true;
-            }
-            else
-                grenade.NetworkMoveRecv(pos , velocity , rot);
-
+            Debug.Log("Move " + pos);
+            Grenade g = (m_itemDict[networkID] as Grenade);
+            if (g.transform.parent != null)
+                g.transform.parent = null;
+            g.NetworkMoveRecv(pos , velocity , rot);
             return true;
         };
 
         //수류탄 폭발 
         m_s2cStub.NotifyGrenadeBoom = (HostID remote , RmiContext rmiContext , int sendHostID , string networkID, bool isStone) =>
         {
-            Grenade grenade = GetNetworkGrenade(networkID);
-
-            if (grenade != null)
-                grenade.NetworkGrenadeBoom(isStone);
-
+           
             return true;
         };
         // 수류탄 삭제하기
         m_s2cStub.NotifyGrenadeRemove = (HostID remote , RmiContext rmiContext , string networkID) =>
         {
-            Grenade grenade = GetNetworkGrenade(networkID);
-
-            if (grenade == null)
-                return true;
-            else
-            {
-                m_grenadeList.Remove(networkID);
-                GameObject.Destroy(grenade.gameObject);
-            }
+            // 여기로 오지않음 
             return true;
         };
  
@@ -687,6 +619,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 Debug.Log("얻었다 ! " + itemID + "를!");
 
                 string id = (itemID.Equals("temp")) ? WeaponManager.Instance().GetRandomWeaponID() : itemID;
+                Debug.Log("dd " + id);
                 //임의
                 GameManager.Instance().RecvItem(id ,networkID, box.transform.GetChild(3).gameObject);
             }
@@ -762,11 +695,11 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 메테오 생성해라
         m_s2cStub.NotifyMeteorCreate = (HostID remote , RmiContext rmiContext ,
-            float anglex , float anglez) =>
+            float anglex , float anglez,string meteorID) =>
         {
             if (m_isGameRunning == false)
                 return true;
-            GameManager.Instance().CreateMeteor(anglex , anglez);
+            GameManager.Instance().CreateMeteor(anglex , anglez , meteorID);
             return true;
         };
 
@@ -825,8 +758,16 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 데스존
         #region Death Zone 
+        // 데스존 생성까지..
+        m_s2cStub.NotifyDeathZoneCommingTime = (HostID remote , RmiContext rmiContext , 
+            int tick , string deathzoneID) =>
+        {
+            GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.DEATH_ZONE , deathzoneID , tick , "Death Zone");
+            return true;
+        };
+
         // 데스존 생성 명령
-        m_s2cStub.NotifyDeathZoneCreate = (HostID remote , RmiContext rmiContext , int spaceShipIndex) =>
+        m_s2cStub.NotifyDeathZoneCreate = (HostID remote , RmiContext rmiContext , int spaceShipIndex, string deathZoneID) =>
         {
             if (SceneManager.GetActiveScene().buildIndex != 2)
                 return true;
@@ -839,7 +780,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 deathZone.DEATH_LINE_INDEX = spaceShipIndex;
 
                 // 실제 회전 
-                deathZone.DeathZoneSetup(m_spaceShipList[spaceShipIndex].transform.position);
+                deathZone.DeathZoneSetup(m_spaceShipList[spaceShipIndex].transform.position,deathZoneID);
             }
             return true;
         };
@@ -1234,6 +1175,13 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_c2sProxy.RequestWorldCreateItem(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID ,
             itemID,networkID , pos , rot);
     }
+
+    // item Delete Command
+    public void C2SRequestItemDelete(string networkID)
+    {
+        NetworkLog("ItemDelete " + networkID);
+        m_c2sProxy.RequestItemDelete(m_p2pID , RmiContext.ReliableSend , networkID);
+    }
     #endregion
 
     #region Bullet / Grenade Create Move Remove
@@ -1427,6 +1375,6 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     void NetworkLog(object o)
     {
-        Debug.Log("NetworkManager : "+o);
+        //Debug.Log("NetworkManager : "+o);
     }
 }

@@ -53,7 +53,7 @@ public class DeathZone : MonoBehaviour {
         m_deathZoneSpeed[4] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED5);
 
         if (m_test != null)
-        DeathZoneSetup(m_test.transform.position);
+            DeathZoneSetup(m_test.transform.position,"");
         for(int i = 0; i < m_planetLevelZoneObject.transform.childCount; i++)
         {
             m_deathZoneLines.Add(m_planetLevelZoneObject.transform.GetChild(i).gameObject);
@@ -70,7 +70,7 @@ public class DeathZone : MonoBehaviour {
     #endregion
 
     #region Death Zone Method
-    public void DeathZoneSetup(Vector3 pos)
+    public void DeathZoneSetup(Vector3 pos,string deathZoneID)
     {
         // 반대 방향으로 생성
         transform.rotation = Quaternion.LookRotation((Vector3.zero - pos).normalized);

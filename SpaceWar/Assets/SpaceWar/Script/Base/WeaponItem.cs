@@ -5,19 +5,6 @@ using UnityEngine;
 public class WeaponItem : Item {
 
     #region WeaponItem INFO
-    public enum WeaponType
-    {
-        NONE,
-        GUN,
-        RIFLE,
-        MELEE,
-        ROCKETLAUNCHER,
-        ETC_GRENADE,
-        ETC_RECOVERY // 이친구 임시다 웨폰 아이템 아니다 
-    }
-
-    [SerializeField] private WeaponType m_type = WeaponType.NONE;
-
 
     public enum AttackTiming
     {
@@ -30,7 +17,7 @@ public class WeaponItem : Item {
     [SerializeField] private AttackTiming m_attackTiming = AttackTiming.SCRIPT_ONLY;
 
     public AttackTiming ATTACK_TIMING { get { return m_attackTiming; } set { m_attackTiming = value; } }
-    public WeaponType WEAPON_TYPE { get { return m_type; } set { m_type = value; } }
+    
 
     // 데미지 지정
     protected float m_damage = 0.0f;
@@ -64,10 +51,7 @@ public class WeaponItem : Item {
     // 무기 발사 소리
     private AudioSource m_source = null;
     [SerializeField] private AudioClip m_weaponShootSound = null;
-
-    //임시
-    float m_recoveryKitValue = 0.0f;
-
+    
     #region SWORD 
     // 칼 휘두르는 이펙트 리스트
     private List<Animator> m_swordAnimatorList = new List<Animator>();
@@ -78,6 +62,8 @@ public class WeaponItem : Item {
     }
 
     #endregion
+
+
 
     #endregion
 
@@ -103,20 +89,20 @@ public class WeaponItem : Item {
         m_player = character;
         switch (m_type)
         {
-            case WeaponType.GUN:
-            case WeaponType.RIFLE:
+            case ItemType.GUN:
+            case ItemType.RIFLE:
                 
                 if(m_attackTiming == AttackTiming.SCRIPT_ONLY)
                     GunAttack(character);
                 break;
-            case WeaponType.ROCKETLAUNCHER:
+            case ItemType.ROCKETLAUNCHER:
                 if (m_attackTiming == AttackTiming.SCRIPT_ONLY)
                     RocketAttack(character);
                     break;
-            case WeaponType.MELEE:
+            case ItemType.MELEE:
             //    EnableMeleeColider();
                 break;
-            case WeaponType.ETC_GRENADE:
+            case ItemType.ETC_GRENADE:
                 GrenadeAttack();
                 break;
         }
@@ -128,14 +114,14 @@ public class WeaponItem : Item {
     {
         switch(m_type)
         {
-            case WeaponType.GUN:
-            case WeaponType.RIFLE:
+            case ItemType.GUN:
+            case ItemType.RIFLE:
                 GunAttack(m_player);
                 break;
-            case WeaponType.ROCKETLAUNCHER:
+            case ItemType.ROCKETLAUNCHER:
                 RocketAttack(m_player);
                 break;
-            case WeaponType.MELEE:
+            case ItemType.MELEE:
                 AttackSword();
                 break;
                 
@@ -146,10 +132,10 @@ public class WeaponItem : Item {
     {
         switch(m_type)
         {
-            case WeaponType.GUN:
-            case WeaponType.RIFLE:
+            case ItemType.GUN:
+            case ItemType.RIFLE:
                 break;
-            case WeaponType.MELEE:
+            case ItemType.MELEE:
                 // DisableMeleeColider();
                 AttackSwordEnd();
                 break;  
@@ -179,7 +165,12 @@ public class WeaponItem : Item {
         WeaponManager.Instance().RequestBulletCreate(networkID ,m_itemID, m_firePoint.position ,
             character.localEulerAngles);
         m_currentBulletIndex++;
-        
+        Invoke("ShotEffectEnd" , 1.0f);
+    }
+
+    void ShotEffectEnd()
+    {
+        m_shotEffect.SetActive(false);
     }
 
     void RocketAttack(Transform character)
@@ -214,13 +205,18 @@ public class WeaponItem : Item {
     #endregion
 
     #region Equip Weapon Logic
-    public void EquipWeapon()
+    protected override void EquipItem()
     {
+
+        if (GameManager.Instance() != null)
+            GameManager.Instance().EquipWeapon(ITEM_ID , AMMO , WeaponManager.Instance().GetWeaponData(ITEM_ID).Bulletcount);
         this.GetComponent<SphereCollider>().enabled = false;
     }
 
-    public void UnEquipWeapon()
+    protected override void UnEquipItem()
     {
+        if (GameManager.Instance() != null)
+            GameManager.Instance().UnEquipWeapon();
         this.GetComponent<SphereCollider>().enabled = true;
     }
     #endregion
@@ -245,49 +241,15 @@ public class WeaponItem : Item {
     #endregion
 
     #region ETC Weapons Attack
-    void GrenadeAttack()
+    
+    protected void GrenadeAttack()
     {
-        if (m_isGrenadeStart)
-            return;
-
-        Grenade g = this.GetComponent<Grenade>();
-        g.GrenadeSetup(m_player.transform.GetChild(0).rotation);
-        g.enabled = true;
-        m_isGrenadeStart = true;
-        if (NetworkManager.Instance() == null)
-            return;
-
-        
-        g.NETWORK_ID = NetworkManager.Instance().m_hostID + "_" + m_itemID + "_" + this.GetHashCode();
-        NetworkManager.Instance().RequestGrenadeCreate(g.NETWORK_ID , g.transform.position);
+        Grenade g = (this as Grenade);
+        g.GRENADE_SHOT_ROT = m_player.transform.localRotation;
+        g.Attack();
+        NetworkManager.Instance().RequestGrenadeCreate(g.ITEM_NETWORK_ID , g.transform.position);
     }
 
-    // 임시로직
-    public void Recovery(PlayerController player)
-    {
-        // 여기서 게이지를 넣자
 
-        // 다되면 힐
-        GameManager.Instance().SLIDER_UI.ShowSlider();
-
-        m_recoveryKitValue += 1f * Time.deltaTime;
-
-        GameManager.Instance().SLIDER_UI.SliderProcess(m_recoveryKitValue);
-
-        if(m_recoveryKitValue >= 1.0f)
-        {
-            player.RecoveryItemUseEnd();
-            GameManager.Instance().SLIDER_UI.HideSlider();
-            if (NetworkManager.Instance() != null)
-                NetworkManager.Instance().RequestHpUpdate(GameManager.Instance().PLAYER.m_hp + 30.0f);
-        }
-
-    }
-    public void RecoveryUp()
-    {
-        m_recoveryKitValue = 0.0f;
-        GameManager.Instance().SLIDER_UI.Reset();
-        GameManager.Instance().SLIDER_UI.HideSlider();
-    }
     #endregion
 }

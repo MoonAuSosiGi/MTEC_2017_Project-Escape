@@ -910,7 +910,7 @@ __msg << enter;
 			RmiName_RequestShelterEnter, (::Proud::RmiID)Rmi_RequestShelterEnter);
 	}
         
-	bool Proxy::RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)	{
+	bool Proxy::RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -918,13 +918,13 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 ::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestItemDelete;
 __msg.Write(__msgid); 
 	
-__msg << itemID;
+__msg << networkID;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_RequestItemDelete, (::Proud::RmiID)Rmi_RequestItemDelete);
 	}
 
-	bool Proxy::RequestItemDelete ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & itemID)  	{
+	bool Proxy::RequestItemDelete ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & networkID)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -932,7 +932,7 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 ::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestItemDelete;
 __msg.Write(__msgid); 
 	
-__msg << itemID;
+__msg << networkID;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_RequestItemDelete, (::Proud::RmiID)Rmi_RequestItemDelete);
@@ -1644,7 +1644,7 @@ __msg << time;
 			RmiName_NotifyMeteorCreateTime, (::Proud::RmiID)Rmi_NotifyMeteorCreateTime);
 	}
         
-	bool Proxy::NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)	{
+	bool Proxy::NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez,  const string & meteorID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1654,12 +1654,13 @@ __msg.Write(__msgid);
 	
 __msg << anglex;
 __msg << anglez;
+__msg << meteorID;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyMeteorCreate, (::Proud::RmiID)Rmi_NotifyMeteorCreate);
 	}
 
-	bool Proxy::NotifyMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & anglex,  const float & anglez)  	{
+	bool Proxy::NotifyMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & anglex,  const float & anglez,  const string & meteorID)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1669,6 +1670,7 @@ __msg.Write(__msgid);
 	
 __msg << anglex;
 __msg << anglez;
+__msg << meteorID;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyMeteorCreate, (::Proud::RmiID)Rmi_NotifyMeteorCreate);
@@ -2124,7 +2126,37 @@ __msg << spaceShipCount;
 			RmiName_RequestSpaceShipSetup, (::Proud::RmiID)Rmi_RequestSpaceShipSetup);
 	}
         
-	bool Proxy::NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex)	{
+	bool Proxy::NotifyDeathZoneCommingTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & tick,  const string & deathzoneID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime;
+__msg.Write(__msgid); 
+	
+__msg << tick;
+__msg << deathzoneID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyDeathZoneCommingTime, (::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime);
+	}
+
+	bool Proxy::NotifyDeathZoneCommingTime ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & tick,  const string & deathzoneID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime;
+__msg.Write(__msgid); 
+	
+__msg << tick;
+__msg << deathzoneID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyDeathZoneCommingTime, (::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime);
+	}
+        
+	bool Proxy::NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex,  const string & deathzoneID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -2133,12 +2165,13 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << spaceShipIndex;
+__msg << deathzoneID;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_NotifyDeathZoneCreate, (::Proud::RmiID)Rmi_NotifyDeathZoneCreate);
 	}
 
-	bool Proxy::NotifyDeathZoneCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipIndex)  	{
+	bool Proxy::NotifyDeathZoneCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipIndex,  const string & deathzoneID)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -2147,6 +2180,7 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 __msg.Write(__msgid); 
 	
 __msg << spaceShipIndex;
+__msg << deathzoneID;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyDeathZoneCreate, (::Proud::RmiID)Rmi_NotifyDeathZoneCreate);
@@ -2578,6 +2612,11 @@ const PNTCHAR* Proxy::RmiName_NotifyGameResultShow =_PNT("");
 const PNTCHAR* Proxy::RmiName_RequestSpaceShipSetup =_PNT("RequestSpaceShipSetup");
 #else
 const PNTCHAR* Proxy::RmiName_RequestSpaceShipSetup =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyDeathZoneCommingTime =_PNT("NotifyDeathZoneCommingTime");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyDeathZoneCommingTime =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyDeathZoneCreate =_PNT("NotifyDeathZoneCreate");

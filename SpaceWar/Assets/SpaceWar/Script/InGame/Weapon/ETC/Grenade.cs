@@ -1,197 +1,161 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Nettention.Proud;
 
-public class Grenade : MonoBehaviour {
+public class Grenade : WeaponItem {
 
-    #region Grenade_INFO
-    [SerializeField] private WeaponItem m_weaponInfo = null;
-    [SerializeField] private float m_speed = 0.0f;
-    [SerializeField] private GameObject m_effectBoom = null;
-    [SerializeField] private GameObject m_effectBoom_Stone = null;
-    [SerializeField] private float m_boomTime = 3.0f;
-    [SerializeField] private GameObject m_grenadeRenderer = null;
-    [SerializeField] private Rigidbody m_rigidBody = null;
-
-    private bool m_isBoomTrigger = false;
-    #region Network INFO
+    #region Grenade INFO
+  
+    #region Network
+    // 네트워크 세팅
     private bool m_isNetwork = false;
     public bool IS_NETWORK { get { return m_isNetwork; } set { m_isNetwork = value; } }
-    private string m_networkID = null;
-    public string NETWORK_ID { get { return m_networkID; } set { m_networkID = value; } }
 
-    private Nettention.Proud.PositionFollower m_positionFollower = null;
-    private Nettention.Proud.AngleFollower m_angleFollowerX = null;
-    private Nettention.Proud.AngleFollower m_angleFollowerY = null;
-    private Nettention.Proud.AngleFollower m_angleFollowerZ = null;
+    protected PositionFollower m_positionFollower = null;
+    protected AngleFollower m_angleFollowerX = null;
+    protected AngleFollower m_angleFollowerY = null;
+    protected AngleFollower m_angleFollowerZ = null;
+
+    private UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero;
     #endregion
 
-    private float m_gravityPower = 0.0f;
-    private Vector3 m_gravityPosition = Vector3.zero;
-    private Quaternion m_shotRot;
+    #region Effect Setting
+    private GameObject m_grenadeBaseHitEffect = null;
+    private GameObject m_grenadeOtherHitEffect = null;
 
-    private bool m_isMoveAble = true;
+    public GameObject GRENADE_BASE_HIT { get { return m_grenadeBaseHitEffect; } set { m_grenadeBaseHitEffect = value; } }
+    public GameObject GRENADE_OTHER_HIT { get { return m_grenadeOtherHitEffect; } set { m_grenadeOtherHitEffect = value; } }
+    #endregion
+    
+    // 수류탄의 Gravity
+    // 실제로 더해지는 값
+    private float m_gravityPower = 5.0f;
+    private float m_gravity = 0.0f;
+    //수류탄 속도
+    private float m_grenadeSpeed = 40.0f;
+    public float GRENADE_SPEED { get { return m_grenadeSpeed; } set { m_grenadeSpeed = value; } }
+    public float GRAVITY_POWER { get { return m_gravityPower; } set { m_gravityPower = value; } }
+    
+    //발사 기준회전 값 ( 캐릭터 )
+    Quaternion m_shotRot;
+    public Quaternion GRENADE_SHOT_ROT { get { return m_shotRot; } set { m_shotRot = value; } }
+
+    //Grenade 발사 
+    private bool m_isGrenadeStart = false;
+    //Grenade 도착
+    private bool m_isShot = false;
+
+    // 리지드봐디
+    Rigidbody m_rigidbody = null;
     #endregion
 
     #region Unity Method
-    void Update()
+    void Start()
     {
-        if (!m_isNetwork)
+        m_rigidbody = gameObject.AddComponent<Rigidbody>();
+        m_rigidbody.isKinematic = true;
+    }
+
+    void FixedUpdate()
+    {
+        if (m_isGrenadeStart && m_isShot == false)
             GrenadeMove();
-        else
+        if (m_isNetwork && m_isShot == false)
             NetworkUpdate();
     }
     #endregion
 
-    #region Main Logic
-    public void GrenadeSetup(Quaternion shotRot)
+    #region Grenade Function
+
+    public void Attack()
     {
-        m_gravityPosition = GravityManager.Instance().CurrentPlanet.transform.position;
-        m_shotRot = shotRot;
-        transform.SetParent(null , true);
+        if (m_isGrenadeStart)
+            return;
 
+        // 콜라이더들 얻기
         SphereCollider[] colls = this.GetComponents<SphereCollider>();
-
-        // F 키
+        // 수류탄 공격 전에 아이템을 얻는 콜라이더를 끈다.
         colls[0].enabled = false;
 
-        // 범위
+        // 수류탄 자체 콜라이더는 켠다
         colls[1].enabled = true;
-        
-        // 바로터져야함
-        //Invoke("GrenadeBoom" , m_boomTime);
+
+        // 공격 명령
+        m_isGrenadeStart = true;
+
+        m_isNetwork = false;
+
+        transform.parent = null;
+
     }
 
     void GrenadeMove()
     {
-        if (m_isMoveAble == false)
+        if (m_isGrenadeStart == false || m_isNetwork == true)
             return;
-        this.transform.RotateAround(GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * Vector3.right,
-           m_speed * Time.deltaTime);
+
+        this.transform.RotateAround(GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * UnityEngine.Vector3.right ,
+           m_grenadeSpeed * Time.deltaTime);
 
 
-        Vector3 dir = (m_gravityPosition - transform.position).normalized;
-        transform.position += dir * m_gravityPower * Time.deltaTime;
+        UnityEngine.Vector3 dir = (GravityManager.Instance().CurrentPlanet.transform.position - transform.position).normalized;
+        transform.position += dir * m_gravity * Time.deltaTime;
 
-        m_gravityPower += 5f * Time.deltaTime;
+        m_gravity += m_gravityPower * Time.deltaTime;
 
-       // transform.GetChild(0).Rotate(new Vector3(Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
-
-        MoveSend();
+        GrenadeMoveSend();
+       
     }
 
-    void MoveSend()
+    void GrenadeMoveSend()
     {
-        Vector3 velo = this.GetComponent<Rigidbody>().velocity;
-        Debug.Log(" pos " +transform.position + " velo "+ velo);
-        if (NetworkManager.Instance() == null)
-            return;
-        
-        NetworkManager.Instance().RequestGrenadeMove(m_networkID , transform.position , velo , transform.GetChild(0).localEulerAngles);
+        // 네트워크 샌드
+        NetworkManager.Instance().RequestGrenadeMove(ITEM_NETWORK_ID , transform.position , m_rigidbody.velocity , transform.localScale);
     }
 
-    void OnTriggerEnter(Collider col)
+    void GrenadeDelete()
     {
-        if (enabled == false)
-            return;
-        Debug.Log("Boom " + col.name + " tag "+col.tag + " boom ? "+m_effectBoom.activeSelf);
-
-        if(!col.CompareTag("Weapon") && !col.CompareTag("Bullet"))
-        {
-            m_isMoveAble = false;
-
-            if (col.CompareTag("PlayerCharacter"))
-            {
-                NetworkPlayer p = col.transform.GetComponent<NetworkPlayer>();
-                
-                if(p != null)
-                {
-                    if (!m_isBoomTrigger)
-                        GrenadeBoom();
-                    Debug.Log("Damage " + p.name);
-                }
-                else
-                {
-                    m_isMoveAble = true;
-                }
-            }
-            else if(col.CompareTag("NonSpone"))
-            {
-                m_effectBoom_Stone.SetActive(true);
-                if (!m_isBoomTrigger)
-                    GrenadeBoomStone();
-            }
-            else
-            {
-                if (!m_isBoomTrigger)
-                    GrenadeBoom();
-            }
-        }        
-    }
-
-    void GrenadeBoom()
-    {
-        m_effectBoom.SetActive(true);
-        m_isMoveAble = false;
-
-        m_grenadeRenderer.SetActive(false);
-        m_isBoomTrigger = true;
-        if (NetworkManager.Instance() != null)
-            NetworkManager.Instance().RequestGrenadeBoom(m_networkID,false);
-    }
-    void GrenadeBoomStone()
-    {
-        m_isBoomTrigger = true;
-        m_effectBoom_Stone.SetActive(true);
-        m_isMoveAble = false;
-        m_grenadeRenderer.SetActive(false);
-        if (NetworkManager.Instance() != null)
-            NetworkManager.Instance().RequestGrenadeBoom(m_networkID , true);
-    }
-
-
-    public void GrenadeBoomEnd()
-    {
+        // 비활성화
         gameObject.SetActive(false);
-        if (NetworkManager.Instance() != null)
-            NetworkManager.Instance().RequestGrenadeRemove(m_networkID);
+        // 삭제 요청을 보낸다
+        NetworkManager.Instance().C2SRequestItemDelete(m_itemNetworkID);
     }
     #endregion
 
-    #region Network Logic
-
+    #region Grenade Network Logic
     public void NetworkGrenadeEnable()
     {
-        m_positionFollower = new Nettention.Proud.PositionFollower();
-        m_angleFollowerX = new Nettention.Proud.AngleFollower();
-        m_angleFollowerY = new Nettention.Proud.AngleFollower();
-        m_angleFollowerZ = new Nettention.Proud.AngleFollower();
+        if (m_positionFollower != null)
+            return;
+        m_positionFollower = new PositionFollower();
+        m_angleFollowerX = new AngleFollower();
+        m_angleFollowerY = new AngleFollower();
+        m_angleFollowerZ = new AngleFollower();
+        m_isNetwork = true;
 
+        // 콜라이더들 얻기
         SphereCollider[] colls = this.GetComponents<SphereCollider>();
-
-        // F 키
+        // 수류탄 공격 전에 아이템을 얻는 콜라이더를 끈다.
         colls[0].enabled = false;
 
-        // 범위
-        colls[1].enabled = false;
+        // 수류탄 자체 콜라이더는 켠다
+        colls[1].enabled = true;
 
-
+        m_isGrenadeStart = true;
     }
 
-    public void NetworkGrenadeBoom(bool isStone)
+    public void NetworkMoveRecv(UnityEngine.Vector3 pos , UnityEngine.Vector3 velocity , UnityEngine.Vector3 rot)
     {
-        if (isStone == false)
-            m_effectBoom.SetActive(true);
-        else
-            m_effectBoom_Stone.SetActive(true);
-        m_grenadeRenderer.SetActive(false);
+        var npos = new Nettention.Proud.Vector3();
+        npos.x = pos.x;
+        npos.y = pos.y;
+        npos.z = pos.z;
 
-    }
-
-    public void NetworkMoveRecv(Vector3 pos, Vector3 velocity, Vector3 rot)
-    {
-        var npos = new Nettention.Proud.Vector3(pos.x , pos.y , pos.z);
-        var nvel = new Nettention.Proud.Vector3(velocity.x , velocity.y , velocity.z);
+        var nvel = new Nettention.Proud.Vector3();
+        nvel.x = velocity.x;
+        nvel.y = velocity.y;
+        nvel.z = velocity.z;
 
         m_positionFollower.SetTarget(npos , nvel);
 
@@ -215,15 +179,81 @@ public class Grenade : MonoBehaviour {
         var vel = new Nettention.Proud.Vector3();
 
         m_positionFollower.GetFollower(ref p , ref vel);
-        transform.position = new Vector3((float)p.x , (float)p.y , (float)p.z);
+        transform.position = new UnityEngine.Vector3((float)p.x , (float)p.y , (float)p.z);
 
         float fx = (float)m_angleFollowerX.FollowerAngle * Mathf.Rad2Deg;
         float fy = (float)m_angleFollowerY.FollowerAngle * Mathf.Rad2Deg;
         float fz = (float)m_angleFollowerZ.FollowerAngle * Mathf.Rad2Deg;
+        var rotate = Quaternion.Euler(fx , fy , fz);
+        transform.localRotation = rotate;
+    }
+    #endregion
 
-        var rot = Quaternion.Euler(fx , fy , fz);
-        transform.GetChild(0).localRotation = rot;
+    #region Collision
+    void OnTriggerEnter(Collider other)
+    {
+        if (m_isGrenadeStart == false)
+            return;
+        
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
+        {
+            m_isShot = true;
+            Debug.Log("other " + other.name + " tag " + other.tag);
+            
+            if (other.CompareTag("PlayerCharacter"))
+            {
+                NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
 
+                if (p != null)
+                {
+                    Debug.Log("Grenade :: " + TARGET_HOST_ID + " p " + p.HOST_ID);
+                    if (m_isNetwork == true && TARGET_HOST_ID == (int)p.HOST_ID)
+                    {
+                        m_isShot = false;
+                        return;
+                    }
+                    BaseHitEffect();     
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else if (string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
+            {
+                // 여기에 부딪치면 다른 이펙트를 보여준다.
+                OtherHitEffect();
+            }
+            else
+            {
+                // 기타 오브젝트
+                BaseHitEffect();
+            }
+
+
+            SphereCollider[] colls = this.GetComponents<SphereCollider>();
+            colls[0].enabled = false;
+            colls[1].enabled = false;
+            //    Invoke("GrenadeDelete" , 1.5f);
+        }
+    }
+
+    void BaseHitEffect()
+    {
+        if(m_grenadeBaseHitEffect != null)
+        {
+            m_grenadeBaseHitEffect.GetComponent<SphereCollider>().enabled = true;
+            m_grenadeBaseHitEffect.SetActive(true);
+        }
+    }
+
+    void OtherHitEffect()
+    {
+        if(m_grenadeOtherHitEffect != null)
+        {
+            m_grenadeOtherHitEffect.GetComponent<SphereCollider>().enabled = true;
+            m_grenadeOtherHitEffect.SetActive(true);
+        }
     }
     #endregion
 }

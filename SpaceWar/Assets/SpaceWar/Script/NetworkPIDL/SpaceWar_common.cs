@@ -83,10 +83,11 @@ namespace SpaceWar
 			public const Nettention.Proud.RmiID NotifyGameResultInfoOther = (Nettention.Proud.RmiID)3141+66;
 			public const Nettention.Proud.RmiID NotifyGameResultShow = (Nettention.Proud.RmiID)3141+67;
 			public const Nettention.Proud.RmiID RequestSpaceShipSetup = (Nettention.Proud.RmiID)3141+68;
-			public const Nettention.Proud.RmiID NotifyDeathZoneCreate = (Nettention.Proud.RmiID)3141+69;
-			public const Nettention.Proud.RmiID RequestDeathZoneMoveIndex = (Nettention.Proud.RmiID)3141+70;
-			public const Nettention.Proud.RmiID NotifyDeathZoneMoveHostAndIndexSetup = (Nettention.Proud.RmiID)3141+71;
-			public const Nettention.Proud.RmiID NotifyDeathZoneMove = (Nettention.Proud.RmiID)3141+72;
+			public const Nettention.Proud.RmiID NotifyDeathZoneCommingTime = (Nettention.Proud.RmiID)3141+69;
+			public const Nettention.Proud.RmiID NotifyDeathZoneCreate = (Nettention.Proud.RmiID)3141+70;
+			public const Nettention.Proud.RmiID RequestDeathZoneMoveIndex = (Nettention.Proud.RmiID)3141+71;
+			public const Nettention.Proud.RmiID NotifyDeathZoneMoveHostAndIndexSetup = (Nettention.Proud.RmiID)3141+72;
+			public const Nettention.Proud.RmiID NotifyDeathZoneMove = (Nettention.Proud.RmiID)3141+73;
 		// List that has RMI ID.
 		public static Nettention.Proud.RmiID[] RmiIDList = new Nettention.Proud.RmiID[] {
 			RequestGameExit,
@@ -157,6 +158,7 @@ namespace SpaceWar
 			NotifyGameResultInfoOther,
 			NotifyGameResultShow,
 			RequestSpaceShipSetup,
+			NotifyDeathZoneCommingTime,
 			NotifyDeathZoneCreate,
 			RequestDeathZoneMoveIndex,
 			NotifyDeathZoneMoveHostAndIndexSetup,

@@ -144,6 +144,8 @@ namespace SpaceWar
                
 		Rmi_RequestSpaceShipSetup,
                
+		Rmi_NotifyDeathZoneCommingTime,
+               
 		Rmi_NotifyDeathZoneCreate,
                
 		Rmi_RequestDeathZoneMoveIndex,
@@ -153,5 +155,5 @@ namespace SpaceWar
 		Rmi_NotifyDeathZoneMove,
 	};
 
-	int g_RmiIDListCount = 72;
+	int g_RmiIDListCount = 73;
 }

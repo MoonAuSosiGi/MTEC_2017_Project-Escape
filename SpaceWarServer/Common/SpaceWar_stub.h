@@ -320,15 +320,15 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestShelterEnter RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
 #define PARAM_SpaceWar_RequestShelterEnter ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & shelterID,  const bool & enter)
                
-		virtual bool RequestItemDelete ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+		virtual bool RequestItemDelete ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & )		{ 
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_RequestItemDelete bool RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID) PN_OVERRIDE
+#define DECRMI_SpaceWar_RequestItemDelete bool RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_RequestItemDelete(DerivedClass) bool DerivedClass::RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)
-#define CALL_SpaceWar_RequestItemDelete RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)
-#define PARAM_SpaceWar_RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID)
+#define DEFRMI_SpaceWar_RequestItemDelete(DerivedClass) bool DerivedClass::RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
+#define CALL_SpaceWar_RequestItemDelete RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
+#define PARAM_SpaceWar_RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
                
 		virtual bool NotifyLoginSuccess ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
 			return false;
@@ -540,15 +540,15 @@ namespace SpaceWar
 #define CALL_SpaceWar_NotifyMeteorCreateTime NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time)
 #define PARAM_SpaceWar_NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time)
                
-		virtual bool NotifyMeteorCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & ,  const float & )		{ 
+		virtual bool NotifyMeteorCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & ,  const float & ,  const string & )		{ 
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_NotifyMeteorCreate bool NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez) PN_OVERRIDE
+#define DECRMI_SpaceWar_NotifyMeteorCreate bool NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez,  const string & meteorID) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_NotifyMeteorCreate(DerivedClass) bool DerivedClass::NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
-#define CALL_SpaceWar_NotifyMeteorCreate NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
-#define PARAM_SpaceWar_NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez)
+#define DEFRMI_SpaceWar_NotifyMeteorCreate(DerivedClass) bool DerivedClass::NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez,  const string & meteorID)
+#define CALL_SpaceWar_NotifyMeteorCreate NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez,  const string & meteorID)
+#define PARAM_SpaceWar_NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez,  const string & meteorID)
                
 		virtual bool NotifySpaceShipEngineCharge ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const float & )		{ 
 			return false;
@@ -700,15 +700,25 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestSpaceShipSetup RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)
 #define PARAM_SpaceWar_RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)
                
-		virtual bool NotifyDeathZoneCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+		virtual bool NotifyDeathZoneCommingTime ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & )		{ 
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_NotifyDeathZoneCreate bool NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex) PN_OVERRIDE
+#define DECRMI_SpaceWar_NotifyDeathZoneCommingTime bool NotifyDeathZoneCommingTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & tick,  const string & deathzoneID) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_NotifyDeathZoneCreate(DerivedClass) bool DerivedClass::NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex)
-#define CALL_SpaceWar_NotifyDeathZoneCreate NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex)
-#define PARAM_SpaceWar_NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex)
+#define DEFRMI_SpaceWar_NotifyDeathZoneCommingTime(DerivedClass) bool DerivedClass::NotifyDeathZoneCommingTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & tick,  const string & deathzoneID)
+#define CALL_SpaceWar_NotifyDeathZoneCommingTime NotifyDeathZoneCommingTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & tick,  const string & deathzoneID)
+#define PARAM_SpaceWar_NotifyDeathZoneCommingTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & tick,  const string & deathzoneID)
+               
+		virtual bool NotifyDeathZoneCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyDeathZoneCreate bool NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex,  const string & deathzoneID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyDeathZoneCreate(DerivedClass) bool DerivedClass::NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex,  const string & deathzoneID)
+#define CALL_SpaceWar_NotifyDeathZoneCreate NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex,  const string & deathzoneID)
+#define PARAM_SpaceWar_NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex,  const string & deathzoneID)
                
 		virtual bool RequestDeathZoneMoveIndex ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
@@ -809,6 +819,7 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyGameResultInfoOther;
 		static const PNTCHAR* RmiName_NotifyGameResultShow;
 		static const PNTCHAR* RmiName_RequestSpaceShipSetup;
+		static const PNTCHAR* RmiName_NotifyDeathZoneCommingTime;
 		static const PNTCHAR* RmiName_NotifyDeathZoneCreate;
 		static const PNTCHAR* RmiName_RequestDeathZoneMoveIndex;
 		static const PNTCHAR* RmiName_NotifyDeathZoneMoveHostAndIndexSetup;
@@ -1094,12 +1105,12 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestItemDelete_Function;
-		virtual bool RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemID) 
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ) > RequestItemDelete_Function;
+		virtual bool RequestItemDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID) 
 		{ 
 			if (RequestItemDelete_Function==nullptr) 
 				return true; 
-			return RequestItemDelete_Function(remote,rmiContext, itemID); 
+			return RequestItemDelete_Function(remote,rmiContext, networkID); 
 		}
 
                
@@ -1292,12 +1303,12 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & ,  const float & ) > NotifyMeteorCreate_Function;
-		virtual bool NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez) 
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & ,  const float & ,  const string & ) > NotifyMeteorCreate_Function;
+		virtual bool NotifyMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & anglex,  const float & anglez,  const string & meteorID) 
 		{ 
 			if (NotifyMeteorCreate_Function==nullptr) 
 				return true; 
-			return NotifyMeteorCreate_Function(remote,rmiContext, anglex, anglez); 
+			return NotifyMeteorCreate_Function(remote,rmiContext, anglex, anglez, meteorID); 
 		}
 
                
@@ -1436,12 +1447,21 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > NotifyDeathZoneCreate_Function;
-		virtual bool NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex) 
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ) > NotifyDeathZoneCommingTime_Function;
+		virtual bool NotifyDeathZoneCommingTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & tick,  const string & deathzoneID) 
+		{ 
+			if (NotifyDeathZoneCommingTime_Function==nullptr) 
+				return true; 
+			return NotifyDeathZoneCommingTime_Function(remote,rmiContext, tick, deathzoneID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ) > NotifyDeathZoneCreate_Function;
+		virtual bool NotifyDeathZoneCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipIndex,  const string & deathzoneID) 
 		{ 
 			if (NotifyDeathZoneCreate_Function==nullptr) 
 				return true; 
-			return NotifyDeathZoneCreate_Function(remote,rmiContext, spaceShipIndex); 
+			return NotifyDeathZoneCreate_Function(remote,rmiContext, spaceShipIndex, deathzoneID); 
 		}
 
                

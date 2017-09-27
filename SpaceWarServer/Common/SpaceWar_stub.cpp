@@ -2399,7 +2399,7 @@ namespace SpaceWar
 					ctx.m_compressMode = pa.GetCompressMode();
 					
 					
-					int itemID; __msg >> itemID;
+					string networkID; __msg >> networkID;
 					m_core->PostCheckReadMessage(__msg,RmiName_RequestItemDelete);
 					
 			
@@ -2407,7 +2407,7 @@ namespace SpaceWar
 					{
 						::Proud::String parameterString;
 						
-						::Proud::AppendTextOut(parameterString,itemID);	
+						::Proud::AppendTextOut(parameterString,networkID);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestItemDelete, 
 							RmiName_RequestItemDelete,parameterString);
@@ -2439,7 +2439,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = RequestItemDelete (remote,ctx , itemID );
+					bool __ret = RequestItemDelete (remote,ctx , networkID );
 						
 					if(__ret==false)
 					{
@@ -4265,6 +4265,7 @@ namespace SpaceWar
 					
 					float anglex; __msg >> anglex;
 					float anglez; __msg >> anglez;
+					string meteorID; __msg >> meteorID;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyMeteorCreate);
 					
 			
@@ -4276,6 +4277,9 @@ namespace SpaceWar
 										
 						parameterString += _PNT(", ");
 						::Proud::AppendTextOut(parameterString,anglez);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,meteorID);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyMeteorCreate, 
 							RmiName_NotifyMeteorCreate,parameterString);
@@ -4307,7 +4311,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyMeteorCreate (remote,ctx , anglex, anglez );
+					bool __ret = NotifyMeteorCreate (remote,ctx , anglex, anglez, meteorID );
 						
 					if(__ret==false)
 					{
@@ -5509,6 +5513,84 @@ namespace SpaceWar
 					}
 				}
 				break;
+			case Rmi_NotifyDeathZoneCommingTime:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int tick; __msg >> tick;
+					string deathzoneID; __msg >> deathzoneID;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyDeathZoneCommingTime);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,tick);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,deathzoneID);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime, 
+							RmiName_NotifyDeathZoneCommingTime,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime, 
+							RmiName_NotifyDeathZoneCommingTime, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime, 
+							RmiName_NotifyDeathZoneCommingTime, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime;
+						summary.m_rmiName = RmiName_NotifyDeathZoneCommingTime;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyDeathZoneCommingTime (remote,ctx , tick, deathzoneID );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyDeathZoneCommingTime);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyDeathZoneCommingTime;
+						summary.m_rmiName = RmiName_NotifyDeathZoneCommingTime;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
 			case Rmi_NotifyDeathZoneCreate:
 				{
 					::Proud::RmiContext ctx;
@@ -5520,6 +5602,7 @@ namespace SpaceWar
 					
 					
 					int spaceShipIndex; __msg >> spaceShipIndex;
+					string deathzoneID; __msg >> deathzoneID;
 					m_core->PostCheckReadMessage(__msg,RmiName_NotifyDeathZoneCreate);
 					
 			
@@ -5528,6 +5611,9 @@ namespace SpaceWar
 						::Proud::String parameterString;
 						
 						::Proud::AppendTextOut(parameterString,spaceShipIndex);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,deathzoneID);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyDeathZoneCreate, 
 							RmiName_NotifyDeathZoneCreate,parameterString);
@@ -5559,7 +5645,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = NotifyDeathZoneCreate (remote,ctx , spaceShipIndex );
+					bool __ret = NotifyDeathZoneCreate (remote,ctx , spaceShipIndex, deathzoneID );
 						
 					if(__ret==false)
 					{
@@ -6162,6 +6248,11 @@ __fail:
 	const PNTCHAR* Stub::RmiName_RequestSpaceShipSetup =_PNT("RequestSpaceShipSetup");
 	#else
 	const PNTCHAR* Stub::RmiName_RequestSpaceShipSetup =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyDeathZoneCommingTime =_PNT("NotifyDeathZoneCommingTime");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyDeathZoneCommingTime =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_NotifyDeathZoneCreate =_PNT("NotifyDeathZoneCreate");

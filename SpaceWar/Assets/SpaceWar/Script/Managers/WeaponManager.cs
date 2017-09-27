@@ -13,8 +13,9 @@ public class WeaponManager : Singletone<WeaponManager> {
         GUN = 0,
         RIFLE,
         ROCKET_LAUNCHER,
-        SWORD
-
+        SWORD,
+        GRENADE,
+        HEAL_PACK
     }
 
     #region Weapon Gun Bullet 
@@ -272,7 +273,7 @@ public class WeaponManager : Singletone<WeaponManager> {
     // 랜덤으로 무기 ID 뽑기
     public string GetRandomWeaponID()
     {
-        return m_weaponTable.dataArray[Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
+        return m_weaponTable.dataArray[m_weaponTable.dataArray.Length - 1].Id; // Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
     }
 
     // 총알 만들기
@@ -380,8 +381,29 @@ public class WeaponManager : Singletone<WeaponManager> {
         WeaponTableData data = GetWeaponData(id);
         GameObject weapon = GameObject.Instantiate(Resources.Load("Art/Resource/Item/Weapon/" + data.Prefabpath)) as GameObject;
         
+
+        // 힐팩
+        if(data.Type == 5)
+        {
+            HealPackItem heal = weapon.AddComponent<HealPackItem>();
+            heal.Setup(id);
+            return weapon;            
+        }
+
         // 공통구간
-        WeaponItem item = weapon.AddComponent<WeaponItem>();
+        WeaponItem item = null;
+        switch ((WeaponType)data.Type)
+        {
+            case WeaponType.GUN:
+            case WeaponType.RIFLE:
+            case WeaponType.ROCKET_LAUNCHER:
+            case WeaponType.SWORD:
+                item = weapon.AddComponent<WeaponItem>();
+                break;
+            case WeaponType.GRENADE:
+                item = weapon.AddComponent<Grenade>();
+                break;
+        }
 
         // 아이디 등록
         item.ITEM_ID = id;
@@ -408,7 +430,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         col.isTrigger = true;
         col.radius = data.Weapongetcolliderradius;
 
-        if((WeaponType)data.Type != WeaponType.SWORD)
+        if((WeaponType)data.Type == WeaponType.GUN || (WeaponType)data.Type == WeaponType.RIFLE || (WeaponType)data.Type == WeaponType.ROCKET_LAUNCHER)
         {
             // AMMO
             item.AMMO = data.Bulletcount;
@@ -424,19 +446,59 @@ public class WeaponManager : Singletone<WeaponManager> {
             item.SHOT_EFFECT = shotEffect;
             #endregion
         }
+        else if((WeaponType)data.Type == WeaponType.GRENADE)
+        {
+            #region Grenade Setup
+
+            Grenade grenade = item as Grenade;
+
+            // 수류탄의 실제 콜라이더
+            SphereCollider grenadeCollider = weapon.AddComponent<SphereCollider>();
+            grenadeCollider.isTrigger = true;
+            grenadeCollider.radius = data.Bulletcolliderradius;
+            grenadeCollider.enabled = false;
+
+            GameObject baseHit = GameObject.Instantiate(Resources.Load("Art/Resource/Effect/" + data.Basehiteffect)) as GameObject;
+            baseHit.transform.parent = item.transform;
+            baseHit.SetActive(false);
+            GrenadeExplosion exp = baseHit.AddComponent<GrenadeExplosion>();
+            exp.TARGET_GRENADE = grenade;
+            
+            SphereCollider hitCol = baseHit.AddComponent<SphereCollider>();
+            hitCol.isTrigger = true;
+            hitCol.enabled = false;
+            hitCol.radius = data.Boomeffectcolliderradius;
+
+            GameObject otherHit = GameObject.Instantiate(Resources.Load("Art/Resource/Effect/" + data.Otherhiteffect)) as GameObject;
+            otherHit.transform.parent = item.transform;
+            exp = otherHit.AddComponent<GrenadeExplosion>();
+            exp.TARGET_GRENADE = grenade;
+            otherHit.SetActive(false);
+
+            hitCol = otherHit.AddComponent<SphereCollider>();
+            hitCol.isTrigger = true;
+            hitCol.enabled = false;
+            hitCol.radius = data.Boomeffectcolliderradius;
+
+            grenade.GRAVITY_POWER = data.Launchergravity;
+            grenade.GRENADE_SPEED = data.Bulletspeed;
+            grenade.GRENADE_BASE_HIT = baseHit;
+            grenade.GRENADE_OTHER_HIT = otherHit;
+            #endregion
+        }
 
         weapon.tag = "Weapon";
       
         
         switch ((WeaponType)data.Type)
         {
-            case WeaponType.GUN:             item.WEAPON_TYPE = WeaponItem.WeaponType.GUN;   break;
-            case WeaponType.RIFLE:           item.WEAPON_TYPE = WeaponItem.WeaponType.RIFLE;  break;
-            case WeaponType.ROCKET_LAUNCHER: item.WEAPON_TYPE = WeaponItem.WeaponType.ROCKETLAUNCHER; break;
+            case WeaponType.GUN:             item.ITEM_TYPE = Item.ItemType.GUN;   break;
+            case WeaponType.RIFLE:           item.ITEM_TYPE = Item.ItemType.RIFLE;  break;
+            case WeaponType.ROCKET_LAUNCHER: item.ITEM_TYPE = Item.ItemType.ROCKETLAUNCHER; break;
             case WeaponType.SWORD:
                 {
                     #region Sword Setup
-                    item.WEAPON_TYPE = WeaponItem.WeaponType.MELEE;
+                    item.ITEM_TYPE = Item.ItemType.MELEE;
                     BoxCollider boxCol = weapon.AddComponent<BoxCollider>();
                     boxCol.isTrigger = true;
                     boxCol.center = new Vector3(data.Swordcollider_center_x , data.Swordcollider_center_y , data.Swordcollider_center_z);
@@ -494,6 +556,7 @@ public class WeaponManager : Singletone<WeaponManager> {
 
                 }
                 break;
+            case WeaponType.GRENADE:        item.ITEM_TYPE = Item.ItemType.ETC_GRENADE; break;
         }
 
 

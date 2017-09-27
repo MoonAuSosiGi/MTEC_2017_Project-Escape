@@ -45,6 +45,7 @@ public class NetworkPlayer : MonoBehaviour {
     {
         m_hostID = hostID;
         m_userName = userName;
+        GameObject.Destroy(this.GetComponent<AudioListener>());
     }
 
     public void RecvNetworkMove(UnityEngine.Vector3 pos,UnityEngine.Vector3 velocity, UnityEngine.Vector3 charrot, UnityEngine.Vector3 rot)
@@ -76,6 +77,10 @@ public class NetworkPlayer : MonoBehaviour {
         //test code
         if (aniValue == 1234)
         {
+            if(animationName.Equals("Damage"))
+            {
+                GetComponent<PlayerController>().DamageEffect();
+            }
             PlayerAnim.Play(animationName);
         }
         else
@@ -89,12 +94,12 @@ public class NetworkPlayer : MonoBehaviour {
                 m_weapon.SoundPlay();
 
             // 근거리 무기용
-            if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
+            if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.ITEM_TYPE == Item.ItemType.MELEE)
             {
                 m_weapon.PLAYER = transform;
                 m_weapon.AttackSword();
             }
-            else if (animationName.Equals("ATTACK") && aniValue == 0 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
+            else if (animationName.Equals("ATTACK") && aniValue == 0 && m_weapon.ITEM_TYPE == Item.ItemType.MELEE)
             {
                 m_weapon.AttackSwordEnd();
             }
@@ -154,7 +159,7 @@ public class NetworkPlayer : MonoBehaviour {
         if(weapon != null)
         {
             m_weapon = weapon.GetComponent<WeaponItem>() ;
-            Debug.Log("Weapon " + m_weapon.ITEM_NETWORK_ID + " type " + m_weapon.WEAPON_TYPE + " name " + m_weapon.name);
+            Debug.Log("Weapon " + m_weapon.ITEM_NETWORK_ID + " type " + m_weapon.ITEM_TYPE + " name " + m_weapon.name);
             m_weapon.transform.parent = m_weaponAnchor.transform;
             m_weapon.transform.localPosition = m_weapon.LOCAL_SET_POS;
             m_weapon.transform.localRotation = Quaternion.Euler(m_weapon.LOCAL_SET_ROT);
@@ -163,17 +168,22 @@ public class NetworkPlayer : MonoBehaviour {
 
             PlayerController p = this.GetComponent<PlayerController>();
             
-            Debug.Log("prev " + PlayerAnim.runtimeAnimatorController.name);
-            switch (m_weapon.WEAPON_TYPE)
+            switch (m_weapon.ITEM_TYPE)
             {
-                case WeaponItem.WeaponType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
-                case WeaponItem.WeaponType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
-                case WeaponItem.WeaponType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
-                case WeaponItem.WeaponType.ROCKETLAUNCHER: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ROCKETLAUNCHER); break;
-                case WeaponItem.WeaponType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
-                case WeaponItem.WeaponType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                case Item.ItemType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
+                case Item.ItemType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
+                case Item.ItemType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
+                case Item.ItemType.ROCKETLAUNCHER: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ROCKETLAUNCHER); break;
+                case Item.ItemType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                case Item.ItemType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
             }
-            Debug.Log("result " + PlayerAnim.runtimeAnimatorController.name);
+
+            if(m_weapon.ITEM_TYPE == Item.ItemType.ETC_GRENADE)
+            {
+                Grenade g = (m_weapon as Grenade);
+                g.IS_NETWORK = true;
+                g.NetworkGrenadeEnable();
+            }
         }
     }
 

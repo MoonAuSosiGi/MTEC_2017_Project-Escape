@@ -20,11 +20,20 @@ int s_meteorCommingSec = 90;
 // 데스존 까지 남은 시간
 int s_deathZoneCommingSec = 180;
 
+// 바뀌는 메테오 로직
+int m_meteorCommingTime[10] = { 30,32,34,36,38,40,42,44,46,48 };
+
 // 데스존이 진행하고 있는 인덱스
 int s_deathZoneIndex = 0;
 
 // 데스존을 움직이는 주체
 int s_deathZoneHostID = -1;
+
+//Meteor ID 
+int s_meteorID = 0;
+
+// Death Zone ID
+int s_deathZoneID = 0;
 
 class Server : public SpaceWar::Stub
 {
@@ -49,6 +58,8 @@ public:
 	DECRMI_SpaceWar_NotifyDeleteItem;
 	DECRMI_SpaceWar_NotifyPlayerMove;
 
+	// 아이템 삭제 요청
+	DECRMI_SpaceWar_RequestItemDelete;
 	//아이템 장비
 	DECRMI_SpaceWar_NotifyPlayerEquipItem;
 

@@ -21,94 +21,98 @@ void MeteorLoop(void*)
 {
 	if (s_GameRunning == false)
 		return;
-	s_meteorCommingSec--;
 
-	if(s_deathZoneCommingSec > 0)
-		s_deathZoneCommingSec--;
+	/*for (int i = 0; i < 10; i++)
+	{
+		if (m_meteorCommingTime[i] > 0)
+		{
+			m_meteorCommingTime[i] -= 1;
+			
+			if(m_meteorCommingTime[i] % 5)
+				cout << "메테오 "<< i << "번 " << m_meteorCommingTime[i] << " 초 남음 " << server.m_netServer->GetTimeMs() << endl;
+			if (m_meteorCommingTime[i] <= 0.0f)
+			{
+				float anglex = RandomRange(-360.0f, 360.0f);
+				float anglez = RandomRange(-360.0f, 360.0f);
+				string meteorID = "meteor";
+				meteorID += to_string(s_meteorID++);
+				cout << "anglex " << anglex << " anglez " << anglez;
 
+				server.m_proxy.NotifyMeteorCreate(server.m_playerP2PGroup, RmiContext::ReliableSend, anglex, anglez, meteorID);
 
-	//if(s_meteorCommingSec % 5 == 0 && s_meteorCommingSec >= 0)
-	//	cout << "메테오 " << s_meteorCommingSec << " 초 남음 " << endl;
-	//if (s_deathZoneCommingSec % 5 == 0)
-	//	cout << "<Server> Death Zone 생성까지 " << s_deathZoneCommingSec << " 초 남았습니다." << endl;
+				m_meteorCommingTime[i] = 30;
+			}
+		}
+	}*/
+	//s_meteorCommingSec--;
+
 	
-	server.m_proxy.NotifyMeteorCreateTime(server.m_playerP2PGroup, RmiContext::UnreliableSend, s_meteorCommingSec);
-
+	/*if (s_deathZoneCommingSec > 0)
 	{
-		if (s_meteorCommingSec == 0)
-		{
-			float anglex = RandomRange(-360.0f, 360.0f);
-			float anglez = RandomRange(-360.0f, 360.0f);
-
-			cout << "anglex " << anglex << " anglez " << anglez;
-			server.m_proxy.NotifyMeteorCreate(server.m_playerP2PGroup, RmiContext::ReliableSend, anglex,anglez);
-
-		}
-
-		else if (s_meteorCommingSec < 0)
-		{
-			//if (s_meteorCommingSec == -120)
-			{
-				s_meteorCommingSec = 90;
-			}
-		}
-	}
-
-	// 여기는 데스존 체크
-	if (s_deathZoneCommingSec == 0)
-	{
-		int index = (int)RandomRange(0, server.GetSpaceShipCount());
-		
-		// 생성
-		server.m_proxy.NotifyDeathZoneCreate(server.m_playerP2PGroup, RmiContext::ReliableSend, index);
-
-		// 움직이는 주체 설정
-		auto iter = server.m_clientMap.begin();
-		while (iter != server.m_clientMap.end())
-		{
-			if (iter->second->m_state == ALIVE)
-			{
-				// 움직이는 주체 통보
-				server.m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(
-					server.m_playerP2PGroup,
-					RmiContext::ReliableSend,
-					(int)iter->second->m_hostID, 
-					s_deathZoneIndex);
-				s_deathZoneHostID = (int)iter->second->m_hostID;
-				break;
-			}
-			iter++;
-		}
 		s_deathZoneCommingSec--;
-	}
-	// 데스존이 움직이는 루프 
-	else if (s_deathZoneCommingSec == -1)
-	{
-		if(server.m_clientMap.size() <= 0)
-			return;
-		if (server.m_clientMap.find((HostID)s_deathZoneHostID) == server.m_clientMap.end())
-			return;
-		if (server.m_clientMap[(HostID)s_deathZoneHostID]->m_state != ALIVE)
-		{
-			// 움직이는 주체 설정
-			auto iter = server.m_clientMap.begin();
-			while (iter != server.m_clientMap.end())
-			{
-				if (iter->second->m_state == ALIVE)
-				{
-					// 움직이는 주체 통보
-					server.m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(
-						server.m_playerP2PGroup,
-						RmiContext::ReliableSend,
-						(int)iter->second->m_hostID,
-						s_deathZoneIndex);
-					s_deathZoneHostID = (int)iter->second->m_hostID;
-					break;
-				}
-				iter++;
-			}
-		}
-	}
+		string s = "deathZone";
+		s += to_string(s_deathZoneID);
+		cout << s_deathZoneCommingSec << endl;
+		server.m_proxy.NotifyDeathZoneCommingTime(server.m_playerP2PGroup, RmiContext::ReliableSend, s_deathZoneCommingSec,s);
+	}*/
+
+	//// 여기는 데스존 체크
+	//if (s_deathZoneCommingSec == 0)
+	//{
+	//	int index = (int)RandomRange(0, server.GetSpaceShipCount());
+	//	string deathZoneID = "deathZone";
+	//	deathZoneID += to_string(s_deathZoneID++);
+	//	// 생성
+	//	server.m_proxy.NotifyDeathZoneCreate(server.m_playerP2PGroup, RmiContext::ReliableSend, index, deathZoneID);
+
+	//	// 움직이는 주체 설정
+	//	auto iter = server.m_clientMap.begin();
+	//	while (iter != server.m_clientMap.end())
+	//	{
+	//		if (iter->second->m_state == ALIVE)
+	//		{
+	//			// 움직이는 주체 통보
+	//			server.m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(
+	//				server.m_playerP2PGroup,
+	//				RmiContext::ReliableSend,
+	//				(int)iter->second->m_hostID, 
+	//				s_deathZoneIndex);
+	//			s_deathZoneHostID = (int)iter->second->m_hostID;
+	//			break;
+	//		}
+	//		iter++;
+	//	}
+	//	s_deathZoneCommingSec--;
+	//	
+	//}
+	//// 데스존이 움직이는 루프 
+	//else if (s_deathZoneCommingSec == -1)
+	//{
+	//	if(server.m_clientMap.size() <= 0)
+	//		return;
+	//	if (server.m_clientMap.find((HostID)s_deathZoneHostID) == server.m_clientMap.end())
+	//		return;
+	//	if (server.m_clientMap[(HostID)s_deathZoneHostID]->m_state != ALIVE)
+	//	{
+	//		// 움직이는 주체 설정
+	//		auto iter = server.m_clientMap.begin();
+	//		while (iter != server.m_clientMap.end())
+	//		{
+	//			if (iter->second->m_state == ALIVE)
+	//			{
+	//				// 움직이는 주체 통보
+	//				server.m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(
+	//					server.m_playerP2PGroup,
+	//					RmiContext::ReliableSend,
+	//					(int)iter->second->m_hostID,
+	//					s_deathZoneIndex);
+	//				s_deathZoneHostID = (int)iter->second->m_hostID;
+	//				break;
+	//			}
+	//			iter++;
+	//		}
+	//	}
+	//}
 
 }
 #pragma endregion
@@ -402,6 +406,13 @@ DEFRMI_SpaceWar_NotifyPlayerMove(Server)
 	return true;
 }
 
+DEFRMI_SpaceWar_RequestItemDelete(Server)
+{
+	cout << "Request Item Delete " << networkID << endl;
+	// p2p 로 뿌려지고, 그제서야 실제 삭제 로직
+	return true;
+}
+
 DEFRMI_SpaceWar_NotifyPlayerEquipItem(Server)
 {
 	cout << "NotifyPlayerEquipItem " << hostID << " item " << itemID << endl;
@@ -541,7 +552,7 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 	cout << "RequestUseItemBox " << itemBoxIndex << endl;
 
 	// TESTCODE
-	if (m_itemBoxMap.find(itemBoxIndex) == m_itemBoxMap.end())
+//	if (m_itemBoxMap.find(itemBoxIndex) != m_itemBoxMap.end())
 	{
 		
 		// 첫 사용

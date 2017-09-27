@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.ImageEffects;
 
 public class CameraManager : Singletone<CameraManager>{
-    #region CamRotate_INFO
+    #region CameraManager INFO
+
+    #region CamRotate
     public Transform Player; // 플레이어
     // 카메라 고정 오브젝트 2개 0 = 처음, 1 = 중간, 2 = 마지막
     // 3 = FPS Anchor  ( 카메라가 여기로 이동 )
     public Transform[] CamAnchor;
-
-
+    
     public float[] CamRoateSpeed; // 카메라 회전속도 0 = X, 1 = Y
     public float[] CamDis; // 카메라 거리 조절 0 = 최소, 1 = 최대, 2 = 현재값
     public float CamZoomSpeed; // 카메라 줌인 줌아웃 속도
@@ -50,18 +52,32 @@ public class CameraManager : Singletone<CameraManager>{
     }
     #endregion
 
+    #region Effect 
+    [SerializeField] private MeshRenderer m_hitEffect = null;
+    [SerializeField] private Material m_hitmat = null;
+    [SerializeField] private VignetteAndChromaticAberration m_hitBlur = null;
+    #endregion
 
+    #endregion
+
+    #region UnityMethod
     void Start()
     {
 
         CamSet();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-       // AnchorPlanet.MainCam = this.transform;
+        // AnchorPlanet.MainCam = this.transform;
+
+        
     }
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            ShowHitEffect();
+        }
         if ((GameManager.Instance() != null && GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f))
             return;
 
@@ -74,6 +90,8 @@ public class CameraManager : Singletone<CameraManager>{
 
 
     }
+    #endregion
+    #region Camera Move Method
 
     void CursorManager()
     {
@@ -185,5 +203,72 @@ public class CameraManager : Singletone<CameraManager>{
             this.transform.position = Hitinfo.point;
         }
     }
+    #endregion
 
+    #region Camera Effect Method
+
+    public void ShowHitEffect()
+    {
+        Color c = m_hitmat.GetColor("_TintColor");
+        c.a = 0.5f;
+        m_hitmat.color = c;
+        m_hitEffect.enabled = true;
+        m_hitBlur.enabled = true;
+
+        m_hitBlur.blurDistance = 1.0f;
+        m_hitBlur.chromaticAberration = 20.0f;
+        HideHitEffect();
+        //Invoke("HideHitEffect" , 0.1f);
+        
+    }
+
+    public void HideHitEffect()
+    {
+        iTween.ValueTo(gameObject , iTween.Hash(
+            "from",0.5f,
+            "to",0.0f,
+            "onupdatetarget" , gameObject ,
+            "time",0.6f,
+            "onupdate" , "HitHide",
+            "oncompletetarget",gameObject,
+            "oncomplete","HitHideEnd"));
+
+        iTween.ValueTo(gameObject , iTween.Hash(
+            "from" , 1.0f ,
+            "to" , 0.0f ,
+            "onupdatetarget" , gameObject ,
+            "time" , 0.6f ,
+            "onupdate" , "BlurHide"));
+
+        iTween.ValueTo(gameObject , iTween.Hash(
+            "from" , 20.0f ,
+            "to" , 0.0f ,
+            "onupdatetarget" , gameObject ,
+            "time" , 0.6f ,
+            "onupdate" , "BlurAbHide"));
+
+    }
+
+    void HitHide(float v)
+    {
+        Color c = m_hitmat.GetColor("_TintColor");
+        m_hitmat.SetColor("_TintColor",new Color(c.r , c.g , c.b , v));
+    }
+
+    void BlurHide(float v)
+    {
+        m_hitBlur.blurDistance = v;
+    }
+
+    void BlurAbHide(float v)
+    {
+        m_hitBlur.chromaticAberration = v;
+    }
+
+    void HitHideEnd()
+    {
+        m_hitEffect.enabled = false;
+        m_hitBlur.enabled = false;
+    }
+    #endregion
 }

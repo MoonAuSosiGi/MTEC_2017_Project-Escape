@@ -203,7 +203,7 @@ public class InGameUI : MonoBehaviour
         m_maxAmmo.text = maxCount.ToString();
     }
 
-    public void UnEquipWeapon(string itemID,int curCount,int maxCount)
+    public void UnEquipWeapon()
     {
         m_equipInfo.SetActive(false);
     }

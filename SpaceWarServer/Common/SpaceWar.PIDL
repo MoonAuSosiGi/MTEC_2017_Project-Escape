@@ -116,7 +116,7 @@ global SpaceWar 3141
 	RequestShelterEnter([in]int sendHostID,[in]int shelterID,[in]bool enter);
 
 	// 아이템 삭제 요청을 보냈다.
-	RequestItemDelete([in]int itemID);
+	RequestItemDelete([in]string networkID);
 
 	//S2C -------------------------------------------------------------
 	NotifyLoginSuccess([in]int hostID,[in]bool host);
@@ -185,7 +185,7 @@ global SpaceWar 3141
 	NotifyMeteorCreateTime([in]int time);
 
 	// 메테오 생성해라
-	NotifyMeteorCreate([in]float anglex,[in]float anglez);
+	NotifyMeteorCreate([in]float anglex,[in]float anglez,[in]string meteorID);
 
 	// 누군가가 우주선 조작중
 	NotifySpaceShipEngineCharge([in]int spaceShipID,[in]float fuel);
@@ -225,8 +225,10 @@ global SpaceWar 3141
 	// DeathZone ------------------------------------------------------------------------------------------------
 	// 우주선이 총 몇개 있는지 세팅 
 	RequestSpaceShipSetup([in]int spaceShipCount);
+	// 데스존 생성까지 남은 시간
+	NotifyDeathZoneCommingTime([in]int tick,[in]string deathzoneID);
 	// 데스존 생성 통보
-	NotifyDeathZoneCreate([in]int spaceShipIndex); 
+	NotifyDeathZoneCreate([in]int spaceShipIndex,[in]string deathzoneID); 
 	// 데스존이 가고 있는 행성 단계를 알려줘야함
 	RequestDeathZoneMoveIndex([in]int moveIndex);
 	// 데스존이 가고 있는 행성 단계 통보 + 누가 움직이는 주체인지도 통보

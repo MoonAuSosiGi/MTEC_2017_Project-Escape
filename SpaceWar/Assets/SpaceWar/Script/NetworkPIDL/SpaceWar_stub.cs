@@ -168,8 +168,8 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool RequestItemDeleteDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int itemID);  
-		public RequestItemDeleteDelegate RequestItemDelete = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int itemID)
+		public delegate bool RequestItemDeleteDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID);  
+		public RequestItemDeleteDelegate RequestItemDelete = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID)
 		{ 
 			return false;
 		};
@@ -278,8 +278,8 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool NotifyMeteorCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, float anglex, float anglez);  
-		public NotifyMeteorCreateDelegate NotifyMeteorCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, float anglex, float anglez)
+		public delegate bool NotifyMeteorCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, float anglex, float anglez, string meteorID);  
+		public NotifyMeteorCreateDelegate NotifyMeteorCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, float anglex, float anglez, string meteorID)
 		{ 
 			return false;
 		};
@@ -358,8 +358,13 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool NotifyDeathZoneCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int spaceShipIndex);  
-		public NotifyDeathZoneCreateDelegate NotifyDeathZoneCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int spaceShipIndex)
+		public delegate bool NotifyDeathZoneCommingTimeDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int tick, string deathzoneID);  
+		public NotifyDeathZoneCommingTimeDelegate NotifyDeathZoneCommingTime = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int tick, string deathzoneID)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyDeathZoneCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int spaceShipIndex, string deathzoneID);  
+		public NotifyDeathZoneCreateDelegate NotifyDeathZoneCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int spaceShipIndex, string deathzoneID)
 		{ 
 			return false;
 		};
@@ -1991,12 +1996,12 @@ case Common.RequestItemDelete:
 		ctx.encryptMode = pa.EncryptMode;
 		ctx.compressMode = pa.CompressMode;
 			
-		int itemID; SP_Marshaler.Read(__msg,out itemID);	
+		string networkID; SP_Marshaler.Read(__msg,out networkID);	
 core.PostCheckReadMessage(__msg, RmiName_RequestItemDelete);
 		if(enableNotifyCallFromStub==true)
 		{
 			string parameterString="";
-			parameterString+=itemID.ToString()+",";
+			parameterString+=networkID.ToString()+",";
 			NotifyCallFromStub(Common.RequestItemDelete, RmiName_RequestItemDelete,parameterString);
 		}
 			
@@ -2013,7 +2018,7 @@ core.PostCheckReadMessage(__msg, RmiName_RequestItemDelete);
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=RequestItemDelete (remote,ctx , itemID );
+		bool __ret=RequestItemDelete (remote,ctx , networkID );
 			
 		if(__ret==false)
 		{
@@ -3233,12 +3238,14 @@ case Common.NotifyMeteorCreate:
 			
 		float anglex; SP_Marshaler.Read(__msg,out anglex);	
 float anglez; SP_Marshaler.Read(__msg,out anglez);	
+string meteorID; SP_Marshaler.Read(__msg,out meteorID);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyMeteorCreate);
 		if(enableNotifyCallFromStub==true)
 		{
 			string parameterString="";
 			parameterString+=anglex.ToString()+",";
 parameterString+=anglez.ToString()+",";
+parameterString+=meteorID.ToString()+",";
 			NotifyCallFromStub(Common.NotifyMeteorCreate, RmiName_NotifyMeteorCreate,parameterString);
 		}
 			
@@ -3255,7 +3262,7 @@ parameterString+=anglez.ToString()+",";
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyMeteorCreate (remote,ctx , anglex, anglez );
+		bool __ret=NotifyMeteorCreate (remote,ctx , anglex, anglez, meteorID );
 			
 		if(__ret==false)
 		{
@@ -4070,6 +4077,59 @@ core.PostCheckReadMessage(__msg, RmiName_RequestSpaceShipSetup);
 		}
 	}
 	break;
+case Common.NotifyDeathZoneCommingTime:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int tick; SP_Marshaler.Read(__msg,out tick);	
+string deathzoneID; SP_Marshaler.Read(__msg,out deathzoneID);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyDeathZoneCommingTime);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=tick.ToString()+",";
+parameterString+=deathzoneID.ToString()+",";
+			NotifyCallFromStub(Common.NotifyDeathZoneCommingTime, RmiName_NotifyDeathZoneCommingTime,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyDeathZoneCommingTime;
+			summary.rmiName = RmiName_NotifyDeathZoneCommingTime;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyDeathZoneCommingTime (remote,ctx , tick, deathzoneID );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyDeathZoneCommingTime);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyDeathZoneCommingTime;
+			summary.rmiName = RmiName_NotifyDeathZoneCommingTime;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
 case Common.NotifyDeathZoneCreate:
 	{
 		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
@@ -4080,11 +4140,13 @@ case Common.NotifyDeathZoneCreate:
 		ctx.compressMode = pa.CompressMode;
 			
 		int spaceShipIndex; SP_Marshaler.Read(__msg,out spaceShipIndex);	
+string deathzoneID; SP_Marshaler.Read(__msg,out deathzoneID);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyDeathZoneCreate);
 		if(enableNotifyCallFromStub==true)
 		{
 			string parameterString="";
 			parameterString+=spaceShipIndex.ToString()+",";
+parameterString+=deathzoneID.ToString()+",";
 			NotifyCallFromStub(Common.NotifyDeathZoneCreate, RmiName_NotifyDeathZoneCreate,parameterString);
 		}
 			
@@ -4101,7 +4163,7 @@ core.PostCheckReadMessage(__msg, RmiName_NotifyDeathZoneCreate);
 		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 			
 		// Call this method.
-		bool __ret=NotifyDeathZoneCreate (remote,ctx , spaceShipIndex );
+		bool __ret=NotifyDeathZoneCreate (remote,ctx , spaceShipIndex, deathzoneID );
 			
 		if(__ret==false)
 		{
@@ -4359,6 +4421,7 @@ const string RmiName_NotifyGameResultInfoMe="NotifyGameResultInfoMe";
 const string RmiName_NotifyGameResultInfoOther="NotifyGameResultInfoOther";
 const string RmiName_NotifyGameResultShow="NotifyGameResultShow";
 const string RmiName_RequestSpaceShipSetup="RequestSpaceShipSetup";
+const string RmiName_NotifyDeathZoneCommingTime="NotifyDeathZoneCommingTime";
 const string RmiName_NotifyDeathZoneCreate="NotifyDeathZoneCreate";
 const string RmiName_RequestDeathZoneMoveIndex="RequestDeathZoneMoveIndex";
 const string RmiName_NotifyDeathZoneMoveHostAndIndexSetup="NotifyDeathZoneMoveHostAndIndexSetup";
@@ -4436,6 +4499,7 @@ const string RmiName_NotifyGameResultInfoMe="";
 const string RmiName_NotifyGameResultInfoOther="";
 const string RmiName_NotifyGameResultShow="";
 const string RmiName_RequestSpaceShipSetup="";
+const string RmiName_NotifyDeathZoneCommingTime="";
 const string RmiName_NotifyDeathZoneCreate="";
 const string RmiName_RequestDeathZoneMoveIndex="";
 const string RmiName_NotifyDeathZoneMoveHostAndIndexSetup="";

@@ -204,4 +204,12 @@ public class WeaponTableData
   float swordcollider_center_z;
   public float Swordcollider_center_z { get {return swordcollider_center_z; } set { swordcollider_center_z = value;} }
   
+  [SerializeField]
+  float heal;
+  public float Heal { get {return heal; } set { heal = value;} }
+  
+  [SerializeField]
+  float healusetime;
+  public float Healusetime { get {return healusetime; } set { healusetime = value;} }
+  
 }
