@@ -31,8 +31,8 @@ public class Item : MonoBehaviour {
         NONE = -1,
         GUN = 0,
         RIFLE,
-        MELEE,
         ROCKETLAUNCHER,
+        MELEE,
         ETC_GRENADE,
         ETC_RECOVERY // 이친구 임시다 웨폰 아이템 아니다 
     }

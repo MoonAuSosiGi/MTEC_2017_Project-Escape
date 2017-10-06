@@ -8,44 +8,45 @@ public class InGameUI : MonoBehaviour
 
     #region InGameUI_INFO
 
+    #region Player HP / OXY
     public UISlider m_hpSlider = null;
     public UISlider m_oxySlider = null;
-    public UISlider m_spaceShipEngineSlider = null;
-
-    public GameObject m_South = null;
-    public GameObject m_North = null;
-
-    public GameObject m_equipInfo = null;
-    public UILabel m_curAmmo = null;
-    public UILabel m_maxAmmo = null;
-
-    public GameObject m_spaceShipUI = null;
-
-    public UILabel m_meteoTimeLabel = null;
-    public GameObject m_meteorObj = null;
-
     public interface PlayerHPOxyUpdate
     {
-        void ChangeHP(float curHp , float prevHp,float maxHp);
-        void ChangeOxy(float curOxy , float prevOxy,float maxOxy);   
+        void ChangeHP(float curHp , float prevHp , float maxHp);
+        void ChangeOxy(float curOxy , float prevOxy , float maxOxy);
     }
 
     private List<PlayerHPOxyUpdate> m_uiUpdate = new List<PlayerHPOxyUpdate>();
-
-    float m_mapBGWidth = 0.0f;
     #endregion
 
-    #region UnityMethod
-    void Start()
-    {
-        startPosition = m_North.transform.position;
-        rationAngleToPixel = numberOfPixelsNorthToNorth / 360f;
-    }
+    #region SpaceShip UI
+    public UISlider m_spaceShipEngineSlider = null;
+    public GameObject m_spaceShipUI = null;
 
-    void FixedUpdate()
-    {
-        PlanetDirCheck();
-    }
+    #endregion
+
+    #region Player Gun
+    public GameObject m_equipInfo = null;
+    public UILabel m_curAmmo = null;
+    public UILabel m_curWeaponName = null;
+    public UISprite m_curWeaponSpr = null;
+    #endregion
+
+    #region Meteor UI    
+    public UILabel m_meteoTimeLabel = null;
+    public GameObject m_meteorObj = null;
+    #endregion
+
+    #region Weapon Inventory Icon
+    // 실제 껐다 켰다 할 오브젝트 
+    [SerializeField] private GameObject m_invenIconObject = null;
+    [SerializeField] private List<GameObject> m_InvenIconList = new List<GameObject>();
+    [SerializeField] private GameObject m_selectObject = null;
+
+    public GameObject INVEN_OBJECT { get { return m_invenIconObject; } }
+    #endregion
+    
 
     #endregion
 
@@ -78,139 +79,78 @@ public class InGameUI : MonoBehaviour
     }
     #endregion
 
-
-
-    #region PlanetDirChecker
-
-
-    public float numberOfPixelsNorthToNorth = 0.0f;
-    public GameObject target;
-    Vector3 startPosition;
-    float rationAngleToPixel = 1.0f;
-
-
-    void PlanetDirCheck()
-    {
-        
-        //Vector3 perp = Vector3.Cross(Vector3.forward , target.transform.forward);
-        //float dir = Vector3.Dot(perp , Vector3.up);
-        //m_North.transform.position = startPosition + (new Vector3(Vector3.Angle(target.transform.forward , Vector3.forward) * Mathf.Sign(dir) * rationAngleToPixel , 0 , 0));
-
-        ////Vector3 angles = Camera.main.transform.eulerAngles;
-
-        ////Debug.Log("angle " + angles);
-
-        ////Vector3 north = Camera.main.transform.position;
-        ////north.z += 1.0f;
-
-
-        ////Vector3 screenPos = Camera.main.WorldToViewportPoint(north);
-        ////Vector3 nscx = Camera.main.WorldToViewportPoint(m_North.transform.position);
-        ////screenPos.x = 0.5f + (screenPos.x - 0.5f) * (m_North.GetComponent<UISprite>().width / Camera.main.pixelWidth) * 0.9f;
-        ////float posX = (screenPos.x - 0.5f + nscx.x) * 0.5f;
-
-        ////Vector3 t = new Vector3(posX , 0 , 0);
-
-
-        ////float width = m_North.transform.parent.GetComponent<UISprite>().width;
-        ////t = new Vector3(0.5f + posX / width , 0.0f , 0.0f);
-        ////Vector3 a = Camera.main.ViewportToWorldPoint(t);
-        ////m_North.transform.position = new Vector3(a.x , m_North.transform.position.y , m_North.transform.position.z);
-
-        // Player p = GameManager.Instance().PLAYER.m_player;
-        // if (p == null)
-        //     return;
-        // Vector3 newP = Camera.main.transform.forward;
-
-        // var southDir = m_SouthPosition.transform.position - newP;
-        // var northDir = m_NorthPosition.transform.position - newP;
-
-        // //southDir.Normalize();
-        // //northDir.Normalize();
-
-
-
-        // var southAngle = Mathf.Abs(Mathf.Atan2(southDir.x , southDir.y) * Mathf.Rad2Deg);
-        // var northAngle = Mathf.Abs(Mathf.Atan2(northDir.x , northDir.y) * Mathf.Rad2Deg);
-
-        //// var angle = Mathf.Abs(Mathf.Atan2(newP.x , newP.y) * Mathf.Rad2Deg);
-
-
-        // Vector3 southp = m_southPos.transform.localPosition;
-        // Vector3 northp = m_northPos.transform.localPosition;
-        // Vector3 center = Vector2.zero; // m_MapBG.transform.localPosition;
-
-        // // 180도면 정 중앙에 있어야함
-
-        // float w = (southAngle / 180.0f) + (m_mapBGWidth / 180.0f);
-
-
-        // // North 는 0에 근접할수록  South 는 -180에 근접할수록
-        // //   Debug.Log("South " + southAngle + " d " + ((180.0f - southAngle) / 180.0f) + " north " + northAngle + " w " + w);
-        // //w = (northAngle )
-        // //m_northPos.transform.position = new Vector3()
-        // Ray ray = new Ray(Camera.main.transform.position , northDir);
-        // RaycastHit hit;
-        // Physics.Raycast(ray , out hit);
-        // Debug.DrawRay(ray.origin , ray.direction , Color.red);
-        // if(hit.transform != null)
-        // {
-        //     Debug.Log(hit.transform.name);
-        // }
-        // else
-        // {
-
-
-
-
-        // }
-
-        // float angle = Mathf.Atan2(Camera.main.transform.forward.z , Camera.main.transform.forward.x) * Mathf.Rad2Deg;
-
-        // Vector3 perp = Vector3.Cross(Vector3.forward , Camera.main.transform.forward);
-        // float dir = Vector3.Dot(perp , Vector3.up);
-
-        // //w = m_MapBG.transform.localPosition.x + Vector3.Angle(Camera.main.transform.forward , Vector3.forward) * Mathf.Sign(dir) * (180.0f/360.0f);
-        // //m_northPos.transform.localPosition = new Vector3(w , northp.y , northp.z);
-
-        //// angle = Mathf.Atan2(Camera.main.transform.)
-
-        // //    m_southPos.transform.localPosition = new Vector3(w  ,
-        // //     southp.y , southp.z);
-
-    }
-    public float GetAngleBetween3DVector(Vector3 vec1 , Vector3 vec2)
-    {
-        float theta = Vector3.Dot(vec1 , vec2) / (vec1.magnitude * vec2.magnitude);
-        Vector3 dirAngle = Vector3.Cross(vec1 , vec2);
-        float angle = Mathf.Acos(theta) * Mathf.Rad2Deg;
-        if (dirAngle.z < 0.0f) angle = 360 - angle;
-        Debug.Log("사잇각 : " + angle);
-        return angle;
-    }
-    #endregion
-
     #region EquipWeapon
-    public void EquipWeapon(string itemID,int curCount,int maxCount)
+    public void EquipWeapon(string itemID,int index,int curCount,int maxCount)
     {
+        Debug.Log("index " + index + " item ID "+ itemID);
+        m_selectObject.transform.position = m_InvenIconList[index].transform.position;
+
+        if (string.IsNullOrEmpty(itemID))
+        {
+            return;
+        }
+        // 인벤 전부 출력
+        INVEN_OBJECT.SetActive(true);
+        // 우측 하단 정보 출력 
         m_equipInfo.SetActive(true);
-        UpdateWeapon(curCount , maxCount);
+
+        // 아이템 정보 얻기
+        WeaponTableData data = WeaponManager.Instance().GetWeaponData(itemID);
+        Debug.Log("type " + data.Type + " " + (int)Item.ItemType.ROCKETLAUNCHER);
+
+        if(data.Type == (int)Item.ItemType.GUN || data.Type == (int)Item.ItemType.RIFLE || data.Type == (int) Item.ItemType.ROCKETLAUNCHER)
+        {
+            // 장탄수 적용
+            UpdateWeapon(curCount , maxCount);
+
+        }
+        else
+        {
+            m_curAmmo.text = "";
+        }
+
+
+        //아이템 이름 세팅
+        m_curWeaponName.text = data.Name_kr;
+        GetWeaponName(m_InvenIconList[index]).text = data.Name_kr;
+
+        // 아이템 아이콘 세팅
+        m_curWeaponSpr.spriteName = data.Inventoryicon;
+        GetWeaponIcon(m_InvenIconList[index]).spriteName = data.Inventoryicon;
+        GetWeaponIcon(m_InvenIconList[index]).gameObject.SetActive(true);
+
+        
     }
 
     public void UpdateWeapon(int curCount,int maxCount)
     {
+        Debug.Log("Update W "+maxCount);
         m_curAmmo.text = curCount.ToString();
-        m_maxAmmo.text = maxCount.ToString();
     }
 
-    public void UnEquipWeapon()
+    public void UnEquipWeapon(int index)
     {
         m_equipInfo.SetActive(false);
     }
-    #endregion
 
-    #region MeteorUI
+    public void ThrowWeapon(int index)
+    { 
+        GetWeaponIcon(m_InvenIconList[index]).gameObject.SetActive(false);
+        GetWeaponName(m_InvenIconList[index]).text = "";
+    }
+
+    // 인벤토리 관련 
+    UISprite GetWeaponIcon(GameObject target)
+    {
+        return target.transform.GetChild(1).GetComponent<UISprite>();
+    }
+
+    UILabel GetWeaponName(GameObject target)
+    {
+        return target.transform.GetChild(2).GetComponent<UILabel>();
+    }
     #endregion
+    
 
     #region SpaceShipUI
 
@@ -250,4 +190,5 @@ public class InGameUI : MonoBehaviour
         m_meteoTimeLabel.text = time.ToString();
     }
     #endregion
+
 }

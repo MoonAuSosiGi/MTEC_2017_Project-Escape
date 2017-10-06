@@ -54,8 +54,13 @@ public class CameraManager : Singletone<CameraManager>{
 
     #region Effect 
     [SerializeField] private MeshRenderer m_hitEffect = null;
+    [SerializeField] private MeshRenderer m_oxyHitEffect = null;
     [SerializeField] private Material m_hitmat = null;
+    [SerializeField] private Material m_oxyHitMat = null;
     [SerializeField] private VignetteAndChromaticAberration m_hitBlur = null;
+
+    // tween 대상 체크용
+    private bool m_damageEffect = true;
     #endregion
 
     #endregion
@@ -207,16 +212,30 @@ public class CameraManager : Singletone<CameraManager>{
 
     #region Camera Effect Method
 
-    public void ShowHitEffect()
+    public void ShowHitEffect(bool damageEffect = true)
     {
-        Color c = m_hitmat.GetColor("_TintColor");
-        c.a = 0.5f;
-        m_hitmat.color = c;
-        m_hitEffect.enabled = true;
-        m_hitBlur.enabled = true;
+        m_damageEffect = damageEffect;
 
+        if (m_damageEffect)
+        {
+            Color c = m_hitmat.GetColor("_TintColor");
+            m_hitmat.SetColor("_TintColor" , new Color(c.r , c.g , c.b , 0.5f));
+            m_hitEffect.enabled = true;
+        }
+        else
+        {
+            if (iTween.Count(gameObject) > 0)
+                return;
+            Color c = m_oxyHitMat.GetColor("_TintColor");
+            m_oxyHitMat.SetColor("_TintColor" , new Color(c.r , c.g , c.b , 15.0f / 255.0f));
+            m_oxyHitMat.color = c;
+            m_oxyHitEffect.enabled = true;
+        }
+
+        m_hitBlur.enabled = true;
         m_hitBlur.blurDistance = 1.0f;
         m_hitBlur.chromaticAberration = 20.0f;
+
         HideHitEffect();
         //Invoke("HideHitEffect" , 0.1f);
         
@@ -224,8 +243,11 @@ public class CameraManager : Singletone<CameraManager>{
 
     public void HideHitEffect()
     {
+        Color c = (m_damageEffect) ? m_hitmat.GetColor("_TintColor") : 
+            m_oxyHitMat.GetColor("_TintColor");
+
         iTween.ValueTo(gameObject , iTween.Hash(
-            "from",0.5f,
+            "from",c.a,
             "to",0.0f,
             "onupdatetarget" , gameObject ,
             "time",0.6f,
@@ -251,8 +273,17 @@ public class CameraManager : Singletone<CameraManager>{
 
     void HitHide(float v)
     {
-        Color c = m_hitmat.GetColor("_TintColor");
-        m_hitmat.SetColor("_TintColor",new Color(c.r , c.g , c.b , v));
+        if(m_damageEffect)
+        {
+            Color c = m_hitmat.GetColor("_TintColor");
+            m_hitmat.SetColor("_TintColor" , new Color(c.r , c.g , c.b , v));
+        }
+        else
+        {
+            Color c = m_oxyHitMat.GetColor("_TintColor");
+            m_oxyHitMat.SetColor("_TintColor" , new Color(c.r , c.g , c.b , v));
+        }
+        Debug.Log("v " + v);
     }
 
     void BlurHide(float v)
@@ -267,7 +298,18 @@ public class CameraManager : Singletone<CameraManager>{
 
     void HitHideEnd()
     {
-        m_hitEffect.enabled = false;
+        if (m_damageEffect)
+        {
+            Color c = m_hitmat.GetColor("_TintColor");
+            m_hitmat.SetColor("_TintColor" , new Color(c.r , c.g , c.b , 0.5f));
+            m_hitEffect.enabled = false;
+        }
+        else
+        {
+            Color c = m_oxyHitMat.GetColor("_TintColor");
+            m_oxyHitMat.SetColor("_TintColor" , new Color(c.r , c.g , c.b , 15.0f / 255.0f));
+            m_oxyHitEffect.enabled = false;
+        }
         m_hitBlur.enabled = false;
     }
     #endregion

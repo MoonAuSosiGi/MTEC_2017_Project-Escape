@@ -45,15 +45,21 @@ public class HealPackItem : Item {
 
     }
 
-    public void EquipRecoveryKit()
+    #region Equip Weapon Logic
+    protected override void EquipItem()
     {
+        if (GameManager.Instance() != null)
+            GameManager.Instance().EquipWeapon(ITEM_ID , 0 , WeaponManager.Instance().GetWeaponData(ITEM_ID).Bulletcount);
         this.GetComponent<SphereCollider>().enabled = false;
     }
 
-    public void UnEquipRecoveryKit()
+    protected override void UnEquipItem()
     {
+        if (GameManager.Instance() != null)
+            GameManager.Instance().UnEquipWeapon(GameManager.Instance().PLAYER.m_player.CUR_EQUIP_INDEX);
         this.GetComponent<SphereCollider>().enabled = true;
     }
+    #endregion
 
 
     public void Recovery(PlayerController player)
@@ -70,6 +76,7 @@ public class HealPackItem : Item {
         if (m_recoveryKitValue >= 1.0f)
         {
             player.RecoveryItemUseEnd();
+            
             GameManager.Instance().SLIDER_UI.HideSlider();
             if (NetworkManager.Instance() != null)
                 NetworkManager.Instance().RequestHpUpdate(GameManager.Instance().PLAYER.m_hp + HEAL);

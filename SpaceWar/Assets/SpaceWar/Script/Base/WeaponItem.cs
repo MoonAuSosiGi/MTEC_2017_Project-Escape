@@ -216,7 +216,7 @@ public class WeaponItem : Item {
     protected override void UnEquipItem()
     {
         if (GameManager.Instance() != null)
-            GameManager.Instance().UnEquipWeapon();
+            GameManager.Instance().UnEquipWeapon(GameManager.Instance().PLAYER.m_player.CUR_EQUIP_INDEX);
         this.GetComponent<SphereCollider>().enabled = true;
     }
     #endregion
@@ -247,6 +247,7 @@ public class WeaponItem : Item {
         Grenade g = (this as Grenade);
         g.GRENADE_SHOT_ROT = m_player.transform.localRotation;
         g.Attack();
+        GameManager.Instance().PLAYER.m_player.UnEquipItem(this);
         NetworkManager.Instance().RequestGrenadeCreate(g.ITEM_NETWORK_ID , g.transform.position);
     }
 

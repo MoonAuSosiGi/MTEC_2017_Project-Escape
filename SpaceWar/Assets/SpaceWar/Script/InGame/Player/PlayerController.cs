@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Item[] m_equipItems = new Item[4];
     private int m_prevEquipItem = -1;
     private int m_curEquipItem = 0;
+
+    public int CUR_EQUIP_INDEX { get { return m_curEquipItem; } }
     #endregion
 
     #region Camera Anchor
@@ -121,8 +123,6 @@ public class PlayerController : MonoBehaviour {
 
 
     private WeaponItem m_currentWeapon = null;
-    private HealPackItem m_currentRecoveryKit = null;
-
     #endregion
 
     #region OXY -----------------------------------------------------------------------------------------------------------
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour {
             else if (idle == false && run == false)
                 useOxy = m_useOxyWALK;
 
-            if (GameManager.Instance().PLAYER.m_hp - useOxy > 0.0f)
+            if (GameManager.Instance().PLAYER.m_hp - useOxy >= 0.0f)
                 NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , useOxy);
         }
     }
@@ -396,15 +396,6 @@ public class PlayerController : MonoBehaviour {
         CameraManager.Instance().CamAnchor[3] = m_camAnchor4;
         CameraManager.Instance().CamSet();
 
-        ////m_camera.transform.SetParent(m_ThirdAnchor , false);
-        ////m_camera.transform.localEulerAngles = new Vector3(0.0f , 0.0f , 0.0f);
-        ////m_camera.transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
-        //m_mat.EnableKeyword("_Emission");
-        //temp = m_mat.GetTexture("_EmissionTexture");
-        //m_mat.SetTexture("_EmissionTexture" , null);
-
-        //m_mat.SetColor("_ALBEDO" , Color.red);
-
     }
 
 
@@ -431,9 +422,14 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.K))
             DamageEffect();
+        if (Input.GetKeyDown(KeyCode.L))
+            OxyDamageEffect();
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , 10.0f);
+        }
 
         HealPackProcess();
-        SphereCastAll();
         GetItemProcess();
         ChangeItemProcess();
         //ControlWeaponObjectProcess();
@@ -693,26 +689,6 @@ public class PlayerController : MonoBehaviour {
 
     #region Player Trigger Collider ------------------------------------------------------------------------
     
-    void OnDrawGizmos()
-    {
-        
-        //RaycastHit[] hits = Physics.SphereCastAll(m_collider.center , m_collider.radius , dir , 300);
-
-
-
-        //for (int i = 0; i < hits.Length; i++)
-        //{
-        //    Debug.Log("hits " + hits[i].transform.name);
-        //    //ShowUseEffect(hits[i].transform.GetComponent<Collider>());
-        //    Gizmos.DrawWireSphere(transform.position + transform.forward * hits[i].distance , 3.0f);
-        //}
-        
-    }
-    void SphereCastAll()
-    {
-        
-    }
-
     void OnTriggerEnter(Collider col)
     {
         if (this.enabled == false)
@@ -773,7 +749,11 @@ public class PlayerController : MonoBehaviour {
     {
         // 리커버리 끝
         (m_equipItems[m_curEquipItem]).gameObject.SetActive(false);
+        
         // 이부분에서 삭제요청
+        NetworkManager.Instance().C2SRequestItemDelete(m_equipItems[m_curEquipItem].ITEM_NETWORK_ID);
+
+        UnEquipItem(m_equipItems[m_curEquipItem]);
         m_equipItems[m_curEquipItem] = null;
         INTERACTION_ANI_VALUE = 0;
 
@@ -823,7 +803,7 @@ public class PlayerController : MonoBehaviour {
             m_useEffect.SetActive(true);
             m_useEffect.transform.position = m_nearItem.transform.position;
             m_nearText.gameObject.SetActive(true);
-            m_nearText.text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<WeaponItem>().ITEM_ID).Name_kr;
+            m_nearText.text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<Item>().ITEM_ID).Name_kr;
 
         }
         else if (col.CompareTag("OxyCharger"))
@@ -863,6 +843,7 @@ public class PlayerController : MonoBehaviour {
             m_nearItem = col.gameObject;//col.GetComponent<HealPackItem>();
             m_useEffect.SetActive(true);
             m_useEffect.transform.position = m_nearItem.transform.position;
+            m_nearText.text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<Item>().ITEM_ID).Name_kr;
         }
     }
 
@@ -921,17 +902,17 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKeyDown(m_inven3)) index = 2;
         if (Input.GetKeyDown(m_inven4)) index = 3;
 
-        if(index != -1 && m_equipItems[index] != null)
+        if(index != -1)// && m_equipItems[index] != null)
         {
+            // 기존 아이템이 장착되어있다면 해제해야한다.
             if (m_equipItems[m_curEquipItem] != null)
             {
                 m_equipItems[m_curEquipItem].EQUIP_STATE = false;
                 m_equipItems[m_curEquipItem].gameObject.SetActive(false);
             }
-            EquipItem(m_equipItems[index]);
+            EquipItem(m_equipItems[index],index);
 
         }
-
     }
     
 
@@ -956,7 +937,7 @@ public class PlayerController : MonoBehaviour {
             case Item.ItemType.ROCKETLAUNCHER: return 1;
             default: return 2;
         }
-    }
+    }   
 
     void HealPackProcess()
     {
@@ -991,9 +972,17 @@ public class PlayerController : MonoBehaviour {
             UnEquipItem(m_equipItems[m_curEquipItem],m_curEquipItem);
         }
     }
-   
-    void EquipItem(Item item)
+   // 실 아이템 장비로직
+    void EquipItem(Item item,int curSelect = -1)
     {
+        if(item == null)
+        {
+            if (GameManager.Instance() != null)
+                GameManager.Instance().EquipWeapon(null,0,0);
+            if(curSelect != -1)
+                m_curEquipItem = curSelect;
+            return;
+        }
         // 해당 아이템 인덱스 받기
         int index = GetEquipItemIndex(item.ITEM_TYPE);
 
@@ -1036,11 +1025,16 @@ public class PlayerController : MonoBehaviour {
                 item.ITEM_NETWORK_ID);
     }
     
-    void UnEquipItem(Item item,int index)
+    public void UnEquipItem(Item item,int index = -1)
     {
+        if (index == -1)
+            index = GetEquipItemIndex(item.ITEM_TYPE);
+
         //장비 해제해야함
         item.gameObject.SetActive(true);
         item.EQUIP_STATE = false;
+
+        GameManager.Instance().m_inGameUI.ThrowWeapon(index);
 
         RaycastHit throwRayHit;
         Physics.Raycast(transform.position + (transform.rotation * (Vector3.up + Vector3.forward)) ,
@@ -1066,7 +1060,7 @@ public class PlayerController : MonoBehaviour {
         SetAnimation(AnimationType.ANI_BAREHAND);
 
         if (GameManager.Instance() != null)
-            GameManager.Instance().UnEquipWeapon();
+            GameManager.Instance().UnEquipWeapon(m_curEquipItem);
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestUnEquipItem(item.ITEM_ID , item.ITEM_NETWORK_ID ,
                 item.transform.position , item.transform.eulerAngles);
@@ -1229,6 +1223,7 @@ public class PlayerController : MonoBehaviour {
         CancelInvoke("MeteorCoolTimeChecker");     
     }
 
+    #region Damage Effect 관련 
     public void DamageEffect()
     {
         CameraManager.Instance().ShowHitEffect();
@@ -1237,6 +1232,17 @@ public class PlayerController : MonoBehaviour {
         Invoke("DamgeEffectEnd" , 0.1f);
     }
 
+    public void OxyDamageEffect()
+    {
+        CameraManager.Instance().ShowHitEffect(false);
+        //m_renderer.material = HIT_MATERIAL;
+        //m_camAnimator.SetInteger("DAMAGE" , 1);
+      //  Invoke("DamgeEffectEnd" , 0.1f);
+
+    }
+    #endregion
+
+    // 카메라 데미지 애니메이션 재생 후 애니메이션을 꺼야 함
     public void CameraDamageAnimationEnd()
     {
         m_camAnimator.SetInteger("DAMAGE" , 0);
@@ -1244,7 +1250,6 @@ public class PlayerController : MonoBehaviour {
 
     public void Damage(Vector3 dir,string reason = null)
     {
-        Debug.Log("Damage");
         DamageEffect();
 
         AudioPlay(m_damageHit);

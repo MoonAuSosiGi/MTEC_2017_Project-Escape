@@ -341,11 +341,11 @@ public class GameManager : Singletone<GameManager> {
     #endregion
 
     #region EquipEvent
-    public void EquipWeapon(string itemID , int cur , int max)
+    public void EquipWeapon(string itemID, int cur , int max)
     {
         if (m_inGameUI == null)
             return;
-        m_inGameUI.EquipWeapon(itemID , cur , max);
+        m_inGameUI.EquipWeapon(itemID ,PLAYER.m_player.CUR_EQUIP_INDEX, cur , max);
     }
 
     public void UpdateWeapon(int cur,int max)
@@ -353,11 +353,11 @@ public class GameManager : Singletone<GameManager> {
         m_inGameUI.UpdateWeapon(cur , max);
     }
 
-    public void UnEquipWeapon()
+    public void UnEquipWeapon(int index)
     {
         if (m_inGameUI == null)
             return;
-        m_inGameUI.UnEquipWeapon();
+        m_inGameUI.UnEquipWeapon(index);
     }
     #endregion
 

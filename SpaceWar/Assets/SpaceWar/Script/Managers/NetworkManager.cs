@@ -572,6 +572,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 if (oxygen <= maxoxy * 0.1f)
                 {
                     GameManager.Instance().PLAYER.m_player.NotEnoughOxy();
+                    CameraManager.Instance().ShowHitEffect(false);
                 }
                 else if (prevoxy <= maxoxy * 0.1f && oxygen > maxoxy * 0.1f)
                 {
@@ -580,7 +581,9 @@ public class NetworkManager : Singletone<NetworkManager> {
 
                 if (oxygen <= 0)
                 {
-                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" , GameManager.Instance().GetGameTableValue(GameManager.OXY_DAMAGE),UnityEngine.Vector3.zero);
+                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" ,
+                        GameManager.Instance().GetGameTableValue(GameManager.OXY_DAMAGE),
+                        UnityEngine.Vector3.zero);
                 }
                 GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);
             }

@@ -22,28 +22,28 @@ void MeteorLoop(void*)
 	if (s_GameRunning == false)
 		return;
 
-	/*for (int i = 0; i < 10; i++)
-	{
-		if (m_meteorCommingTime[i] > 0)
-		{
-			m_meteorCommingTime[i] -= 1;
-			
-			if(m_meteorCommingTime[i] % 5)
-				cout << "메테오 "<< i << "번 " << m_meteorCommingTime[i] << " 초 남음 " << server.m_netServer->GetTimeMs() << endl;
-			if (m_meteorCommingTime[i] <= 0.0f)
-			{
-				float anglex = RandomRange(-360.0f, 360.0f);
-				float anglez = RandomRange(-360.0f, 360.0f);
-				string meteorID = "meteor";
-				meteorID += to_string(s_meteorID++);
-				cout << "anglex " << anglex << " anglez " << anglez;
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	if (m_meteorCommingTime[i] > 0)
+	//	{
+	//		m_meteorCommingTime[i] -= 1;
 
-				server.m_proxy.NotifyMeteorCreate(server.m_playerP2PGroup, RmiContext::ReliableSend, anglex, anglez, meteorID);
+	//		if(m_meteorCommingTime[i] % 5)
+	//			cout << "메테오 "<< i << "번 " << m_meteorCommingTime[i] << " 초 남음 " << server.m_netServer->GetTimeMs() << endl;
+	//		if (m_meteorCommingTime[i] <= 0.0f)
+	//		{
+	//			float anglex = RandomRange(-360.0f, 360.0f);
+	//			float anglez = RandomRange(-360.0f, 360.0f);
+	//			string meteorID = "meteor";
+	//			meteorID += to_string(s_meteorID++);
+	//			cout << "anglex " << anglex << " anglez " << anglez;
 
-				m_meteorCommingTime[i] = 30;
-			}
-		}
-	}*/
+	//			server.m_proxy.NotifyMeteorCreate(server.m_playerP2PGroup, RmiContext::ReliableSend, anglex, anglez, meteorID);
+
+	//			m_meteorCommingTime[i] = 30;
+	//		}
+	//	}
+	//}
 	//s_meteorCommingSec--;
 
 	
@@ -123,7 +123,7 @@ void Server::ServerRun()
 {
 	m_netServer = shared_ptr<CNetServer>(CNetServer::Create());
 
-//	typedef void(*ThreadProc)(void* ctx);
+	// 메테오 스레드 별도로 돌려라
 	void(*func)(void*);
 	func = &MeteorLoop;
 	CTimerThread meteorThread(func, 1000, nullptr);
@@ -519,6 +519,7 @@ DEFRMI_SpaceWar_RequestPlayerUseOxy(Server)
 
 	if (m_clientMap[(HostID)sendHostID]->oxy - useOxy < 0)
 	{
+		m_clientMap[(HostID)sendHostID]->oxy = 0.0f;
 		m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName,0.0f, prevOxy, MAX_OXY);
 		return true;
 	}

@@ -33,8 +33,8 @@ public class WeaponTableData
   public string Inventoryicon { get {return inventoryicon; } set { inventoryicon = value;} }
   
   [SerializeField]
-  string inventorytitle_kr;
-  public string Inventorytitle_kr { get {return inventorytitle_kr; } set { inventorytitle_kr = value;} }
+  string inventoryatlasname;
+  public string Inventoryatlasname { get {return inventoryatlasname; } set { inventoryatlasname = value;} }
   
   [SerializeField]
   string inventorytitle_eng;
