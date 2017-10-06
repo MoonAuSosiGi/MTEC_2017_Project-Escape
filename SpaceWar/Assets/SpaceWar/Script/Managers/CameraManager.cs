@@ -192,7 +192,11 @@ public class CameraManager : Singletone<CameraManager>{
         Physics.Raycast(CamAnchor[1].position , CamAnchor[2].rotation * Vector3.back , out Hitinfo , (float)Vector3.Distance(CamAnchor[1].position , Vector3.Lerp(CamAnchor[1].position , CamAnchor[2].position , CamDis[2]))); // 레이캐스트
         //Debug.DrawRay(CamAnchor[1].position, CamAnchor[2].rotation * Vector3.back * Vector3.Distance(CamAnchor[1].position, Vector3.Lerp(CamAnchor[1].position, CamAnchor[2].position, CamDis[2])), Color.red, 0.1f);
         if (Hitinfo.transform != null &&
-            (Hitinfo.transform.CompareTag("NoCameraCollider") || Hitinfo.transform.CompareTag("ShelterDoor")))
+            (Hitinfo.transform.CompareTag("NoCameraCollider")
+            || Hitinfo.transform.CompareTag("ShelterDoor")
+            || Hitinfo.transform.CompareTag("Weapon")
+            || Hitinfo.transform.CompareTag("ItemBox")
+            || Hitinfo.transform.CompareTag("PlayerCharacter")))
         {
             this.transform.position = Vector3.Lerp(CamAnchor[1].position , CamAnchor[2].position , CamDis[2]);
             return;
