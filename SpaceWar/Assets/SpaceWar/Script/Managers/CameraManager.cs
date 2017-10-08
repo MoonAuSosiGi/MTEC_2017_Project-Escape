@@ -118,8 +118,12 @@ public class CameraManager : Singletone<CameraManager>{
     private void CamRotateCode()  // 카메라 회전
     {
 
-        if(PLAYER_ROTATE)
+        if(PLAYER_ROTATE && !Input.GetKey(KeyCode.LeftAlt))
             Player.Rotate(0 , Input.GetAxis("Mouse X") * CamRoateSpeed[0] , 0); // 플레이어 캐릭터(카메라 부모 오브젝트) X축 회전
+        else
+        {
+           // transform.RotateAround(Player.transform.position , Vector3.down, Input.GetAxis("Mouse X") * CamRoateSpeed[0]);
+        }
 
         // Y축 회전 시작
         if (CamAngle.y <= 27f && CamAngle.y >= -62f) // 최대,최소 각 체크

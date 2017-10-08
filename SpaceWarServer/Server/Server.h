@@ -5,6 +5,7 @@
 #include "Item.h"
 #include "Shelter.h"
 #include "GameRoom.h"
+#include "OxyCharger.h"
 #include "SP_Marshaler.h"
 #include "../Common/SpaceWar_stub.h"
 #include "../Common/SpaceWar_proxy.h"
@@ -69,8 +70,17 @@ public:
 	// 숨을 쉬었다.
 	DECRMI_SpaceWar_RequestPlayerUseOxy;
 
+	// 산소 충전기 등록 요청
+	DECRMI_SpaceWar_RequestOxyChargerStartSetup;
+
+	// 산소 충전기 조작 요청 
+	DECRMI_SpaceWar_RequestUseOxyChargerStart;
+
 	// 산소 충전기 사용
 	DECRMI_SpaceWar_RequestUseOxyCharger;
+
+	// 산소 충전기 사용 끝
+	DECRMI_SpaceWar_RequestUseOxyChargerEnd;
 
 	// 아이템 박스 사용
 	DECRMI_SpaceWar_RequestUseItemBox;
@@ -132,7 +142,6 @@ private:
 	// 아이템 박스 등 상호작용 오브젝트의 경우 동시접근을 막아야 하므로
 	// 현재 접근하고 있는지 체크하는 로직이 필요함, 이에 따른 체크용 변수들
 	unordered_map<int, int> m_itemBoxMap;
-	unordered_map<int, int> m_oxyChargerMap;
 
 	// 쉘터의 경우엔 등록해야함
 	unordered_map<int, shared_ptr<Shelter>> m_shelterMap;
@@ -152,6 +161,9 @@ public:
 	shared_ptr<CNetServer> m_netServer;
 	// 스레드 lock 을 위함 
 	CriticalSection m_critSec;
+
+	// 산소충전기 리스트
+	unordered_map<int, shared_ptr<OxyCharger>> m_oxyChargerMap;
 
 	// 클라이언트 리스트
 	unordered_map<HostID, shared_ptr<Client>> m_clientMap;

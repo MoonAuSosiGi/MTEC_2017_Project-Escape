@@ -601,8 +601,25 @@ public class NetworkManager : Singletone<NetworkManager> {
             return true;
         };
 
+        // 산소 충전기 사용 가능
+        m_s2cStub.NotifyUseSuccessedOxyCharger = (HostID remote , RmiContext rmiContext , 
+            int targetHostID , int oxyChargerIndex) =>
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 가능 상태");
+            GameManager.Instance().PLAYER.m_player.OXY_CHARGE_ENABLE = true;
+            return true;
+        };
+
+        // 산소 충전기 사용 거부
+        m_s2cStub.NotifyUseFailedOxyCharger = (HostID remote , RmiContext rmiContext , int targetHostID , int oxyChargerIndex) =>
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 거부 상태 "+targetHostID + " 가 먼저 점유하였음 ");
+            GameManager.Instance().PLAYER.m_player.OXY_CHARGE_ENABLE = false;
+            return true;
+        };
+ 
         // itemBox 조작 이벤트 ( 아이템 박스 사용 결과와 생성할 아이템 코드가 날아옴 )
-        m_s2cStub.NotifyUseItemBox = (HostID remote , RmiContext rmiContext ,
+         m_s2cStub.NotifyUseItemBox = (HostID remote , RmiContext rmiContext ,
             int sendHostID , int itemBoxIndex , string itemID,string networkID) =>
         {
             if (itemBoxIndex < 0 || m_itemBoxList.Count <= itemBoxIndex)
@@ -899,6 +916,11 @@ public class NetworkManager : Singletone<NetworkManager> {
         {
             m_itemBoxList.Add(m_itemBoxParent.transform.GetChild(i).GetComponent<ItemBox>());
             m_itemBoxList[i].ITEMBOX_ID = i;
+
+            if(IS_HOST)
+            {
+                m_c2sProxy.RequestOxyChargerStartSetup(HostID.HostID_Server , RmiContext.ReliableSend , i);
+            }
         }
     }
 
@@ -1027,7 +1049,7 @@ public class NetworkManager : Singletone<NetworkManager> {
     public event GameStartFailed gameStartFailed = null;
 
 
-    // 게임이 끝났다 시발
+    // 게임이 끝났다 
     public void RequestGameExit()
     {
         if (m_isHost)
@@ -1303,13 +1325,26 @@ public class NetworkManager : Singletone<NetworkManager> {
     #endregion
 
     #region Network Object 
-    // user OxyCharger
+
+    // use request OxyCharger
+    public void C2SRequestUseOxyChargerStart(OxyCharger charger)
+    {
+        m_c2sProxy.RequestUseOxyChargerStart(HostID.HostID_Server , RmiContext.ReliableSend , charger.OXY_CHARGER_ID);
+    }
+
+    // use OxyCharger
     public void C2SRequestPlayerUseOxyCharger(OxyCharger charger,float UseOxy)
     {
         m_c2sProxy.RequestUseOxyCharger(HostID.HostID_Server , RmiContext.ReliableSend ,
             (int)m_hostID , GetOxyChargerIndex(charger) , UseOxy);
     }
 
+    // use end OxyCharger
+    public void C2SRequestPlayerUseEndOxyCharger(OxyCharger charger)
+    {
+        GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 끝");
+        m_c2sProxy.RequestUseOxyChargerEnd(HostID.HostID_Server , RmiContext.ReliableSend , charger.OXY_CHARGER_ID);
+    }
     // use itemBox
     public void C2SRequestPlayerUseItemBox(ItemBox box)
     {

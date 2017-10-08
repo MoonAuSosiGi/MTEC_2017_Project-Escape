@@ -259,10 +259,11 @@ public class PlayerController : MonoBehaviour {
             //if (m_isJumpAble == false)
             //    return;
             m_walkAniVal = value;
-
+            
             // 이동 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
-            if(m_walkAniVal != 0)
+            if (m_walkAniVal != 0)
             {
+                AttackAnimationEnd();
                 ATTACK_ANI_VALUE = 0;
                 JUMP_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
@@ -278,9 +279,10 @@ public class PlayerController : MonoBehaviour {
         set
         {
             m_jumpAniVal = value;
-            
+            if (m_jumpAniVal == 1 && ATTACK_ANI_VALUE != 0)
+                AttackAnimationEnd();
             // 점프 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
-            if(m_jumpAniVal != 0)
+            if (m_jumpAniVal != 0)
             {
               //  ATTACK_ANI_VALUE = 0;
                 WALK_ANI_VALUE = 0;
@@ -297,8 +299,9 @@ public class PlayerController : MonoBehaviour {
         set
         {
             m_interactionAniVal = value;
-
-            if(m_interactionAniVal != 0)
+            if (m_interactionAniVal == 1 && ATTACK_ANI_VALUE != 0)
+                AttackAnimationEnd();
+            if (m_interactionAniVal != 0)
             {
                 ATTACK_ANI_VALUE = 0;
                 WALK_ANI_VALUE = 0;
@@ -312,6 +315,25 @@ public class PlayerController : MonoBehaviour {
     #region Player Oxy Charger 
     private float m_targetOxy = 0.0f;
     private float m_plusOxy = 0.0f;
+    private bool m_oxyChargeEnable = false;
+    private bool m_oxyChargeRequest = false;
+    public bool OXY_CHARGE_ENABLE
+    {
+        get { return m_oxyChargeEnable; }
+        set {
+            m_oxyChargeEnable = value;
+
+            if(m_oxyChargeEnable == false)
+            {
+                m_isMoveAble = true;
+                m_oxyChargeRequest = false;
+            }
+            else
+            {
+                OxyChargerEnableSetup();
+            }
+        }
+    }
     #endregion
 
 
@@ -773,7 +795,7 @@ public class PlayerController : MonoBehaviour {
 
     public void AttackAnimationEnd()
     {
-        if (enabled == false)
+        if (enabled == false || m_equipItems[m_curEquipItem] == null)
             return;
 
         if(m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_GRENADE)
@@ -795,7 +817,7 @@ public class PlayerController : MonoBehaviour {
         {
             
         }
-
+        m_nearText.gameObject.SetActive(false);
         if (col.CompareTag("Weapon"))
         {
             m_nearItem = col.gameObject;
@@ -1121,33 +1143,47 @@ public class PlayerController : MonoBehaviour {
                 AudioPlay(m_spaceShipChargeFail);
             }
         }
-         
+        
+        // 산소 충전 요청을 보내야 한다.
+        if(m_oxyChargeEnable == false)
+        {
+            if(m_nearOxyCharger != null && Input.GetKeyDown(m_Get) && m_oxyChargeRequest == false)
+            {
+                m_oxyChargeRequest = true;
+                m_isMoveAble = false;
+                NetworkManager.Instance().C2SRequestUseOxyChargerStart(m_nearOxyCharger);
+            }
 
-        ControlOxyChargerProcess();
+        }else
+        {
+            ControlOxyChargerProcess();
+        }
+
+        
     }
 
+    // 산소 충전 가능 상태가 되자마자 첨 세팅
+    void OxyChargerEnableSetup()
+    {
+        AudioPlay(m_oxyChargerUseSound);
+        LoopAudioPlay(m_oxyChargeSound);
+        m_targetOxy = GameManager.Instance().PLAYER.m_fullOxy - GameManager.Instance().PLAYER.m_oxy;
+        m_plusOxy = 0.0f;
+        SetAnimation(AnimationType.ANI_ETC);
+        if (m_currentWeapon != null)
+        {
+            m_currentWeapon.gameObject.SetActive(false);
+
+        }
+        INTERACTION_ANI_VALUE = 1;
+        GameManager.Instance().SLIDER_UI.ShowSlider();
+        GameManager.Instance().SLIDER_UI.Reset();
+    }
+    // 산소 충전가능한 상황일때
     void ControlOxyChargerProcess()
     {
         if (m_nearOxyCharger == null)
             return;
-
-        if (Input.GetKeyDown(m_Get))
-        {
-            AudioPlay(m_oxyChargerUseSound);
-            LoopAudioPlay(m_oxyChargeSound);
-            m_targetOxy = GameManager.Instance().PLAYER.m_fullOxy - GameManager.Instance().PLAYER.m_oxy;
-            m_plusOxy = 0.0f;
-            SetAnimation(AnimationType.ANI_ETC);
-            if (m_currentWeapon != null)
-            {
-                m_currentWeapon.gameObject.SetActive(false);
-
-            }
-            INTERACTION_ANI_VALUE = 1;
-            GameManager.Instance().SLIDER_UI.ShowSlider();
-            GameManager.Instance().SLIDER_UI.Reset();
-            
-        }
 
         if(Input.GetKey(m_Get))
         {
@@ -1186,6 +1222,12 @@ public class PlayerController : MonoBehaviour {
         }
         if(Input.GetKeyUp(m_Get))
         {
+            m_oxyChargeRequest = false;
+            m_oxyChargeEnable = false;
+            m_isMoveAble = true;
+            //산소 충전 끝
+            NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
+
             LoopAudioStop();
             INTERACTION_ANI_VALUE = 0;
             m_targetOxy = 0.0f;

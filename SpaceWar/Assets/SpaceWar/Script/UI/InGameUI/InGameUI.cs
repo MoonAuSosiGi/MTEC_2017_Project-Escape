@@ -46,8 +46,10 @@ public class InGameUI : MonoBehaviour
 
     public GameObject INVEN_OBJECT { get { return m_invenIconObject; } }
     #endregion
-    
 
+    #region Debug Label
+    [SerializeField] private UILabel m_debugLabel = null;
+    #endregion
     #endregion
 
     #region PlayerHP_OXY
@@ -151,7 +153,6 @@ public class InGameUI : MonoBehaviour
     }
     #endregion
     
-
     #region SpaceShipUI
 
     public void StartSpaceShipUI()
@@ -188,6 +189,13 @@ public class InGameUI : MonoBehaviour
     public void RecvMeteorInfo(int time)
     {
         m_meteoTimeLabel.text = time.ToString();
+    }
+    #endregion
+
+    #region Debug Label
+    public void ShowDebugLabel(string text)
+    {
+        m_debugLabel.text = "Debug Label \n"+ text;
     }
     #endregion
 

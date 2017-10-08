@@ -270,6 +270,16 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestPlayerUseOxy RequestPlayerUseOxy ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & useOxy)
 #define PARAM_SpaceWar_RequestPlayerUseOxy ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & useOxy)
                
+		virtual bool RequestUseOxyChargerStart ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestUseOxyChargerStart bool RequestUseOxyChargerStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestUseOxyChargerStart(DerivedClass) bool DerivedClass::RequestUseOxyChargerStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex)
+#define CALL_SpaceWar_RequestUseOxyChargerStart RequestUseOxyChargerStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex)
+#define PARAM_SpaceWar_RequestUseOxyChargerStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex)
+               
 		virtual bool RequestUseOxyCharger ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const float & )		{ 
 			return false;
 		} 
@@ -280,6 +290,16 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestUseOxyCharger RequestUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)
 #define PARAM_SpaceWar_RequestUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)
                
+		virtual bool RequestUseOxyChargerEnd ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestUseOxyChargerEnd bool RequestUseOxyChargerEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestUseOxyChargerEnd(DerivedClass) bool DerivedClass::RequestUseOxyChargerEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex)
+#define CALL_SpaceWar_RequestUseOxyChargerEnd RequestUseOxyChargerEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex)
+#define PARAM_SpaceWar_RequestUseOxyChargerEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex)
+               
 		virtual bool RequestUseItemBox ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & )		{ 
 			return false;
 		} 
@@ -289,6 +309,16 @@ namespace SpaceWar
 #define DEFRMI_SpaceWar_RequestUseItemBox(DerivedClass) bool DerivedClass::RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex)
 #define CALL_SpaceWar_RequestUseItemBox RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex)
 #define PARAM_SpaceWar_RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex)
+               
+		virtual bool RequestOxyChargerStartSetup ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestOxyChargerStartSetup bool RequestOxyChargerStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestOxyChargerStartSetup(DerivedClass) bool DerivedClass::RequestOxyChargerStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID)
+#define CALL_SpaceWar_RequestOxyChargerStartSetup RequestOxyChargerStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID)
+#define PARAM_SpaceWar_RequestOxyChargerStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID)
                
 		virtual bool RequestShelterStartSetup ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
@@ -400,16 +430,6 @@ namespace SpaceWar
 #define CALL_SpaceWar_NotifyCreateItem NotifyCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & itemID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
 #define PARAM_SpaceWar_NotifyCreateItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & hostID,  const string & itemID,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
                
-		virtual bool NotifyStartOxyChargerState ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const float & )		{ 
-			return false;
-		} 
-
-#define DECRMI_SpaceWar_NotifyStartOxyChargerState bool NotifyStartOxyChargerState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID,  const float & oxy) PN_OVERRIDE
-
-#define DEFRMI_SpaceWar_NotifyStartOxyChargerState(DerivedClass) bool DerivedClass::NotifyStartOxyChargerState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID,  const float & oxy)
-#define CALL_SpaceWar_NotifyStartOxyChargerState NotifyStartOxyChargerState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID,  const float & oxy)
-#define PARAM_SpaceWar_NotifyStartOxyChargerState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID,  const float & oxy)
-               
 		virtual bool NotifyStartItemBoxState ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
 			return false;
 		} 
@@ -509,6 +529,26 @@ namespace SpaceWar
 #define DEFRMI_SpaceWar_NotifyUseOxyCharger(DerivedClass) bool DerivedClass::NotifyUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)
 #define CALL_SpaceWar_NotifyUseOxyCharger NotifyUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)
 #define PARAM_SpaceWar_NotifyUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy)
+               
+		virtual bool NotifyUseSuccessedOxyCharger ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyUseSuccessedOxyCharger bool NotifyUseSuccessedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyUseSuccessedOxyCharger(DerivedClass) bool DerivedClass::NotifyUseSuccessedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex)
+#define CALL_SpaceWar_NotifyUseSuccessedOxyCharger NotifyUseSuccessedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex)
+#define PARAM_SpaceWar_NotifyUseSuccessedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex)
+               
+		virtual bool NotifyUseFailedOxyCharger ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyUseFailedOxyCharger bool NotifyUseFailedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyUseFailedOxyCharger(DerivedClass) bool DerivedClass::NotifyUseFailedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex)
+#define CALL_SpaceWar_NotifyUseFailedOxyCharger NotifyUseFailedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex)
+#define PARAM_SpaceWar_NotifyUseFailedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex)
                
 		virtual bool NotifyUseItemBox ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const string & ,  const string & )		{ 
 			return false;
@@ -776,8 +816,11 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_RequestWorldCreateItem;
 		static const PNTCHAR* RmiName_RequestPlayerDamage;
 		static const PNTCHAR* RmiName_RequestPlayerUseOxy;
+		static const PNTCHAR* RmiName_RequestUseOxyChargerStart;
 		static const PNTCHAR* RmiName_RequestUseOxyCharger;
+		static const PNTCHAR* RmiName_RequestUseOxyChargerEnd;
 		static const PNTCHAR* RmiName_RequestUseItemBox;
+		static const PNTCHAR* RmiName_RequestOxyChargerStartSetup;
 		static const PNTCHAR* RmiName_RequestShelterStartSetup;
 		static const PNTCHAR* RmiName_RequestShelterDoorControl;
 		static const PNTCHAR* RmiName_RequestShelterEnter;
@@ -789,7 +832,6 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyPlayerMove;
 		static const PNTCHAR* RmiName_NotifyDeleteItem;
 		static const PNTCHAR* RmiName_NotifyCreateItem;
-		static const PNTCHAR* RmiName_NotifyStartOxyChargerState;
 		static const PNTCHAR* RmiName_NotifyStartItemBoxState;
 		static const PNTCHAR* RmiName_NotifyPlayerEquipItem;
 		static const PNTCHAR* RmiName_NotifyPlayerUnEquipItem;
@@ -800,6 +842,8 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyPlayerChangeHP;
 		static const PNTCHAR* RmiName_NotifyPlayerChangeOxygen;
 		static const PNTCHAR* RmiName_NotifyUseOxyCharger;
+		static const PNTCHAR* RmiName_NotifyUseSuccessedOxyCharger;
+		static const PNTCHAR* RmiName_NotifyUseFailedOxyCharger;
 		static const PNTCHAR* RmiName_NotifyUseItemBox;
 		static const PNTCHAR* RmiName_NotifyShelterInfo;
 		static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
@@ -1060,6 +1104,15 @@ namespace SpaceWar
 		}
 
                
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestUseOxyChargerStart_Function;
+		virtual bool RequestUseOxyChargerStart ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex) 
+		{ 
+			if (RequestUseOxyChargerStart_Function==nullptr) 
+				return true; 
+			return RequestUseOxyChargerStart_Function(remote,rmiContext, oxyChargerIndex); 
+		}
+
+               
 		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ,  const float & ) > RequestUseOxyCharger_Function;
 		virtual bool RequestUseOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & oxyChargerIndex,  const float & userOxy) 
 		{ 
@@ -1069,12 +1122,30 @@ namespace SpaceWar
 		}
 
                
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestUseOxyChargerEnd_Function;
+		virtual bool RequestUseOxyChargerEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerIndex) 
+		{ 
+			if (RequestUseOxyChargerEnd_Function==nullptr) 
+				return true; 
+			return RequestUseOxyChargerEnd_Function(remote,rmiContext, oxyChargerIndex); 
+		}
+
+               
 		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ) > RequestUseItemBox_Function;
 		virtual bool RequestUseItemBox ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const int & itemBoxIndex) 
 		{ 
 			if (RequestUseItemBox_Function==nullptr) 
 				return true; 
 			return RequestUseItemBox_Function(remote,rmiContext, sendHostID, itemBoxIndex); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestOxyChargerStartSetup_Function;
+		virtual bool RequestOxyChargerStartSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID) 
+		{ 
+			if (RequestOxyChargerStartSetup_Function==nullptr) 
+				return true; 
+			return RequestOxyChargerStartSetup_Function(remote,rmiContext, oxyChargerID); 
 		}
 
                
@@ -1177,15 +1248,6 @@ namespace SpaceWar
 		}
 
                
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const float & ) > NotifyStartOxyChargerState_Function;
-		virtual bool NotifyStartOxyChargerState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & oxyChargerID,  const float & oxy) 
-		{ 
-			if (NotifyStartOxyChargerState_Function==nullptr) 
-				return true; 
-			return NotifyStartOxyChargerState_Function(remote,rmiContext, oxyChargerID, oxy); 
-		}
-
-               
 		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & ) > NotifyStartItemBoxState_Function;
 		virtual bool NotifyStartItemBoxState ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & itemBoxID,  const bool & openState) 
 		{ 
@@ -1273,6 +1335,24 @@ namespace SpaceWar
 			if (NotifyUseOxyCharger_Function==nullptr) 
 				return true; 
 			return NotifyUseOxyCharger_Function(remote,rmiContext, sendHostID, oxyChargerIndex, userOxy); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ) > NotifyUseSuccessedOxyCharger_Function;
+		virtual bool NotifyUseSuccessedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex) 
+		{ 
+			if (NotifyUseSuccessedOxyCharger_Function==nullptr) 
+				return true; 
+			return NotifyUseSuccessedOxyCharger_Function(remote,rmiContext, targetHostID, oxyChargerIndex); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const int & ) > NotifyUseFailedOxyCharger_Function;
+		virtual bool NotifyUseFailedOxyCharger ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const int & oxyChargerIndex) 
+		{ 
+			if (NotifyUseFailedOxyCharger_Function==nullptr) 
+				return true; 
+			return NotifyUseFailedOxyCharger_Function(remote,rmiContext, targetHostID, oxyChargerIndex); 
 		}
 
                

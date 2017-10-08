@@ -236,6 +236,18 @@ void Server::OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, con
 
 		return;
 	}
+	auto oxyIter = m_oxyChargerMap.begin();
+	while (oxyIter != m_oxyChargerMap.end())
+	{
+		if (oxyIter->second->GetUseHostID() == (int)clientInfo->m_HostID)
+		{
+			m_oxyChargerMap.erase(oxyIter);
+			break;
+		}
+		oxyIter++;
+	}
+
+	
 
 	m_proxy.NotifyPlayerLost(m_playerP2PGroup,RmiContext::ReliableSend,clientInfo->m_HostID);
 	m_gameRoom->LogOutClient(iter->second->m_hostID);
@@ -532,19 +544,58 @@ DEFRMI_SpaceWar_RequestPlayerUseOxy(Server)
 	return true;
 }
 
+//산소 충전기 등록 요청
+DEFRMI_SpaceWar_RequestOxyChargerStartSetup(Server)
+{
+	CriticalSectionLock lock(m_critSec, true);
+	auto newOxyCharger = make_shared<OxyCharger>();
+	m_oxyChargerMap[oxyChargerID] = newOxyCharger;
+	return true;
+}
+// 산소 충전기 조작 끝
+DEFRMI_SpaceWar_RequestUseOxyChargerEnd(Server)
+{
+	cout << "Request Use Oxy Charger End "<< oxyChargerIndex << endl;
+	if(m_oxyChargerMap[oxyChargerIndex]->GetUseHostID() == (int)remote)
+		m_oxyChargerMap[oxyChargerIndex]->UnLockOxyCharger();
+	return true;
+}
+
+// 산소 충전기 조작 요청
+DEFRMI_SpaceWar_RequestUseOxyChargerStart(Server)
+{
+	// 잠겨있다면 거부
+	if (m_oxyChargerMap[oxyChargerIndex]->IsLocked())
+	{
+		m_proxy.NotifyUseFailedOxyCharger(remote, RmiContext::ReliableSend, m_oxyChargerMap[oxyChargerIndex]->GetUseHostID(), oxyChargerIndex);
+	}
+	// 잠겨있지 않다면 허용
+	else
+	{
+		//잠근다.
+		m_oxyChargerMap[oxyChargerIndex]->LockOxyCharger((int)remote);
+		m_proxy.NotifyUseSuccessedOxyCharger(remote, RmiContext::ReliableSend, (int)remote, oxyChargerIndex);
+	}
+	return true;
+}
+
+// 산소 충전기 조작중
 DEFRMI_SpaceWar_RequestUseOxyCharger(Server)
 {
 	cout << "RequestUseOxyCharger " << endl;
 
-	CriticalSectionLock lock(m_critSec, true);
+	if (m_oxyChargerMap[oxyChargerIndex]->IsLocked() && m_oxyChargerMap[oxyChargerIndex]->GetUseHostID() == (int)remote)
+	{
 	
-	float prevOxy = m_clientMap[(HostID)sendHostID]->oxy;
-	m_clientMap[(HostID)sendHostID]->oxy += userOxy;
+		float prevOxy = m_clientMap[(HostID)sendHostID]->oxy;
+		m_clientMap[(HostID)sendHostID]->oxy += userOxy;
 
-	m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName, m_clientMap[(HostID)sendHostID]->oxy, prevOxy, MAX_OXY);
+		m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName, m_clientMap[(HostID)sendHostID]->oxy, prevOxy, MAX_OXY);
 
-	m_proxy.NotifyUseOxyCharger(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID,
-		oxyChargerIndex, userOxy);
+		m_proxy.NotifyUseOxyCharger(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID,
+			oxyChargerIndex, userOxy);
+	}
+	
 	return true;
 }
 

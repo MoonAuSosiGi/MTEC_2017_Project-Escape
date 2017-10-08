@@ -143,13 +143,28 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
+		public delegate bool RequestUseOxyChargerStartDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int oxyChargerIndex);  
+		public RequestUseOxyChargerStartDelegate RequestUseOxyChargerStart = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int oxyChargerIndex)
+		{ 
+			return false;
+		};
 		public delegate bool RequestUseOxyChargerDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int oxyChargerIndex, float userOxy);  
 		public RequestUseOxyChargerDelegate RequestUseOxyCharger = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int oxyChargerIndex, float userOxy)
 		{ 
 			return false;
 		};
+		public delegate bool RequestUseOxyChargerEndDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int oxyChargerIndex);  
+		public RequestUseOxyChargerEndDelegate RequestUseOxyChargerEnd = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int oxyChargerIndex)
+		{ 
+			return false;
+		};
 		public delegate bool RequestUseItemBoxDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex);  
 		public RequestUseItemBoxDelegate RequestUseItemBox = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int itemBoxIndex)
+		{ 
+			return false;
+		};
+		public delegate bool RequestOxyChargerStartSetupDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int oxyChargerID);  
+		public RequestOxyChargerStartSetupDelegate RequestOxyChargerStartSetup = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int oxyChargerID)
 		{ 
 			return false;
 		};
@@ -208,11 +223,6 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
-		public delegate bool NotifyStartOxyChargerStateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int oxyChargerID, float oxy);  
-		public NotifyStartOxyChargerStateDelegate NotifyStartOxyChargerState = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int oxyChargerID, float oxy)
-		{ 
-			return false;
-		};
 		public delegate bool NotifyStartItemBoxStateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int itemBoxID, bool openState);  
 		public NotifyStartItemBoxStateDelegate NotifyStartItemBoxState = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int itemBoxID, bool openState)
 		{ 
@@ -260,6 +270,16 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		};
 		public delegate bool NotifyUseOxyChargerDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int oxyChargerIndex, float userOxy);  
 		public NotifyUseOxyChargerDelegate NotifyUseOxyCharger = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int sendHostID, int oxyChargerIndex, float userOxy)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyUseSuccessedOxyChargerDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID, int oxyChargerIndex);  
+		public NotifyUseSuccessedOxyChargerDelegate NotifyUseSuccessedOxyCharger = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID, int oxyChargerIndex)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyUseFailedOxyChargerDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID, int oxyChargerIndex);  
+		public NotifyUseFailedOxyChargerDelegate NotifyUseFailedOxyCharger = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID, int oxyChargerIndex)
 		{ 
 			return false;
 		};
@@ -1718,6 +1738,57 @@ parameterString+=useOxy.ToString()+",";
 		}
 	}
 	break;
+case Common.RequestUseOxyChargerStart:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int oxyChargerIndex; SP_Marshaler.Read(__msg,out oxyChargerIndex);	
+core.PostCheckReadMessage(__msg, RmiName_RequestUseOxyChargerStart);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=oxyChargerIndex.ToString()+",";
+			NotifyCallFromStub(Common.RequestUseOxyChargerStart, RmiName_RequestUseOxyChargerStart,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.RequestUseOxyChargerStart;
+			summary.rmiName = RmiName_RequestUseOxyChargerStart;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=RequestUseOxyChargerStart (remote,ctx , oxyChargerIndex );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_RequestUseOxyChargerStart);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.RequestUseOxyChargerStart;
+			summary.rmiName = RmiName_RequestUseOxyChargerStart;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
 case Common.RequestUseOxyCharger:
 	{
 		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
@@ -1773,6 +1844,57 @@ parameterString+=userOxy.ToString()+",";
 		}
 	}
 	break;
+case Common.RequestUseOxyChargerEnd:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int oxyChargerIndex; SP_Marshaler.Read(__msg,out oxyChargerIndex);	
+core.PostCheckReadMessage(__msg, RmiName_RequestUseOxyChargerEnd);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=oxyChargerIndex.ToString()+",";
+			NotifyCallFromStub(Common.RequestUseOxyChargerEnd, RmiName_RequestUseOxyChargerEnd,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.RequestUseOxyChargerEnd;
+			summary.rmiName = RmiName_RequestUseOxyChargerEnd;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=RequestUseOxyChargerEnd (remote,ctx , oxyChargerIndex );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_RequestUseOxyChargerEnd);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.RequestUseOxyChargerEnd;
+			summary.rmiName = RmiName_RequestUseOxyChargerEnd;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
 case Common.RequestUseItemBox:
 	{
 		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
@@ -1819,6 +1941,57 @@ parameterString+=itemBoxIndex.ToString()+",";
 			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
 			summary.rmiID = Common.RequestUseItemBox;
 			summary.rmiName = RmiName_RequestUseItemBox;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.RequestOxyChargerStartSetup:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int oxyChargerID; SP_Marshaler.Read(__msg,out oxyChargerID);	
+core.PostCheckReadMessage(__msg, RmiName_RequestOxyChargerStartSetup);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=oxyChargerID.ToString()+",";
+			NotifyCallFromStub(Common.RequestOxyChargerStartSetup, RmiName_RequestOxyChargerStartSetup,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.RequestOxyChargerStartSetup;
+			summary.rmiName = RmiName_RequestOxyChargerStartSetup;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=RequestOxyChargerStartSetup (remote,ctx , oxyChargerID );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_RequestOxyChargerStartSetup);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.RequestOxyChargerStartSetup;
+			summary.rmiName = RmiName_RequestOxyChargerStartSetup;
 			summary.hostID = remote;
 			summary.hostTag = hostTag;
 			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
@@ -2439,59 +2612,6 @@ parameterString+=rot.ToString()+",";
 		}
 	}
 	break;
-case Common.NotifyStartOxyChargerState:
-	{
-		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
-		ctx.sentFrom=pa.RemoteHostID;
-		ctx.relayed=pa.IsRelayed;
-		ctx.hostTag=hostTag;
-		ctx.encryptMode = pa.EncryptMode;
-		ctx.compressMode = pa.CompressMode;
-			
-		int oxyChargerID; SP_Marshaler.Read(__msg,out oxyChargerID);	
-float oxy; SP_Marshaler.Read(__msg,out oxy);	
-core.PostCheckReadMessage(__msg, RmiName_NotifyStartOxyChargerState);
-		if(enableNotifyCallFromStub==true)
-		{
-			string parameterString="";
-			parameterString+=oxyChargerID.ToString()+",";
-parameterString+=oxy.ToString()+",";
-			NotifyCallFromStub(Common.NotifyStartOxyChargerState, RmiName_NotifyStartOxyChargerState,parameterString);
-		}
-			
-		if(enableStubProfiling)
-		{
-			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
-			summary.rmiID = Common.NotifyStartOxyChargerState;
-			summary.rmiName = RmiName_NotifyStartOxyChargerState;
-			summary.hostID = remote;
-			summary.hostTag = hostTag;
-			BeforeRmiInvocation(summary);
-		}
-			
-		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
-			
-		// Call this method.
-		bool __ret=NotifyStartOxyChargerState (remote,ctx , oxyChargerID, oxy );
-			
-		if(__ret==false)
-		{
-			// Error: RMI function that a user did not create has been called. 
-			core.ShowNotImplementedRmiWarning(RmiName_NotifyStartOxyChargerState);
-		}
-			
-		if(enableStubProfiling)
-		{
-			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
-			summary.rmiID = Common.NotifyStartOxyChargerState;
-			summary.rmiName = RmiName_NotifyStartOxyChargerState;
-			summary.hostID = remote;
-			summary.hostTag = hostTag;
-			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
-			AfterRmiInvocation(summary);
-		}
-	}
-	break;
 case Common.NotifyStartItemBoxState:
 	{
 		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
@@ -3055,6 +3175,112 @@ parameterString+=userOxy.ToString()+",";
 			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
 			summary.rmiID = Common.NotifyUseOxyCharger;
 			summary.rmiName = RmiName_NotifyUseOxyCharger;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyUseSuccessedOxyCharger:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int targetHostID; SP_Marshaler.Read(__msg,out targetHostID);	
+int oxyChargerIndex; SP_Marshaler.Read(__msg,out oxyChargerIndex);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyUseSuccessedOxyCharger);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=targetHostID.ToString()+",";
+parameterString+=oxyChargerIndex.ToString()+",";
+			NotifyCallFromStub(Common.NotifyUseSuccessedOxyCharger, RmiName_NotifyUseSuccessedOxyCharger,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyUseSuccessedOxyCharger;
+			summary.rmiName = RmiName_NotifyUseSuccessedOxyCharger;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyUseSuccessedOxyCharger (remote,ctx , targetHostID, oxyChargerIndex );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyUseSuccessedOxyCharger);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyUseSuccessedOxyCharger;
+			summary.rmiName = RmiName_NotifyUseSuccessedOxyCharger;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyUseFailedOxyCharger:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int targetHostID; SP_Marshaler.Read(__msg,out targetHostID);	
+int oxyChargerIndex; SP_Marshaler.Read(__msg,out oxyChargerIndex);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyUseFailedOxyCharger);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=targetHostID.ToString()+",";
+parameterString+=oxyChargerIndex.ToString()+",";
+			NotifyCallFromStub(Common.NotifyUseFailedOxyCharger, RmiName_NotifyUseFailedOxyCharger,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyUseFailedOxyCharger;
+			summary.rmiName = RmiName_NotifyUseFailedOxyCharger;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyUseFailedOxyCharger (remote,ctx , targetHostID, oxyChargerIndex );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyUseFailedOxyCharger);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyUseFailedOxyCharger;
+			summary.rmiName = RmiName_NotifyUseFailedOxyCharger;
 			summary.hostID = remote;
 			summary.hostTag = hostTag;
 			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
@@ -4378,8 +4604,11 @@ const string RmiName_RequestClientJoin="RequestClientJoin";
 const string RmiName_RequestWorldCreateItem="RequestWorldCreateItem";
 const string RmiName_RequestPlayerDamage="RequestPlayerDamage";
 const string RmiName_RequestPlayerUseOxy="RequestPlayerUseOxy";
+const string RmiName_RequestUseOxyChargerStart="RequestUseOxyChargerStart";
 const string RmiName_RequestUseOxyCharger="RequestUseOxyCharger";
+const string RmiName_RequestUseOxyChargerEnd="RequestUseOxyChargerEnd";
 const string RmiName_RequestUseItemBox="RequestUseItemBox";
+const string RmiName_RequestOxyChargerStartSetup="RequestOxyChargerStartSetup";
 const string RmiName_RequestShelterStartSetup="RequestShelterStartSetup";
 const string RmiName_RequestShelterDoorControl="RequestShelterDoorControl";
 const string RmiName_RequestShelterEnter="RequestShelterEnter";
@@ -4391,7 +4620,6 @@ const string RmiName_NotifyPlayerLost="NotifyPlayerLost";
 const string RmiName_NotifyPlayerMove="NotifyPlayerMove";
 const string RmiName_NotifyDeleteItem="NotifyDeleteItem";
 const string RmiName_NotifyCreateItem="NotifyCreateItem";
-const string RmiName_NotifyStartOxyChargerState="NotifyStartOxyChargerState";
 const string RmiName_NotifyStartItemBoxState="NotifyStartItemBoxState";
 const string RmiName_NotifyPlayerEquipItem="NotifyPlayerEquipItem";
 const string RmiName_NotifyPlayerUnEquipItem="NotifyPlayerUnEquipItem";
@@ -4402,6 +4630,8 @@ const string RmiName_NotifyPlayerAnimation="NotifyPlayerAnimation";
 const string RmiName_NotifyPlayerChangeHP="NotifyPlayerChangeHP";
 const string RmiName_NotifyPlayerChangeOxygen="NotifyPlayerChangeOxygen";
 const string RmiName_NotifyUseOxyCharger="NotifyUseOxyCharger";
+const string RmiName_NotifyUseSuccessedOxyCharger="NotifyUseSuccessedOxyCharger";
+const string RmiName_NotifyUseFailedOxyCharger="NotifyUseFailedOxyCharger";
 const string RmiName_NotifyUseItemBox="NotifyUseItemBox";
 const string RmiName_NotifyShelterInfo="NotifyShelterInfo";
 const string RmiName_NotifyMeteorCreateTime="NotifyMeteorCreateTime";
@@ -4456,8 +4686,11 @@ const string RmiName_RequestClientJoin="";
 const string RmiName_RequestWorldCreateItem="";
 const string RmiName_RequestPlayerDamage="";
 const string RmiName_RequestPlayerUseOxy="";
+const string RmiName_RequestUseOxyChargerStart="";
 const string RmiName_RequestUseOxyCharger="";
+const string RmiName_RequestUseOxyChargerEnd="";
 const string RmiName_RequestUseItemBox="";
+const string RmiName_RequestOxyChargerStartSetup="";
 const string RmiName_RequestShelterStartSetup="";
 const string RmiName_RequestShelterDoorControl="";
 const string RmiName_RequestShelterEnter="";
@@ -4469,7 +4702,6 @@ const string RmiName_NotifyPlayerLost="";
 const string RmiName_NotifyPlayerMove="";
 const string RmiName_NotifyDeleteItem="";
 const string RmiName_NotifyCreateItem="";
-const string RmiName_NotifyStartOxyChargerState="";
 const string RmiName_NotifyStartItemBoxState="";
 const string RmiName_NotifyPlayerEquipItem="";
 const string RmiName_NotifyPlayerUnEquipItem="";
@@ -4480,6 +4712,8 @@ const string RmiName_NotifyPlayerAnimation="";
 const string RmiName_NotifyPlayerChangeHP="";
 const string RmiName_NotifyPlayerChangeOxygen="";
 const string RmiName_NotifyUseOxyCharger="";
+const string RmiName_NotifyUseSuccessedOxyCharger="";
+const string RmiName_NotifyUseFailedOxyCharger="";
 const string RmiName_NotifyUseItemBox="";
 const string RmiName_NotifyShelterInfo="";
 const string RmiName_NotifyMeteorCreateTime="";

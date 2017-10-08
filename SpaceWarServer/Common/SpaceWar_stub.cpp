@@ -1991,6 +1991,80 @@ namespace SpaceWar
 					}
 				}
 				break;
+			case Rmi_RequestUseOxyChargerStart:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int oxyChargerIndex; __msg >> oxyChargerIndex;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestUseOxyChargerStart);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,oxyChargerIndex);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestUseOxyChargerStart, 
+							RmiName_RequestUseOxyChargerStart,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestUseOxyChargerStart, 
+							RmiName_RequestUseOxyChargerStart, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestUseOxyChargerStart, 
+							RmiName_RequestUseOxyChargerStart, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestUseOxyChargerStart;
+						summary.m_rmiName = RmiName_RequestUseOxyChargerStart;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestUseOxyChargerStart (remote,ctx , oxyChargerIndex );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestUseOxyChargerStart);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestUseOxyChargerStart;
+						summary.m_rmiName = RmiName_RequestUseOxyChargerStart;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
 			case Rmi_RequestUseOxyCharger:
 				{
 					::Proud::RmiContext ctx;
@@ -2073,6 +2147,80 @@ namespace SpaceWar
 					}
 				}
 				break;
+			case Rmi_RequestUseOxyChargerEnd:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int oxyChargerIndex; __msg >> oxyChargerIndex;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestUseOxyChargerEnd);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,oxyChargerIndex);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestUseOxyChargerEnd, 
+							RmiName_RequestUseOxyChargerEnd,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestUseOxyChargerEnd, 
+							RmiName_RequestUseOxyChargerEnd, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestUseOxyChargerEnd, 
+							RmiName_RequestUseOxyChargerEnd, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestUseOxyChargerEnd;
+						summary.m_rmiName = RmiName_RequestUseOxyChargerEnd;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestUseOxyChargerEnd (remote,ctx , oxyChargerIndex );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestUseOxyChargerEnd);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestUseOxyChargerEnd;
+						summary.m_rmiName = RmiName_RequestUseOxyChargerEnd;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
 			case Rmi_RequestUseItemBox:
 				{
 					::Proud::RmiContext ctx;
@@ -2140,6 +2288,80 @@ namespace SpaceWar
 						::Proud::AfterRmiSummary summary;
 						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestUseItemBox;
 						summary.m_rmiName = RmiName_RequestUseItemBox;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestOxyChargerStartSetup:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int oxyChargerID; __msg >> oxyChargerID;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestOxyChargerStartSetup);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,oxyChargerID);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestOxyChargerStartSetup, 
+							RmiName_RequestOxyChargerStartSetup,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestOxyChargerStartSetup, 
+							RmiName_RequestOxyChargerStartSetup, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestOxyChargerStartSetup, 
+							RmiName_RequestOxyChargerStartSetup, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestOxyChargerStartSetup;
+						summary.m_rmiName = RmiName_RequestOxyChargerStartSetup;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestOxyChargerStartSetup (remote,ctx , oxyChargerID );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestOxyChargerStartSetup);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestOxyChargerStartSetup;
+						summary.m_rmiName = RmiName_RequestOxyChargerStartSetup;
 						summary.m_hostID = remote;
 						summary.m_hostTag = hostTag;
 						int64_t __t1;
@@ -3069,84 +3291,6 @@ namespace SpaceWar
 					}
 				}
 				break;
-			case Rmi_NotifyStartOxyChargerState:
-				{
-					::Proud::RmiContext ctx;
-					ctx.m_sentFrom=pa.GetRemoteHostID();
-					ctx.m_relayed=pa.IsRelayed();
-					ctx.m_hostTag = hostTag;
-					ctx.m_encryptMode = pa.GetEncryptMode();
-					ctx.m_compressMode = pa.GetCompressMode();
-					
-					
-					int oxyChargerID; __msg >> oxyChargerID;
-					float oxy; __msg >> oxy;
-					m_core->PostCheckReadMessage(__msg,RmiName_NotifyStartOxyChargerState);
-					
-			
-					if(m_enableNotifyCallFromStub && !m_internalUse)
-					{
-						::Proud::String parameterString;
-						
-						::Proud::AppendTextOut(parameterString,oxyChargerID);	
-										
-						parameterString += _PNT(", ");
-						::Proud::AppendTextOut(parameterString,oxy);	
-						
-						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyStartOxyChargerState, 
-							RmiName_NotifyStartOxyChargerState,parameterString);
-			
-			#ifdef VIZAGENT
-						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyStartOxyChargerState, 
-							RmiName_NotifyStartOxyChargerState, parameterString);
-			#endif
-					}
-					else if(!m_internalUse)
-					{
-			#ifdef VIZAGENT
-						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyStartOxyChargerState, 
-							RmiName_NotifyStartOxyChargerState, _PNT(""));
-			#endif
-					}
-						
-					int64_t __t0 = 0;
-					if(!m_internalUse && m_enableStubProfiling)
-					{
-						::Proud::BeforeRmiSummary summary;
-						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyStartOxyChargerState;
-						summary.m_rmiName = RmiName_NotifyStartOxyChargerState;
-						summary.m_hostID = remote;
-						summary.m_hostTag = hostTag;
-						BeforeRmiInvocation(summary);
-			
-						__t0 = ::Proud::GetPreciseCurrentTimeMs();
-					}
-						
-					// Call this method.
-					bool __ret = NotifyStartOxyChargerState (remote,ctx , oxyChargerID, oxy );
-						
-					if(__ret==false)
-					{
-						// Error: RMI function that a user did not create has been called. 
-						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyStartOxyChargerState);
-					}
-						
-					if(!m_internalUse && m_enableStubProfiling)
-					{
-						::Proud::AfterRmiSummary summary;
-						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyStartOxyChargerState;
-						summary.m_rmiName = RmiName_NotifyStartOxyChargerState;
-						summary.m_hostID = remote;
-						summary.m_hostTag = hostTag;
-						int64_t __t1;
-			
-						__t1 = ::Proud::GetPreciseCurrentTimeMs();
-			
-						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
-						AfterRmiInvocation(summary);
-					}
-				}
-				break;
 			case Rmi_NotifyStartItemBoxState:
 				{
 					::Proud::RmiContext ctx;
@@ -3996,6 +4140,162 @@ namespace SpaceWar
 						::Proud::AfterRmiSummary summary;
 						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyUseOxyCharger;
 						summary.m_rmiName = RmiName_NotifyUseOxyCharger;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyUseSuccessedOxyCharger:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int targetHostID; __msg >> targetHostID;
+					int oxyChargerIndex; __msg >> oxyChargerIndex;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyUseSuccessedOxyCharger);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,targetHostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,oxyChargerIndex);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyUseSuccessedOxyCharger, 
+							RmiName_NotifyUseSuccessedOxyCharger,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyUseSuccessedOxyCharger, 
+							RmiName_NotifyUseSuccessedOxyCharger, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyUseSuccessedOxyCharger, 
+							RmiName_NotifyUseSuccessedOxyCharger, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyUseSuccessedOxyCharger;
+						summary.m_rmiName = RmiName_NotifyUseSuccessedOxyCharger;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyUseSuccessedOxyCharger (remote,ctx , targetHostID, oxyChargerIndex );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyUseSuccessedOxyCharger);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyUseSuccessedOxyCharger;
+						summary.m_rmiName = RmiName_NotifyUseSuccessedOxyCharger;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_NotifyUseFailedOxyCharger:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int targetHostID; __msg >> targetHostID;
+					int oxyChargerIndex; __msg >> oxyChargerIndex;
+					m_core->PostCheckReadMessage(__msg,RmiName_NotifyUseFailedOxyCharger);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,targetHostID);	
+										
+						parameterString += _PNT(", ");
+						::Proud::AppendTextOut(parameterString,oxyChargerIndex);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_NotifyUseFailedOxyCharger, 
+							RmiName_NotifyUseFailedOxyCharger,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyUseFailedOxyCharger, 
+							RmiName_NotifyUseFailedOxyCharger, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_NotifyUseFailedOxyCharger, 
+							RmiName_NotifyUseFailedOxyCharger, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyUseFailedOxyCharger;
+						summary.m_rmiName = RmiName_NotifyUseFailedOxyCharger;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = NotifyUseFailedOxyCharger (remote,ctx , targetHostID, oxyChargerIndex );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_NotifyUseFailedOxyCharger);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_NotifyUseFailedOxyCharger;
+						summary.m_rmiName = RmiName_NotifyUseFailedOxyCharger;
 						summary.m_hostID = remote;
 						summary.m_hostTag = hostTag;
 						int64_t __t1;
@@ -6035,14 +6335,29 @@ __fail:
 	const PNTCHAR* Stub::RmiName_RequestPlayerUseOxy =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestUseOxyChargerStart =_PNT("RequestUseOxyChargerStart");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestUseOxyChargerStart =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_RequestUseOxyCharger =_PNT("RequestUseOxyCharger");
 	#else
 	const PNTCHAR* Stub::RmiName_RequestUseOxyCharger =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestUseOxyChargerEnd =_PNT("RequestUseOxyChargerEnd");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestUseOxyChargerEnd =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_RequestUseItemBox =_PNT("RequestUseItemBox");
 	#else
 	const PNTCHAR* Stub::RmiName_RequestUseItemBox =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestOxyChargerStartSetup =_PNT("RequestOxyChargerStartSetup");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestOxyChargerStartSetup =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_RequestShelterStartSetup =_PNT("RequestShelterStartSetup");
@@ -6100,11 +6415,6 @@ __fail:
 	const PNTCHAR* Stub::RmiName_NotifyCreateItem =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
-	const PNTCHAR* Stub::RmiName_NotifyStartOxyChargerState =_PNT("NotifyStartOxyChargerState");
-	#else
-	const PNTCHAR* Stub::RmiName_NotifyStartOxyChargerState =_PNT("");
-	#endif
-	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_NotifyStartItemBoxState =_PNT("NotifyStartItemBoxState");
 	#else
 	const PNTCHAR* Stub::RmiName_NotifyStartItemBoxState =_PNT("");
@@ -6153,6 +6463,16 @@ __fail:
 	const PNTCHAR* Stub::RmiName_NotifyUseOxyCharger =_PNT("NotifyUseOxyCharger");
 	#else
 	const PNTCHAR* Stub::RmiName_NotifyUseOxyCharger =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyUseSuccessedOxyCharger =_PNT("NotifyUseSuccessedOxyCharger");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyUseSuccessedOxyCharger =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_NotifyUseFailedOxyCharger =_PNT("NotifyUseFailedOxyCharger");
+	#else
+	const PNTCHAR* Stub::RmiName_NotifyUseFailedOxyCharger =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_NotifyUseItemBox =_PNT("NotifyUseItemBox");
