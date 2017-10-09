@@ -16,6 +16,7 @@ public class AlertUI : MonoBehaviour {
         NONE = 0,
         METEOR_ATTACK,
         ENGINE_STARTING,
+        ENGINE_READY,
         DEATH_ZONE
     }
 
@@ -76,6 +77,7 @@ public class AlertUI : MonoBehaviour {
             case AlertType.METEOR_ATTACK: iconName = "Icon_Meteor"; break;
             case AlertType.DEATH_ZONE: iconName = "Icon_DeathZone"; break;
             case AlertType.ENGINE_STARTING: iconName = "Icon_SpaceShip"; break;
+            case AlertType.ENGINE_READY: iconName = "Icon_SpaceShip"; break;
         }
 
         UISprite spr = GetIcon(alert);
@@ -144,7 +146,8 @@ public class AlertUI : MonoBehaviour {
         }
 
         
-    }        
+    }
+    
 
     void LeftShowAlert(GameObject alert)
     {
@@ -164,6 +167,16 @@ public class AlertUI : MonoBehaviour {
                 "oncompletetarget" , gameObject ,
                 "oncomplete" , "AlertHideEnd" ,
                 "oncompleteparams" , index));
+
+            if (index != -1)
+            {
+                for (int i = 0; i < m_alertList.Count; i++)
+                {
+                    AlertData d = m_alertList[i];
+                    iTween.MoveBy(d.target , iTween.Hash(
+                        "y" , +0.15f));
+                }
+            }
         }
     }
 

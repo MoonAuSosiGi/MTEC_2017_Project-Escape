@@ -21,13 +21,21 @@ void MeteorLoop(void*)
 {
 	if (s_GameRunning == false)
 		return;
+	// 우주선 잠금 해제 시간
+
+	if (s_spaceShipLockTime > 0)
+	{
+		s_spaceShipLockTime--;
+		server.m_proxy.NotifySpaceShipLockTime(server.m_playerP2PGroup, RmiContext::ReliableSend, s_spaceShipLockTime);
+	}
+	
+
 
 	//for (int i = 0; i < 10; i++)
 	//{
 	//	if (m_meteorCommingTime[i] > 0)
 	//	{
 	//		m_meteorCommingTime[i] -= 1;
-
 	//		if(m_meteorCommingTime[i] % 5)
 	//			cout << "메테오 "<< i << "번 " << m_meteorCommingTime[i] << " 초 남음 " << server.m_netServer->GetTimeMs() << endl;
 	//		if (m_meteorCommingTime[i] <= 0.0f)
@@ -119,6 +127,9 @@ void MeteorLoop(void*)
 
 
 
+#pragma region Sever Class Logic ===================================================================================
+
+// 서버 실행 로직
 void Server::ServerRun()
 {
 	m_netServer = shared_ptr<CNetServer>(CNetServer::Create());
@@ -203,6 +214,7 @@ void Server::ServerRun()
 	meteorThread.Stop();
 }
 
+// 유저 리셋
 void Server::ResetUsers()
 {
 	auto iter = m_clientMap.begin();
@@ -216,6 +228,7 @@ void Server::ResetUsers()
 	m_itemMap.clear();
 }
 
+// 클라접속시마다
 void Server::OnClientJoin(CNetClientInfo* clientInfo)
 {
 	cout << "OnClientJoin " << clientInfo->m_HostID << endl;
@@ -223,6 +236,7 @@ void Server::OnClientJoin(CNetClientInfo* clientInfo)
 	m_netServer->JoinP2PGroup(clientInfo->m_HostID, m_playerP2PGroup);
 }
 
+// 클라 접속 해제시 
 void Server::OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, const ByteArray& comment)
 {
 	cout << "OnClientLeave " << clientInfo->m_HostID << endl;
@@ -256,7 +270,13 @@ void Server::OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, con
 
 }
 
-#pragma region C2S Method
+#pragma endregion
+
+#pragma region C2S Method ==========================================================================================
+
+#pragma region 초기 접속 ===========================================================================================
+#pragma region 공통 구간 -------------------------------------------------------------------------------------------
+// Connect 초기 접속 요청
 DEFRMI_SpaceWar_RequestServerConnect(Server)
 {
 	cout << "C2S-- RequestServerConnect " << id << " remote " << remote << endl;
@@ -314,123 +334,286 @@ DEFRMI_SpaceWar_RequestServerConnect(Server)
 	return true;
 }
 
-// TODO 서버 구조 변경으로 삭제 대상
-DEFRMI_SpaceWar_RequestClientJoin(Server)
+// 팀 선택을 바꿈
+DEFRMI_SpaceWar_RequestNetworkGameTeamSelect(Server)
 {
-	cout << "Server : RequestClientJoin "<<name << endl;
-	
-	auto iter = m_clientMap.find((HostID)hostID);
-	if (iter == m_clientMap.end())
-	{
-		cout << "잘못된 클라이언트 " << endl;
-		return true;
-	}
-	// 모두에게 나타나게 해야함 
-	for each (auto c in m_clientMap)
-	{
-		if (c.first != iter->first)
-		{
-			auto otherClient = c.second;
-			m_proxy.NotifyOtherClientJoin(c.first, 
-				RmiContext::ReliableSend,
-				iter->second->m_hostID,
-				iter->second->m_userName,
-				iter->second->x,
-				iter->second->y,
-				iter->second->z);
+	cout << "Team 변경 " << endl;
+	m_gameRoom->TeamChange(remote, teamRed);
 
-			m_proxy.NotifyOtherClientJoin(iter->first,
-				RmiContext::ReliableSend,
-				c.second->m_hostID,
-				c.second->m_userName,
-				c.second->x,
-				c.second->y,
-				c.second->z);
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGameTeamChange(*iter, RmiContext::ReliableSend, (int)remote, teamRed);
+		iter++;
+	}
+
+
+	return true;
+}
+
+// 정상적인 종료 루틴
+DEFRMI_SpaceWar_RequestGameExit(Server)
+{
+	s_GameRunning = false;
+	m_gameRoom->ClearRoom();
+	m_clientMap.clear();
+	m_itemMap.clear();
+	m_itemBoxMap.clear();
+	m_oxyChargerMap.clear();
+	s_spaceShipLockTime = 60;
+	s_deathZoneCommingSec = 180;
+	return true;
+}
+#pragma endregion
+
+#pragma region 호스트 아닌 유저 ------------------------------------------------------------------------------------
+// 레디
+DEFRMI_SpaceWar_RequestNetworkGameReady(Server)
+{
+	cout << " Ready 변경 " << endl;
+
+	m_gameRoom->SetReady(remote, ready);
+
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkReady(*iter, RmiContext::ReliableSend, (int)remote, m_gameRoom->GetClient(remote)->GetName(), ready);
+		iter++;
+	}
+	return true;
+}
+
+// 로비 화면에 들어왔다.
+DEFRMI_SpaceWar_RequestLobbyConnect(Server)
+{
+	// 이제 이친구한테 모든 정보를 날린다.
+	cout << "Lobby Connect " << endl;
+	forward_list<RoomClient> list = m_gameRoom->GetOtherClientInfos(remote);
+
+	//먼저 게임모드를 날린다.
+	m_proxy.NotifyNetworkGameModeChange(remote, RmiContext::ReliableSend, m_gameRoom->GetGameMode(), m_gameRoom->GetTeamMode());
+
+	// 플레이 카운트도 날림
+	m_proxy.NotifyNetworkGamePlayerCountChange(remote, RmiContext::ReliableSend, m_gameRoom->GetPlayerLimitCount());
+
+	auto iter = list.begin();
+
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkUserSetup(remote, RmiContext::ReliableSend, (int)iter->GetHostID(), iter->GetName(), iter->IsReady(), iter->IsRedTeam());
+
+		if (remote != iter->GetHostID())
+			m_proxy.NotifyNetworkConnectUser(iter->GetHostID(), RmiContext::ReliableSend, remote, m_gameRoom->GetClient(remote)->GetName());
+		iter++;
+	}
+	return true;
+}
+
+// 이제 게임이 시작되고 게임 씬으로 넘어왔을 때 다들 요청한다.
+DEFRMI_SpaceWar_RequestGameSceneJoin(Server)
+{
+	shared_ptr<RoomClient> client = m_gameRoom->GetClient(remote);
+
+	client->SetGameScene(true);
+	client->SetPosition(pos);
+
+	// 모든 클라이언트가 준비되었는지 확인 
+
+	cout << "우와 " << m_gameRoom->IsGameSceneAllReady() << endl;
+	if (m_gameRoom->IsGameSceneAllReady())
+	{
+		// 이 경우 이제 모든 클라에게 접속 정보를 보낸다.
+		forward_list<HostID> list = m_gameRoom->GetAllClient();
+
+		auto iter = list.begin();
+		while (iter != list.end())
+		{
+			forward_list<RoomClient> otherUsers = m_gameRoom->GetOtherClientInfos(*iter);
+
+			auto iter2 = otherUsers.begin();
+			while (iter2 != otherUsers.end())
+			{
+				Vector3 pos = iter2->GetPos();
+				m_proxy.NotifyOtherClientJoin(*iter, RmiContext::ReliableSend,
+					iter2->GetHostID(), iter2->GetName(), pos.x, pos.y, pos.z);
+				iter2++;
+			}
+
+			// 호스트가 아니면 아이템 생성 명령도 보내야 함
+			if (m_gameRoom->GetClient(*iter)->IsHost() == false)
+			{
+				// 아이템 생성 샌드
+				for each(auto item in m_itemMap)
+				{
+					m_proxy.NotifyCreateItem(*iter, RmiContext::ReliableSend, (int)HostID_Server,
+						item.second->m_itemID, item.second->m_networkID, item.second->pos, item.second->rot);
+				}
+			}
+
+
+			iter++;
 		}
 	}
 
 
 	return true;
 }
+#pragma endregion
 
-DEFRMI_SpaceWar_RequestWorldCreateItem(Server)
+#pragma region 방장 호스트 전용 ------------------------------------------------------------------------------------
+// 방장이 맵을 바꿈
+DEFRMI_SpaceWar_RequestNetworkChangeMap(Server)
 {
-	cout << "RequestWorldCreateItem  itemID : " << itemID  << " x : "<< pos.x << " y : " << pos.y << " z : "<<pos.z  << endl;
-	auto iter = m_clientMap.find((HostID)hostID);
+	cout << " Map 변경 " << endl;
 
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
 	{
-		// 추가로직
-		CriticalSectionLock lock(m_critSec, true);
-		auto newItem = make_shared<Item>();
-		newItem->m_itemID = itemID;
-		newItem->m_networkID = networkID;
-		newItem->pos.x = pos.x;
-		newItem->pos.y = pos.y;
-		newItem->pos.z = pos.z;
-		newItem->rot.x = rot.x;
-		newItem->rot.y = rot.y;
-		newItem->rot.z = rot.z;
-		m_itemMap[networkID] = newItem;
+		m_proxy.NotifyNetworkGameChangeMap(*iter, RmiContext::ReliableSend, mapName);
+		iter++;
 	}
 
-	if (iter == m_clientMap.end())
+	return true;
+}
+
+// 방장이 플레이어 수를 바꿈
+DEFRMI_SpaceWar_RequestNetworkPlayerCount(Server)
+{
+	cout << " Player Count 변경 " << playerCount << endl;
+
+	m_gameRoom->SetPlayerLimitCount(playerCount);
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
 	{
-		cout << "잘못된 요청" << endl;
+		m_proxy.NotifyNetworkGamePlayerCountChange(*iter, RmiContext::ReliableSend, playerCount);
+		iter++;
+	}
+	return true;
+}
+
+// 방장이 게임 모드를 바꿈 
+DEFRMI_SpaceWar_RequestNetworkGameModeChange(Server)
+{
+	cout << " Game Mode 변경 " << endl;
+
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	m_gameRoom->SetGameMode(gameMode);
+	m_gameRoom->SetTeamMode(teamMode);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGameModeChange(*iter, RmiContext::ReliableSend, gameMode, teamMode);
+		iter++;
+	}
+	return true;
+}
+
+// 방장이 게임 시작을 누름
+DEFRMI_SpaceWar_RequestNetworkGameStart(Server)
+{
+	cout << " Game Start 변경 " << endl;
+	m_itemMap.clear();
+	//if (!m_gameRoom->GameStartCheck())
+	//{
+	//	//실패
+	//	m_proxy.NotifyNetworkGameStartFailed(m_playerP2PGroup, RmiContext::ReliableSend);
+	//	return true;
+	//	
+	//}
+	m_gameStartTime = m_netServer->GetTimeMs();
+	s_GameRunning = true;
+	auto iter = m_clientMap.begin();
+	while (iter != m_clientMap.end())
+	{
+		m_proxy.NotifyNetworkGameStart(iter->second->m_hostID, RmiContext::ReliableSend);
+		iter++;
 	}
 
-	// 보낸 사람 외에 생성 요청 보내기
-	for each(auto c in m_clientMap)
+	/*forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
 	{
-		if (c.first != iter->first)
+	m_proxy.NotifyNetworkGameStart(*iter, RmiContext::ReliableSend);
+	iter++;
+	}*/
+	return true;
+}
+
+//방장이 나감
+DEFRMI_SpaceWar_RequestNetworkHostOut(Server)
+{
+	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
+
+	auto iter = list.begin();
+	while (iter != list.end())
+	{
+		m_proxy.NotifyNetworkGameHostOut(*iter, RmiContext::ReliableSend);
+		iter++;
+	}
+
+	m_gameRoom->ClearRoom();
+	s_GameRunning = false;
+	m_gameRoom->ClearRoom();
+	m_clientMap.clear();
+	m_itemMap.clear();
+	m_itemBoxMap.clear();
+	m_oxyChargerMap.clear();
+	s_deathZoneCommingSec = 180;
+	s_spaceShipLockTime = 60;
+
+	cout << "호스트가 나갔으므로 게임 룸 클리어 " << endl;
+
+	return true;
+}
+
+
+#pragma endregion
+#pragma endregion
+
+#pragma region 인게임 ==============================================================================================
+#pragma region 인게임 :: 플레이어 메시지 ---------------------------------------------------------------------------
+#pragma region [플레이어 상태 관련 정보] 
+
+// 체력 회복 메시지
+DEFRMI_SpaceWar_RequestHpUpdate(Server)
+{
+	cout << "HP Update 요청 " << endl;
+
+	auto iter = m_clientMap.begin();
+
+	float prevHp = 0.0f;
+	while (iter != m_clientMap.end())
+	{
+		if (iter->second->m_hostID == remote)
 		{
-			m_proxy.NotifyCreateItem(c.first, RmiContext::ReliableSend, 
-				(int)(iter->first),itemID,networkID, pos, rot);
+			prevHp = iter->second->hp;
+			iter->second->hp = hp;
+			break;
 		}
+		iter++;
 	}
-	return true;
-}
 
-DEFRMI_SpaceWar_NotifyDeleteItem(Server)
-{
-	cout << "NotifyDeleteItem " << networkID << endl;
-
-	auto iter = m_itemMap.find(networkID);
-	
-	if (iter == m_itemMap.end())
+	iter = m_clientMap.begin();
+	while (iter != m_clientMap.end())
 	{
-		cout << "잘못된 요청" << endl;
-	}
-	{
-		// 추가로직
-		CriticalSectionLock lock(m_critSec, true);
-		m_itemMap.erase(iter);
+		m_proxy.NotifyPlayerChangeHP(iter->second->m_hostID, RmiContext::ReliableSend, (int)remote, "HpUpdate", hp, prevHp, MAX_HP, Vector3(0.0, 0.0, 0.0));
+		iter++;
 	}
 	return true;
 }
 
-DEFRMI_SpaceWar_NotifyPlayerMove(Server)
-{
-	m_clientMap[(HostID)hostID]->x = curX;
-	m_clientMap[(HostID)hostID]->y = curY;
-	m_clientMap[(HostID)hostID]->z = curZ;
-
-	m_gameRoom->GetClient((HostID)hostID)->SetPosition(curX, curY, curZ);
-	return true;
-}
-
-DEFRMI_SpaceWar_RequestItemDelete(Server)
-{
-	cout << "Request Item Delete " << networkID << endl;
-	// p2p 로 뿌려지고, 그제서야 실제 삭제 로직
-	return true;
-}
-
-DEFRMI_SpaceWar_NotifyPlayerEquipItem(Server)
-{
-	cout << "NotifyPlayerEquipItem " << hostID << " item " << itemID << endl;
-	return true;
-}
-
+// 플레이어가 맞았다.
 DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 {
 	cout << "Request Player Damage 때린놈 " << sendHostID << " 맞은놈 " << targetHostID << " 데미지 " << damage << endl;
@@ -438,7 +621,7 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 
 	if (m_clientMap[(HostID)targetHostID]->m_state == DEATH)
 		return true;
-	
+
 	float prevHp = m_clientMap[(HostID)targetHostID]->hp;
 	m_clientMap[(HostID)targetHostID]->hp -= damage;
 
@@ -447,7 +630,7 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 		cout << " 죽었다 " + targetHostID << endl;
 		m_clientMap[(HostID)targetHostID]->hp = 0.0f;
 		m_clientMap[(HostID)targetHostID]->PlayerDead(m_netServer->GetTimeMs());
-		
+
 		// 죽은 후에 어시스트 목록 갱신
 		forward_list<int> list = m_clientMap[(HostID)targetHostID]->GetAssistClientList();
 		for (auto value : list)
@@ -459,7 +642,7 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 			m_proxy.NotifyKillInfo((HostID)value, RmiContext::ReliableSend, m_clientMap[(HostID)targetHostID]->m_userName, false, m_clientMap[(HostID)value]->m_killCount, m_clientMap[(HostID)value]->m_assistCount);
 		}
 
-		if(sendHostID != targetHostID)
+		if (sendHostID != targetHostID)
 			m_clientMap[(HostID)sendHostID]->m_killCount++;
 
 		m_proxy.NotifyKillInfo((HostID)sendHostID, RmiContext::ReliableSend, m_clientMap[(HostID)targetHostID]->m_userName, true, m_clientMap[(HostID)sendHostID]->m_killCount, m_clientMap[(HostID)sendHostID]->m_assistCount);
@@ -488,42 +671,16 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 	else
 	{
 		// 이녀석은 어시스트 체크를 해야함
-		if(targetHostID != sendHostID)
-			m_clientMap[(HostID)targetHostID]->DamageClient((int)sendHostID,m_netServer->GetTimeMs());
+		if (targetHostID != sendHostID)
+			m_clientMap[(HostID)targetHostID]->DamageClient((int)sendHostID, m_netServer->GetTimeMs());
 	}
 
 
-	m_proxy.NotifyPlayerChangeHP(m_playerP2PGroup, RmiContext::ReliableSend, targetHostID, weaponName, m_clientMap[(HostID)targetHostID]->hp, prevHp, MAX_HP,dir);
+	m_proxy.NotifyPlayerChangeHP(m_playerP2PGroup, RmiContext::ReliableSend, targetHostID, weaponName, m_clientMap[(HostID)targetHostID]->hp, prevHp, MAX_HP, dir);
 	return true;
 }
 
-DEFRMI_SpaceWar_RequestHpUpdate(Server)
-{
-	cout << "HP Update 요청 " << endl;
-
-	auto iter = m_clientMap.begin();
-
-	float prevHp = 0.0f;
-	while (iter != m_clientMap.end())
-	{
-		if (iter->second->m_hostID == remote)
-		{
-			prevHp = iter->second->hp;
-			iter->second->hp = hp;
-			break;
-		}
-		iter++;
-	}
-
-	iter = m_clientMap.begin();
-	while (iter != m_clientMap.end())
-	{
-		m_proxy.NotifyPlayerChangeHP(iter->second->m_hostID, RmiContext::ReliableSend, (int)remote, "HpUpdate", hp, prevHp, MAX_HP, Vector3(0.0, 0.0, 0.0));
-		iter++;
-	}
-	return true;
-}
-
+// 플레이어가 숨을 쉬었다.
 DEFRMI_SpaceWar_RequestPlayerUseOxy(Server)
 {
 	//cout << "RequestPlayerUseOxy " << useOxy << endl;
@@ -532,11 +689,11 @@ DEFRMI_SpaceWar_RequestPlayerUseOxy(Server)
 	if (m_clientMap[(HostID)sendHostID]->oxy - useOxy < 0)
 	{
 		m_clientMap[(HostID)sendHostID]->oxy = 0.0f;
-		m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName,0.0f, prevOxy, MAX_OXY);
+		m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName, 0.0f, prevOxy, MAX_OXY);
 		return true;
 	}
-	
-	
+
+
 	m_clientMap[(HostID)sendHostID]->oxy -= useOxy;
 
 	m_proxy.NotifyPlayerChangeOxygen(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID, m_clientMap[(HostID)sendHostID]->m_userName, m_clientMap[(HostID)sendHostID]->oxy, prevOxy, MAX_OXY);
@@ -544,20 +701,34 @@ DEFRMI_SpaceWar_RequestPlayerUseOxy(Server)
 	return true;
 }
 
-//산소 충전기 등록 요청
+// 플레이어 움직임 처리
+DEFRMI_SpaceWar_NotifyPlayerMove(Server)
+{
+	m_clientMap[(HostID)hostID]->x = curX;
+	m_clientMap[(HostID)hostID]->y = curY;
+	m_clientMap[(HostID)hostID]->z = curZ;
+
+	m_gameRoom->GetClient((HostID)hostID)->SetPosition(curX, curY, curZ);
+	return true;
+}
+
+// 플레이어가 아이템을 장비했다.
+DEFRMI_SpaceWar_NotifyPlayerEquipItem(Server)
+{
+	cout << "NotifyPlayerEquipItem " << hostID << " item " << itemID << endl;
+	return true;
+}
+#pragma endregion
+
+#pragma endregion
+#pragma region 인게임 :: 산소 충전기 -------------------------------------------------------------------------------
+
+// 처음에 산소 충전기를 등록한다
 DEFRMI_SpaceWar_RequestOxyChargerStartSetup(Server)
 {
 	CriticalSectionLock lock(m_critSec, true);
 	auto newOxyCharger = make_shared<OxyCharger>();
 	m_oxyChargerMap[oxyChargerID] = newOxyCharger;
-	return true;
-}
-// 산소 충전기 조작 끝
-DEFRMI_SpaceWar_RequestUseOxyChargerEnd(Server)
-{
-	cout << "Request Use Oxy Charger End "<< oxyChargerIndex << endl;
-	if(m_oxyChargerMap[oxyChargerIndex]->GetUseHostID() == (int)remote)
-		m_oxyChargerMap[oxyChargerIndex]->UnLockOxyCharger();
 	return true;
 }
 
@@ -586,7 +757,7 @@ DEFRMI_SpaceWar_RequestUseOxyCharger(Server)
 
 	if (m_oxyChargerMap[oxyChargerIndex]->IsLocked() && m_oxyChargerMap[oxyChargerIndex]->GetUseHostID() == (int)remote)
 	{
-	
+
 		float prevOxy = m_clientMap[(HostID)sendHostID]->oxy;
 		m_clientMap[(HostID)sendHostID]->oxy += userOxy;
 
@@ -595,38 +766,53 @@ DEFRMI_SpaceWar_RequestUseOxyCharger(Server)
 		m_proxy.NotifyUseOxyCharger(m_playerP2PGroup, RmiContext::ReliableSend, sendHostID,
 			oxyChargerIndex, userOxy);
 	}
-	
+
 	return true;
 }
 
+// 산소 충전기 조작 끝
+DEFRMI_SpaceWar_RequestUseOxyChargerEnd(Server)
+{
+	cout << "Request Use Oxy Charger End " << oxyChargerIndex << endl;
+	if (m_oxyChargerMap[oxyChargerIndex]->GetUseHostID() == (int)remote)
+		m_oxyChargerMap[oxyChargerIndex]->UnLockOxyCharger();
+	return true;
+}
+
+#pragma endregion
+#pragma region 인게임 :: 아이템 박스 조작 --------------------------------------------------------------------------
+// 아이템 박스 조작
 DEFRMI_SpaceWar_RequestUseItemBox(Server)
 {
 	cout << "RequestUseItemBox " << itemBoxIndex << endl;
 
 	// TESTCODE
-//	if (m_itemBoxMap.find(itemBoxIndex) != m_itemBoxMap.end())
+	//	if (m_itemBoxMap.find(itemBoxIndex) != m_itemBoxMap.end())
 	{
-		
+
 		// 첫 사용
 		m_itemBoxMap[itemBoxIndex] = sendHostID;
 
 		string itemID = "temp"; // 여기서 줘야하는데 일단은 클라에서 주는 것으로..
 		cout << "item Code " << itemID << endl;
 		string networkID = "server_" + m_itemBoxCreateItemIndex;
-		
+
 		m_proxy.NotifyUseItemBox(m_playerP2PGroup, RmiContext::ReliableSend,
 			sendHostID, itemBoxIndex, itemID, networkID);
 		return true;
 	}
 
 	// 이미 사용중
-	
-	
+
+
 
 	return true;
 }
+#pragma endregion
 
-// 쉘터 등록
+#pragma region 인게임 :: 쉘터 조작 ---------------------------------------------------------------------------------
+
+// 처음에 쉘터를 등록한다
 DEFRMI_SpaceWar_RequestShelterStartSetup(Server)
 {
 	cout << "RequestShelterStartSetup " << shelterID << endl;
@@ -648,19 +834,19 @@ DEFRMI_SpaceWar_RequestShelterDoorControl(Server)
 	auto iter = m_clientMap.begin();
 	while (iter != m_clientMap.end())
 	{
-		if((int)iter->second->m_hostID != sendHostID)
+		if ((int)iter->second->m_hostID != sendHostID)
 			m_proxy.NotifyShelterInfo(iter->second->m_hostID,
 				RmiContext::ReliableSend, sendHostID, shelterID,
 				doorState, m_shelterMap[shelterID]->m_lightState);
 
 		iter++;
 	}
-	
+
 
 	return true;
 }
-
-// 쉘터 입장
+ 
+// 쉘터 입장 퇴장
 DEFRMI_SpaceWar_RequestShelterEnter(Server)
 {
 	cout << "RequestShelterEnter " << sendHostID << endl;
@@ -674,7 +860,7 @@ DEFRMI_SpaceWar_RequestShelterEnter(Server)
 		m_shelterMap[shelterID]->ShelterExit();
 
 	// 기존 상태와 달라졌을 경우
-	if (m_shelterMap[shelterID]->m_lightState != prevState || 
+	if (m_shelterMap[shelterID]->m_lightState != prevState ||
 		m_shelterMap[shelterID]->m_doorState != prevDoorState)
 	{
 		// 상태 전송
@@ -689,15 +875,116 @@ DEFRMI_SpaceWar_RequestShelterEnter(Server)
 
 #pragma endregion
 
-#pragma region Game_RESULT
+#pragma region 인게임 :: 아이템 로직 -------------------------------------------------------------------------------
 
+// 월드에 아이템 생성 요청
+DEFRMI_SpaceWar_RequestWorldCreateItem(Server)
+{
+	cout << "RequestWorldCreateItem  itemID : " << itemID << " x : " << pos.x << " y : " << pos.y << " z : " << pos.z << endl;
+	auto iter = m_clientMap.find((HostID)hostID);
+
+	{
+		// 추가로직
+		CriticalSectionLock lock(m_critSec, true);
+		auto newItem = make_shared<Item>();
+		newItem->m_itemID = itemID;
+		newItem->m_networkID = networkID;
+		newItem->pos.x = pos.x;
+		newItem->pos.y = pos.y;
+		newItem->pos.z = pos.z;
+		newItem->rot.x = rot.x;
+		newItem->rot.y = rot.y;
+		newItem->rot.z = rot.z;
+		m_itemMap[networkID] = newItem;
+	}
+
+	if (iter == m_clientMap.end())
+	{
+		cout << "잘못된 요청" << endl;
+	}
+
+	// 보낸 사람 외에 생성 요청 보내기
+	for each(auto c in m_clientMap)
+	{
+		if (c.first != iter->first)
+		{
+			m_proxy.NotifyCreateItem(c.first, RmiContext::ReliableSend,
+				(int)(iter->first), itemID, networkID, pos, rot);
+		}
+	}
+	return true;
+}
+
+// 아이템 삭제 요청
+DEFRMI_SpaceWar_RequestItemDelete(Server)
+{
+	cout << "Request Item Delete " << networkID << endl;
+	// p2p 로 뿌려지고, 그제서야 실제 삭제 로직
+	return true;
+}
+
+// 월드 아이템 삭제 알림
+DEFRMI_SpaceWar_NotifyDeleteItem(Server)
+{
+	cout << "NotifyDeleteItem " << networkID << endl;
+
+	auto iter = m_itemMap.find(networkID);
+
+	if (iter == m_itemMap.end())
+	{
+		cout << "잘못된 요청" << endl;
+	}
+	{
+		// 추가로직
+		CriticalSectionLock lock(m_critSec, true);
+		m_itemMap.erase(iter);
+	}
+	return true;
+}
+#pragma endregion
+
+// 메테오는 알림만 날림 //
+
+#pragma region 인게임 :: 우주선 ------------------------------------------------------------------------------------
+
+// 우주선이 총 몇개 있는지 세팅
+DEFRMI_SpaceWar_RequestSpaceShipSetup(Server)
+{
+	cout << "우주선의 갯수가 세팅됩니다.." << spaceShipCount << endl;
+	m_spaceshipCount = spaceShipCount;
+	return true;
+};
+
+// 우주선 타서 연료 다채웠을 경우 보냄
 DEFRMI_SpaceWar_RequestSpaceShip(Server)
 {
+	if (s_spaceShipLockTime > 0)
+		return true;
 	cout << "이친구 우주선 탔다 " << winPlayerID << endl;
 	m_clientMap[(HostID)winPlayerID]->PlayerWin();
 	return true;
 }
+#pragma endregion 
 
+#pragma region 인게임 :: 데스존 ------------------------------------------------------------------------------------
+
+// 데스존이 가고 있는 행성 단계를 알려줘야함
+DEFRMI_SpaceWar_RequestDeathZoneMoveIndex(Server)
+{
+	cout << "Death Zone Move Target Index " << moveIndex << endl;
+	s_deathZoneIndex = moveIndex;
+
+	// 바뀔때 통보도 해주어야함
+	m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(m_playerP2PGroup, RmiContext::ReliableSend, s_deathZoneHostID, s_deathZoneIndex);
+
+	return true;
+};
+#pragma endregion 
+#pragma endregion
+
+#pragma region 결과창 ==============================================================================================
+
+// 드로우 게임시 정보 요청
 DEFRMI_SpaceWar_RequestDrawGameResult(Server)
 {
 	cout << "드로우 결과 요청 " << endl;
@@ -735,19 +1022,20 @@ DEFRMI_SpaceWar_RequestDrawGameResult(Server)
 	return true;
 }
 
+// 결과를 받아오는 것
 DEFRMI_SpaceWar_RequestGameEnd(Server)
 {
 	cout << "RequestGameEnd -- 게임 종료  - " << endl;
 	s_GameRunning = false;
 
-	
+
 
 	// 여기서 문제  생겼었음
 
 	if (m_clientMap[remote]->m_state != SPACESHIP)
 		return true;
 
-	
+
 	auto iter = m_clientMap.begin();
 
 	float playTime = m_netServer->GetTimeMs() - m_gameStartTime;
@@ -758,288 +1046,70 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 		HostID targetID = iter->first;
 
 		int winState = (m_clientMap[targetID]->m_state == SPACESHIP) ? 1 : 0;
-		
+
 		m_proxy.NotifyGameResultInfoMe(targetID, RmiContext::ReliableSend, "test", winState,
 			playTime, iter->second->m_killCount, iter->second->m_assistCount, iter->second->m_deathCount, 100);
 
 		auto resultIter = m_clientMap.begin();
 		while (resultIter != m_clientMap.end())
 		{
-		//	if (resultIter->first != iter->first)
+			//	if (resultIter->first != iter->first)
 			{
 				cout << " 정보 보내기 " << endl;
 				m_proxy.NotifyGameResultInfoOther(targetID, RmiContext::ReliableSend,
 					resultIter->second->m_userName, resultIter->second->m_state);
 			}
-			
+
 			resultIter++;
 		}
 		m_proxy.NotifyGameResultShow(targetID, RmiContext::ReliableSend);
 
 		iter++;
 	}
-	
 
-	
+
+
 	return true;
 }
 #pragma endregion
 
-#pragma region Network Lobby
+//// TODO 서버 구조 변경으로 삭제 대상
+//DEFRMI_SpaceWar_RequestClientJoin(Server)
+//{
+//	cout << "Server : RequestClientJoin "<<name << endl;
+//	
+//	auto iter = m_clientMap.find((HostID)hostID);
+//	if (iter == m_clientMap.end())
+//	{
+//		cout << "잘못된 클라이언트 " << endl;
+//		return true;
+//	}
+//	// 모두에게 나타나게 해야함 
+//	for each (auto c in m_clientMap)
+//	{
+//		if (c.first != iter->first)
+//		{
+//			auto otherClient = c.second;
+//			m_proxy.NotifyOtherClientJoin(c.first, 
+//				RmiContext::ReliableSend,
+//				iter->second->m_hostID,
+//				iter->second->m_userName,
+//				iter->second->x,
+//				iter->second->y,
+//				iter->second->z);
+//
+//			m_proxy.NotifyOtherClientJoin(iter->first,
+//				RmiContext::ReliableSend,
+//				c.second->m_hostID,
+//				c.second->m_userName,
+//				c.second->x,
+//				c.second->y,
+//				c.second->z);
+//		}
+//	}
+//
+//
+//	return true;
+//}
 
-// 로비 화면에 들어왔다.
-DEFRMI_SpaceWar_RequestLobbyConnect(Server)
-{
-	// 이제 이친구한테 모든 정보를 날린다.
-	cout << "Lobby Connect " << endl;
-	forward_list<RoomClient> list = m_gameRoom->GetOtherClientInfos(remote);
-
-	//먼저 게임모드를 날린다.
-	m_proxy.NotifyNetworkGameModeChange(remote, RmiContext::ReliableSend, m_gameRoom->GetGameMode(), m_gameRoom->GetTeamMode());
-
-	// 플레이 카운트도 날림
-	m_proxy.NotifyNetworkGamePlayerCountChange(remote, RmiContext::ReliableSend, m_gameRoom->GetPlayerLimitCount());
-
-	auto iter = list.begin();
-
-	while (iter != list.end())
-	{
-		m_proxy.NotifyNetworkUserSetup(remote, RmiContext::ReliableSend, (int)iter->GetHostID(),iter->GetName(), iter->IsReady(), iter->IsRedTeam());
-
-		if (remote != iter->GetHostID())
-			m_proxy.NotifyNetworkConnectUser(iter->GetHostID(), RmiContext::ReliableSend, remote, m_gameRoom->GetClient(remote)->GetName());
-		iter++;
-	}
-	return true;
-}
-
-// 팀 선택을 바꿈 
-DEFRMI_SpaceWar_RequestNetworkGameTeamSelect(Server)
-{
-	cout << "Team 변경 " << endl;
-	m_gameRoom->TeamChange(remote, teamRed);
-
-	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
-	
-	auto iter = list.begin();
-	while (iter != list.end())
-	{
-		m_proxy.NotifyNetworkGameTeamChange(*iter, RmiContext::ReliableSend,(int)remote, teamRed);
-		iter++;
-	}
-
-	
-	return true;
-}
-
-// 레디
-DEFRMI_SpaceWar_RequestNetworkGameReady(Server)
-{
-	cout << " Ready 변경 " << endl;
-
-	m_gameRoom->SetReady(remote, ready);
-
-	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
-
-	auto iter = list.begin();
-	while (iter != list.end())
-	{
-		m_proxy.NotifyNetworkReady(*iter, RmiContext::ReliableSend,(int)remote,m_gameRoom->GetClient(remote)->GetName(), ready);
-		iter++;
-	}
-	return true;
-}
-
-// 방장이 맵을 바꿈
-DEFRMI_SpaceWar_RequestNetworkChangeMap(Server)
-{
-	cout << " Map 변경 " << endl;
-
-	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
-
-	auto iter = list.begin();
-	while (iter != list.end())
-	{
-		m_proxy.NotifyNetworkGameChangeMap(*iter, RmiContext::ReliableSend, mapName);
-		iter++;
-	}
-	
-	return true;
-}
-
-// 방장이 게임 모드를 바꿈 
-DEFRMI_SpaceWar_RequestNetworkGameModeChange(Server)
-{
-	cout << " Game Mode 변경 " << endl;
-
-	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
-
-	m_gameRoom->SetGameMode(gameMode);
-	m_gameRoom->SetTeamMode(teamMode);
-
-	auto iter = list.begin();
-	while (iter != list.end())
-	{
-		m_proxy.NotifyNetworkGameModeChange(*iter, RmiContext::ReliableSend, gameMode, teamMode);
-		iter++;
-	}
-	return true;
-}
-
-// 방장이 플레이어 수를 바꿈
-DEFRMI_SpaceWar_RequestNetworkPlayerCount(Server)
-{
-	cout << " Player Count 변경 " << playerCount << endl;
-
-	m_gameRoom->SetPlayerLimitCount(playerCount);
-	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
-
-	auto iter = list.begin();
-	while (iter != list.end())
-	{
-		m_proxy.NotifyNetworkGamePlayerCountChange(*iter, RmiContext::ReliableSend, playerCount);
-		iter++;
-	}
-	return true;
-}
-
-// 방장이 게임 시작을 누름
-DEFRMI_SpaceWar_RequestNetworkGameStart(Server)
-{
-	cout << " Game Start 변경 " << endl;
-	m_itemMap.clear();
-	//if (!m_gameRoom->GameStartCheck())
-	//{
-	//	//실패
-	//	m_proxy.NotifyNetworkGameStartFailed(m_playerP2PGroup, RmiContext::ReliableSend);
-	//	return true;
-	//	
-	//}
-	m_gameStartTime = m_netServer->GetTimeMs();
-	s_GameRunning = true;
-	auto iter = m_clientMap.begin();
-	while (iter != m_clientMap.end())
-	{
-		m_proxy.NotifyNetworkGameStart(iter->second->m_hostID, RmiContext::ReliableSend);
-		iter++;
-	}
-
-	/*forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
-
-	auto iter = list.begin();
-	while (iter != list.end())
-	{
-		m_proxy.NotifyNetworkGameStart(*iter, RmiContext::ReliableSend);
-		iter++;
-	}*/
-	return true;
-}
-
-//방장이 나감
-DEFRMI_SpaceWar_RequestNetworkHostOut(Server)
-{
-	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
-
-	auto iter = list.begin();
-	while (iter != list.end())
-	{
-		m_proxy.NotifyNetworkGameHostOut(*iter, RmiContext::ReliableSend);
-		iter++;
-	}
-
-	m_gameRoom->ClearRoom();
-	s_GameRunning = false;
-	m_gameRoom->ClearRoom();
-	m_clientMap.clear();
-	m_itemMap.clear();
-	m_itemBoxMap.clear();
-	//m_oxyChargerMap.clear();
-	s_deathZoneCommingSec = 180;
-
-	cout << "호스트가 나갔으므로 게임 룸 클리어 " << endl;
-
-	return true;
-}
-
-DEFRMI_SpaceWar_RequestGameSceneJoin(Server)
-{
-	shared_ptr<RoomClient> client = m_gameRoom->GetClient(remote);
-
-	client->SetGameScene(true);
-	client->SetPosition(pos);
-
-	// 모든 클라이언트가 준비되었는지 확인 
-
-	cout << "우와 " << m_gameRoom->IsGameSceneAllReady() << endl;
-	if (m_gameRoom->IsGameSceneAllReady())
-	{
-		// 이 경우 이제 모든 클라에게 접속 정보를 보낸다.
-		forward_list<HostID> list = m_gameRoom->GetAllClient();
-
-		auto iter = list.begin();
-		while (iter != list.end())
-		{
-			forward_list<RoomClient> otherUsers = m_gameRoom->GetOtherClientInfos(*iter);
-
-			auto iter2 = otherUsers.begin();
-			while (iter2 != otherUsers.end())
-			{
-				Vector3 pos = iter2->GetPos();
-				m_proxy.NotifyOtherClientJoin(*iter, RmiContext::ReliableSend,
-					iter2->GetHostID(), iter2->GetName(), pos.x, pos.y, pos.z);
-				iter2++;
-			}
-
-			// 호스트가 아니면 아이템 생성 명령도 보내야 함
-			if (m_gameRoom->GetClient(*iter)->IsHost() == false)
-			{
-				// 아이템 생성 샌드
-				for each(auto item in m_itemMap)
-				{
-					m_proxy.NotifyCreateItem(*iter, RmiContext::ReliableSend, (int)HostID_Server,
-						item.second->m_itemID,item.second->m_networkID, item.second->pos, item.second->rot);
-				}
-			}
-			
-
-			iter++;
-		}
-	}
-
-	
-	return true;
-}
-
-#pragma endregion
-
-DEFRMI_SpaceWar_RequestGameExit(Server)
-{
-	s_GameRunning = false;
-	m_gameRoom->ClearRoom();
-	m_clientMap.clear();
-	m_itemMap.clear();
-	m_itemBoxMap.clear();
-	//m_oxyChargerMap.clear();
-	s_deathZoneCommingSec = 180;
-	return true;
-}
-
-#pragma region Death Zone
-DEFRMI_SpaceWar_RequestSpaceShipSetup(Server)
-{
-	cout << "우주선의 갯수가 세팅됩니다.." << spaceShipCount << endl;
-	m_spaceshipCount = spaceShipCount;
-	return true;
-};
-
-DEFRMI_SpaceWar_RequestDeathZoneMoveIndex(Server)
-{
-	cout << "Death Zone Move Target Index " << moveIndex << endl;
-	s_deathZoneIndex = moveIndex;
-
-	// 바뀔때 통보도 해주어야함
-	m_proxy.NotifyDeathZoneMoveHostAndIndexSetup(m_playerP2PGroup, RmiContext::ReliableSend, s_deathZoneHostID, s_deathZoneIndex);
-
-	return true;
-};
 #pragma endregion

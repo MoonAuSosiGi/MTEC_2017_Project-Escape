@@ -854,6 +854,15 @@ public class PlayerController : MonoBehaviour {
         }
         else if (col.CompareTag("SpaceShipControlPanel"))
         {
+            if (NetworkManager.Instance().SPACE_SHIP_ENABLE == false)
+            {
+                GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 잠김 상태");
+                return;
+            }
+            else
+            {
+                GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 사용 가능 상태");
+            }
             m_nearSpaceShip = col.GetComponent<SpaceShip>();
             m_useEffect.SetActive(true);
             m_useEffect.transform.position = m_useEffectHeadAnchor.transform.position;

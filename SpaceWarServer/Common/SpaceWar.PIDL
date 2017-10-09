@@ -17,22 +17,28 @@ using(cs) Nettention.Proud;
 [marshaler(cs)=SP_Marshaler]
 global SpaceWar 3141
 {
-		// TEST CODE
-	RequestGameExit();
-	// Room Logic -----------------------------------------------------
 	
-	// Connect - 방 입장 
+// [초기 접속]  ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+	//[공통] ====================================================================================================
+	
+	// Connect - 초기 접속 요청
 	RequestServerConnect([in]string id);
 
-	// 로비에 들어왔다 - 이제부터 메시지를 받겠다.
-	RequestLobbyConnect();
-
-	// 팀 선택
+	// 팀 선택을 알린다.
 	RequestNetworkGameTeamSelect([in]string name,[in]bool teamRed);
 
-	// 레디
-	RequestNetworkGameReady([in]string name,[in]bool ready);
+	// 게임 종료시
+	RequestGameExit();
 
+	// [호스트 아닌 유저 전용 ] ==============================================================================
+	
+	// 레디 정보를 알린다
+	RequestNetworkGameReady([in]string name,[in]bool ready);
+	// 로비에 연결되었음을 서버 측에 알림 // 이후 서버는 모든 정보를 알려준다. 방장은 이 리퀘스트를 쓰지 않음
+	RequestLobbyConnect();
+	
+	// [방장 호스트 전용] ====================================================================================
 	// 방장이 맵을 바꿈 // 지금 실 적용은 하지 않음
 	RequestNetworkChangeMap([in]string mapName);
 	
@@ -51,15 +57,24 @@ global SpaceWar 3141
 	// 이제 게임이 시작되고 게임 씬으로 넘어왔을 때 다들 요청한다.
 	RequestGameSceneJoin([in]Proud::Vector3 pos,[in]int hostID,[in]string name);
 
-	// Room Server -------------------------
+// [초기 접속 요청 끝] ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+// [초기 접속 알림 ] ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::	
+	// [공통] =================================================================================================
+	
+	// 로그인 
+	NotifyLoginSuccess([in]int hostID,[in]bool host);
+	NotifyLoginFailed([in]string reason);
 	// 초창기 정보를 넘긴다
 	NotifyNetworkUserSetup([in]int userHostID,[in]string userName,[in]bool ready,[in]bool teamRed);
 
 	// 누군가 팀 선택을 바꾸었다.
 	NotifyNetworkGameTeamChange([in]int userHostID,[in]bool teamRed);
+
 	// 누군가 접속을 했다
 	NotifyNetworkConnectUser([in]int userHostID,[in]string userName);
+
+	// [ 유저 ] ===============================================================================================
 
 	// 레디 정보
 	NotifyNetworkReady([in]int hostID,[in]string userName, [in]bool ready);
@@ -79,85 +94,61 @@ global SpaceWar 3141
 	// 게임 시작 실패
 	NotifyNetworkGameStartFailed();
 
+	
+
+	// [방장 호스트 전용] ====================================================================================
 	// 호스트가 나갔다.
 	NotifyNetworkGameHostOut();
 
+// [초기 접속 알림 끝 ]::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-	// Game Logic ----------------------------------------------------
-	//C2S -------------------------------------------------------------
+// [인게임] ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;::
 	
 	// TODO 서버 구조 변경으로 삭제 대상
-	RequestClientJoin([in]int hostID,[in]string name,[in]float x,[in]float y,[in]float z);
+//	RequestClientJoin([in]int hostID,[in]string name,[in]float x,[in]float y,[in]float z);
 	
-	// 월드에 아이템 생성 요청 //
-	RequestWorldCreateItem([in]int hostID,[in]string itemID,[in]string networkID,[in] Proud::Vector3 pos,[in]Proud::Vector3 rot);
-
 	
-	// 플레이어가 맞았다
-	RequestPlayerDamage([in]int sendHostID,[in]int targetHostID,[in]string name,[in]string weaponName,[in]float damage,[in]Proud::Vector3 dir);
 
-	// 플레이어가 숨을쉬었다.
-	RequestPlayerUseOxy([in]int sendHostID,[in]string name,[in]float useOxy);
+// ===============================================================================================================================================
+// [인게임 :: 플레이어 메시지] ===================================================================================================================
 
-	// 산소 충전기 조작 요청
-	RequestUseOxyChargerStart([in]int oxyChargerIndex);
-
-	// 산소 충전기 조작
-	RequestUseOxyCharger([in]int sendHostID,[in]int oxyChargerIndex,[in]float userOxy);
-
-	// 산소 충전기 조작 끝
-	RequestUseOxyChargerEnd([in]int oxyChargerIndex);
-
-	// 아이템 박스 조작
-	RequestUseItemBox([in]int sendHostID,[in]int itemBoxIndex);
-
-	// 처음에 산소 충전기를 등록한다 
-	RequestOxyChargerStartSetup([in]int oxyChargerID);
-
-	// 처음에 쉘터를 등록한다
-	RequestShelterStartSetup([in]int shelterID);
-
-	// 쉘터 문을 조작했다.
-	RequestShelterDoorControl([in]int sendHostID,[in]int shelterID,[in]bool doorState);
-
-	// 쉘터를 들어오고 나갔다 // false 면 나갔다
-	RequestShelterEnter([in]int sendHostID,[in]int shelterID,[in]bool enter);
-
-	// 아이템 삭제 요청을 보냈다.
-	RequestItemDelete([in]string networkID);
-
-	//S2C -------------------------------------------------------------
-	NotifyLoginSuccess([in]int hostID,[in]bool host);
-	NotifyLoginFailed([in]string reason);
-
+// [다른 플레이어] ===============================================================================================================================
 	// Other Player join
 	NotifyOtherClientJoin([in]int hostID,[in]string name,[in]float x,[in]float y,[in]float z);
 
+
+// [플레이어 상태 관련 정보] =====================================================================================================================
+	
 	// 플레이어가 나갔다
 	NotifyPlayerLost([in]int hostID);
+	// 서버에게 - 체력 회복용
+	RequestHpUpdate([in]float hp);
 
+	// 체력 변동 이벤트 (데미지는 여기서 처리되지 않는다.)
+	NotifyPlayerChangeHP([in]int sendHostID,[in]string name,[in]float hp,[in]float prevhp,[in]float maxhp,[in]Proud::Vector3 dir);
+
+	// 산소 변동 이벤트
+	NotifyPlayerChangeOxygen([in]int sendHostID,[in]string name,[in]float oxygen,[in]float prevoxy,[in]float maxoxy);
+
+	// 플레이어가 맞았다
+	RequestPlayerDamage([in]int sendHostID,[in]int targetHostID,[in]string name,[in]string weaponName,[in]float damage,[in]Proud::Vector3 dir);
+
+	// 플레이어가 숨을 쉬었다.
+	RequestPlayerUseOxy([in]int sendHostID,[in]string name,[in]float useOxy);
+	
 	// 플레이어가 움직임
 	NotifyPlayerMove([in]int hostID,[in]string name,[in]float curX,[in]float curY,[in]float curZ,
-	[in]float velocityX,[in]float velocityY,[in]float velocityZ,
-	[in]float crx,[in]float cry,[in]float crz,
-	[in]float rx,[in]float ry, [in]float rz);
-
-	// 월드 아이템 삭제
-	NotifyDeleteItem([in]string networkID);
-
-	// 아이템 생성하는 명령
-	NotifyCreateItem([in]int hostID,[in]string itemID,[in]string networkID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
-
-	// 처음 접속시 아이템 박스의 상태를 전송하는 명령
-	NotifyStartItemBoxState([in]int itemBoxID,[in]bool openState);
-
-	// 플레이어가 아이템을 먹었다. // 임시로 없음
+					[in]float velocityX,[in]float velocityY,[in]float velocityZ,
+					[in]float crx,[in]float cry,[in]float crz,
+					[in]float rx,[in]float ry, [in]float rz);
 
 	// 플레이어가 아이템을 장비했다.
 	NotifyPlayerEquipItem([in]int hostID,[in]string itemID,[in]string networkID);
 
 	// 플레이어가 아이템을 해제했다.
 	NotifyPlayerUnEquipItem([in]int hostID,[in]string itemID,[in]string networkID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
+
+// [ 플레이어 무기 로직 ] ========================================================================================================================
 
 	// 플레이어의 총알 생성
 	NotifyPlayerBulletCreate([in]int sendHostID,[in]string bulletID,[in]string weaponID ,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
@@ -171,36 +162,6 @@ global SpaceWar 3141
 	// 플레이어의 애니메이션 재생 // 누가 보냈는지 / 해당 플레이어 이름 /  애니메이션 이름 / 애니메이션 값
 	NotifyPlayerAnimation([in]int hostID,[in]string name,[in]string animationName,[in]int aniValue);
 
-	// 체력 변동 이벤트 (데미지는 여기서 처리되지 않는다.)
-	NotifyPlayerChangeHP([in]int sendHostID,[in]string name,[in]float hp,[in]float prevhp,[in]float maxhp,[in]Proud::Vector3 dir);
-
-	// 산소 변동 이벤트
-	NotifyPlayerChangeOxygen([in]int sendHostID,[in]string name,[in]float oxygen,[in]float prevoxy,[in]float maxoxy);
-
-	// 산소 충전기 조작 중
-	NotifyUseOxyCharger([in]int sendHostID,[in]int oxyChargerIndex,[in]float userOxy);
-	
-	// 산소 충전기 조작 가능
-	NotifyUseSuccessedOxyCharger([in]int targetHostID,[in]int oxyChargerIndex);
-
-	// 산소 충전기 조작 불가
-	NotifyUseFailedOxyCharger([in]int targetHostID, [in]int oxyChargerIndex);
-
-	// 아이템 박스 조작
-	NotifyUseItemBox([in]int sendHostID,[in]int itemBoxIndex,[in]string itemID,[in]string networkID);
-
-	// 쉘터의 상태 정보
-	NotifyShelterInfo([in]int sendHostID,[in]int shelterID,[in]bool doorState,[in]bool lightState);
-
-	// 메테오 생성까지 남은 시간
-	NotifyMeteorCreateTime([in]int time);
-
-	// 메테오 생성해라
-	NotifyMeteorCreate([in]float anglex,[in]float anglez,[in]string meteorID);
-
-	// 누군가가 우주선 조작중
-	NotifySpaceShipEngineCharge([in]int spaceShipID,[in]float fuel);
-
 	// 유저끼리 날리는 메시지 - 수류탄 생성해라
 	NotifyGrenadeCreate([in]int sendHostID,[in]string networkID,[in]Proud::Vector3 pos);
 	// 유저끼리 날리는 메시지 - 수류탄 이동 동기화
@@ -209,11 +170,120 @@ global SpaceWar 3141
 	NotifyGrenadeBoom([in]int sendHostID,[in]string networkID,[in]bool isStone);
 	// 유저끼리 날리는 메시지 - 수류탄 삭제
 	NotifyGrenadeRemove([in]string networkID);
+// ===============================================================================================================================================
 
-	// 서버에게 - 나 체력 회복했엉
-	RequestHpUpdate([in]float hp);
+// ===============================================================================================================================================
+// [인게임 :: 산소 충전기] =======================================================================================================================
 	
-	// RESULT -------------------------------------------------------------------------
+	// 처음에 산소 충전기를 등록한다 
+	RequestOxyChargerStartSetup([in]int oxyChargerID);
+
+	// 산소 충전기 조작 요청
+	RequestUseOxyChargerStart([in]int oxyChargerIndex);
+
+	// 산소 충전기 조작
+	RequestUseOxyCharger([in]int sendHostID,[in]int oxyChargerIndex,[in]float userOxy);
+
+	// 산소 충전기 조작 끝
+	RequestUseOxyChargerEnd([in]int oxyChargerIndex);
+
+	// 산소 충전기 조작 중 
+	NotifyUseOxyCharger([in]int sendHostID,[in]int oxyChargerIndex,[in]float userOxy);
+	
+	// 산소 충전기 조작 가능
+	NotifyUseSuccessedOxyCharger([in]int targetHostID,[in]int oxyChargerIndex);
+
+	// 산소 충전기 조작 불가
+	NotifyUseFailedOxyCharger([in]int targetHostID, [in]int oxyChargerIndex);
+
+// [인게임 :: 산소 충전기 끝] ====================================================================================================================
+// ===============================================================================================================================================
+
+// ===============================================================================================================================================
+// [인게임 :: 아이템 박스 조작] ==================================================================================================================
+
+	// 아이템 박스 조작
+	RequestUseItemBox([in]int sendHostID,[in]int itemBoxIndex);
+	// 처음 접속시 아이템 박스의 상태를 전송하는 명령
+	NotifyStartItemBoxState([in]int itemBoxID,[in]bool openState);
+	// 아이템 박스 조작
+	NotifyUseItemBox([in]int sendHostID,[in]int itemBoxIndex,[in]string itemID,[in]string networkID);
+// ===============================================================================================================================================
+
+// ===============================================================================================================================================
+// [인게임 :: 쉘터 조작] =========================================================================================================================
+
+	// 처음에 쉘터를 등록한다
+	RequestShelterStartSetup([in]int shelterID);
+
+	// 쉘터 문을 조작했다.
+	RequestShelterDoorControl([in]int sendHostID,[in]int shelterID,[in]bool doorState);
+
+	// 쉘터를 들어오고 나갔다 // false 면 나갔다
+	RequestShelterEnter([in]int sendHostID,[in]int shelterID,[in]bool enter);
+	
+	// 쉘터의 상태 정보
+	NotifyShelterInfo([in]int sendHostID,[in]int shelterID,[in]bool doorState,[in]bool lightState);
+// ===============================================================================================================================================
+// [인게임 :: 아이템 로직] =======================================================================================================================
+	// 월드에 아이템 생성 요청 //
+	RequestWorldCreateItem([in]int hostID,[in]string itemID,[in]string networkID,[in] Proud::Vector3 pos,[in]Proud::Vector3 rot);
+	// 아이템 생성하는 명령
+	NotifyCreateItem([in]int hostID,[in]string itemID,[in]string networkID,[in]Proud::Vector3 pos,[in]Proud::Vector3 rot);
+
+	// 아이템 삭제 요청
+	RequestItemDelete([in]string networkID);
+	// 월드 아이템 삭제 알림
+	NotifyDeleteItem([in]string networkID);
+// ===============================================================================================================================================
+
+// ===============================================================================================================================================
+// [인게임 - 메테오 ] ============================================================================================================================
+
+	// 메테오 생성까지 남은 시간
+	NotifyMeteorCreateTime([in]int time);
+
+	// 메테오 생성해라
+	NotifyMeteorCreate([in]float anglex,[in]float anglez,[in]string meteorID);
+// ===============================================================================================================================================
+
+// ===============================================================================================================================================
+// [인게임 - 우주선] =============================================================================================================================
+	// 우주선이 총 몇개 있는지 세팅 
+	RequestSpaceShipSetup([in]int spaceShipCount);
+	// 우주선 사용 요청
+	RequestUseSpaceShip([in]int spaceShipID);
+
+	// 우주선 사용 성공
+	NotifyUseSpaceShipSuccess([in]int spaceShipID);
+
+	// 우주선 사용 실패
+	NotifyUseSpaceShipFailed([in]int spaceShipID,[in]int targetHostID);
+	
+	// 우주선 잠금 해제까지 남은 시간
+	NotifySpaceShipLockTime([in]int sec);
+
+	// 누군가가 우주선 조작 중 실패함
+	NotifySpaceShipEngineChargeFailed([in]int spaceShipID);
+
+	// 누군가가 우주선 조작중
+	NotifySpaceShipEngineCharge([in]int spaceShipID,[in]float fuel);
+	
+
+// ===============================================================================================================================================
+// [ Death Zone ] ================================================================================================================================
+	// 데스존 생성까지 남은 시간
+	NotifyDeathZoneCommingTime([in]int tick,[in]string deathzoneID);
+	// 데스존 생성 통보
+	NotifyDeathZoneCreate([in]int spaceShipIndex,[in]string deathzoneID); 
+	// 데스존이 가고 있는 행성 단계를 알려줘야함
+	RequestDeathZoneMoveIndex([in]int moveIndex);
+	// 데스존이 가고 있는 행성 단계 통보 + 누가 움직이는 주체인지도 통보
+	NotifyDeathZoneMoveHostAndIndexSetup([in]int moveHostID,[in]int currentIndex);
+	// 데스존 이동 통보 - 이건 클라에서 보내는 것
+	NotifyDeathZoneMove([in]Proud::Vector3 pos,[in]Proud::Vector3 velocity);
+// ===============================================================================================================================================
+// [ 결과 ] ======================================================================================================================================
 	
 	// 드로우 게임 
 	NotifyDrawGame();
@@ -231,20 +301,5 @@ global SpaceWar 3141
 	NotifyGameResultInfoMe([in]string gameMode,[in]int winState,[in]int playTime,[in]int kills,[in]int assists,[in]int death,[in]int getMoney); 
 	NotifyGameResultInfoOther([in]string name,[in]int state);
 	NotifyGameResultShow();
-
-
-	// DeathZone ------------------------------------------------------------------------------------------------
-	// 우주선이 총 몇개 있는지 세팅 
-	RequestSpaceShipSetup([in]int spaceShipCount);
-	// 데스존 생성까지 남은 시간
-	NotifyDeathZoneCommingTime([in]int tick,[in]string deathzoneID);
-	// 데스존 생성 통보
-	NotifyDeathZoneCreate([in]int spaceShipIndex,[in]string deathzoneID); 
-	// 데스존이 가고 있는 행성 단계를 알려줘야함
-	RequestDeathZoneMoveIndex([in]int moveIndex);
-	// 데스존이 가고 있는 행성 단계 통보 + 누가 움직이는 주체인지도 통보
-	NotifyDeathZoneMoveHostAndIndexSetup([in]int moveHostID,[in]int currentIndex);
-	// 데스존 이동 통보 - 이건 클라에서 보내는 것
-	NotifyDeathZoneMove([in]Proud::Vector3 pos,[in]Proud::Vector3 velocity);
-
+// ===============================================================================================================================================
 }

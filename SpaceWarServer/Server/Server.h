@@ -16,6 +16,9 @@
 #include "../Common/SpaceWar_proxy.cpp"
 #include "../Common/SpaceWar_common.cpp"
 
+// 우주선 잠금 해제까지 남은 시간
+int s_spaceShipLockTime = 60;
+
 // 메테오까지 남은시간
 int s_meteorCommingSec = 90;
 // 데스존 까지 남은 시간
@@ -50,68 +53,46 @@ public:
 	// P2P 그룹 이름 --------------------------
 	HostID m_playerP2PGroup = HostID_None; 
 public:
-	// 기본 서버 로직 -------------------------
+
+#pragma region Server Class Logic -------------------------------------------------------------------
+	// 서버 실행 로직
 	void ServerRun();
+	// 서버 이벤트 로직
+	// 클라 접속시
+	void OnClientJoin(CNetClientInfo* clientInfo);
+	// 클라 접속 해제시
+	void OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, const ByteArray& comment);
+#pragma endregion
 
+#pragma region C2S  ---------------------------------------------------------------------------------
+#pragma region 초기 접속 ========================
+#pragma region 공통 구간 ------------------------
+
+	// Connect 초기 접속 요청
 	DECRMI_SpaceWar_RequestServerConnect;
-	DECRMI_SpaceWar_RequestClientJoin;
-	DECRMI_SpaceWar_RequestWorldCreateItem;
-	DECRMI_SpaceWar_NotifyDeleteItem;
-	DECRMI_SpaceWar_NotifyPlayerMove;
 
-	// 아이템 삭제 요청
-	DECRMI_SpaceWar_RequestItemDelete;
-	//아이템 장비
-	DECRMI_SpaceWar_NotifyPlayerEquipItem;
-
-	// 데미지 요청
-	DECRMI_SpaceWar_RequestPlayerDamage;
-
-	// 숨을 쉬었다.
-	DECRMI_SpaceWar_RequestPlayerUseOxy;
-
-	// 산소 충전기 등록 요청
-	DECRMI_SpaceWar_RequestOxyChargerStartSetup;
-
-	// 산소 충전기 조작 요청 
-	DECRMI_SpaceWar_RequestUseOxyChargerStart;
-
-	// 산소 충전기 사용
-	DECRMI_SpaceWar_RequestUseOxyCharger;
-
-	// 산소 충전기 사용 끝
-	DECRMI_SpaceWar_RequestUseOxyChargerEnd;
-
-	// 아이템 박스 사용
-	DECRMI_SpaceWar_RequestUseItemBox;
-
-	// 쉘터 등록
-	DECRMI_SpaceWar_RequestShelterStartSetup;
-	// 쉘터 문 조작
-	DECRMI_SpaceWar_RequestShelterDoorControl;
-
-	// 쉘터 입장 퇴장
-	DECRMI_SpaceWar_RequestShelterEnter;
-
-	// 서버야 나 체력 회복했어
-	DECRMI_SpaceWar_RequestHpUpdate;
-	
-	// 드로우 결과 요청
-	DECRMI_SpaceWar_RequestDrawGameResult;
-	// 우주선 탔음 
-	DECRMI_SpaceWar_RequestSpaceShip;
-	//게임 끝
-	DECRMI_SpaceWar_RequestGameEnd;
-
-	// 서버 로비 로직
-	DECRMI_SpaceWar_RequestLobbyConnect;
-	// 팀 선택 요청
+	// 팀 선택 바꿈
 	DECRMI_SpaceWar_RequestNetworkGameTeamSelect;
+
+	//정상적인 종료 루틴 // 게임 끝났음을 알림 ( 호스트가 보낸다 ))
+	DECRMI_SpaceWar_RequestGameExit;
+
+#pragma endregion
+
+#pragma region 호스트 아닌 유저 -----------------
 	// 레디
 	DECRMI_SpaceWar_RequestNetworkGameReady;
-	// 맵 바꿈 요청
+	// 서버 로비 로직 // 로비 화면에 들어왔다.
+	DECRMI_SpaceWar_RequestLobbyConnect;
+
+	// 게임이 시작되고 게임 씬으로 넘어왔을 때 다들 요청한다.
+	DECRMI_SpaceWar_RequestGameSceneJoin;
+#pragma endregion
+
+#pragma region 방장 호스트 전용 -----------------
+	// 방장이 맵을 바꿈
 	DECRMI_SpaceWar_RequestNetworkChangeMap;
-	// 방장이 인원 수를 조작
+	// 방장이 플레이어 수를 바꿈
 	DECRMI_SpaceWar_RequestNetworkPlayerCount;
 	// 방장이 게임 모드를 바꿈
 	DECRMI_SpaceWar_RequestNetworkGameModeChange;
@@ -119,22 +100,87 @@ public:
 	DECRMI_SpaceWar_RequestNetworkGameStart;
 	// 방장이 로비를 나갔다.
 	DECRMI_SpaceWar_RequestNetworkHostOut;
+#pragma endregion
+#pragma endregion
 
-	// 게임 씬에 들어왔다는 것을 알려야지
-	DECRMI_SpaceWar_RequestGameSceneJoin;
+#pragma region 인게임 ===========================
 
+#pragma region 인게임 :: 플레이어 메시지 --------
+#pragma region [플레이어 상태 관련 정보]
+	// 체력 회복 메시지
+	DECRMI_SpaceWar_RequestHpUpdate;
+	// 플레이어가 맞았다.
+	DECRMI_SpaceWar_RequestPlayerDamage;
+	// 플레이어가 숨을 쉬었다.
+	DECRMI_SpaceWar_RequestPlayerUseOxy;
+	// 플레이어 움직임 처리 
+	DECRMI_SpaceWar_NotifyPlayerMove;
+	//아이템 장비 // 추후 지울 수 있음
+	DECRMI_SpaceWar_NotifyPlayerEquipItem;
+#pragma endregion
+#pragma endregion
+
+#pragma region 인게임 :: 산소 충전기 ------------
+	// 처음에 산소 충전기를 등록한다
+	DECRMI_SpaceWar_RequestOxyChargerStartSetup;
+	// 산소 충전기 조작 요청 
+	DECRMI_SpaceWar_RequestUseOxyChargerStart;
+	// 산소 충전기 조작중
+	DECRMI_SpaceWar_RequestUseOxyCharger;
+	// 산소 충전기 조작 끝
+	DECRMI_SpaceWar_RequestUseOxyChargerEnd;
+#pragma endregion
+
+#pragma region 인게임 :: 아이템 박스 조작 -------
+	// 아이템 박스 조작
+	DECRMI_SpaceWar_RequestUseItemBox;
+#pragma endregion
+
+#pragma region 인게임 :: 쉘터 조작 --------------
+	// 쉘터 등록
+	DECRMI_SpaceWar_RequestShelterStartSetup;
+	// 쉘터 문 조작
+	DECRMI_SpaceWar_RequestShelterDoorControl;
+
+	// 쉘터 입장 퇴장
+	DECRMI_SpaceWar_RequestShelterEnter;
+#pragma endregion
+
+#pragma region 인게임 :: 아이템 로직 ------------
+	// 월드에 아이템 생성 요청
+	DECRMI_SpaceWar_RequestWorldCreateItem;
+	// 아이템 삭제 요청
+	DECRMI_SpaceWar_RequestItemDelete;
+	// 월드 아이템 삭제 알림
+	DECRMI_SpaceWar_NotifyDeleteItem;
+#pragma endregion
+
+#pragma region 인게임 :: 우주선 -----------------
 	// 우주선 몇개 있는지 세팅
 	DECRMI_SpaceWar_RequestSpaceShipSetup;
+	// 우주선 탔음 
+	DECRMI_SpaceWar_RequestSpaceShip;
+#pragma endregion
 
+#pragma region 인게임 :: 데스존 -----------------
 	// 데스존이 이동하고 있는 단계를 통보해줘라
 	DECRMI_SpaceWar_RequestDeathZoneMoveIndex;
+#pragma endregion
 
-	// 게임 끝났음을 알림 ( 호스트가 보낸다 ))
-	DECRMI_SpaceWar_RequestGameExit;
+#pragma endregion
 
-	// 서버 이벤트 로직
-	void OnClientJoin(CNetClientInfo* clientInfo);
-	void OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, const ByteArray& comment);
+#pragma region 결과창 ==========================
+	// 드로우 게임시 정보 요청
+	DECRMI_SpaceWar_RequestDrawGameResult;
+
+	// 결과를 받아오는 것
+	DECRMI_SpaceWar_RequestGameEnd;
+#pragma endregion
+#pragma endregion
+
+
+
+	//DECRMI_SpaceWar_RequestClientJoin;
 
 	int GetSpaceShipCount() { return m_spaceshipCount; }
 

@@ -163,6 +163,11 @@ public class NetworkManager : Singletone<NetworkManager> {
     public GameObject m_grenadeParent = null; // 수류탄 
     #endregion
 
+    #region SpaceShip
+    private bool m_spaceShipEnabled = false;
+    public bool SPACE_SHIP_ENABLE { get { return m_spaceShipEnabled; } }
+    #endregion
+
     #region Death Zone 
     private GameObject m_deathZone = null;
     #endregion
@@ -671,13 +676,33 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         };
 
+        // 우주선 잠금 시간
+        m_s2cStub.NotifySpaceShipLockTime = (HostID remote , RmiContext rmiContext , int sec) =>
+        {
+            if (sec <= 0)
+            {
+                m_spaceShipEnabled = true;
+                GameManager.Instance().ALERT.AlertHide("SpaceShipLock");
+            }
+            else
+                GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.ENGINE_READY , "SpaceShipLock" , sec , "우주선 잠금");
+            return true;
+        };
+
+        // 우주선 조작 중 실패
+        m_s2cStub.NotifySpaceShipEngineChargeFailed = (HostID remote , RmiContext rmiContext , int spaceShipID) =>
+        {
+            GameManager.Instance().ALERT.AlertHide("SpaceStart_" + spaceShipID);
+            return true;
+        };
+
         // 우주선 조작 정보가 넘어옴
         m_s2cStub.NotifySpaceShipEngineCharge = (HostID remote , RmiContext rmiContext ,
             int spaceShipID , float fuel) =>
         {
-            Debug.Log("넘어옴 정보 " + spaceShipID);
             var spaceShip = m_spaceShipList[spaceShipID];
 
+            GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.ENGINE_STARTING , "SpaceStart_"+ spaceShipID , Mathf.RoundToInt(1.0f - fuel) , "우주선 조작");
             spaceShip.SpaceShipEngineCharge(fuel , false);
             if(fuel >= 1.0f)
             {
@@ -1385,6 +1410,15 @@ public class NetworkManager : Singletone<NetworkManager> {
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
         sendOption.enableLoopback = false;
         m_c2sProxy.NotifySpaceShipEngineCharge(m_p2pID , sendOption , spaceShipID , fuel);
+    }
+
+    // 우주선 조작 실패
+    public void C2SNotifySpaceShipEngineFailed(int spaceShipID)
+    {
+        var sendOption = new RmiContext(); // (2)
+        sendOption.reliability = MessageReliability.MessageReliability_Reliable;
+        sendOption.enableLoopback = false;
+        m_c2sProxy.NotifySpaceShipEngineChargeFailed(m_p2pID , sendOption , spaceShipID);
     }
 
     // 우주선을 탔음을 알림
