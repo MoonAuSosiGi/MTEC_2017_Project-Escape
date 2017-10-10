@@ -84,7 +84,6 @@ public class InGameUI : MonoBehaviour
     #region EquipWeapon
     public void EquipWeapon(string itemID,int index,int curCount,int maxCount)
     {
-        Debug.Log("index " + index + " item ID "+ itemID);
         m_selectObject.transform.position = m_InvenIconList[index].transform.position;
 
         if (string.IsNullOrEmpty(itemID))

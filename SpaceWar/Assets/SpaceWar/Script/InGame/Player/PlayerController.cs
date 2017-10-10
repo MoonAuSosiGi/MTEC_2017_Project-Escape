@@ -117,7 +117,19 @@ public class PlayerController : MonoBehaviour {
     private OxyCharger m_nearOxyCharger = null;
     private ItemBox m_nearItemBox = null;
     private Shelter m_nearShelter = null;
+
+    #region SpaceShip
     private SpaceShip m_nearSpaceShip = null;
+    private bool m_spaceShipRequest = false;
+    public bool SPACESHIP_REQUEST {
+        get { return m_spaceShipRequest; }
+        set {
+            m_spaceShipRequest = value;
+            if (m_spaceShipRequest == false)
+                m_isMoveAble = true;
+        } }
+    #endregion
+
 
     #endregion
 
@@ -811,6 +823,7 @@ public class PlayerController : MonoBehaviour {
 
     #region Player Object Interaction ---------------------------------------------------------------------
 
+    #region Show UI Logic :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     void ShowUseEffect(Collider col)
     {
         if (m_useEffect.activeSelf)
@@ -856,18 +869,17 @@ public class PlayerController : MonoBehaviour {
         {
             if (NetworkManager.Instance().SPACE_SHIP_ENABLE == false)
             {
-                GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 잠김 상태");
+                GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 최초 잠김 상태");
                 return;
             }
             else
             {
-                GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 사용 가능 상태");
+                GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 최초 잠김이 풀린 상태");
             }
             m_nearSpaceShip = col.GetComponent<SpaceShip>();
             m_useEffect.SetActive(true);
             m_useEffect.transform.position = m_useEffectHeadAnchor.transform.position;
-            //  우주선 연료창 띄우기
-            m_nearSpaceShip.StartSpaceShipEngineCharge();
+
         }
         else if(col.CompareTag("Recoverykit"))
         {
@@ -923,18 +935,20 @@ public class PlayerController : MonoBehaviour {
         if (m_useEffect.activeSelf)
             m_useEffect.transform.GetChild(0).GetChild(0).rotation = this.transform.rotation;
     }
-
+    #endregion
     void ChangeItemProcess()
     {
         int index = -1;
 
-        if (Input.GetKeyDown(m_inven1)) index = 0;
-        if (Input.GetKeyDown(m_inven2)) index = 1;
-        if (Input.GetKeyDown(m_inven3)) index = 2;
-        if (Input.GetKeyDown(m_inven4)) index = 3;
+        if (Input.GetKey(m_inven1)) index = 0;
+        if (Input.GetKey(m_inven2)) index = 1;
+        if (Input.GetKey(m_inven3)) index = 2;
+        if (Input.GetKey(m_inven4)) index = 3;
 
         if(index != -1)// && m_equipItems[index] != null)
         {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("Inven index " + index + " cur " + m_curEquipItem);
+
             // 기존 아이템이 장착되어있다면 해제해야한다.
             if (m_equipItems[m_curEquipItem] != null)
             {
@@ -1098,9 +1112,7 @@ public class PlayerController : MonoBehaviour {
 
         m_equipItems[index] = null;
     }
-
-   
-
+    
     void ControlObjectProcess()
     {
          if(Input.GetKeyDown(m_Get))
@@ -1121,40 +1133,46 @@ public class PlayerController : MonoBehaviour {
             {
                 if(m_currentWeapon != null)
                    m_currentWeapon.gameObject.SetActive(false);
-                SetAnimation(AnimationType.ANI_ETC);
-                INTERACTION_ANI_VALUE = 1;
+                
                 IS_MOVE_ABLE = false;
                 m_nearSpaceShip.StartSpaceShipEngineCharge();
-                AudioPlay(m_spaceShipChargeSound);
+
             }
             
         }
-         if(Input.GetKey(m_Get))
+
+        #region SpaceShip Interaction Logic ---------------------------------------------------------------------
+
+         // 사용 요청
+        if (m_spaceShipRequest == false && Input.GetKeyDown(m_Get) && m_nearSpaceShip != null)
+        {
+            m_spaceShipRequest = true;
+            m_isMoveAble = false;
+            NetworkManager.Instance().C2SRequestUseSpaceShip(m_nearSpaceShip.SPACESHIP_ID);
+        }
+
+        // 사용 가능 할때 
+        if (m_spaceShipRequest == true && Input.GetKey(m_Get) && m_nearSpaceShip.IS_SPACESHIP_ENABLED == true)
         {
             if (m_nearSpaceShip != null)
             {
                 m_nearSpaceShip.SpaceShipEngineChargeProcess();
             }
         }
-         if(Input.GetKeyUp(m_Get))
+
+        // 중도 취소 
+        if (Input.GetKeyUp(m_Get))
         {
             if (m_nearSpaceShip != null)
             {
-                IS_MOVE_ABLE = true;
-                INTERACTION_ANI_VALUE = 0;
-                if (m_currentWeapon != null)
-                {
-                    m_currentWeapon.gameObject.SetActive(true);
-                    WeaponAnimationChange(m_currentWeapon);
-                }
-                    
-                m_nearSpaceShip.StopSpaceShipEngineCharge();
-                AudioPlay(m_spaceShipChargeFail);
+                SpaceShipControlCancel();
             }
         }
-        
+        #endregion
+
+        #region OxyCharger Interaction Logic -------------------------------------------------------------------
         // 산소 충전 요청을 보내야 한다.
-        if(m_oxyChargeEnable == false)
+        if (m_oxyChargeEnable == false)
         {
             if(m_nearOxyCharger != null && Input.GetKeyDown(m_Get) && m_oxyChargeRequest == false)
             {
@@ -1167,10 +1185,10 @@ public class PlayerController : MonoBehaviour {
         {
             ControlOxyChargerProcess();
         }
+        #endregion
 
-        
     }
-
+    #region OxyCharger Interaction Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // 산소 충전 가능 상태가 되자마자 첨 세팅
     void OxyChargerEnableSetup()
     {
@@ -1188,6 +1206,7 @@ public class PlayerController : MonoBehaviour {
         GameManager.Instance().SLIDER_UI.ShowSlider();
         GameManager.Instance().SLIDER_UI.Reset();
     }
+
     // 산소 충전가능한 상황일때
     void ControlOxyChargerProcess()
     {
@@ -1248,8 +1267,10 @@ public class PlayerController : MonoBehaviour {
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
     }
+    #endregion
 
 
+    #region Meteor Interaction Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // 메테오 데미지
     void MeteorDamage(Collider col)
     {
@@ -1273,8 +1294,36 @@ public class PlayerController : MonoBehaviour {
         m_meteorCoolTime = -1.0f;
         CancelInvoke("MeteorCoolTimeChecker");     
     }
+    #endregion
 
-    #region Damage Effect 관련 
+    #region SpaceShip Interaction Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    // 우주선 사용가능 상태일때 최초 수행시 
+    public void SpaceShipEnable()
+    {
+        SetAnimation(AnimationType.ANI_ETC);
+        INTERACTION_ANI_VALUE = 1;
+        AudioPlay(m_spaceShipChargeSound);
+        Debug.Log("우주선 사용가능 ");
+    }
+
+    void SpaceShipControlCancel()
+    {
+        IS_MOVE_ABLE = true;
+        INTERACTION_ANI_VALUE = 0;
+        m_spaceShipRequest = false;
+        NetworkManager.Instance().C2SRequestUseSpaceShipCancel(m_nearSpaceShip.SPACESHIP_ID);
+        if (m_currentWeapon != null)
+        {
+            m_currentWeapon.gameObject.SetActive(true);
+            WeaponAnimationChange(m_currentWeapon);
+        }
+
+        m_nearSpaceShip.StopSpaceShipEngineCharge();
+        AudioPlay(m_spaceShipChargeFail);
+    }
+    #endregion
+
+    #region Damage Effect Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     public void DamageEffect()
     {
         CameraManager.Instance().ShowHitEffect();
@@ -1304,10 +1353,11 @@ public class PlayerController : MonoBehaviour {
         DamageEffect();
 
         AudioPlay(m_damageHit);
+        // 우주선 생성 도중 데미지를 입었을 경우 캔슬됨
         if (m_nearSpaceShip != null && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
-            m_nearSpaceShip.StopSpaceShipEngineCharge();
+            SpaceShipControlCancel();
 
-        if(m_nearOxyCharger != null && m_targetOxy > 0.0f && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
+        if (m_nearOxyCharger != null && m_targetOxy > 0.0f && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
         {
             INTERACTION_ANI_VALUE = 0;
             m_targetOxy = 0.0f;

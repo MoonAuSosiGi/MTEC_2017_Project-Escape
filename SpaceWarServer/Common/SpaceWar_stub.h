@@ -634,11 +634,21 @@ namespace SpaceWar
 			return false;
 		} 
 
-#define DECRMI_SpaceWar_RequestSpaceShipSetup bool RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount) PN_OVERRIDE
+#define DECRMI_SpaceWar_RequestSpaceShipSetup bool RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID) PN_OVERRIDE
 
-#define DEFRMI_SpaceWar_RequestSpaceShipSetup(DerivedClass) bool DerivedClass::RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)
-#define CALL_SpaceWar_RequestSpaceShipSetup RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)
-#define PARAM_SpaceWar_RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)
+#define DEFRMI_SpaceWar_RequestSpaceShipSetup(DerivedClass) bool DerivedClass::RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
+#define CALL_SpaceWar_RequestSpaceShipSetup RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
+#define PARAM_SpaceWar_RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
+               
+		virtual bool RequestSpaceShip ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestSpaceShip bool RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestSpaceShip(DerivedClass) bool DerivedClass::RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+#define CALL_SpaceWar_RequestSpaceShip RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
+#define PARAM_SpaceWar_RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
                
 		virtual bool RequestUseSpaceShip ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
@@ -649,6 +659,16 @@ namespace SpaceWar
 #define DEFRMI_SpaceWar_RequestUseSpaceShip(DerivedClass) bool DerivedClass::RequestUseSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
 #define CALL_SpaceWar_RequestUseSpaceShip RequestUseSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
 #define PARAM_SpaceWar_RequestUseSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
+               
+		virtual bool RequestUseSpaceShipCancel ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestUseSpaceShipCancel bool RequestUseSpaceShipCancel ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestUseSpaceShipCancel(DerivedClass) bool DerivedClass::RequestUseSpaceShipCancel ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
+#define CALL_SpaceWar_RequestUseSpaceShipCancel RequestUseSpaceShipCancel ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
+#define PARAM_SpaceWar_RequestUseSpaceShipCancel ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)
                
 		virtual bool NotifyUseSpaceShipSuccess ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
@@ -770,16 +790,6 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestDrawGameResult RequestDrawGameResult ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
 #define PARAM_SpaceWar_RequestDrawGameResult ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
                
-		virtual bool RequestSpaceShip ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
-			return false;
-		} 
-
-#define DECRMI_SpaceWar_RequestSpaceShip bool RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) PN_OVERRIDE
-
-#define DEFRMI_SpaceWar_RequestSpaceShip(DerivedClass) bool DerivedClass::RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
-#define CALL_SpaceWar_RequestSpaceShip RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
-#define PARAM_SpaceWar_RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)
-               
 		virtual bool RequestGameEnd ( ::Proud::HostID, ::Proud::RmiContext& )		{ 
 			return false;
 		} 
@@ -893,7 +903,9 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
 		static const PNTCHAR* RmiName_NotifyMeteorCreate;
 		static const PNTCHAR* RmiName_RequestSpaceShipSetup;
+		static const PNTCHAR* RmiName_RequestSpaceShip;
 		static const PNTCHAR* RmiName_RequestUseSpaceShip;
+		static const PNTCHAR* RmiName_RequestUseSpaceShipCancel;
 		static const PNTCHAR* RmiName_NotifyUseSpaceShipSuccess;
 		static const PNTCHAR* RmiName_NotifyUseSpaceShipFailed;
 		static const PNTCHAR* RmiName_NotifySpaceShipLockTime;
@@ -906,7 +918,6 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyDeathZoneMove;
 		static const PNTCHAR* RmiName_NotifyDrawGame;
 		static const PNTCHAR* RmiName_RequestDrawGameResult;
-		static const PNTCHAR* RmiName_RequestSpaceShip;
 		static const PNTCHAR* RmiName_RequestGameEnd;
 		static const PNTCHAR* RmiName_NotifyKillInfo;
 		static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
@@ -1473,11 +1484,20 @@ namespace SpaceWar
 
                
 		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestSpaceShipSetup_Function;
-		virtual bool RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount) 
+		virtual bool RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID) 
 		{ 
 			if (RequestSpaceShipSetup_Function==nullptr) 
 				return true; 
-			return RequestSpaceShipSetup_Function(remote,rmiContext, spaceShipCount); 
+			return RequestSpaceShipSetup_Function(remote,rmiContext, spaceShipID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestSpaceShip_Function;
+		virtual bool RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) 
+		{ 
+			if (RequestSpaceShip_Function==nullptr) 
+				return true; 
+			return RequestSpaceShip_Function(remote,rmiContext, winPlayerID); 
 		}
 
                
@@ -1487,6 +1507,15 @@ namespace SpaceWar
 			if (RequestUseSpaceShip_Function==nullptr) 
 				return true; 
 			return RequestUseSpaceShip_Function(remote,rmiContext, spaceShipID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestUseSpaceShipCancel_Function;
+		virtual bool RequestUseSpaceShipCancel ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID) 
+		{ 
+			if (RequestUseSpaceShipCancel_Function==nullptr) 
+				return true; 
+			return RequestUseSpaceShipCancel_Function(remote,rmiContext, spaceShipID); 
 		}
 
                
@@ -1595,15 +1624,6 @@ namespace SpaceWar
 			if (RequestDrawGameResult_Function==nullptr) 
 				return true; 
 			return RequestDrawGameResult_Function(remote,rmiContext); 
-		}
-
-               
-		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestSpaceShip_Function;
-		virtual bool RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID) 
-		{ 
-			if (RequestSpaceShip_Function==nullptr) 
-				return true; 
-			return RequestSpaceShip_Function(remote,rmiContext, winPlayerID); 
 		}
 
                

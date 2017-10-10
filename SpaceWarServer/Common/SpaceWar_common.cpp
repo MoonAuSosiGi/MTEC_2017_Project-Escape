@@ -132,7 +132,11 @@ namespace SpaceWar
                
 		Rmi_RequestSpaceShipSetup,
                
+		Rmi_RequestSpaceShip,
+               
 		Rmi_RequestUseSpaceShip,
+               
+		Rmi_RequestUseSpaceShipCancel,
                
 		Rmi_NotifyUseSpaceShipSuccess,
                
@@ -158,8 +162,6 @@ namespace SpaceWar
                
 		Rmi_RequestDrawGameResult,
                
-		Rmi_RequestSpaceShip,
-               
 		Rmi_RequestGameEnd,
                
 		Rmi_NotifyKillInfo,
@@ -171,5 +173,5 @@ namespace SpaceWar
 		Rmi_NotifyGameResultShow,
 	};
 
-	int g_RmiIDListCount = 81;
+	int g_RmiIDListCount = 82;
 }

@@ -6,6 +6,7 @@
 #include "Shelter.h"
 #include "GameRoom.h"
 #include "OxyCharger.h"
+#include "SpaceShip.h"
 #include "SP_Marshaler.h"
 #include "../Common/SpaceWar_stub.h"
 #include "../Common/SpaceWar_proxy.h"
@@ -45,7 +46,6 @@ public:
 	Server() 
 	{ 
 		m_gameRoom = make_shared <GameRoom>(); 
-		m_spaceshipCount = 0;
 	}
 	~Server() {}
 
@@ -160,6 +160,10 @@ public:
 	DECRMI_SpaceWar_RequestSpaceShipSetup;
 	// 우주선 탔음 
 	DECRMI_SpaceWar_RequestSpaceShip;
+	// 우주선 사용 요청
+	DECRMI_SpaceWar_RequestUseSpaceShip;
+	// 우주선 사용 취소
+	DECRMI_SpaceWar_RequestUseSpaceShipCancel;
 #pragma endregion
 
 #pragma region 인게임 :: 데스존 -----------------
@@ -182,8 +186,6 @@ public:
 
 	//DECRMI_SpaceWar_RequestClientJoin;
 
-	int GetSpaceShipCount() { return m_spaceshipCount; }
-
 private:
 	// 아이템 박스 등 상호작용 오브젝트의 경우 동시접근을 막아야 하므로
 	// 현재 접근하고 있는지 체크하는 로직이 필요함, 이에 따른 체크용 변수들
@@ -195,9 +197,6 @@ private:
 	// 플레이 타임
 	int m_gameStartTime;
 
-	// 현재 게임의 우주선 갯수
-	int m_spaceshipCount;
-	
 	// 아이템박스 인덱스
 	int m_itemBoxCreateItemIndex;
 public:
@@ -210,6 +209,9 @@ public:
 
 	// 산소충전기 리스트
 	unordered_map<int, shared_ptr<OxyCharger>> m_oxyChargerMap;
+
+	// 우주선 리스트
+	unordered_map<int, shared_ptr<SpaceShip>> m_spaceShipMap;
 
 	// 클라이언트 리스트
 	unordered_map<HostID, shared_ptr<Client>> m_clientMap;

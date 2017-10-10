@@ -1910,7 +1910,7 @@ __msg << meteorID;
 			RmiName_NotifyMeteorCreate, (::Proud::RmiID)Rmi_NotifyMeteorCreate);
 	}
         
-	bool Proxy::RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipCount)	{
+	bool Proxy::RequestSpaceShipSetup ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1918,13 +1918,13 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 ::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShipSetup;
 __msg.Write(__msgid); 
 	
-__msg << spaceShipCount;
+__msg << spaceShipID;
 		
 		return RmiSend(&remote,1,rmiContext,__msg,
 			RmiName_RequestSpaceShipSetup, (::Proud::RmiID)Rmi_RequestSpaceShipSetup);
 	}
 
-	bool Proxy::RequestSpaceShipSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipCount)  	{
+	bool Proxy::RequestSpaceShipSetup ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipID)  	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
 __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
@@ -1932,10 +1932,38 @@ __msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
 ::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShipSetup;
 __msg.Write(__msgid); 
 	
-__msg << spaceShipCount;
+__msg << spaceShipID;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_RequestSpaceShipSetup, (::Proud::RmiID)Rmi_RequestSpaceShipSetup);
+	}
+        
+	bool Proxy::RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShip;
+__msg.Write(__msgid); 
+	
+__msg << winPlayerID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestSpaceShip, (::Proud::RmiID)Rmi_RequestSpaceShip);
+	}
+
+	bool Proxy::RequestSpaceShip ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & winPlayerID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShip;
+__msg.Write(__msgid); 
+	
+__msg << winPlayerID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestSpaceShip, (::Proud::RmiID)Rmi_RequestSpaceShip);
 	}
         
 	bool Proxy::RequestUseSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)	{
@@ -1964,6 +1992,34 @@ __msg << spaceShipID;
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_RequestUseSpaceShip, (::Proud::RmiID)Rmi_RequestUseSpaceShip);
+	}
+        
+	bool Proxy::RequestUseSpaceShipCancel ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestUseSpaceShipCancel;
+__msg.Write(__msgid); 
+	
+__msg << spaceShipID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestUseSpaceShipCancel, (::Proud::RmiID)Rmi_RequestUseSpaceShipCancel);
+	}
+
+	bool Proxy::RequestUseSpaceShipCancel ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & spaceShipID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestUseSpaceShipCancel;
+__msg.Write(__msgid); 
+	
+__msg << spaceShipID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestUseSpaceShipCancel, (::Proud::RmiID)Rmi_RequestUseSpaceShipCancel);
 	}
         
 	bool Proxy::NotifyUseSpaceShipSuccess ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & spaceShipID)	{
@@ -2308,34 +2364,6 @@ __msg.Write(__msgid);
 		
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_RequestDrawGameResult, (::Proud::RmiID)Rmi_RequestDrawGameResult);
-	}
-        
-	bool Proxy::RequestSpaceShip ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & winPlayerID)	{
-		::Proud::CMessage __msg;
-__msg.UseInternalBuffer();
-__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
-
-::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShip;
-__msg.Write(__msgid); 
-	
-__msg << winPlayerID;
-		
-		return RmiSend(&remote,1,rmiContext,__msg,
-			RmiName_RequestSpaceShip, (::Proud::RmiID)Rmi_RequestSpaceShip);
-	}
-
-	bool Proxy::RequestSpaceShip ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & winPlayerID)  	{
-		::Proud::CMessage __msg;
-__msg.UseInternalBuffer();
-__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
-
-::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestSpaceShip;
-__msg.Write(__msgid); 
-	
-__msg << winPlayerID;
-		
-		return RmiSend(remotes,remoteCount,rmiContext,__msg,
-			RmiName_RequestSpaceShip, (::Proud::RmiID)Rmi_RequestSpaceShip);
 	}
         
 	bool Proxy::RequestGameEnd ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )	{
@@ -2804,9 +2832,19 @@ const PNTCHAR* Proxy::RmiName_RequestSpaceShipSetup =_PNT("RequestSpaceShipSetup
 const PNTCHAR* Proxy::RmiName_RequestSpaceShipSetup =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("RequestSpaceShip");
+#else
+const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestUseSpaceShip =_PNT("RequestUseSpaceShip");
 #else
 const PNTCHAR* Proxy::RmiName_RequestUseSpaceShip =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestUseSpaceShipCancel =_PNT("RequestUseSpaceShipCancel");
+#else
+const PNTCHAR* Proxy::RmiName_RequestUseSpaceShipCancel =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyUseSpaceShipSuccess =_PNT("NotifyUseSpaceShipSuccess");
@@ -2867,11 +2905,6 @@ const PNTCHAR* Proxy::RmiName_NotifyDrawGame =_PNT("");
 const PNTCHAR* Proxy::RmiName_RequestDrawGameResult =_PNT("RequestDrawGameResult");
 #else
 const PNTCHAR* Proxy::RmiName_RequestDrawGameResult =_PNT("");
-#endif
-#ifdef USE_RMI_NAME_STRING
-const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("RequestSpaceShip");
-#else
-const PNTCHAR* Proxy::RmiName_RequestSpaceShip =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestGameEnd =_PNT("RequestGameEnd");

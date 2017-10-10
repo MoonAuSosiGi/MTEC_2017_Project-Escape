@@ -13,6 +13,8 @@ public:
 
 	void LockSpaceShip(int hostID) { m_isLocked = true; m_targetHostID = hostID; }
 	void UnLockSpaceShip() { m_isLocked = false; m_targetHostID = -1; }
+	bool IsLock() { return m_isLocked; }
+	int GetTargetHostID() { return m_targetHostID; }
 };
 
 #endif

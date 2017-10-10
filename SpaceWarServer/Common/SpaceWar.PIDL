@@ -249,10 +249,16 @@ global SpaceWar 3141
 
 // ===============================================================================================================================================
 // [인게임 - 우주선] =============================================================================================================================
-	// 우주선이 총 몇개 있는지 세팅 
-	RequestSpaceShipSetup([in]int spaceShipCount);
+	// 우주선을 등록한다
+	RequestSpaceShipSetup([in]int spaceShipID);
+	// 우주선 타서 연료 다채웠을 경우 보냄
+	RequestSpaceShip([in]int winPlayerID);
+
 	// 우주선 사용 요청
 	RequestUseSpaceShip([in]int spaceShipID);
+
+	// 우주선 사용 취소 (중도 취소)
+	RequestUseSpaceShipCancel([in]int spaceShipID);
 
 	// 우주선 사용 성공
 	NotifyUseSpaceShipSuccess([in]int spaceShipID);
@@ -289,8 +295,7 @@ global SpaceWar 3141
 	NotifyDrawGame();
 	// 드로우 게임시 정보 요청
 	RequestDrawGameResult();
-	// 우주선 타서 연료 다채웠을 경우 보냄
-	RequestSpaceShip([in]int winPlayerID);
+
 	// 이것은 결과를 받아오는 것
 	RequestGameEnd();
 

@@ -20,6 +20,9 @@ public class SpaceShip : MonoBehaviour {
 
     public AudioSource m_spaceShipSource = null;
 
+    private bool m_isSpaceShipEnabled = false;
+    public bool IS_SPACESHIP_ENABLED { get { return m_isSpaceShipEnabled; } set { m_isSpaceShipEnabled = value; } }
+
     #endregion
 
     #region UnityMethod
@@ -31,8 +34,8 @@ public class SpaceShip : MonoBehaviour {
 
     public void StartSpaceShipEngineCharge()
     {
-        if (!m_isEnd)
-            m_fuel = 0.0f;
+        //if (!m_isEnd)
+        //    m_fuel = 0.0f;
         GameManager.Instance().m_inGameUI.StartSpaceShipUI();
     }
 
@@ -40,15 +43,16 @@ public class SpaceShip : MonoBehaviour {
     {
         if(!m_isEnd)
             m_fuel = 0.0f;
+        NetworkManager.Instance().C2SNotifySpaceShipEngineFailed(SPACESHIP_ID);
         GameManager.Instance().m_inGameUI.StopSpaceShipUI();
         SpaceShipEngineChargerProcessCancel();
     }
 
     public void SpaceShipEngineChargeProcess()
     {
-        //if(IsInvoking("ChargeProcess") == false)
-        //    InvokeRepeating("ChargeProcess" , Time.deltaTime , Time.deltaTime);
-        ChargeProcess();
+        if (IsInvoking("ChargeProcess") == false)
+            InvokeRepeating("ChargeProcess" , Time.deltaTime , Time.deltaTime);
+        //ChargeProcess();
     }
     
     public void SpaceShipEngineChargerProcessCancel()

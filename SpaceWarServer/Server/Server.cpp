@@ -780,6 +780,7 @@ DEFRMI_SpaceWar_RequestUseOxyChargerEnd(Server)
 }
 
 #pragma endregion
+
 #pragma region 인게임 :: 아이템 박스 조작 --------------------------------------------------------------------------
 // 아이템 박스 조작
 DEFRMI_SpaceWar_RequestUseItemBox(Server)
@@ -947,11 +948,18 @@ DEFRMI_SpaceWar_NotifyDeleteItem(Server)
 
 #pragma region 인게임 :: 우주선 ------------------------------------------------------------------------------------
 
-// 우주선이 총 몇개 있는지 세팅
+// 우주선을 등록한다 :: 한번에 등록
 DEFRMI_SpaceWar_RequestSpaceShipSetup(Server)
 {
-	cout << "우주선의 갯수가 세팅됩니다.." << spaceShipCount << endl;
-	m_spaceshipCount = spaceShipCount;
+	cout << "SpaceShip ID Setting " << spaceShipID << endl;
+	CriticalSectionLock lock(m_critSec, true);
+	
+	for (int i = 0; i < spaceShipID; i++)
+	{
+		auto newSpaceShip = make_shared<SpaceShip>();
+		m_spaceShipMap[i] = newSpaceShip;
+	}
+
 	return true;
 };
 
@@ -962,6 +970,35 @@ DEFRMI_SpaceWar_RequestSpaceShip(Server)
 		return true;
 	cout << "이친구 우주선 탔다 " << winPlayerID << endl;
 	m_clientMap[(HostID)winPlayerID]->PlayerWin();
+	return true;
+}
+
+// 우주선 사용 요청
+DEFRMI_SpaceWar_RequestUseSpaceShip(Server)
+{
+	// 잠겨있다면 거부
+	if (m_spaceShipMap[spaceShipID]->IsLock())
+	{
+		cout << "잠겨있음:: 사용 불가 " << endl;
+		m_proxy.NotifyUseSpaceShipFailed(remote, RmiContext::ReliableSend, spaceShipID, m_spaceShipMap[spaceShipID]->GetTargetHostID());
+	}
+	else
+	{
+		cout << "잠겨있지 않음 " << endl;
+		// 사용 가능하다면 잠금
+		m_spaceShipMap[spaceShipID]->LockSpaceShip((int)remote);
+		// 성공 메시지 보냄
+		m_proxy.NotifyUseSpaceShipSuccess(remote, RmiContext::ReliableSend, spaceShipID);
+	}
+	return true;
+}
+
+// 우주선 사용 취소
+DEFRMI_SpaceWar_RequestUseSpaceShipCancel(Server)
+{
+	// 사용 취소이므로 해제
+	m_spaceShipMap[spaceShipID]->UnLockSpaceShip();
+	cout << "중도 취소 이벤트 " << endl;
 	return true;
 }
 #pragma endregion 

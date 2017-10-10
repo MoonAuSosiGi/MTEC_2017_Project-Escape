@@ -461,7 +461,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         #endregion
 
-       #region Network 총알 / 수류탄 
+        #region Network 총알 / 수류탄 
 
         // 총알 생성해라
         m_s2cStub.NotifyPlayerBulletCreate = (HostID remote , RmiContext rmiContext ,
@@ -606,6 +606,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             return true;
         };
 
+        #region OxyCharger 
         // 산소 충전기 사용 가능
         m_s2cStub.NotifyUseSuccessedOxyCharger = (HostID remote , RmiContext rmiContext , 
             int targetHostID , int oxyChargerIndex) =>
@@ -622,9 +623,12 @@ public class NetworkManager : Singletone<NetworkManager> {
             GameManager.Instance().PLAYER.m_player.OXY_CHARGE_ENABLE = false;
             return true;
         };
- 
+
+        #endregion
+
+        #region ItemBox
         // itemBox 조작 이벤트 ( 아이템 박스 사용 결과와 생성할 아이템 코드가 날아옴 )
-         m_s2cStub.NotifyUseItemBox = (HostID remote , RmiContext rmiContext ,
+        m_s2cStub.NotifyUseItemBox = (HostID remote , RmiContext rmiContext ,
             int sendHostID , int itemBoxIndex , string itemID,string networkID) =>
         {
             if (itemBoxIndex < 0 || m_itemBoxList.Count <= itemBoxIndex)
@@ -651,7 +655,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
             return true;
         };
-
+        #endregion
         // 쉘터 문 정보가 왔을 때 
         m_s2cStub.NotifyShelterInfo = (HostID remote ,
             RmiContext rmiContext ,
@@ -676,6 +680,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         };
 
+        #region SpaceShip
         // 우주선 잠금 시간
         m_s2cStub.NotifySpaceShipLockTime = (HostID remote , RmiContext rmiContext , int sec) =>
         {
@@ -702,7 +707,15 @@ public class NetworkManager : Singletone<NetworkManager> {
         {
             var spaceShip = m_spaceShipList[spaceShipID];
 
-            GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.ENGINE_STARTING , "SpaceStart_"+ spaceShipID , Mathf.RoundToInt(1.0f - fuel) , "우주선 조작");
+            if(fuel >= 1.0f)
+            {
+                GameManager.Instance().ALERT.AlertHide("SpaceStart_" + spaceShipID);
+            }else
+            {
+
+                GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.ENGINE_STARTING ,
+                    "SpaceStart_" + spaceShipID , Mathf.RoundToInt(10.0f - (fuel * 10.0f)) , "우주선 조작");
+            }
             spaceShip.SpaceShipEngineCharge(fuel , false);
             if(fuel >= 1.0f)
             {
@@ -718,6 +731,26 @@ public class NetworkManager : Singletone<NetworkManager> {
             }
             return true;
         };
+
+        // 우주선 사용 가능 상태
+        m_s2cStub.NotifyUseSpaceShipSuccess = (HostID remote , RmiContext rmiContext , int spaceShipID) =>
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("SpaceShip 사용 가능 " + spaceShipID);
+            m_spaceShipList[spaceShipID].IS_SPACESHIP_ENABLED = true;
+            GameManager.Instance().PLAYER.m_player.SpaceShipEnable();
+            return true;
+        };
+
+        // 우주선 사용 불가 상태
+        m_s2cStub.NotifyUseSpaceShipFailed = (HostID remote , RmiContext rmiContext , int spaceShipID , int targetHostID) =>
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("SpaceShip 사용 불가 " + spaceShipID);
+            m_spaceShipList[spaceShipID].IS_SPACESHIP_ENABLED = false;
+            GameManager.Instance().PLAYER.m_player.SPACESHIP_REQUEST = false;
+            return true;
+        };
+
+        #endregion
         #endregion
 
         #region Meteor , Death Zone
@@ -1351,6 +1384,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     #region Network Object 
 
+    #region OxyCharger Request ----------------------------------------------------------------
     // use request OxyCharger
     public void C2SRequestUseOxyChargerStart(OxyCharger charger)
     {
@@ -1370,6 +1404,9 @@ public class NetworkManager : Singletone<NetworkManager> {
         GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 끝");
         m_c2sProxy.RequestUseOxyChargerEnd(HostID.HostID_Server , RmiContext.ReliableSend , charger.OXY_CHARGER_ID);
     }
+    #endregion
+
+    #region ItemBox Request -------------------------------------------------------------------
     // use itemBox
     public void C2SRequestPlayerUseItemBox(ItemBox box)
     {
@@ -1377,6 +1414,9 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_c2sProxy.RequestUseItemBox(HostID.HostID_Server , RmiContext.ReliableSend ,
             (int)m_hostID , GetItemBoxIndex(box));   
     }
+    #endregion
+
+    #region Shelter Request --------------------------------------------------------------------
 
     // 쉘터 등록
     public void C2SRequestShelterStartSetup(int shelterID)
@@ -1400,6 +1440,20 @@ public class NetworkManager : Singletone<NetworkManager> {
         Debug.Log("Shelter Enter " +enter);
         m_c2sProxy.RequestShelterEnter(HostID.HostID_Server , 
             RmiContext.ReliableSend , (int)m_hostID,shelterID , enter);
+    }
+    #endregion
+
+    #region SpaceShip Request ------------------------------------------------------------------
+
+    // 우주선 조작 요청
+    public void C2SRequestUseSpaceShip(int spaceShipID)
+    {
+        m_c2sProxy.RequestUseSpaceShip(HostID.HostID_Server , RmiContext.ReliableSend , spaceShipID);
+    }
+    // 우주선 조작 중도 취소
+    public void C2SRequestUseSpaceShipCancel(int spaceShipID)
+    {
+        m_c2sProxy.RequestUseSpaceShipCancel(HostID.HostID_Server , RmiContext.ReliableSend , spaceShipID);
     }
 
     // 우주선 조작
@@ -1427,6 +1481,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         NetworkLog("RequestSpaceShip");
         m_c2sProxy.RequestSpaceShip(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID);
     }
+    #endregion
     #endregion
 
     // 게임이 끝났음을 알림

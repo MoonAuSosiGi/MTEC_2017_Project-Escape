@@ -4957,7 +4957,7 @@ namespace SpaceWar
 					ctx.m_compressMode = pa.GetCompressMode();
 					
 					
-					int spaceShipCount; __msg >> spaceShipCount;
+					int spaceShipID; __msg >> spaceShipID;
 					m_core->PostCheckReadMessage(__msg,RmiName_RequestSpaceShipSetup);
 					
 			
@@ -4965,7 +4965,7 @@ namespace SpaceWar
 					{
 						::Proud::String parameterString;
 						
-						::Proud::AppendTextOut(parameterString,spaceShipCount);	
+						::Proud::AppendTextOut(parameterString,spaceShipID);	
 						
 						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestSpaceShipSetup, 
 							RmiName_RequestSpaceShipSetup,parameterString);
@@ -4997,7 +4997,7 @@ namespace SpaceWar
 					}
 						
 					// Call this method.
-					bool __ret = RequestSpaceShipSetup (remote,ctx , spaceShipCount );
+					bool __ret = RequestSpaceShipSetup (remote,ctx , spaceShipID );
 						
 					if(__ret==false)
 					{
@@ -5010,6 +5010,80 @@ namespace SpaceWar
 						::Proud::AfterRmiSummary summary;
 						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestSpaceShipSetup;
 						summary.m_rmiName = RmiName_RequestSpaceShipSetup;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestSpaceShip:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int winPlayerID; __msg >> winPlayerID;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestSpaceShip);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,winPlayerID);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestSpaceShip, 
+							RmiName_RequestSpaceShip,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestSpaceShip, 
+							RmiName_RequestSpaceShip, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestSpaceShip, 
+							RmiName_RequestSpaceShip, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestSpaceShip;
+						summary.m_rmiName = RmiName_RequestSpaceShip;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestSpaceShip (remote,ctx , winPlayerID );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestSpaceShip);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestSpaceShip;
+						summary.m_rmiName = RmiName_RequestSpaceShip;
 						summary.m_hostID = remote;
 						summary.m_hostTag = hostTag;
 						int64_t __t1;
@@ -5084,6 +5158,80 @@ namespace SpaceWar
 						::Proud::AfterRmiSummary summary;
 						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestUseSpaceShip;
 						summary.m_rmiName = RmiName_RequestUseSpaceShip;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						int64_t __t1;
+			
+						__t1 = ::Proud::GetPreciseCurrentTimeMs();
+			
+						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
+						AfterRmiInvocation(summary);
+					}
+				}
+				break;
+			case Rmi_RequestUseSpaceShipCancel:
+				{
+					::Proud::RmiContext ctx;
+					ctx.m_sentFrom=pa.GetRemoteHostID();
+					ctx.m_relayed=pa.IsRelayed();
+					ctx.m_hostTag = hostTag;
+					ctx.m_encryptMode = pa.GetEncryptMode();
+					ctx.m_compressMode = pa.GetCompressMode();
+					
+					
+					int spaceShipID; __msg >> spaceShipID;
+					m_core->PostCheckReadMessage(__msg,RmiName_RequestUseSpaceShipCancel);
+					
+			
+					if(m_enableNotifyCallFromStub && !m_internalUse)
+					{
+						::Proud::String parameterString;
+						
+						::Proud::AppendTextOut(parameterString,spaceShipID);	
+						
+						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestUseSpaceShipCancel, 
+							RmiName_RequestUseSpaceShipCancel,parameterString);
+			
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestUseSpaceShipCancel, 
+							RmiName_RequestUseSpaceShipCancel, parameterString);
+			#endif
+					}
+					else if(!m_internalUse)
+					{
+			#ifdef VIZAGENT
+						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestUseSpaceShipCancel, 
+							RmiName_RequestUseSpaceShipCancel, _PNT(""));
+			#endif
+					}
+						
+					int64_t __t0 = 0;
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::BeforeRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestUseSpaceShipCancel;
+						summary.m_rmiName = RmiName_RequestUseSpaceShipCancel;
+						summary.m_hostID = remote;
+						summary.m_hostTag = hostTag;
+						BeforeRmiInvocation(summary);
+			
+						__t0 = ::Proud::GetPreciseCurrentTimeMs();
+					}
+						
+					// Call this method.
+					bool __ret = RequestUseSpaceShipCancel (remote,ctx , spaceShipID );
+						
+					if(__ret==false)
+					{
+						// Error: RMI function that a user did not create has been called. 
+						m_core->ShowNotImplementedRmiWarning(RmiName_RequestUseSpaceShipCancel);
+					}
+						
+					if(!m_internalUse && m_enableStubProfiling)
+					{
+						::Proud::AfterRmiSummary summary;
+						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestUseSpaceShipCancel;
+						summary.m_rmiName = RmiName_RequestUseSpaceShipCancel;
 						summary.m_hostID = remote;
 						summary.m_hostTag = hostTag;
 						int64_t __t1;
@@ -6003,80 +6151,6 @@ namespace SpaceWar
 					}
 				}
 				break;
-			case Rmi_RequestSpaceShip:
-				{
-					::Proud::RmiContext ctx;
-					ctx.m_sentFrom=pa.GetRemoteHostID();
-					ctx.m_relayed=pa.IsRelayed();
-					ctx.m_hostTag = hostTag;
-					ctx.m_encryptMode = pa.GetEncryptMode();
-					ctx.m_compressMode = pa.GetCompressMode();
-					
-					
-					int winPlayerID; __msg >> winPlayerID;
-					m_core->PostCheckReadMessage(__msg,RmiName_RequestSpaceShip);
-					
-			
-					if(m_enableNotifyCallFromStub && !m_internalUse)
-					{
-						::Proud::String parameterString;
-						
-						::Proud::AppendTextOut(parameterString,winPlayerID);	
-						
-						NotifyCallFromStub(remote, (::Proud::RmiID)Rmi_RequestSpaceShip, 
-							RmiName_RequestSpaceShip,parameterString);
-			
-			#ifdef VIZAGENT
-						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestSpaceShip, 
-							RmiName_RequestSpaceShip, parameterString);
-			#endif
-					}
-					else if(!m_internalUse)
-					{
-			#ifdef VIZAGENT
-						m_core->Viz_NotifyRecvToStub(remote, (::Proud::RmiID)Rmi_RequestSpaceShip, 
-							RmiName_RequestSpaceShip, _PNT(""));
-			#endif
-					}
-						
-					int64_t __t0 = 0;
-					if(!m_internalUse && m_enableStubProfiling)
-					{
-						::Proud::BeforeRmiSummary summary;
-						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestSpaceShip;
-						summary.m_rmiName = RmiName_RequestSpaceShip;
-						summary.m_hostID = remote;
-						summary.m_hostTag = hostTag;
-						BeforeRmiInvocation(summary);
-			
-						__t0 = ::Proud::GetPreciseCurrentTimeMs();
-					}
-						
-					// Call this method.
-					bool __ret = RequestSpaceShip (remote,ctx , winPlayerID );
-						
-					if(__ret==false)
-					{
-						// Error: RMI function that a user did not create has been called. 
-						m_core->ShowNotImplementedRmiWarning(RmiName_RequestSpaceShip);
-					}
-						
-					if(!m_internalUse && m_enableStubProfiling)
-					{
-						::Proud::AfterRmiSummary summary;
-						summary.m_rmiID = (::Proud::RmiID)Rmi_RequestSpaceShip;
-						summary.m_rmiName = RmiName_RequestSpaceShip;
-						summary.m_hostID = remote;
-						summary.m_hostTag = hostTag;
-						int64_t __t1;
-			
-						__t1 = ::Proud::GetPreciseCurrentTimeMs();
-			
-						summary.m_elapsedTime = (uint32_t)(__t1 - __t0);
-						AfterRmiInvocation(summary);
-					}
-				}
-				break;
 			case Rmi_RequestGameEnd:
 				{
 					::Proud::RmiContext ctx;
@@ -6804,9 +6878,19 @@ __fail:
 	const PNTCHAR* Stub::RmiName_RequestSpaceShipSetup =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestSpaceShip =_PNT("RequestSpaceShip");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestSpaceShip =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_RequestUseSpaceShip =_PNT("RequestUseSpaceShip");
 	#else
 	const PNTCHAR* Stub::RmiName_RequestUseSpaceShip =_PNT("");
+	#endif
+	#ifdef USE_RMI_NAME_STRING
+	const PNTCHAR* Stub::RmiName_RequestUseSpaceShipCancel =_PNT("RequestUseSpaceShipCancel");
+	#else
+	const PNTCHAR* Stub::RmiName_RequestUseSpaceShipCancel =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_NotifyUseSpaceShipSuccess =_PNT("NotifyUseSpaceShipSuccess");
@@ -6867,11 +6951,6 @@ __fail:
 	const PNTCHAR* Stub::RmiName_RequestDrawGameResult =_PNT("RequestDrawGameResult");
 	#else
 	const PNTCHAR* Stub::RmiName_RequestDrawGameResult =_PNT("");
-	#endif
-	#ifdef USE_RMI_NAME_STRING
-	const PNTCHAR* Stub::RmiName_RequestSpaceShip =_PNT("RequestSpaceShip");
-	#else
-	const PNTCHAR* Stub::RmiName_RequestSpaceShip =_PNT("");
 	#endif
 	#ifdef USE_RMI_NAME_STRING
 	const PNTCHAR* Stub::RmiName_RequestGameEnd =_PNT("RequestGameEnd");
