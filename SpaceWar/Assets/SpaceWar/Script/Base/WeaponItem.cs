@@ -207,7 +207,6 @@ public class WeaponItem : Item {
     #region Equip Weapon Logic
     protected override void EquipItem()
     {
-
         if (GameManager.Instance() != null)
             GameManager.Instance().EquipWeapon(ITEM_ID , AMMO , WeaponManager.Instance().GetWeaponData(ITEM_ID).Bulletcount);
         this.GetComponent<SphereCollider>().enabled = false;
@@ -225,6 +224,7 @@ public class WeaponItem : Item {
     // 신상 칼질
     public void AttackSword()
     {
+        GameManager.Instance().m_inGameUI.ShowDebugLabel("AttackSword");
         m_swordAnimatorList[m_curSwordEffectIndex].gameObject.SetActive(true);
         //m_swordAnimatorList[m_curSwordEffectIndex].transform.parent = m_player;
         m_swordAnimatorList[m_curSwordEffectIndex].transform.SetParent(m_player.GetChild(0) , false);
@@ -233,6 +233,7 @@ public class WeaponItem : Item {
 
     public void AttackSwordEnd()
     {
+        GameManager.Instance().m_inGameUI.ShowDebugLabel("AttackSword End");
         m_swordAnimatorList[m_curSwordEffectIndex].SetInteger("ATTACK" , 0);
         //m_swordAnimatorList[m_curSwordEffectIndex].transform.parent = transform;
         m_swordAnimatorList[m_curSwordEffectIndex].transform.SetParent(transform , false);
@@ -247,7 +248,7 @@ public class WeaponItem : Item {
         Grenade g = (this as Grenade);
         g.GRENADE_SHOT_ROT = m_player.transform.localRotation;
         g.Attack();
-        GameManager.Instance().PLAYER.m_player.UnEquipItem(this);
+        GameManager.Instance().PLAYER.m_player.UnEquipGrenade(this);
         NetworkManager.Instance().RequestGrenadeCreate(g.ITEM_NETWORK_ID , g.transform.position);
     }
 

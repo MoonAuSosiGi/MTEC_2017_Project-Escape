@@ -20,4 +20,8 @@ public class GameTableData
   string desc;
   public string Desc { get {return desc; } set { desc = value;} }
   
+  [SerializeField]
+  string realvalues;
+  public string Realvalues { get {return realvalues; } set { realvalues = value;} }
+  
 }

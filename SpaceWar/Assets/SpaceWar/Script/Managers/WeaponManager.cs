@@ -273,7 +273,7 @@ public class WeaponManager : Singletone<WeaponManager> {
     // 랜덤으로 무기 ID 뽑기
     public string GetRandomWeaponID()
     {
-        return m_weaponTable.dataArray[ Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
+        return m_weaponTable.dataArray[m_weaponTable.dataArray.Length - 1].Id; //Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
     }
 
     // 총알 만들기

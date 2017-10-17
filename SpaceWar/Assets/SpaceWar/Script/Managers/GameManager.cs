@@ -15,6 +15,8 @@ public class GameManager : Singletone<GameManager> {
     public const string OXY_DAMAGE = "OxyDamage";
     public const string WALK_SPEED = "WalkSpeed";
     public const string RUN_SPEED = "RunSpeed";
+    public const string DASH_TICK = "DashTick";
+    public const string DASH_SPEED = "DashSpeed";
     public const string JUMP_POWER = "JumpPower";
     public const string JUMP_TICK = "JumpTick";
     public const string USEOXY_IDLE = "UseOxy_IDLE";
@@ -31,6 +33,10 @@ public class GameManager : Singletone<GameManager> {
     public const string DZ_SPEED4 = "DeathZoneSpeed_Level4";
     public const string DZ_SPEED5 = "DeathZoneSpeed_Level5";
     public const string DZ_DAMAGE = "DeathZoneDamage";
+    public const string RUN_SPEED_LEVEL = "RunSpeedLevel";
+    public const string WALK_SPEED_LEVEL = "WalkSpeedLevel";
+    public const string WEIGHT_LIMIT = "WeightLimit";
+    public const string METEOR_CAMERA_ANI_DISTANCE = "MeteorCameraAniDistance";
     #endregion
     #endregion
 
@@ -88,6 +94,11 @@ public class GameManager : Singletone<GameManager> {
     private string m_meteorID = null;
 
     private SortedList<string , float> m_meteorList = new SortedList<string , float>();
+
+    // 메테오 거리별 흔들리기 효과를 주기위한 체크용 배열
+    private float[] m_meteorEffectDistance;
+    public float[] METEOR_EFFECT_DISTANCE { get { return m_meteorEffectDistance; } }
+
     #endregion
     #region Slider UI Menu -------------------------------------------------------------------
     [SerializeField] private SliderMenuUI m_sliderUI = null;
@@ -122,7 +133,24 @@ public class GameManager : Singletone<GameManager> {
         public float m_oxy = 100.0f;
         public float m_fullHp = 100.0f;
         public float m_fullOxy = 100.0f;
+        private float m_weight = 0.0f;
         public PlayerController m_player = null;
+
+        // 차차 다른것도 이 형태로 변경
+        public float WEIGHT {
+            get { return m_weight; }
+            set {
+                m_weight = value;
+
+                float walkSpeed = 0.0f, runSpeed = 0.0f;
+                GameManager.Instance().GetWeightSpeed(m_weight , out walkSpeed , out runSpeed);
+
+                GameManager.Instance().m_inGameUI.ShowDebugLabel("WEIGHT " + m_weight + " speed " + walkSpeed + " run " + runSpeed);
+
+                m_player.WALK_SPEED = walkSpeed;
+                m_player.RUN_SPEED = runSpeed;
+            }
+        }
     }
     #endregion
 
@@ -134,11 +162,21 @@ public class GameManager : Singletone<GameManager> {
         if (GravityManager.Instance() == null || NetworkManager.Instance() == null)
             return;
 
+        // 플레이어 정보 세팅!
         m_playerInfo.m_name = NetworkManager.Instance().USER_NAME;
         m_playerInfo.m_hp = GetGameTableValue(FULL_HP);
         m_playerInfo.m_oxy = GetGameTableValue(FULL_OXY);
         m_playerInfo.m_fullHp = GetGameTableValue(FULL_HP);
         m_playerInfo.m_fullOxy = GetGameTableValue(FULL_OXY);
+
+        // 메테오 정보 세팅
+        string[] split = GetGameTableStringValue(METEOR_CAMERA_ANI_DISTANCE).Split(',');
+        m_meteorEffectDistance = new float[split.Length - 1];
+
+        for(int i = 0; i < m_meteorEffectDistance.Length; i++)
+        {
+            m_meteorEffectDistance[i] = float.Parse(split[i]);
+        }
 
         float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 20.8f;
 
@@ -187,6 +225,7 @@ public class GameManager : Singletone<GameManager> {
 
         if (me)
         {
+            // 네트워크 매니저 세팅 --
             NetworkManager.Instance().m_itemBoxParent = m_itemBoxParent;
             NetworkManager.Instance().m_spaceShipParent = m_spaceShipParent;
             NetworkManager.Instance().m_oxyChargerParent = m_oxyChargerParent;
@@ -217,8 +256,7 @@ public class GameManager : Singletone<GameManager> {
             player.enabled = true;
             player.SetCameraThirdPosition();
             player.Setup();
-
-
+            player.SetUserName(NetworkManager.Instance().USER_NAME);
 
             //Plant.GetComponent<Gravity>().TargetObject = MP.GetComponent<Rigidbody>();
 
@@ -374,6 +412,41 @@ public class GameManager : Singletone<GameManager> {
             }
         }
         return 0.0f;
+    }
+
+    public string GetGameTableStringValue(string id)
+    {
+        for (int i = 0; i < m_gameTable.dataArray.Length; i++)
+        {
+            GameTableData data = m_gameTable.dataArray[i];
+
+            if (data.Id.Equals(id))
+            {
+                return data.Realvalues;
+            }
+        }
+        return null;
+    }
+    
+    // 값이 변동될 때만 부를 것
+    public void GetWeightSpeed(float weight,out float walkSpeed, out float runSpeed)
+    {
+        string[] weights = GetGameTableStringValue(WEIGHT_LIMIT).Split(',');
+        string[] walkSpeeds = GetGameTableStringValue(WALK_SPEED_LEVEL).Split(',');
+        string[] runSpeeds = GetGameTableStringValue(RUN_SPEED_LEVEL).Split(',');
+
+        // 거꾸로 훑어야 함
+        for(int i = weights.Length -1; i >= 0; i--)
+        {
+            if(float.Parse(weights[i]) >= weight)
+            {
+                walkSpeed = float.Parse(walkSpeeds[i]);
+                runSpeed = float.Parse(runSpeeds[i]);
+                return;
+            }
+        }
+        walkSpeed = 5;
+        runSpeed = 8;
     }
     #endregion
 

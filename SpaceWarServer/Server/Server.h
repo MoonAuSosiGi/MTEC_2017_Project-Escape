@@ -23,10 +23,10 @@ int s_spaceShipLockTime = 60;
 // 메테오까지 남은시간
 int s_meteorCommingSec = 90;
 // 데스존 까지 남은 시간
-int s_deathZoneCommingSec = 180;
+int s_deathZoneCommingSec = 30;
 
 // 바뀌는 메테오 로직
-int m_meteorCommingTime[10] = { 30,32,34,36,38,40,42,44,46,48 };
+int m_meteorCommingTime[10] = { 30 ,50,70,90,110,130,150,170,190,210 };
 
 // 데스존이 진행하고 있는 인덱스
 int s_deathZoneIndex = 0;
@@ -182,8 +182,6 @@ public:
 #pragma endregion
 #pragma endregion
 
-
-
 	//DECRMI_SpaceWar_RequestClientJoin;
 
 private:
@@ -224,6 +222,12 @@ public:
 
 	// 게임 유저 리셋
 	void ResetUsers();
+	
+	//우주선 총 카운트 얻기
+	int GetSpaceShipCount()
+	{
+		return m_spaceShipMap.size();
+	}
 };
 
 // 랜덤함수

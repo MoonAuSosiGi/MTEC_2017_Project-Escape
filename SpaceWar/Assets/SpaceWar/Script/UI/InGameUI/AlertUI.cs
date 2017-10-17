@@ -97,6 +97,7 @@ public class AlertUI : MonoBehaviour {
             AlertData d = m_alertList[i];
 
             // 내가 이친구보다 위로 올라가야함
+            Debug.Log("tick " + d.tick + " data  " + data.tick + " d.id " + d.id + " data.id " + data.id);
             if (d.tick > data.tick)
             {
                 alert.transform.position = new Vector3(
@@ -112,7 +113,8 @@ public class AlertUI : MonoBehaviour {
 
         if (index != -1)
         {
-            LeftShowAlert(alert);
+            Debug.Log("여길와야하지 " + index + " " + m_alertList[0].id);
+        //    LeftShowAlert(alert);
             for (int i = index; i < m_alertList.Count; i++)
             {
                 AlertData d = m_alertList[i];
@@ -123,6 +125,7 @@ public class AlertUI : MonoBehaviour {
         }
         else if(m_alertList.Count >= 1)
         {
+            Debug.Log("내가 맨 마지막이야 ");
             // 내가 맨 마지막이야
             data.target.transform.position = new Vector3(
                 data.target.transform.position.x ,
@@ -153,13 +156,14 @@ public class AlertUI : MonoBehaviour {
     {
         iTween.MoveTo(alert , iTween.Hash(
             "x" , m_ShowPosition.transform.position.x ,
+            "time",0.1f,
             "easeType" , "easeOutQuint"));
     }
 
     public void AlertHide(string id)
     {
         int index = GetDataIndex(id);
-
+        Debug.Log("Alert HIDE " + index + " " + id);
         if(index != -1)
         {
             iTween.MoveTo(m_alertList[index].target , iTween.Hash(
@@ -168,15 +172,12 @@ public class AlertUI : MonoBehaviour {
                 "oncomplete" , "AlertHideEnd" ,
                 "oncompleteparams" , index));
 
-            if (index != -1)
-            {
                 for (int i = 0; i < m_alertList.Count; i++)
                 {
                     AlertData d = m_alertList[i];
                     iTween.MoveBy(d.target , iTween.Hash(
                         "y" , +0.15f));
                 }
-            }
         }
     }
 

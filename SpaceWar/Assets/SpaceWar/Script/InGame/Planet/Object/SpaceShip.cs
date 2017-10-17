@@ -97,6 +97,8 @@ public class SpaceShip : MonoBehaviour {
                 Camera.main.transform.SetParent(transform.GetChild(0).GetChild(0) , false);
                 Camera.main.transform.localEulerAngles = new Vector3(0.0f , 0.0f , 0.0f);
                 Camera.main.transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
+                CameraManager.Instance().HideNotEnoughHpEffect();
+                CameraManager.Instance().HideNotEnoughOxyEffect();
                 GameManager.Instance().PLAYER.m_player.gameObject.SetActive(false);
             }
             m_spaceShipSource.Play();

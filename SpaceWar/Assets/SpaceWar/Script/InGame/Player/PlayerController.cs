@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
     public Material ORIGIN_MATERIAL { get { return m_originMaterial; } }
 
     #region Equip Inven System ---------------------------------------------------------------------------
-    [SerializeField] Item[] m_equipItems = new Item[4];
+    [SerializeField] Item[] m_equipItems = new Item[5];
     private int m_prevEquipItem = -1;
     private int m_curEquipItem = 0;
 
@@ -56,6 +56,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private TextMesh m_nearText = null;
     [SerializeField] private Transform m_forward = null;
 
+    // 똥꼬 대시
+    [SerializeField] private GameObject m_dashEffect = null;
+
+    // 유저네임  
+    [SerializeField] private TextMesh m_userNameUI = null;
+    public TextMesh USERNAME_UI { get { return m_userNameUI; } }
+    public void SetUserName(string name) { m_userNameUI.text = name; }
     // 콜라이더
     CapsuleCollider m_collider = null;
 
@@ -108,6 +115,10 @@ public class PlayerController : MonoBehaviour {
     public bool IS_JUMP_ABLE { get { return m_isJumpAble; } set { m_isJumpAble = value; } }
     public bool IS_ATTACK_ABLE { get { return m_isAttackAble; } set { m_isAttackAble = value; } }
     public bool IS_SHELTER { get { return m_isShelter; } set { m_isShelter = value; } }
+
+    // 속도
+    public float WALK_SPEED { get { return m_walkSpeed; } set { m_walkSpeed = value; } }
+    public float RUN_SPEED { get { return m_runSpeed; } set { m_runSpeed = value; } }
 
     #region Interaction Object -----------------------------------------------------------------------------------------------
     // 상호작용 오브젝트와 관련된 것
@@ -186,6 +197,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private KeyCode m_inven2 = KeyCode.Alpha2;
     [SerializeField] private KeyCode m_inven3 = KeyCode.Alpha3;
     [SerializeField] private KeyCode m_inven4 = KeyCode.Alpha4;
+    [SerializeField] private KeyCode m_inven5 = KeyCode.Alpha5;
 
     // 점프
     [SerializeField] private KeyCode m_Jump     = KeyCode.Space;
@@ -246,6 +258,13 @@ public class PlayerController : MonoBehaviour {
         get { return m_attackAniVal; }
         set
         {
+            // 만약 기존에 재생중이었다면?
+            if(m_attackAniVal != 0 && value == 0 && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
+            {
+                if (m_equipItems[m_curEquipItem] != null)
+                    (m_equipItems[m_curEquipItem] as WeaponItem).AnimationEventAttackEnd();
+            }
+
             m_attackAniVal = value;
 
             // 공격 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
@@ -275,8 +294,7 @@ public class PlayerController : MonoBehaviour {
             // 이동 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
             if (m_walkAniVal != 0)
             {
-                AttackAnimationEnd();
-                ATTACK_ANI_VALUE = 0;
+              //  ATTACK_ANI_VALUE = 0;
                 JUMP_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
@@ -291,8 +309,8 @@ public class PlayerController : MonoBehaviour {
         set
         {
             m_jumpAniVal = value;
-            if (m_jumpAniVal == 1 && ATTACK_ANI_VALUE != 0)
-                AttackAnimationEnd();
+            //if (m_jumpAniVal == 1 && ATTACK_ANI_VALUE != 0)
+            //    AttackAnimationEnd();
             // 점프 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
             if (m_jumpAniVal != 0)
             {
@@ -311,8 +329,8 @@ public class PlayerController : MonoBehaviour {
         set
         {
             m_interactionAniVal = value;
-            if (m_interactionAniVal == 1 && ATTACK_ANI_VALUE != 0)
-                AttackAnimationEnd();
+            //if (m_interactionAniVal == 1 && ATTACK_ANI_VALUE != 0)
+            //    AttackAnimationEnd();
             if (m_interactionAniVal != 0)
             {
                 ATTACK_ANI_VALUE = 0;
@@ -391,8 +409,8 @@ public class PlayerController : MonoBehaviour {
     #region Table Setup
     public void Setup()
     {
-        m_walkSpeed = GameManager.Instance().GetGameTableValue(GameManager.WALK_SPEED);
-        m_runSpeed = GameManager.Instance().GetGameTableValue(GameManager.RUN_SPEED);
+        m_dashTick = GameManager.Instance().GetGameTableValue(GameManager.DASH_TICK);
+        m_dashSpeed = GameManager.Instance().GetGameTableValue(GameManager.DASH_SPEED);
         m_jumpHeight = GameManager.Instance().GetGameTableValue(GameManager.JUMP_POWER);
         m_jumpTick = GameManager.Instance().GetGameTableValue(GameManager.JUMP_TICK);
         m_useOxyIDLE = GameManager.Instance().GetGameTableValue(GameManager.USEOXY_IDLE);
@@ -402,8 +420,25 @@ public class PlayerController : MonoBehaviour {
         m_meteorHitDamage = GameManager.Instance().GetGameTableValue(GameManager.METEOR_HIT_DAMAGE);
         m_meteorDamage = GameManager.Instance().GetGameTableValue(GameManager.METEOR_DAMAGE);
         m_damageCoolTime = GameManager.Instance().GetGameTableValue(GameManager.DAMAGE_COOLTIME);
+
+        GameManager.Instance().PLAYER.m_player = this;
+        GameManager.Instance().PLAYER.WEIGHT = 0.0f;
         
     }
+    #endregion
+
+    #region Player UI -----------------------------------------------------------------------------------------
+    // 이 함수는 Update 에서 호출되어야 함
+    void RotatePlayerName()
+    {
+        m_userNameUI.transform.rotation = this.transform.rotation;
+    }
+
+    void ShowPlayerName(bool isShow)
+    {
+        m_userNameUI.gameObject.SetActive(isShow);
+    }
+
     #endregion
 
     #region Unity Method
@@ -455,14 +490,19 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.K))
+        {
             DamageEffect();
+        }
         if (Input.GetKeyDown(KeyCode.L))
+        {
             OxyDamageEffect();
-        if(Input.GetKeyDown(KeyCode.O))
+        }
+        if (Input.GetKeyDown(KeyCode.O))
         {
             NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , 10.0f);
         }
 
+        m_userNameUI.transform.rotation = this.transform.rotation;
         HealPackProcess();
         GetItemProcess();
         ChangeItemProcess();
@@ -484,7 +524,7 @@ public class PlayerController : MonoBehaviour {
         bool realDash = Input.GetKeyDown(m_dashKey);
         float horizontalSpeed = 0.0f, verticalSpeed = 0.0f;
 
-        if(realDash && WALK_ANI_VALUE != 3)
+        if(realDash && WALK_ANI_VALUE != 3 && m_isJumpAble == true)
         {
             transform.GetChild(0).localRotation =
                 Quaternion.Slerp(transform.GetChild(0).localRotation ,
@@ -692,18 +732,21 @@ public class PlayerController : MonoBehaviour {
         float startTime = Time.time;
 
         Vector3 dir = transform.GetChild(0).forward;
-
+        m_dashEffect.SetActive(true);
         while (Time.time - startTime < m_dashTick)
         {
             float nowTick = (Time.time - startTime) / m_dashTick;
             this.transform.RotateAround(
                 GravityManager.Instance().CurrentPlanet.transform.position , GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right,
                 (m_dashSpeed * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick))));
-            //transform.Translate(dir *
-            //    (m_dashSpeed * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick))));
+            
             yield return new WaitForFixedUpdate();
         }
-        
+        WALK_ANI_VALUE = 0;
+
+        m_dashEffect.SetActive(false);
+
+
     }
 
     void MoveSend()
@@ -768,9 +811,17 @@ public class PlayerController : MonoBehaviour {
             this.transform.GetChild(0).localRotation = Quaternion.Euler(Vector3.zero);
 
             WeaponItem item = (m_equipItems[m_curEquipItem] as WeaponItem);
-            if(item != null)
+            if (item != null)
+            {
                 item.Attack(transform);
 
+                if(item.ITEM_TYPE == Item.ItemType.ETC_GRENADE)
+                {
+                    // 수류탄의 경우 탈착 
+                    GameManager.Instance().UnEquipWeapon(m_curEquipItem);
+                }
+
+            }
             m_lastCoolTime = item.COOL_TIME;
             Invoke("AttackCoolTime" , m_lastCoolTime);
         }
@@ -944,6 +995,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(m_inven2)) index = 1;
         if (Input.GetKey(m_inven3)) index = 2;
         if (Input.GetKey(m_inven4)) index = 3;
+        if (Input.GetKey(m_inven5)) index = 4;
 
         if(index != -1)// && m_equipItems[index] != null)
         {
@@ -955,7 +1007,8 @@ public class PlayerController : MonoBehaviour {
                 m_equipItems[m_curEquipItem].EQUIP_STATE = false;
                 m_equipItems[m_curEquipItem].gameObject.SetActive(false);
             }
-            EquipItem(m_equipItems[index],index);
+
+            EquipItem(m_equipItems[index],index,false);
 
         }
     }
@@ -966,7 +1019,21 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetKeyDown(m_Get) && m_nearItem != null)
         {
-            EquipItem(m_nearItem.GetComponent<Item>());
+            // 주울 때 알아서 index 를 결정한다.
+            Item nearItem = m_nearItem.GetComponent<Item>();
+            int index = GetEquipItemIndex(nearItem.ITEM_TYPE);
+
+            // 다만 item 의 type 이 원거리 무기 일 경우엔 
+            // 1번 ,2번 인덱스에 나눠서 넣어야 한다.
+            if(index == 1)
+            {
+                if(m_equipItems[index] != null)
+                {
+                    index = 2;
+                }
+            }
+
+            EquipItem(nearItem,index,true);
             m_nearItem = null;
         }
     }
@@ -980,7 +1047,7 @@ public class PlayerController : MonoBehaviour {
             case Item.ItemType.GUN: 
             case Item.ItemType.RIFLE:
             case Item.ItemType.ROCKETLAUNCHER: return 1;
-            default: return 2;
+            default: return 3;
         }
     }   
 
@@ -1017,35 +1084,38 @@ public class PlayerController : MonoBehaviour {
             UnEquipItem(m_equipItems[m_curEquipItem],m_curEquipItem);
         }
     }
-   // 실 아이템 장비로직
-    void EquipItem(Item item,int curSelect = -1)
+
+    
+    // 실 아이템 장비로직
+    void EquipItem(Item item , int curSelect = -1, bool getItem = false)
     {
-        if(item == null)
+        if (item == null)
         {
             if (GameManager.Instance() != null)
-                GameManager.Instance().EquipWeapon(null,0,0);
-            if(curSelect != -1)
+                GameManager.Instance().EquipWeapon(null , 0 , 0);
+            if (curSelect != -1)
                 m_curEquipItem = curSelect;
             return;
         }
-        // 해당 아이템 인덱스 받기
-        int index = GetEquipItemIndex(item.ITEM_TYPE);
-
-        // 기존 장비가 타입이 다르면 일단 꺼야함
-        if (m_equipItems[m_curEquipItem] != null && m_curEquipItem != index)
+        if(getItem)
+        {
+            GameManager.Instance().PLAYER.WEIGHT += item.ITEM_WEIGHT;
+        }
+        // 현재 착용중인 장비는 끈다
+        if(m_equipItems[m_curEquipItem] != null)
         {
             m_equipItems[m_curEquipItem].gameObject.SetActive(false);
         }
 
         // 해당 인덱스 장비 있으면 해제
-        if (m_equipItems[index] != null)
+        if (getItem == true && m_equipItems[curSelect] != null)
         {
-            UnEquipItem(m_equipItems[index] , index);
+            Debug.Log("UNEQUIP");
+            UnEquipItem(m_equipItems[curSelect] , curSelect);
         }
-
         m_prevEquipItem = m_curEquipItem;
-        m_equipItems[index] = item;
-        m_curEquipItem = index;
+        m_equipItems[curSelect] = item;
+        m_curEquipItem = curSelect;
 
         item.EQUIP_STATE = true;
 
@@ -1068,6 +1138,7 @@ public class PlayerController : MonoBehaviour {
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestEquipItem(item.ITEM_ID ,
                 item.ITEM_NETWORK_ID);
+        
     }
     
     public void UnEquipItem(Item item,int index = -1)
@@ -1079,6 +1150,7 @@ public class PlayerController : MonoBehaviour {
         item.gameObject.SetActive(true);
         item.EQUIP_STATE = false;
 
+        GameManager.Instance().PLAYER.WEIGHT -= item.ITEM_WEIGHT;
         GameManager.Instance().m_inGameUI.ThrowWeapon(index);
 
         RaycastHit throwRayHit;
@@ -1109,10 +1181,17 @@ public class PlayerController : MonoBehaviour {
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestUnEquipItem(item.ITEM_ID , item.ITEM_NETWORK_ID ,
                 item.transform.position , item.transform.eulerAngles);
-
+        
         m_equipItems[index] = null;
     }
     
+    // 수류탄의 경우는 일반적인 경우가 아님
+    public void UnEquipGrenade(Item item)
+    {
+        item.transform.parent = null;
+        if (GameManager.Instance() != null)
+            GameManager.Instance().UnEquipWeapon(m_curEquipItem);
+    }
     void ControlObjectProcess()
     {
          if(Input.GetKeyDown(m_Get))
@@ -1324,13 +1403,15 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     #region Damage Effect Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    public void DamageEffect()
+    public void DamageEffect(bool showHitEffect = true)
     {
-        CameraManager.Instance().ShowHitEffect();
+        if(showHitEffect == true)
+            CameraManager.Instance().ShowHitEffect();
         m_renderer.material = HIT_MATERIAL;
         m_camAnimator.SetInteger("DAMAGE" , 1);
         Invoke("DamgeEffectEnd" , 0.1f);
     }
+
 
     public void OxyDamageEffect()
     {

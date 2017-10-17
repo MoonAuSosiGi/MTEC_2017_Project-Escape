@@ -19,6 +19,16 @@ public class GrenadeExplosion : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Boom " + col.name);
+        if (m_grenade.IS_NETWORK == true)
+            return;
+        if(col.CompareTag("PlayerCharacter"))
+        {
+            NetworkPlayer p = col.GetComponent<NetworkPlayer>();
+
+            if( p != null)
+            {
+                m_grenade.BoomPlayer(p);
+            }
+        }
     }
 }

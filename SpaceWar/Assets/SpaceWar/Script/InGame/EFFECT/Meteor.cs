@@ -17,10 +17,18 @@ public class Meteor : MonoBehaviour {
         m_meteorSoundLoopSource.Play();
     }
 
+    void Update()
+    {
+        Vector3 pos = transform.parent.position;
+
+    }
+
+    // 메테오가 지면에 충돌 했을 때 
     public void MeteorAnimationEvent()
     {
-        Camera.main.GetComponent<UBER_GlobalParams>().enabled = true;
-        
+        // 이펙트 보여주기 
+        CameraManager.Instance().ShowMeteorCameraEffect(Vector3.Distance(transform.position ,
+            GameManager.Instance().PLAYER.m_player.transform.position));
 
         m_meteorSoundLoopSource.clip = m_shotIDLESound;
         m_meteorSoundLoopSource.Play();
@@ -31,9 +39,9 @@ public class Meteor : MonoBehaviour {
         m_meteorOneShotSource.Play();
     }
 
+    // 메테오가 끝났다.
     public void MeteorAnimationEnd()
     {
-        Camera.main.GetComponent<UBER_GlobalParams>().enabled = false;
         transform.GetChild(0).GetComponent<SphereCollider>().enabled = false;
 
         GameObject.Destroy(transform.parent.gameObject);

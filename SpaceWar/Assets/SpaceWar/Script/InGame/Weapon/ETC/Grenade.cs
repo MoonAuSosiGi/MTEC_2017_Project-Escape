@@ -78,9 +78,9 @@ public class Grenade : WeaponItem {
         // 수류탄 공격 전에 아이템을 얻는 콜라이더를 끈다.
         colls[0].enabled = false;
 
-        // 수류탄 자체 콜라이더는 켠다
+        //// 수류탄 자체 콜라이더는 켠다
         colls[1].enabled = true;
-
+        
         // 공격 명령
         m_isGrenadeStart = true;
 
@@ -118,8 +118,13 @@ public class Grenade : WeaponItem {
     {
         // 비활성화
         gameObject.SetActive(false);
-        // 삭제 요청을 보낸다
-        NetworkManager.Instance().C2SRequestItemDelete(m_itemNetworkID);
+
+        if(m_isNetwork)
+        {
+            // 삭제 요청을 보낸다
+            NetworkManager.Instance().C2SRequestItemDelete(m_itemNetworkID);
+        }
+        
     }
     #endregion
 
@@ -141,8 +146,8 @@ public class Grenade : WeaponItem {
 
         // 수류탄 자체 콜라이더는 켠다
         colls[1].enabled = true;
-
-        m_isGrenadeStart = true;
+        
+        transform.parent = null;
     }
 
     public void NetworkMoveRecv(UnityEngine.Vector3 pos , UnityEngine.Vector3 velocity , UnityEngine.Vector3 rot)
@@ -166,6 +171,10 @@ public class Grenade : WeaponItem {
 
     void NetworkUpdate()
     {
+        if (m_positionFollower == null || m_angleFollowerX == null || m_angleFollowerY == null || m_angleFollowerZ == null)
+            return;
+        GameManager.Instance().m_inGameUI.ShowDebugLabel("Network Update Grenade ");
+        Debug.Log("Network Update Grenade ");
         m_positionFollower.FrameMove(Time.deltaTime);
         m_angleFollowerX.FrameMove(Time.deltaTime);
         m_angleFollowerY.FrameMove(Time.deltaTime);
@@ -192,14 +201,19 @@ public class Grenade : WeaponItem {
     #region Collision
     void OnTriggerEnter(Collider other)
     {
-        if (m_isGrenadeStart == false)
+        if (m_isGrenadeStart == false && m_isNetwork == false)
             return;
-        
+        else if (m_isShot)
+            return;
+
+        // 콜라이더들 얻기
+        SphereCollider[] colls = this.GetComponents<SphereCollider>();
+
         if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
         {
             m_isShot = true;
             Debug.Log("other " + other.name + " tag " + other.tag);
-            
+
             if (other.CompareTag("PlayerCharacter"))
             {
                 NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
@@ -212,7 +226,7 @@ public class Grenade : WeaponItem {
                         m_isShot = false;
                         return;
                     }
-                    BaseHitEffect();     
+                    BaseHitEffect();
                 }
                 else
                 {
@@ -229,13 +243,17 @@ public class Grenade : WeaponItem {
                 // 기타 오브젝트
                 BaseHitEffect();
             }
-
-
-            SphereCollider[] colls = this.GetComponents<SphereCollider>();
+            transform.GetChild(0).gameObject.SetActive(false);
             colls[0].enabled = false;
             colls[1].enabled = false;
-            //    Invoke("GrenadeDelete" , 1.5f);
+            Invoke("GrenadeDelete" , 1.5f);
         }
+    }
+
+    public void BoomPlayer(NetworkPlayer p)
+    {
+        if (NetworkManager.Instance() != null)
+            NetworkManager.Instance().C2SRequestPlayerDamage((int)p.HOST_ID , p.m_userName , this.ITEM_NAME , this.DAMAGE , transform.position);
     }
 
     void BaseHitEffect()
@@ -243,6 +261,7 @@ public class Grenade : WeaponItem {
         if(m_grenadeBaseHitEffect != null)
         {
             m_grenadeBaseHitEffect.GetComponent<SphereCollider>().enabled = true;
+//            m_grenadeBaseHitEffect.transform.parent = null;
             m_grenadeBaseHitEffect.SetActive(true);
         }
     }

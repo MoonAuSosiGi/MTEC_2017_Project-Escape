@@ -35,6 +35,20 @@ public class DeathZoneCollider : MonoBehaviour {
 
         if (col.transform.CompareTag("PlayerCharacter"))
         {
+            // 사망한 친구들은 처리하지 않음
+            NetworkPlayer nplayer = col.GetComponent<NetworkPlayer>();
+
+            if (nplayer != null)
+            {
+                if (nplayer.IS_DEATH)
+                    return;
+            }
+            else
+            {
+                if (NetworkManager.Instance().IS_LOSE)
+                    return;
+            }
+
             bool check = false;
             for(int i = 0; i < m_hitList.Count;i++)
             {
@@ -45,7 +59,6 @@ public class DeathZoneCollider : MonoBehaviour {
                     check = true;
                     if (tick <= 0.0f)
                     {
-                        Debug.Log("TTTSHOT ");
                         // 생성
                         m_targetZone.DeathZoneHit(col.gameObject);
                         m_hitList[i] = new HitObject(m_hitList[i].hitObj , 1.0f);

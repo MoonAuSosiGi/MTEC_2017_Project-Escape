@@ -13,5 +13,11 @@ public class CameraAnimationController : MonoBehaviour {
     {
         m_playerController.CameraDamageAnimationEnd();
     }
+
+    // 메테오 부딪힘 이펙트 종료
+    public void MeteorEffectAnimationEnd()
+    {
+        this.GetComponent<Animator>().SetInteger("METEOR" , 0);
+    }
     #endregion
 }

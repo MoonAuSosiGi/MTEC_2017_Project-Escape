@@ -84,6 +84,7 @@ public class InGameUI : MonoBehaviour
     #region EquipWeapon
     public void EquipWeapon(string itemID,int index,int curCount,int maxCount)
     {
+        //ShowDebugLabel("무기 장착 " + index + " 아이템 아이디 " + itemID);
         m_selectObject.transform.position = m_InvenIconList[index].transform.position;
 
         if (string.IsNullOrEmpty(itemID))
@@ -131,6 +132,10 @@ public class InGameUI : MonoBehaviour
 
     public void UnEquipWeapon(int index)
     {
+        //아이템 이름 세팅
+        m_curWeaponName.text = "";
+        GetWeaponName(m_InvenIconList[index]).text = "";
+        GetWeaponIcon(m_InvenIconList[index]).gameObject.SetActive(false);
         m_equipInfo.SetActive(false);
     }
 

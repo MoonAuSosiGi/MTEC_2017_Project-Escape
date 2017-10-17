@@ -9,9 +9,18 @@ public class NetworkPlayer : MonoBehaviour {
     // -- Network Player -----------------------------------------------------------//
     public Animator PlayerAnim;
     public HostID m_hostID;
-    public string m_userName = "";
     public WeaponItem m_weapon = null;
     public GameObject m_weaponAnchor;
+    public string m_userName = null;
+    [SerializeField] private TextMesh m_userNameUI = null;
+
+    private bool m_isDeath = false;
+    public bool IS_DEATH { get { return m_isDeath; }
+        set {
+            m_isDeath = value;
+            ShowPlayerName(m_isDeath) ;
+        }
+    }
 
     public WeaponItem HAS_WEAPON
     {
@@ -40,11 +49,14 @@ public class NetworkPlayer : MonoBehaviour {
 
     public HostID HOST_ID { get { return m_hostID; } }
     #endregion
-
+    
     public void NetworkPlayerSetup(HostID hostID,string userName)
     {
         m_hostID = hostID;
+        m_userNameUI = transform.GetComponent<PlayerController>().USERNAME_UI;
+        m_userNameUI.text = userName;
         m_userName = userName;
+        ShowPlayerName(false);
         GameObject.Destroy(this.GetComponent<AudioListener>());
     }
 
@@ -79,7 +91,7 @@ public class NetworkPlayer : MonoBehaviour {
         {
             if(animationName.Equals("Damage"))
             {
-                GetComponent<PlayerController>().DamageEffect();
+                GetComponent<PlayerController>().DamageEffect(false);
             }
             PlayerAnim.Play(animationName);
         }
@@ -151,8 +163,26 @@ public class NetworkPlayer : MonoBehaviour {
     void FixedUpdate()
     {
         NetworkMoveUpdate();
+
+        if(m_userNameUI.gameObject.activeSelf)
+        {
+            RotatePlayerName();
+        }
       
     }
+
+    // 이름 처리
+
+    void RotatePlayerName()
+    {
+        m_userNameUI.transform.rotation = this.transform.rotation;
+    }
+
+    void ShowPlayerName(bool isShow)
+    {
+        m_userNameUI.gameObject.SetActive(isShow);
+    }
+
 
     public void EquipWeapon(GameObject weapon)
     {
@@ -182,7 +212,7 @@ public class NetworkPlayer : MonoBehaviour {
             {
                 Grenade g = (m_weapon as Grenade);
                 g.IS_NETWORK = true;
-                g.NetworkGrenadeEnable();
+             //   g.NetworkGrenadeEnable();
             }
         }
     }

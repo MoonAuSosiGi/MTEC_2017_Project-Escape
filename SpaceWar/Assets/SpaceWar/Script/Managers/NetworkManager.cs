@@ -357,6 +357,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         // 아이템 삭제 로직
         m_s2cStub.NotifyDeleteItem = (HostID remote , RmiContext rmiContext ,string networkID) =>
         {
+            Debug.Log("Server 측에서 Item 삭제 요청 " + networkID + " d "+ m_itemDict.ContainsKey(networkID));
             // 추후 코루틴으로 삭제하도록 하자
             if(m_itemDict.ContainsKey(networkID))
             {
@@ -426,7 +427,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             Debug.Log("Equip Check " + m_itemDict.ContainsKey(networkID));
 
             GameObject item = m_itemDict[networkID].gameObject;
-            NetworkLog("NotifyPlayerEquipItem " + itemID + " null ? " + (item == null));
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("NotifyPlayerEquipItem " + itemID + " null ? " + (item == null));
 
             if (item != null)
             {
@@ -503,8 +504,6 @@ public class NetworkManager : Singletone<NetworkManager> {
         {
             Debug.Log("수류탄 생성 !!! " + sendHostID + " pos " + pos);
             Grenade g = (m_itemDict[networkID] as Grenade);
-            if (g.IS_NETWORK == true)
-                return true;
             g.IS_NETWORK = true;
             g.transform.parent = null;
             g.transform.position = pos;
@@ -516,10 +515,9 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyGrenadeMove = (HostID remote , RmiContext rmiContext , int sendHostID , string networkID ,
             UnityEngine.Vector3 pos ,UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot) =>
         {
-            Debug.Log("Move " + pos);
+       
             Grenade g = (m_itemDict[networkID] as Grenade);
-            if (g.transform.parent != null)
-                g.transform.parent = null;
+            Debug.Log("Move " + pos + " g null "+(g == null));
             g.NetworkMoveRecv(pos , velocity , rot);
             return true;
         };
@@ -544,25 +542,46 @@ public class NetworkManager : Singletone<NetworkManager> {
           m_s2cStub.NotifyPlayerChangeHP = (HostID remote , RmiContext rmiContext ,
             int targetHostID , string name , float hp , float prevhp , float maxhp,UnityEngine.Vector3 dir) =>
         {
-            NetworkLog("damage host " + (int)m_hostID + " target " + targetHostID);
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("damage host " + (int)m_hostID + " target " + targetHostID);
             if ((int)m_hostID == targetHostID)
             {
                 if (hp <= 0.0f)
+                {
                     m_isLose = true;
+                }
 
                 // 10% 체크
                 if(hp <= maxhp * 0.1f)
                 {
+                    // 산소 부족이 띄워져있을 경우 숨김
+                    CameraManager.Instance().HideNotEnoughOxyEffect();
+                    CameraManager.Instance().ShowNotEnoughHPEffect();
                     GameManager.Instance().PLAYER.m_player.NotEnoughHp();
                 }
                 else if(prevhp <= maxhp * 0.1f && hp > maxhp * 0.1f)
                 {
+                    // 막 회복되었을때
                     GameManager.Instance().PLAYER.m_player.HealHPAndOxy();
+                    CameraManager.Instance().HideNotEnoughHpEffect();
                 }
 
                 GameManager.Instance().ChangeHP(hp , prevhp , maxhp, (string.IsNullOrEmpty(name)) ? null : name);
                 if(prevhp > hp)
                     GameManager.Instance().PLAYER.m_player.Damage(dir,(string.IsNullOrEmpty(name)) ? null : name);
+            }
+            else
+            {
+                for(int i = 0; i < m_players.Count; i++)
+                {
+                    if(m_players[i].HOST_ID == (HostID)targetHostID)
+                    {
+                        if(hp <= 0.0f)
+                        {
+                            m_players[i].IS_DEATH = true;
+                        }
+                        return true;
+                    }
+                }
             }
             return true;
         };
@@ -584,11 +603,19 @@ public class NetworkManager : Singletone<NetworkManager> {
                     GameManager.Instance().PLAYER.m_player.HealHPAndOxy();
                 }
 
+                // 산소 오링났을 때 
                 if (oxygen <= 0)
                 {
+                    CameraManager.Instance().ShowNotEnoughOxyEffect();
+
                     C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" ,
                         GameManager.Instance().GetGameTableValue(GameManager.OXY_DAMAGE),
                         UnityEngine.Vector3.zero);
+                }
+                else
+                {
+                    // 산소가 조금이라도 있다면 not enough effect 는 끔
+                    CameraManager.Instance().HideNotEnoughOxyEffect();
                 }
                 GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);
             }
@@ -840,7 +867,11 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyDeathZoneCommingTime = (HostID remote , RmiContext rmiContext , 
             int tick , string deathzoneID) =>
         {
-            GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.DEATH_ZONE , deathzoneID , tick , "Death Zone");
+            GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.DEATH_ZONE , deathzoneID , 
+                tick , "Death Zone");
+
+            if(tick <= 0)
+                GameManager.Instance().ALERT.AlertHide(deathzoneID);
             return true;
         };
 
@@ -1236,6 +1267,7 @@ public class NetworkManager : Singletone<NetworkManager> {
     // item Equip Send
     public void C2SRequestEquipItem(string itemID , string networkID)
     {
+        Debug.Log("Equip !");
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
         sendOption.enableLoopback = false;
