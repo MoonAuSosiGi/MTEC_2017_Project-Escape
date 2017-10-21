@@ -282,6 +282,7 @@ public class GameManager : Singletone<GameManager> {
             MP.GetComponent<PlayerController>().enabled = false;
             NetworkManager.Instance().NETWORK_PLAYERS.Add(p);
 
+            p.NetworkPlayerColorSetup(NetworkManager.Instance().NETWORK_PLAYERS.Count - 1);
         }
 
         return MP;
@@ -354,14 +355,12 @@ public class GameManager : Singletone<GameManager> {
         m_playerInfo.m_hp = curHp;
         m_inGameUI.PlayerHPUpdate(curHp , prevHp , maxHp);
 
-        // 얘넨 애니메이션 재생 필요 없음
-        if (reason.Equals("oxy") || reason.Equals("Meteor"))
-            return;
+        //// 얘넨 애니메이션 재생 필요 없음
+        //if (reason.Equals("oxy") || reason.Equals("Meteor"))
+        //    return;
 
         // 애니메이션 재생
-        if (m_playerInfo.m_hp > 0.0f)
-            m_playerInfo.m_player.AnimationPlay("Damage");
-        else
+        if (m_playerInfo.m_hp <= 0.0f)
         {
             m_playerInfo.m_player.IS_MOVE_ABLE = false;
             m_playerInfo.m_player.AnimationPlay("Dead");

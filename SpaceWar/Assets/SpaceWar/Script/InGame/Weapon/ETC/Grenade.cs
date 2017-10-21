@@ -236,6 +236,7 @@ public class Grenade : WeaponItem {
             else if (string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
             {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
+                BaseHitEffect();
                 OtherHitEffect();
             }
             else
@@ -270,7 +271,7 @@ public class Grenade : WeaponItem {
     {
         if(m_grenadeOtherHitEffect != null)
         {
-            m_grenadeOtherHitEffect.GetComponent<SphereCollider>().enabled = true;
+         //   m_grenadeOtherHitEffect.GetComponent<SphereCollider>().enabled = true;
             m_grenadeOtherHitEffect.SetActive(true);
         }
     }

@@ -13,15 +13,17 @@ public class RocketBullet : Bullet {
     #region Bullet Process
     public override void BulletMove()
     {
+        
         this.transform.RotateAround(
             GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * Vector3.right,
             m_speed  * Time.deltaTime);
 
         Vector3 dir = (m_gravityPosition - transform.position).normalized;
         transform.position += dir * m_gravityPower * Time.deltaTime;
-
+        Vector3 velo = (m_shotRot * Vector3.right * m_speed * Time.deltaTime); // + (dir * m_gravityPower * Time.deltaTime);
         m_gravityPower += 5f * Time.deltaTime;
-        MoveSend();
+        
+        MoveSend(velo);
     }
 
     public override void BulletSetup()

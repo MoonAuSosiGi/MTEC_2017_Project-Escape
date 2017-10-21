@@ -22,6 +22,37 @@ public class NetworkPlayer : MonoBehaviour {
         }
     }
 
+    public void HPUpdate(float cur,float max)
+    {
+        if (iTween.Count(gameObject) > 0)
+            iTween.Stop(gameObject);
+        m_hpUI.gameObject.SetActive(true);
+
+        m_hpUI.transform.position =  GameManager.Instance().m_inGameUI.GetUIPos(
+            GetComponent<PlayerController>().HEAD_ANCHOR.transform.position);
+
+        iTween.ValueTo(gameObject , iTween.Hash(
+            "from" , m_hpUI.value ,
+            "to" , cur / max ,
+            "onupdatetarget" , gameObject ,
+            "onupdate" , "HpUpdate",
+            "time",0.2f,
+            "oncompletetarget",gameObject,
+            "oncomplete","HpHide"));
+    }
+
+    void HpUpdate(float value)
+    {
+        m_hpUI.transform.position = GameManager.Instance().m_inGameUI.GetUIPos(
+            GetComponent<PlayerController>().HEAD_ANCHOR.transform.position);
+        m_hpUI.value = value;
+    }
+
+    void HpHide()
+    {
+        m_hpUI.gameObject.SetActive(false);
+    }
+
     public WeaponItem HAS_WEAPON
     {
         get { return m_weapon; }
@@ -30,7 +61,6 @@ public class NetworkPlayer : MonoBehaviour {
 
             if(m_weapon == null)
             {
-                Debug.Log("설마");
                 // 수류탄이었으므로 애니메이션 변경
                 PlayerController p = this.GetComponent<PlayerController>();
                 PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
@@ -38,6 +68,11 @@ public class NetworkPlayer : MonoBehaviour {
         }
     }
 
+    [SerializeField] private UISlider m_hpUI = null;
+
+
+
+    #region Network Player Proud Net
     PositionFollower m_positionFollower = new PositionFollower();
     AngleFollower m_playerCamSeeX = new AngleFollower();
     AngleFollower m_playerCamSeeY = new AngleFollower();
@@ -49,7 +84,8 @@ public class NetworkPlayer : MonoBehaviour {
 
     public HostID HOST_ID { get { return m_hostID; } }
     #endregion
-    
+    #endregion
+
     public void NetworkPlayerSetup(HostID hostID,string userName)
     {
         m_hostID = hostID;
@@ -57,10 +93,25 @@ public class NetworkPlayer : MonoBehaviour {
         m_userNameUI.text = userName;
         m_userName = userName;
         ShowPlayerName(false);
+
+        //ui
+        m_hpUI = GameManager.Instance().m_inGameUI.SetupNetworkHPUI().GetComponent<UISlider>();
+        m_hpUI.gameObject.SetActive(false);
         GameObject.Destroy(this.GetComponent<AudioListener>());
     }
 
-    public void RecvNetworkMove(UnityEngine.Vector3 pos,UnityEngine.Vector3 velocity, UnityEngine.Vector3 charrot, UnityEngine.Vector3 rot)
+    //임시 개인전
+    public void NetworkPlayerColorSetup(int index)
+    {
+        Vector4[] vecs = { new Vector4(3.68276f , 0.0f , 6.0f) ,
+            new Vector4(0.0f , 6.0f , 0.7862077f) , new Vector4(0.0f , 3.517242f , 6.0f) };
+        transform.GetChild(0).GetChild(0).GetChild(3)
+                .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" , vecs[index]);
+    }
+
+    public void RecvNetworkMove(UnityEngine.Vector3 pos,
+        UnityEngine.Vector3 velocity, UnityEngine.Vector3 charrot, 
+        UnityEngine.Vector3 rot)
     {
         var npos = new Nettention.Proud.Vector3();
         npos.x = pos.x;
@@ -91,19 +142,28 @@ public class NetworkPlayer : MonoBehaviour {
         {
             if(animationName.Equals("Damage"))
             {
-                GetComponent<PlayerController>().DamageEffect(false);
+                GetComponent<PlayerController>().DamageEffect(false,false);
             }
+            Debug.Log("DD " + animationName);
             PlayerAnim.Play(animationName);
         }
         else
         {
             PlayerAnim.SetInteger(animationName , aniValue);
 
+            if(animationName.Equals("WALK") && aniValue == 3)
+            {
+                this.GetComponent<PlayerController>().DASH_EFFECT.SetActive(true);
+            }
+            else
+            {
+                this.GetComponent<PlayerController>().DASH_EFFECT.SetActive(false);
+            }
+
             if (m_weapon == null)
                 return;
-
-       //     if (m_weapon.ATTACK_TIMING == WeaponItem.AttackTiming.SCRIPT_ONLY)
-                m_weapon.SoundPlay();
+            
+            m_weapon.SoundPlay();
 
             // 근거리 무기용
             if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.ITEM_TYPE == Item.ItemType.MELEE)
@@ -115,7 +175,22 @@ public class NetworkPlayer : MonoBehaviour {
             {
                 m_weapon.AttackSwordEnd();
             }
+            // 원거리
+            else if (animationName.Equals("ATTACK") && aniValue == 0 && 
+                ( m_weapon.ITEM_TYPE == Item.ItemType.GUN  || m_weapon.ITEM_TYPE == Item.ItemType.RIFLE ||
+                m_weapon.ITEM_TYPE == Item.ItemType.ROCKETLAUNCHER))
+            {
+                //m_weapon.SHOT_EFFECT.transform.position = m_weapon.FIRE_POS.position;
+                //m_weapon.SHOT_EFFECT.SetActive(true);
+                //Invoke("ShotEffectEnd" , m_weapon.COOL_TIME - 0.1f);
+            }
         }
+    }
+
+    void ShotEffectEnd()
+    {
+        if(m_weapon != null)
+            m_weapon.SHOT_EFFECT.SetActive(false);
     }
 
     void NetworkMoveUpdate()
@@ -175,7 +250,7 @@ public class NetworkPlayer : MonoBehaviour {
 
     void RotatePlayerName()
     {
-        m_userNameUI.transform.rotation = this.transform.rotation;
+        m_userNameUI.transform.rotation = GameManager.Instance().PLAYER.m_player.transform.rotation;
     }
 
     void ShowPlayerName(bool isShow)
@@ -226,7 +301,7 @@ public class NetworkPlayer : MonoBehaviour {
             m_weapon.transform.position = pos;
             m_weapon.transform.eulerAngles = rot;
             m_weapon.GetComponent<SphereCollider>().enabled = true;
-
+            m_weapon.SHOT_EFFECT.SetActive(false);
             PlayerController p = this.GetComponent<PlayerController>();
 
             Debug.Log("UnEquip ");

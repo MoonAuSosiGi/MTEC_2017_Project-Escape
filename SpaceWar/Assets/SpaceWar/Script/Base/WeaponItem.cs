@@ -165,7 +165,7 @@ public class WeaponItem : Item {
         WeaponManager.Instance().RequestBulletCreate(networkID ,m_itemID, m_firePoint.position ,
             character.localEulerAngles);
         m_currentBulletIndex++;
-        Invoke("ShotEffectEnd" , 1.0f);
+        Invoke("ShotEffectEnd" , m_coolTime - 0.1f);
     }
 
     void ShotEffectEnd()
@@ -198,7 +198,7 @@ public class WeaponItem : Item {
         WeaponManager.Instance().RequestBulletCreate(networkID , m_itemID , 
             m_firePoint.position , rot.eulerAngles);
         m_currentBulletIndex++;
-
+        Invoke("ShotEffectEnd" , m_coolTime - 0.1f);
     }
     #endregion
 

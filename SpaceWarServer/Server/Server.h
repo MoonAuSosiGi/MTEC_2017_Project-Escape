@@ -62,6 +62,9 @@ public:
 	void OnClientJoin(CNetClientInfo* clientInfo);
 	// 클라 접속 해제시
 	void OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, const ByteArray& comment);
+
+	// 서버 리셋
+	void ServerReset();
 #pragma endregion
 
 #pragma region C2S  ---------------------------------------------------------------------------------

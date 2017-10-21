@@ -15,6 +15,7 @@ int main()
 	server.ServerRun();
     return 0;
 }
+
 #pragma region Meteor
 
 void MeteorLoop(void*)
@@ -262,13 +263,34 @@ void Server::OnClientLeave(CNetClientInfo* clientInfo, ErrorInfo* errorInfo, con
 		oxyIter++;
 	}
 
-	
 
-	m_proxy.NotifyPlayerLost(m_playerP2PGroup,RmiContext::ReliableSend,clientInfo->m_HostID);
+
+	m_proxy.NotifyPlayerLost(m_playerP2PGroup, RmiContext::ReliableSend, clientInfo->m_HostID);
 	m_gameRoom->LogOutClient(iter->second->m_hostID);
-	
+
 	m_clientMap.erase(iter);
 
+	if (m_clientMap.size() <= 0)
+		ServerReset();
+}
+
+// 서버 리셋
+void Server::ServerReset()
+{
+	cout << " Server Reset " << endl;
+	m_gameRoom->ClearRoom();
+	s_GameRunning = false;
+	m_clientMap.clear();
+	m_itemMap.clear();
+	m_itemBoxMap.clear();
+	m_oxyChargerMap.clear();
+	m_spaceShipMap.clear();
+	s_deathZoneCommingSec = 180;
+	s_spaceShipLockTime = 60;
+
+	// 파일입출력 전
+	for (int i = 0; i < 10; i++)
+		m_meteorCommingTime[i] = 30 + (i * 20);
 }
 
 #pragma endregion
@@ -357,14 +379,7 @@ DEFRMI_SpaceWar_RequestNetworkGameTeamSelect(Server)
 // 정상적인 종료 루틴
 DEFRMI_SpaceWar_RequestGameExit(Server)
 {
-	s_GameRunning = false;
-	m_gameRoom->ClearRoom();
-	m_clientMap.clear();
-	m_itemMap.clear();
-	m_itemBoxMap.clear();
-	m_oxyChargerMap.clear();
-	s_spaceShipLockTime = 60;
-	s_deathZoneCommingSec = 180;
+	ServerReset();
 	return true;
 }
 #pragma endregion
@@ -563,16 +578,8 @@ DEFRMI_SpaceWar_RequestNetworkHostOut(Server)
 		iter++;
 	}
 
-	m_gameRoom->ClearRoom();
-	s_GameRunning = false;
-	m_gameRoom->ClearRoom();
-	m_clientMap.clear();
-	m_itemMap.clear();
-	m_itemBoxMap.clear();
-	m_oxyChargerMap.clear();
-	s_deathZoneCommingSec = 180;
-	s_spaceShipLockTime = 60;
 
+	ServerReset();
 	cout << "호스트가 나갔으므로 게임 룸 클리어 " << endl;
 
 	return true;
@@ -617,7 +624,7 @@ DEFRMI_SpaceWar_RequestHpUpdate(Server)
 // 플레이어가 맞았다.
 DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 {
-	cout << "Request Player Damage 때린놈 " << sendHostID << " 맞은놈 " << targetHostID << " 데미지 " << damage << endl;
+	cout << "Request Player Damage 때린놈 " << sendHostID << " 맞은놈 " << targetHostID << " 데미지 " << damage << " 무기 이름 " << weaponName << endl;
 	cout << "현재 총인원 " << m_clientMap.size() << endl;
 
 	if (m_clientMap[(HostID)targetHostID]->m_state == DEATH)
@@ -832,23 +839,23 @@ DEFRMI_SpaceWar_RequestShelterDoorControl(Server)
 
 	m_shelterMap[shelterID]->ShelterDoorStateChange(doorState);
 
-	// p2p 로 수정 TODO
-	auto iter = m_clientMap.begin();
-	while (iter != m_clientMap.end())
-	{
-		if ((int)iter->second->m_hostID != sendHostID)
-			m_proxy.NotifyShelterInfo(iter->second->m_hostID,
-				RmiContext::ReliableSend, sendHostID, shelterID,
-				doorState, m_shelterMap[shelterID]->m_lightState);
+	//// p2p 로 수정 TODO
+	//auto iter = m_clientMap.begin();
+	//while (iter != m_clientMap.end())
+	//{
+	//	if ((int)iter->second->m_hostID != sendHostID)
+	//		m_proxy.NotifyShelterInfo(iter->second->m_hostID,
+	//			RmiContext::ReliableSend, sendHostID, shelterID,
+	//			doorState, m_shelterMap[shelterID]->m_lightState);
 
-		iter++;
-	}
+	//	iter++;
+	//}
 
 
 	return true;
 }
  
-// 쉘터 입장 퇴장
+// 쉘터 입장 퇴장 /
 DEFRMI_SpaceWar_RequestShelterEnter(Server)
 {
 	cout << "RequestShelterEnter " << sendHostID << endl;
@@ -861,15 +868,15 @@ DEFRMI_SpaceWar_RequestShelterEnter(Server)
 	else
 		m_shelterMap[shelterID]->ShelterExit();
 
-	// 기존 상태와 달라졌을 경우
-	if (m_shelterMap[shelterID]->m_lightState != prevState ||
-		m_shelterMap[shelterID]->m_doorState != prevDoorState)
-	{
-		// 상태 전송
-		m_proxy.NotifyShelterInfo(m_playerP2PGroup,
-			RmiContext::ReliableSend, sendHostID,
-			shelterID, m_shelterMap[shelterID]->m_doorState, m_shelterMap[shelterID]->m_lightState);
-	}
+	//// 기존 상태와 달라졌을 경우
+	//if (m_shelterMap[shelterID]->m_lightState != prevState ||
+	//	m_shelterMap[shelterID]->m_doorState != prevDoorState)
+	//{
+	//	// 상태 전송
+	//	m_proxy.NotifyShelterInfo(m_playerP2PGroup,
+	//		RmiContext::ReliableSend, sendHostID,
+	//		shelterID, m_shelterMap[shelterID]->m_doorState, m_shelterMap[shelterID]->m_lightState);
+	//}
 
 
 	return true;

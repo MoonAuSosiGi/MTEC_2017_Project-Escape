@@ -494,6 +494,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         // 총알 부딪혀서 삭제해라
         m_s2cStub.NotifyPlayerBulletDelete = (HostID remote , RmiContext rmiContext , int sendHostID , string bulletID) =>
         {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("삭제 요청보ㄴ냄 "+bulletID);
             WeaponManager.Instance().NetworkBulletRemoveRequest(bulletID);
 
             return true;
@@ -579,6 +580,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                         {
                             m_players[i].IS_DEATH = true;
                         }
+                        m_players[i].HPUpdate(hp , maxhp);
                         return true;
                     }
                 }
@@ -690,7 +692,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             bool lightState) =>
         {
             Debug.Log("shelterinfo " + lightState + " id " + shelterID);
-
+            m_shelterList[shelterID].DOOR_STATE = doorState;
 
             if (lightState)
                 m_shelterList[shelterID].LightOn();
@@ -1462,16 +1464,23 @@ public class NetworkManager : Singletone<NetworkManager> {
     {
         Debug.Log("Shelter Door Control");
 
-        m_c2sProxy.RequestShelterDoorControl(HostID.HostID_Server, 
-            RmiContext.ReliableSend,(int)m_hostID , shelterID , doorState);
+        m_c2sProxy.NotifyShelterInfo(m_p2pID , RmiContext.ReliableSend , (int)m_hostID , shelterID , doorState , 
+            m_shelterList[shelterID].LIGHT_STATE);
+
+        m_c2sProxy.RequestShelterDoorControl(HostID.HostID_Server ,
+            RmiContext.ReliableSend , (int)m_hostID , shelterID , doorState);
     }
 
     // 쉘터 입장
     public void C2SRequestShelterEnter(int shelterID,bool enter)
     {
         Debug.Log("Shelter Enter " +enter);
-        m_c2sProxy.RequestShelterEnter(HostID.HostID_Server , 
-            RmiContext.ReliableSend , (int)m_hostID,shelterID , enter);
+
+        m_c2sProxy.NotifyShelterInfo(m_p2pID , RmiContext.ReliableSend , (int)m_hostID , shelterID , 
+            m_shelterList[shelterID].DOOR_STATE,enter);
+
+        m_c2sProxy.RequestShelterEnter(HostID.HostID_Server ,
+            RmiContext.ReliableSend , (int)m_hostID , shelterID , enter);
     }
     #endregion
 

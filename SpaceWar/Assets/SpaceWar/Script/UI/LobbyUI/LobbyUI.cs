@@ -292,6 +292,8 @@ public class LobbyUI : MonoBehaviour {
 
     private void LobbyUI_otherPlayerConnect(int hostID , string userName)
     {
+        Vector4[] vecs = { new Vector4(3.68276f , 0.0f , 6.0f) ,
+            new Vector4(0.0f , 6.0f , 0.7862077f) , new Vector4(0.0f , 3.517242f , 6.0f) };
         m_curPlayer++;
         for (int i = 0; i < m_playerLobbyList.Count; i++)
         {
@@ -299,6 +301,11 @@ public class LobbyUI : MonoBehaviour {
 
             if (data.m_hostID == -1)
             {
+
+                if (i < vecs.Length)
+                    data.m_readyEffect.transform.parent.GetChild(1).GetChild(3)
+                        .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" ,
+                        vecs[i]);
                 data.m_readyEffect.transform.parent.gameObject.SetActive(true);
                 data.m_hostID = hostID;
                 data.m_userName.text = userName;
@@ -331,17 +338,24 @@ public class LobbyUI : MonoBehaviour {
     private void LobbyUI_otherRoomPlayerInfo(int hostID , string userName , bool ready , bool redTeam)
     {
         m_curPlayer++;
-
+        Vector4[] vecs = { new Vector4(3.68276f , 0.0f , 6.0f) ,
+            new Vector4(0.0f , 6.0f , 0.7862077f) , new Vector4(0.0f , 3.517242f , 6.0f) };
         for (int i = 0; i < m_playerLobbyList.Count; i++)
         {
             PlayerLobbyData data = m_playerLobbyList[i];
 
             if (data.m_hostID == -1)
             {
+
                 data.m_readyEffect.transform.parent.gameObject.SetActive(true);
                 data.m_hostID = hostID;
                 data.m_userName.text = userName;
                 data.m_readyEffect.SetActive(ready);
+                if (i < vecs.Length)
+                    data.m_readyEffect.transform.parent.GetChild(1).GetChild(3)
+                         .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" ,
+                        vecs[i]);
+
 
                 if (NetworkManager.Instance().IS_TEAMMODE)
                     data.SetTeamColor(true , redTeam);

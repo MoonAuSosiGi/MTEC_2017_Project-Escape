@@ -7,6 +7,8 @@ public class InGameUI : MonoBehaviour
 {
 
     #region InGameUI_INFO
+    [SerializeField] private Camera m_uiCamera = null;
+
 
     #region Player HP / OXY
     public UISlider m_hpSlider = null;
@@ -44,11 +46,19 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private List<GameObject> m_InvenIconList = new List<GameObject>();
     [SerializeField] private GameObject m_selectObject = null;
 
+    [SerializeField] private Transform m_showInvenTarget = null;
+    [SerializeField] private Transform m_hideInvenTarget = null;
+
     public GameObject INVEN_OBJECT { get { return m_invenIconObject; } }
     #endregion
 
     #region Debug Label
     [SerializeField] private UILabel m_debugLabel = null;
+    #endregion
+
+    #region Network Player HP
+    [SerializeField] private GameObject m_hpOrigin = null;
+    
     #endregion
     #endregion
 
@@ -82,6 +92,21 @@ public class InGameUI : MonoBehaviour
     #endregion
 
     #region EquipWeapon
+
+    public void ShowInvenUI()
+    {
+        if (iTween.Count(m_invenIconObject) > 0)
+            iTween.Stop(m_invenIconObject);
+        iTween.MoveTo(m_invenIconObject , iTween.Hash("y" , m_showInvenTarget.position.y));
+    }
+
+    public void HideInvenUI()
+    {
+        if (iTween.Count(m_invenIconObject) > 0)
+            iTween.Stop(m_invenIconObject);
+        iTween.MoveTo(m_invenIconObject , iTween.Hash("y" , m_hideInvenTarget.position.y));
+    }
+
     public void EquipWeapon(string itemID,int index,int curCount,int maxCount)
     {
         //ShowDebugLabel("무기 장착 " + index + " 아이템 아이디 " + itemID);
@@ -202,5 +227,21 @@ public class InGameUI : MonoBehaviour
         m_debugLabel.text = "Debug Label \n"+ text;
     }
     #endregion
+    
+    #region Network Player HP Method
 
+    public GameObject SetupNetworkHPUI()
+    {
+        GameObject hpUI = GameObject.Instantiate(m_hpOrigin);
+        hpUI.transform.parent = m_hpOrigin.transform.parent;
+        hpUI.transform.localScale = m_hpOrigin.transform.localScale;
+        return hpUI;
+    }
+    public Vector3 GetUIPos(Vector3 pos)
+    {
+        Vector3 p = Camera.main.WorldToScreenPoint(pos);
+        p = m_uiCamera.ScreenToWorldPoint(p);
+        return new Vector3(p.x , p.y + 0.25f , 0.0f);
+    }
+    #endregion
 }

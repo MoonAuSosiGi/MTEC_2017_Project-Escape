@@ -196,6 +196,7 @@ public class Bullet : MonoBehaviour {
 
     public void BulletDelete()
     {
+        BulletEffectReset();
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(false);
         
@@ -207,17 +208,18 @@ public class Bullet : MonoBehaviour {
     
     public virtual void BulletMove()
     {
+        UnityEngine.Vector3 velo = m_shotRot * UnityEngine.Vector3.right * m_speed * Time.deltaTime;
+        
         this.transform.RotateAround(
             GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * UnityEngine.Vector3.right , 
             m_speed * Time.deltaTime);
 
         if(!m_isRemote)
-            MoveSend();
+            MoveSend(velo);
     }
 
-    protected void MoveSend()
+    protected void MoveSend(UnityEngine.Vector3 velo)
     {
-        UnityEngine.Vector3 velo = GetComponent<Rigidbody>().velocity;
         
         if(NetworkManager.Instance() != null)
         NetworkManager.Instance().C2SRequestBulletMove(m_networkID ,
@@ -229,7 +231,7 @@ public class Bullet : MonoBehaviour {
     {
         if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
         {
-            Debug.Log("other " + other.name + " tag " + other.tag);
+            //Debug.Log("other " + other.name + " tag " + other.tag);
             m_hitEnemy= true;
             
             if (other.CompareTag("PlayerCharacter"))
@@ -243,7 +245,7 @@ public class Bullet : MonoBehaviour {
 
                     if (m_shotEffect != null)
                         m_shotEffect.SetActive(true);
-                    BULLET_TRAIL_EFFECT.SetActive(false);
+                  
                     if (m_hitMain != null)
                     {
                         m_bulletAudioSource.clip = m_hitMain;
@@ -263,9 +265,9 @@ public class Bullet : MonoBehaviour {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
                 if (m_shotOtherObjectEffect != null)
                     m_shotOtherObjectEffect.SetActive(true);
-                else
+                if(m_shotEffect != null)
                     m_shotEffect.SetActive(true);
-                BULLET_TRAIL_EFFECT.SetActive(false);
+              
                 if (m_hitOther != null)
                 {
                     m_bulletAudioSource.clip = m_hitOther;
@@ -278,14 +280,48 @@ public class Bullet : MonoBehaviour {
                 // 기타 오브젝트
                 if (m_shotEffect != null)
                     m_shotEffect.SetActive(true);
-                BULLET_TRAIL_EFFECT.SetActive(false);
+        //        BULLET_TRAIL_EFFECT.SetActive(false);
             }
 
 
             this.GetComponent<SphereCollider>().enabled = false;
-            Invoke("BulletDelete" , 1.5f);
+            BulletHitEvent();
         }
 
+    }
+
+    // 파티클 등의 이펙트 처리용
+    void BulletHitEvent()
+    {
+        var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
+
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            Transform t = transform.GetChild(0).GetChild(i);
+
+            var off = t.GetComponent<BulletParticle_Off>();
+        
+            var rateOff = t.GetComponent<BulletParticle_RateOff>();
+
+            if (off != null)            off.BulletHitEvent();
+            if (destroyTime != null)    destroyTime.BulletHitEvent();
+            if (rateOff != null)        rateOff.BulletHitEvent();
+        }
+    }
+
+    // 파티클 등의 이펙트 리셋
+    void BulletEffectReset()
+    {
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            Transform t = transform.GetChild(0).GetChild(i);
+
+            var off = t.GetComponent<BulletParticle_Off>();
+            var rateOff = t.GetComponent<BulletParticle_RateOff>();
+
+            if (off != null)        off.Reset();
+            if (rateOff != null)    rateOff.Reset();
+        }
     }
     #endregion
 

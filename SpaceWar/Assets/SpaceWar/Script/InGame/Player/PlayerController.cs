@@ -58,6 +58,9 @@ public class PlayerController : MonoBehaviour {
 
     // 똥꼬 대시
     [SerializeField] private GameObject m_dashEffect = null;
+    private Vector3 m_dashEffectAngle = Vector3.zero;
+    //네트워크용
+    public GameObject DASH_EFFECT { get { return m_dashEffect; } }
 
     // 유저네임  
     [SerializeField] private TextMesh m_userNameUI = null;
@@ -69,6 +72,8 @@ public class PlayerController : MonoBehaviour {
     // USE EFFECT ANCHOR
     [SerializeField] private GameObject m_useEffectHeadAnchor = null;
     [SerializeField] private GameObject m_useEffectHandAnchor = null;
+
+    public GameObject HEAD_ANCHOR { get { return m_useEffectHandAnchor; } }
     // 무기 앵커
     [SerializeField] private GameObject m_weaponEquipAnchor = null;
     public GameObject WEAPON_ANCHOR { get { return m_weaponEquipAnchor; } }
@@ -333,7 +338,7 @@ public class PlayerController : MonoBehaviour {
             //    AttackAnimationEnd();
             if (m_interactionAniVal != 0)
             {
-                ATTACK_ANI_VALUE = 0;
+             //   ATTACK_ANI_VALUE = 0;
                 WALK_ANI_VALUE = 0;
                 JUMP_ANI_VALUE = 0;
             }
@@ -449,6 +454,7 @@ public class PlayerController : MonoBehaviour {
 
         m_rigidBody = this.GetComponent<Rigidbody>();
         m_collider = this.GetComponent<CapsuleCollider>();
+        m_dashEffectAngle = m_dashEffect.transform.localEulerAngles;
 
         GravityManager.Instance().SetGravityTarget(m_rigidBody);
         InvokeRepeating("UseOxy" , 1.0f , 1.0f);
@@ -482,7 +488,8 @@ public class PlayerController : MonoBehaviour {
         if (IS_JUMP_ABLE)
             JumpProcess();
 
-        if (IS_ATTACK_ABLE && m_equipItems[m_curEquipItem] != null && m_equipItems[m_curEquipItem].EQUIP_STATE == true 
+        if (IS_ATTACK_ABLE && m_equipItems[m_curEquipItem] != null && 
+            m_equipItems[m_curEquipItem].EQUIP_STATE == true 
             && m_equipItems[m_curEquipItem].ITEM_TYPE != Item.ItemType.ETC_RECOVERY)
         {
             AttackProcess();
@@ -495,7 +502,10 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            OxyDamageEffect();
+            transform.GetChild(0).GetChild(0).GetChild(3)
+                .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" , new Vector4(3.68276f,0.0f, 6.00000f));
+            // 0  6 0.7862077
+            // 0 3.517242 6 
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -558,7 +568,8 @@ public class PlayerController : MonoBehaviour {
             //WalkAnimation(0);
 
         Vector3 speed = new Vector3(horizontalSpeed , 0 , verticalSpeed);
-        transform.Translate(speed * Time.deltaTime);
+        speed *= Time.deltaTime;
+        transform.Translate(speed);
         #endregion
         // 회전
         #region Rotate Logic
@@ -649,7 +660,7 @@ public class PlayerController : MonoBehaviour {
             }
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
-        MoveSend();
+        MoveSend(speed);
     }
 
     public void DashAnimationEnd()
@@ -749,12 +760,12 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-    void MoveSend()
+    void MoveSend(Vector3 velo)
     {
         if (NetworkManager.Instance() == null)
             return;
 
-        Vector3 velo = m_rigidBody.velocity;
+       // Vector3 velo = m_rigidBody.velocity;
 
         NetworkManager.Instance().C2SRequestPlayerMove(name ,
             transform.position , velo ,
@@ -799,12 +810,10 @@ public class PlayerController : MonoBehaviour {
     #region Player Attack --------------------------------------------------------------------------------
     void AttackProcess()
     {
-
-        if (Input.GetKey(m_AttackKey) && m_lastCoolTime <= 0.0f)
+        if (Input.GetKey(m_AttackKey) && !IsInvoking("AttackCoolTime") && ATTACK_ANI_VALUE != 1)
         {
             m_isAttackAble = false;
-            //     m_isMoveAble = false;
-            //   AttackAnimation(1);
+
             ATTACK_ANI_VALUE = 1;
 
             // 공격할땐 정면을 보고 공격
@@ -853,11 +862,13 @@ public class PlayerController : MonoBehaviour {
 
     void AttackCoolTime()
     {
-        m_lastCoolTime = -0.0f;
+        m_lastCoolTime = 0.0f;
+        ATTACK_ANI_VALUE = 0;
     }
 
     public void AttackAnimationEnd()
     {
+        ATTACK_ANI_VALUE = 0;
         if (enabled == false || m_equipItems[m_curEquipItem] == null)
             return;
 
@@ -867,7 +878,7 @@ public class PlayerController : MonoBehaviour {
             SetAnimation(AnimationType.ANI_BAREHAND);
         }
 
-        ATTACK_ANI_VALUE = 0;
+        
     }
     #endregion
 
@@ -1032,7 +1043,7 @@ public class PlayerController : MonoBehaviour {
                     index = 2;
                 }
             }
-
+            
             EquipItem(nearItem,index,true);
             m_nearItem = null;
         }
@@ -1057,6 +1068,8 @@ public class PlayerController : MonoBehaviour {
         {
             if (Input.GetKey(m_AttackKey))
             {
+                IS_MOVE_ABLE = false;
+                IS_JUMP_ABLE = false;
              //   WeaponAnimationChange(m_currentRecoveryKit);
 
                 if (m_interactionAniVal != 1)
@@ -1069,6 +1082,8 @@ public class PlayerController : MonoBehaviour {
 
             if (Input.GetKeyUp(m_AttackKey))
             {
+                IS_MOVE_ABLE = true;
+                IS_JUMP_ABLE = true;
                 //애니메이션 끝 
                 INTERACTION_ANI_VALUE = 0;
 
@@ -1099,6 +1114,18 @@ public class PlayerController : MonoBehaviour {
         }
         if(getItem)
         {
+            bool ck = false;
+            for(int i = 0; i < m_equipItems.Length; i ++)
+            {
+                if(m_equipItems[i] != null)
+                {
+                    ck = true;
+                }
+            }
+
+            if (ck == false)
+                GameManager.Instance().m_inGameUI.ShowInvenUI();
+
             GameManager.Instance().PLAYER.WEIGHT += item.ITEM_WEIGHT;
         }
         // 현재 착용중인 장비는 끈다
@@ -1145,7 +1172,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (index == -1)
             index = GetEquipItemIndex(item.ITEM_TYPE);
-
+        
         //장비 해제해야함
         item.gameObject.SetActive(true);
         item.EQUIP_STATE = false;
@@ -1183,6 +1210,19 @@ public class PlayerController : MonoBehaviour {
                 item.transform.position , item.transform.eulerAngles);
         
         m_equipItems[index] = null;
+
+
+        // 인벤 하이드
+        bool ck = false;
+        for (int i = 0; i < m_equipItems.Length; i++)
+        {
+            if (m_equipItems[i] != null)
+            {
+                ck = true;
+            }
+        }
+        if (ck == false)
+            GameManager.Instance().m_inGameUI.HideInvenUI();
     }
     
     // 수류탄의 경우는 일반적인 경우가 아님
@@ -1194,6 +1234,7 @@ public class PlayerController : MonoBehaviour {
     }
     void ControlObjectProcess()
     {
+    
          if(Input.GetKeyDown(m_Get))
         {
 
@@ -1205,6 +1246,7 @@ public class PlayerController : MonoBehaviour {
             if (m_nearShelter != null)
             {
                 AudioPlay(m_shelterUseSound);
+                m_nearShelter.DOOR_STATE = !m_nearShelter.DOOR_STATE;
                 m_nearShelter.DoorControl();
             }
 
@@ -1353,7 +1395,6 @@ public class PlayerController : MonoBehaviour {
     // 메테오 데미지
     void MeteorDamage(Collider col)
     {
-        
         if (col.CompareTag("Meteor") && IS_SHELTER == false)
         {
             AudioPlay(m_damageHit);
@@ -1403,12 +1444,13 @@ public class PlayerController : MonoBehaviour {
     #endregion
 
     #region Damage Effect Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    public void DamageEffect(bool showHitEffect = true)
+    public void DamageEffect(bool showHitEffect = true,bool characterDamageAnimationShow = true)
     {
         if(showHitEffect == true)
             CameraManager.Instance().ShowHitEffect();
         m_renderer.material = HIT_MATERIAL;
-        m_camAnimator.SetInteger("DAMAGE" , 1);
+        if (characterDamageAnimationShow == true && GameManager.Instance().PLAYER.m_hp > 0.0f)
+            AnimationPlay("Damage");
         Invoke("DamgeEffectEnd" , 0.1f);
     }
 
@@ -1431,7 +1473,7 @@ public class PlayerController : MonoBehaviour {
 
     public void Damage(Vector3 dir,string reason = null)
     {
-        DamageEffect();
+        DamageEffect(true,!reason.Equals("DeathZone"));
 
         AudioPlay(m_damageHit);
         // 우주선 생성 도중 데미지를 입었을 경우 캔슬됨
@@ -1456,21 +1498,23 @@ public class PlayerController : MonoBehaviour {
             }
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
-        // 보류
-
-        //CameraManager.Instance().PLAYER_ROTATE = false;
-        //Vector3 rot = Quaternion.LookRotation( (dir - transform.GetChild(0).position).normalized).eulerAngles;
-        //transform.GetChild(0).localEulerAngles = new Vector3(0.0f , rot.y , 0.0f) ;
-
-        //if (IsInvoking("DamageAniCheck") == false)
-        //    InvokeRepeating("DamageAniCheck" , 0.5f , Time.deltaTime);
-
-        
     }
 
     void DamgeEffectEnd()
     {
         m_renderer.material = ORIGIN_MATERIAL;
+        if (GetComponent<NetworkPlayer>() != null)
+        {
+            Vector4[] vecs = { new Vector4(3.68276f , 0.0f , 6.0f) ,
+            new Vector4(0.0f , 6.0f , 0.7862077f) , new Vector4(0.0f , 3.517242f , 6.0f) };
+            int index = NetworkManager.Instance().NETWORK_PLAYERS.IndexOf(GetComponent<NetworkPlayer>());
+            
+            if(index < vecs.Length)
+                transform.GetChild(0).GetChild(0).GetChild(3)
+                        .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" , 
+                        vecs[index]);
+        }
+            
     }
 
     public void Dead()

@@ -161,7 +161,7 @@ public class WeaponManager : Singletone<WeaponManager> {
     public void NetworkBulletRemoveRequest(string bulletID)
     {
         // 삭제 요청이 들어올 경우 Bullet의 ALIVE 를 False 로 두고 현 리스트에서
-        
+        Debug.Log("삭제 요청 " + bulletID);
         int deleteIndex = -1;
         for(int i = 0; i < m_networkAliveBulletList.Count; i ++)
         {
@@ -177,6 +177,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         if (deleteIndex != -1)
         {
             Bullet b = m_networkAliveBulletList[deleteIndex];
+            b.gameObject.SetActive(false);
             m_networkDeadBulletList.Add(b);
             m_networkAliveBulletList.RemoveAt(deleteIndex);
             b.transform.parent = m_deadNetworkBulletParent;
@@ -273,7 +274,7 @@ public class WeaponManager : Singletone<WeaponManager> {
     // 랜덤으로 무기 ID 뽑기
     public string GetRandomWeaponID()
     {
-        return m_weaponTable.dataArray[m_weaponTable.dataArray.Length - 1].Id; //Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
+        return m_weaponTable.dataArray[Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
     }
 
     // 총알 만들기
@@ -372,6 +373,8 @@ public class WeaponManager : Singletone<WeaponManager> {
         // TODO
         // 이부분에서 사운드 지정
 
+        // 
+        bullet.transform.GetComponentInChildren<Bullet_DestroyTime>().TARGET_BULLET = bullet.GetComponentInChildren<Bullet>();
         return bullet;
     }
 
