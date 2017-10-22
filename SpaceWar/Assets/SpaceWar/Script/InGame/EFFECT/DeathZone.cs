@@ -142,10 +142,11 @@ public class DeathZone : MonoBehaviour {
         
         hitEffect.transform.position = hitPlayer.transform.GetChild(4).position;
         hitEffect.SetActive(true);
-        
 
+        Debug.Log("Death Zone DD ");
         if(hitPlayer.GetComponent<NetworkPlayer>() == null && hitPlayer.GetComponent<PlayerController>()  != null && hitPlayer.GetComponent<PlayerController>().enabled == true)
         {
+            Debug.Log("Death Zone DD!! ");
             if (NetworkManager.Instance() != null)
                 NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , "" , "DeathZone" , GameManager.Instance().GetGameTableValue(GameManager.DZ_DAMAGE) , Vector3.zero);
         }

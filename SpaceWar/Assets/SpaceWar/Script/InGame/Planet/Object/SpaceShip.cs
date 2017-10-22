@@ -100,6 +100,7 @@ public class SpaceShip : MonoBehaviour {
                 CameraManager.Instance().HideNotEnoughHpEffect();
                 CameraManager.Instance().HideNotEnoughOxyEffect();
                 GameManager.Instance().PLAYER.m_player.gameObject.SetActive(false);
+                this.gameObject.AddComponent<AudioListener>();
             }
             m_spaceShipSource.Play();
             m_isEnd = true;

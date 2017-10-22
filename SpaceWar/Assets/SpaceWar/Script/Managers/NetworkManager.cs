@@ -566,6 +566,11 @@ public class NetworkManager : Singletone<NetworkManager> {
                     CameraManager.Instance().HideNotEnoughHpEffect();
                 }
 
+                if(GameManager.Instance().WINNER == false)
+                {
+                    CameraManager.Instance().HideNotEnoughHpEffect();
+                    CameraManager.Instance().HideNotEnoughOxyEffect();
+                }
                 GameManager.Instance().ChangeHP(hp , prevhp , maxhp, (string.IsNullOrEmpty(name)) ? null : name);
                 if(prevhp > hp)
                     GameManager.Instance().PLAYER.m_player.Damage(dir,(string.IsNullOrEmpty(name)) ? null : name);
@@ -617,6 +622,11 @@ public class NetworkManager : Singletone<NetworkManager> {
                 else
                 {
                     // 산소가 조금이라도 있다면 not enough effect 는 끔
+                    CameraManager.Instance().HideNotEnoughOxyEffect();
+                }
+                if (GameManager.Instance().WINNER == false)
+                {
+                    CameraManager.Instance().HideNotEnoughHpEffect();
                     CameraManager.Instance().HideNotEnoughOxyEffect();
                 }
                 GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);

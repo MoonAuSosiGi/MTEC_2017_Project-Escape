@@ -385,6 +385,11 @@ public class WeaponManager : Singletone<WeaponManager> {
         //사운드
         Bullet bb = bullet.GetComponent<Bullet>();
         bb.AUDIO_SOURCE = bullet.AddComponent<AudioSource>();
+        bb.AUDIO_SOURCE.playOnAwake = false;
+        bb.AUDIO_SOURCE.loop = false;
+        bb.AUDIO_SOURCE.rolloffMode = AudioRolloffMode.Logarithmic;
+        bb.AUDIO_SOURCE.minDistance = 1.0f;
+        bb.AUDIO_SOURCE.maxDistance = 10.0f;
         string[] temp = data.Otherhitsound.Split(',');
         if (!IsSound(data.Hitsound))
         {
@@ -616,6 +621,11 @@ public class WeaponManager : Singletone<WeaponManager> {
         WeaponItem w = item.GetComponent<WeaponItem>();
 
         w.AUDIO_SOURCE = w.gameObject.AddComponent<AudioSource>();
+        w.AUDIO_SOURCE.playOnAwake = false;
+        w.AUDIO_SOURCE.loop = false;
+        w.AUDIO_SOURCE.rolloffMode = AudioRolloffMode.Logarithmic;
+        w.AUDIO_SOURCE.minDistance = 1.0f;
+        w.AUDIO_SOURCE.maxDistance = 10.0f;
 
         if(!IsSound(data.Usesound))
         {
