@@ -50,7 +50,9 @@ public class WeaponItem : Item {
 
     // 무기 발사 소리
     private AudioSource m_source = null;
+    public AudioSource AUDIO_SOURCE { get { return m_source; } set { m_source = value; } }
     [SerializeField] private AudioClip m_weaponShootSound = null;
+    public AudioClip SHOT_SOUND { get { return m_weaponShootSound; } set { m_weaponShootSound = value; } }
     
     #region SWORD 
     // 칼 휘두르는 이펙트 리스트

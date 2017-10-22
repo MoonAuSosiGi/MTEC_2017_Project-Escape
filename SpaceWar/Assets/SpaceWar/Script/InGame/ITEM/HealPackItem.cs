@@ -70,7 +70,6 @@ public class HealPackItem : Item {
         GameManager.Instance().SLIDER_UI.ShowSlider();
         
         m_recoveryKitValue += Time.deltaTime / m_healTime;
-        Debug.Log("m_ " + m_recoveryKitValue);
         GameManager.Instance().SLIDER_UI.SliderProcess(m_recoveryKitValue);
 
         if (m_recoveryKitValue >= 1.0f)

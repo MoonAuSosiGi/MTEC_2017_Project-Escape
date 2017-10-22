@@ -23,7 +23,7 @@ int s_spaceShipLockTime = 60;
 // 메테오까지 남은시간
 int s_meteorCommingSec = 90;
 // 데스존 까지 남은 시간
-int s_deathZoneCommingSec = 30;
+int s_deathZoneCommingSec = 180;
 
 // 바뀌는 메테오 로직
 int m_meteorCommingTime[10] = { 30 ,50,70,90,110,130,150,170,190,210 };

@@ -65,8 +65,17 @@ public class Bullet : MonoBehaviour {
 
     #region Sound Play ---------------------------------------------------------------------
     [SerializeField] protected AudioClip m_hitMain = null;
-    [SerializeField] protected AudioClip m_hitOther = null;
+    [SerializeField] protected AudioClip m_hitSpaceShip = null;
+    [SerializeField] protected AudioClip m_hitShelter = null;
+    [SerializeField] protected AudioClip m_hitland = null;
+
+    public AudioClip HIT_MAIN { get { return m_hitMain; } set { m_hitMain = value; } }
+    public AudioClip HIT_SPACESHIP { get { return m_hitSpaceShip; } set { m_hitSpaceShip = value; } }
+    public AudioClip HIT_SHELTER{ get { return m_hitShelter; } set { m_hitShelter = value; } }
+    public AudioClip HIT_LAND { get { return m_hitland; } set { m_hitland = value; } }
+
     protected AudioSource m_bulletAudioSource = null;
+    public AudioSource AUDIO_SOURCE { get { return m_bulletAudioSource; } set { m_bulletAudioSource = value; } }
     #endregion
     #endregion
 
@@ -245,13 +254,9 @@ public class Bullet : MonoBehaviour {
 
                     if (m_shotEffect != null)
                         m_shotEffect.SetActive(true);
-                  
-                    if (m_hitMain != null)
-                    {
-                        m_bulletAudioSource.clip = m_hitMain;
-                        m_bulletAudioSource.Play();
-                    }
-                    if(IS_REMOTE == false)
+
+                    SoundPlay(m_hitMain);
+                    if (IS_REMOTE == false)
                         NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage ,m_startPos);
                 }
                 else
@@ -267,20 +272,22 @@ public class Bullet : MonoBehaviour {
                     m_shotOtherObjectEffect.SetActive(true);
                 if(m_shotEffect != null)
                     m_shotEffect.SetActive(true);
-              
-                if (m_hitOther != null)
-                {
-                    m_bulletAudioSource.clip = m_hitOther;
-                    m_bulletAudioSource.Play();
-                }
-                
+
+                SoundPlay(m_hitland);
+
+
             }
             else
             {
                 // 기타 오브젝트
                 if (m_shotEffect != null)
                     m_shotEffect.SetActive(true);
-        //        BULLET_TRAIL_EFFECT.SetActive(false);
+                //        BULLET_TRAIL_EFFECT.SetActive(false);
+
+                if (other.CompareTag("SpaceShipControlPanel"))
+                    SoundPlay(m_hitSpaceShip);
+                else if (other.CompareTag("Shelter"))
+                    SoundPlay(m_hitShelter);
             }
 
 
@@ -288,6 +295,15 @@ public class Bullet : MonoBehaviour {
             BulletHitEvent();
         }
 
+    }
+
+    void SoundPlay(AudioClip clip)
+    {
+        if(clip != null)
+        {
+            m_bulletAudioSource.clip = clip;
+            m_bulletAudioSource.Play();
+        }
     }
 
     // 파티클 등의 이펙트 처리용

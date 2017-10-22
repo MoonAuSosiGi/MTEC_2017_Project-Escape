@@ -17,6 +17,7 @@ public class GameManager : Singletone<GameManager> {
     public const string RUN_SPEED = "RunSpeed";
     public const string DASH_TICK = "DashTick";
     public const string DASH_SPEED = "DashSpeed";
+    public const string DASH_USE_OXY = "DashUseOxy";
     public const string JUMP_POWER = "JumpPower";
     public const string JUMP_TICK = "JumpTick";
     public const string USEOXY_IDLE = "UseOxy_IDLE";
@@ -293,7 +294,7 @@ public class GameManager : Singletone<GameManager> {
     // 메테오 생성
     public void CreateMeteor(float anglex,float anglez,string meteorID)
     {
-        float planetScale = Plant.transform.localScale.x + 12.8f;
+        float planetScale = Plant.transform.localScale.x + 12.3f;
 
         Vector3 pos = GetPlanetPosition(planetScale , anglex , anglez);
         Vector3 pos2 = GetPlanetPosition(planetScale + 30.0f , anglex , anglez);

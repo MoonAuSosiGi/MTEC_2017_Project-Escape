@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float m_runSpeed;
     [SerializeField] private float m_dashSpeed = 3.0f;
     [SerializeField] private float m_dashTick = 1.0f;
+    [SerializeField] private float m_dashUseOxy = 20.0f;
     [SerializeField] private float m_jumpHeight = 3.0f;
     [SerializeField] private float m_jumpTick = 1.0f;
     [SerializeField] private AnimationCurve m_jumpCurve = null;
@@ -59,6 +60,11 @@ public class PlayerController : MonoBehaviour {
     // 똥꼬 대시
     [SerializeField] private GameObject m_dashEffect = null;
     private Vector3 m_dashEffectAngle = Vector3.zero;
+
+    // 대시 방향
+    private Vector3 m_dashDirection = Vector3.forward;
+    private bool m_isDash = false;
+
     //네트워크용
     public GameObject DASH_EFFECT { get { return m_dashEffect; } }
 
@@ -421,6 +427,7 @@ public class PlayerController : MonoBehaviour {
         m_useOxyIDLE = GameManager.Instance().GetGameTableValue(GameManager.USEOXY_IDLE);
         m_useOxyRUN = GameManager.Instance().GetGameTableValue(GameManager.USEOXY_RUN);
         m_useOxyWALK = GameManager.Instance().GetGameTableValue(GameManager.USEOXY_WALK);
+        m_dashUseOxy = GameManager.Instance().GetGameTableValue(GameManager.DASH_USE_OXY);
         m_chargeOxy = GameManager.Instance().GetGameTableValue(GameManager.OXY_CHARGER_USE);
         m_meteorHitDamage = GameManager.Instance().GetGameTableValue(GameManager.METEOR_HIT_DAMAGE);
         m_meteorDamage = GameManager.Instance().GetGameTableValue(GameManager.METEOR_DAMAGE);
@@ -479,6 +486,7 @@ public class PlayerController : MonoBehaviour {
         if (GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f)
             return;
 
+
         if (IS_MOVE_ABLE)
         {
             MoveProcess();
@@ -534,17 +542,21 @@ public class PlayerController : MonoBehaviour {
         bool realDash = Input.GetKeyDown(m_dashKey);
         float horizontalSpeed = 0.0f, verticalSpeed = 0.0f;
 
-        if(realDash && WALK_ANI_VALUE != 3 && m_isJumpAble == true)
+        if(realDash && WALK_ANI_VALUE != 3 && m_isJumpAble == true
+            && GameManager.Instance().PLAYER.m_oxy >= m_dashUseOxy && m_isDash == false)
         {
             transform.GetChild(0).localRotation =
                 Quaternion.Slerp(transform.GetChild(0).localRotation ,
                 Quaternion.Euler(GetCurrentAngle()) , 0.23f);
+            m_dashDirection = transform.GetChild(0).forward;
+            m_isDash = true;
             StartCoroutine(DashCall());
             //transform.Translate(Vector3.forward * m_dashSpeed * Time.deltaTime);
             WALK_ANI_VALUE = 3;
+            NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , m_dashUseOxy);
             return;
         }
-        if (WALK_ANI_VALUE == 3)
+        if (WALK_ANI_VALUE == 3 || m_isDash == true)
             return;
         // 가로 이동
         if (Input.GetKey(m_Left))    horizontalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
@@ -742,19 +754,31 @@ public class PlayerController : MonoBehaviour {
     {
         float startTime = Time.time;
 
-        Vector3 dir = transform.GetChild(0).forward;
+       
         m_dashEffect.SetActive(true);
         while (Time.time - startTime < m_dashTick)
         {
+            Ray ray = new Ray(transform.position , m_dashDirection);
+            RaycastHit hit;
+            if (Physics.Raycast(ray , out hit))
+            {
+                float distance = Vector3.Distance(transform.position , hit.transform.position);
+                
+                if(!hit.transform.CompareTag("Untagged") && distance <= 5.0f)
+                    yield return new WaitForFixedUpdate();
+            }
             float nowTick = (Time.time - startTime) / m_dashTick;
             this.transform.RotateAround(
-                GravityManager.Instance().CurrentPlanet.transform.position , GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right,
+                GravityManager.Instance().CurrentPlanet.transform.position , 
+                GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right,
                 (m_dashSpeed * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick))));
-            
+
+         
+
             yield return new WaitForFixedUpdate();
         }
         WALK_ANI_VALUE = 0;
-
+        m_isDash = false;
         m_dashEffect.SetActive(false);
 
 
@@ -828,6 +852,20 @@ public class PlayerController : MonoBehaviour {
                 {
                     // 수류탄의 경우 탈착 
                     GameManager.Instance().UnEquipWeapon(m_curEquipItem);
+                    m_equipItems[m_curEquipItem] = null;
+
+
+                    // 인벤 하이드
+                    bool ck = false;
+                    for (int i = 0; i < m_equipItems.Length; i++)
+                    {
+                        if (m_equipItems[i] != null)
+                        {
+                            ck = true;
+                        }
+                    }
+                    if (ck == false)
+                        GameManager.Instance().m_inGameUI.HideInvenUI();
                 }
 
             }
@@ -841,6 +879,8 @@ public class PlayerController : MonoBehaviour {
 
     public void RecoveryItemUseEnd()
     {
+        m_isMoveAble = true;
+        m_isJumpAble = true;
         // 리커버리 끝
         (m_equipItems[m_curEquipItem]).gameObject.SetActive(false);
         
@@ -1449,7 +1489,8 @@ public class PlayerController : MonoBehaviour {
         if(showHitEffect == true)
             CameraManager.Instance().ShowHitEffect();
         m_renderer.material = HIT_MATERIAL;
-        if (characterDamageAnimationShow == true && GameManager.Instance().PLAYER.m_hp > 0.0f)
+        if (characterDamageAnimationShow == true 
+            && GameManager.Instance().PLAYER.m_hp > 0.0f)
             AnimationPlay("Damage");
         Invoke("DamgeEffectEnd" , 0.1f);
     }
@@ -1473,7 +1514,7 @@ public class PlayerController : MonoBehaviour {
 
     public void Damage(Vector3 dir,string reason = null)
     {
-        DamageEffect(true,!reason.Equals("DeathZone"));
+        DamageEffect(true,!reason.Equals("DeathZone") && !reason.Equals("Meteor") && !reason.Equals("oxy"));
 
         AudioPlay(m_damageHit);
         // 우주선 생성 도중 데미지를 입었을 경우 캔슬됨

@@ -18,6 +18,14 @@ public class WeaponManager : Singletone<WeaponManager> {
         HEAL_PACK
     }
 
+    // TEMP SOUND
+    private SortedList<string , AudioClip> m_bulletSoundList = new SortedList<string , AudioClip>();
+
+    private bool IsSound(string key)
+    {
+        return m_bulletSoundList.ContainsKey(key);
+    }
+
     #region Weapon Gun Bullet 
 
     #region Bullet List Info
@@ -314,6 +322,8 @@ public class WeaponManager : Singletone<WeaponManager> {
             otherHit.SetActive(false);
             otherHit.transform.parent = bullet.transform;
         }
+
+     
         #endregion
 
         #region Bullet Collider Attach
@@ -372,6 +382,47 @@ public class WeaponManager : Singletone<WeaponManager> {
 
         // TODO
         // 이부분에서 사운드 지정
+        //사운드
+        Bullet bb = bullet.GetComponent<Bullet>();
+        bb.AUDIO_SOURCE = bullet.AddComponent<AudioSource>();
+        string[] temp = data.Otherhitsound.Split(',');
+        if (!IsSound(data.Hitsound))
+        {
+            bb.HIT_MAIN = Resources.Load("Sound/Weapons/" + data.Hitsound) as AudioClip;
+            m_bulletSoundList.Add(data.Hitsound , bb.HIT_MAIN);
+        }
+        else
+        {
+            bb.HIT_MAIN = m_bulletSoundList[data.Hitsound];
+        }
+
+        if (!IsSound(temp[0]))
+        {
+           bb.HIT_LAND = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
+            m_bulletSoundList.Add(temp[0] , bb.HIT_LAND);
+        }
+        else
+        {
+            bb.HIT_LAND = m_bulletSoundList[temp[0]];
+        }
+        if (!IsSound(temp[1]))
+        {
+            bb.HIT_SPACESHIP = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
+            m_bulletSoundList.Add(temp[1] , bb.HIT_SPACESHIP);
+        }
+        else
+        {
+            bb.HIT_SPACESHIP = m_bulletSoundList[temp[0]];
+        }
+        if (!IsSound(temp[2]))
+        {
+            bb.HIT_SHELTER = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
+            m_bulletSoundList.Add(temp[2] , bb.HIT_SHELTER);
+        }
+        else
+        {
+            bb.HIT_SHELTER = m_bulletSoundList[temp[2]];
+        }
 
         // 
         bullet.transform.GetComponentInChildren<Bullet_DestroyTime>().TARGET_BULLET = bullet.GetComponentInChildren<Bullet>();
@@ -562,7 +613,22 @@ public class WeaponManager : Singletone<WeaponManager> {
             case WeaponType.GRENADE:        item.ITEM_TYPE = Item.ItemType.ETC_GRENADE; break;
         }
 
+        WeaponItem w = item.GetComponent<WeaponItem>();
 
+        w.AUDIO_SOURCE = w.gameObject.AddComponent<AudioSource>();
+
+        if(!IsSound(data.Usesound))
+        {
+            Object o = Resources.Load("Sound/Weapons/" + data.Usesound);
+
+            Debug.Log("NULL + " + (o == null) + " Sound/Weapons/" + data.Usesound + ".wav");
+            w.SHOT_SOUND = o as AudioClip;
+            m_bulletSoundList.Add(data.Usesound , w.SHOT_SOUND);
+        }
+        else
+        {
+            w.SHOT_SOUND = m_bulletSoundList[data.Usesound];
+        }
         return weapon;
     }
 
