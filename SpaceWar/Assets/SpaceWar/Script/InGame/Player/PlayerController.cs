@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject WEAPON_ANCHOR { get { return m_weaponEquipAnchor; } }
 
     // 무기
-    public WeaponItem CURRENT_WEAPON { get { return m_currentWeapon; } }
+    public WeaponItem CURRENT_WEAPON { get { return m_equipItems[m_curEquipItem] as WeaponItem; } }
 
     // 공격 쿨타임
     private float m_lastCoolTime = 0.0f;
@@ -133,9 +133,7 @@ public class PlayerController : MonoBehaviour {
 
     #region Interaction Object -----------------------------------------------------------------------------------------------
     // 상호작용 오브젝트와 관련된 것
-    private GameObject m_nearWeapon = null;
     private GameObject m_nearItem = null;
-    private HealPackItem m_nearRecoveryKit = null;
     private OxyCharger m_nearOxyCharger = null;
     private ItemBox m_nearItemBox = null;
     private Shelter m_nearShelter = null;
@@ -285,7 +283,7 @@ public class PlayerController : MonoBehaviour {
                 JUMP_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
-            else
+            else if(m_lastCoolTime <= 0)
                 m_isAttackAble = true;
 
             AttackAnimation(m_attackAniVal);
@@ -490,7 +488,6 @@ public class PlayerController : MonoBehaviour {
         if (IS_MOVE_ABLE)
         {
             MoveProcess();
-            DashProcess();
         }
 
         if (IS_JUMP_ABLE)
@@ -510,10 +507,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            transform.GetChild(0).GetChild(0).GetChild(3)
-                .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" , new Vector4(3.68276f,0.0f, 6.00000f));
-            // 0  6 0.7862077
-            // 0 3.517242 6 
+            NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID, GameManager.Instance().PLAYER.m_name ,"test",5.0f,Vector3.zero);
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -665,11 +659,13 @@ public class PlayerController : MonoBehaviour {
             LoopAudioStop();
             INTERACTION_ANI_VALUE = 0;
             m_targetOxy = 0.0f;
-            if (m_currentWeapon != null)
+            if (m_equipItems[m_curEquipItem] != null)
             {
-                m_currentWeapon.gameObject.SetActive(true);
-                WeaponAnimationChange(m_currentWeapon);
+                m_equipItems[m_curEquipItem].gameObject.SetActive(true);
+                WeaponAnimationChange(m_equipItems[m_curEquipItem]);
             }
+            else
+                WeaponAnimationChange(null);
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
         MoveSend(speed);
@@ -718,15 +714,6 @@ public class PlayerController : MonoBehaviour {
             
         }
     }
-
-    void DashProcess()
-    {
-        if(Input.GetKeyDown(m_dashKey))
-        {
-            WALK_ANI_VALUE = 3;
-        }
-    }
-
     IEnumerator JumpCall()
     {
         float startTime = Time.time;
@@ -773,7 +760,10 @@ public class PlayerController : MonoBehaviour {
                 GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right,
                 (m_dashSpeed * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick))));
 
-         
+            Vector3 velo = GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right * m_dashSpeed 
+                * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick));
+
+            MoveSend(velo);         
 
             yield return new WaitForFixedUpdate();
         }
@@ -852,20 +842,12 @@ public class PlayerController : MonoBehaviour {
                 {
                     // 수류탄의 경우 탈착 
                     GameManager.Instance().UnEquipWeapon(m_curEquipItem);
-                    m_equipItems[m_curEquipItem] = null;
-
 
                     // 인벤 하이드
-                    bool ck = false;
-                    for (int i = 0; i < m_equipItems.Length; i++)
-                    {
-                        if (m_equipItems[i] != null)
-                        {
-                            ck = true;
-                        }
-                    }
-                    if (ck == false)
-                        GameManager.Instance().m_inGameUI.HideInvenUI();
+                    if (IsInvoking("HideInvenIcon"))
+                        CancelInvoke("HideInvenIcon");
+                    Invoke("HideInvenIcon" , 3.0f);
+                    GameManager.Instance().m_inGameUI.ShowInvenUI();
                 }
 
             }
@@ -906,7 +888,7 @@ public class PlayerController : MonoBehaviour {
 
     public void AttackAnimationEnd()
     {
-        ATTACK_ANI_VALUE = 0;
+        //ATTACK_ANI_VALUE = 0;
         if (enabled == false || m_equipItems[m_curEquipItem] == null)
             return;
 
@@ -1087,7 +1069,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    int GetEquipItemIndex(Item.ItemType type)
+    public int GetEquipItemIndex(Item.ItemType type)
     {
         switch(type)
         {
@@ -1152,17 +1134,10 @@ public class PlayerController : MonoBehaviour {
         }
         if(getItem)
         {
-            bool ck = false;
-            for(int i = 0; i < m_equipItems.Length; i ++)
-            {
-                if(m_equipItems[i] != null)
-                {
-                    ck = true;
-                }
-            }
-
-            if (ck == false)
-                GameManager.Instance().m_inGameUI.ShowInvenUI();
+            if (IsInvoking("HideInvenIcon"))
+                CancelInvoke("HideInvenIcon");
+            Invoke("HideInvenIcon" , 3.0f);
+            GameManager.Instance().m_inGameUI.ShowInvenUI();
 
             GameManager.Instance().PLAYER.WEIGHT += item.ITEM_WEIGHT;
         }
@@ -1183,13 +1158,11 @@ public class PlayerController : MonoBehaviour {
         m_curEquipItem = curSelect;
 
         item.EQUIP_STATE = true;
-
+        item.gameObject.SetActive(true);
         item.transform.parent = m_weaponEquipAnchor.transform;
         item.transform.localPosition = item.LOCAL_SET_POS;
         item.transform.localRotation = Quaternion.Euler(item.LOCAL_SET_ROT);
         item.transform.localScale = item.LOCAL_SET_SCALE;
-
-        m_nearWeapon = null;
         m_useEffect.SetActive(false);
 
         // 기존 코드에 이부분에 무기 발사 앵커를 세팅해주는게 있었지만 무기마다 다르니 무기껄로 쓰기로
@@ -1205,7 +1178,13 @@ public class PlayerController : MonoBehaviour {
                 item.ITEM_NETWORK_ID);
         
     }
-    
+
+    void HideInvenIcon()
+    {
+        GameManager.Instance().m_inGameUI.HideInvenUI();
+    }
+
+
     public void UnEquipItem(Item item,int index = -1)
     {
         if (index == -1)
@@ -1239,7 +1218,6 @@ public class PlayerController : MonoBehaviour {
         item.transform.Translate(Vector3.right * 0.15f);
         item.EQUIP_STATE = false;
 
-        SetAnimation(AnimationType.ANI_BAREHAND);
 
         if (GameManager.Instance() != null)
             GameManager.Instance().UnEquipWeapon(m_curEquipItem);
@@ -1251,16 +1229,10 @@ public class PlayerController : MonoBehaviour {
 
 
         // 인벤 하이드
-        bool ck = false;
-        for (int i = 0; i < m_equipItems.Length; i++)
-        {
-            if (m_equipItems[i] != null)
-            {
-                ck = true;
-            }
-        }
-        if (ck == false)
-            GameManager.Instance().m_inGameUI.HideInvenUI();
+        if (IsInvoking("HideInvenIcon"))
+            CancelInvoke("HideInvenIcon");  
+        Invoke("HideInvenIcon" , 3.0f);
+        GameManager.Instance().m_inGameUI.ShowInvenUI();
     }
     
     // 수류탄의 경우는 일반적인 경우가 아님
@@ -1326,6 +1298,7 @@ public class PlayerController : MonoBehaviour {
             {
                 SpaceShipControlCancel();
             }
+
         }
         #endregion
 
@@ -1338,6 +1311,14 @@ public class PlayerController : MonoBehaviour {
                 m_oxyChargeRequest = true;
                 m_isMoveAble = false;
                 NetworkManager.Instance().C2SRequestUseOxyChargerStart(m_nearOxyCharger);
+            }
+            
+            if(Input.GetKeyUp(m_Get))
+            {
+                if(m_nearOxyCharger != null)
+                    NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
+                m_isMoveAble = true;
+                m_oxyChargeRequest = false;
             }
 
         }else
@@ -1356,10 +1337,9 @@ public class PlayerController : MonoBehaviour {
         m_targetOxy = GameManager.Instance().PLAYER.m_fullOxy - GameManager.Instance().PLAYER.m_oxy;
         m_plusOxy = 0.0f;
         SetAnimation(AnimationType.ANI_ETC);
-        if (m_currentWeapon != null)
+        if (m_equipItems[m_curEquipItem] != null)
         {
-            m_currentWeapon.gameObject.SetActive(false);
-
+            m_equipItems[m_curEquipItem].gameObject.SetActive(false);
         }
         INTERACTION_ANI_VALUE = 1;
         GameManager.Instance().SLIDER_UI.ShowSlider();
@@ -1386,24 +1366,29 @@ public class PlayerController : MonoBehaviour {
                 LoopAudioStop();
                 INTERACTION_ANI_VALUE = 0;
                 m_targetOxy = 0.0f;
-                if (m_currentWeapon != null)
+                if (m_equipItems[m_curEquipItem] != null)
                 {
-                    m_currentWeapon.gameObject.SetActive(true);
-                    WeaponAnimationChange(m_currentWeapon);
+                    m_equipItems[m_curEquipItem].gameObject.SetActive(true);
+                    WeaponAnimationChange(m_equipItems[m_curEquipItem]);
                 }
+                else
+                    WeaponAnimationChange(null);
                 GameManager.Instance().SLIDER_UI.HideSlider();
                 return;
             }
 
             if(GameManager.Instance().PLAYER.m_oxy >= GameManager.Instance().PLAYER.m_fullOxy)
             {
+                m_isMoveAble = true;
                 INTERACTION_ANI_VALUE = 0;
-                if(m_currentWeapon != null)
+                if(m_equipItems[m_curEquipItem] != null)
                 {
-                    m_currentWeapon.gameObject.SetActive(true);
-                    WeaponAnimationChange(m_currentWeapon);
+                    m_equipItems[m_curEquipItem].gameObject.SetActive(true);
+                    WeaponAnimationChange(m_equipItems[m_curEquipItem]);
                     
                 }
+                else
+                    WeaponAnimationChange(null);
                 GameManager.Instance().SLIDER_UI.HideSlider();
             }
         }
@@ -1418,11 +1403,13 @@ public class PlayerController : MonoBehaviour {
             LoopAudioStop();
             INTERACTION_ANI_VALUE = 0;
             m_targetOxy = 0.0f;
-            if (m_currentWeapon != null)
+            if (m_equipItems[m_curEquipItem] != null)
             {
-                m_currentWeapon.gameObject.SetActive(true);
-                WeaponAnimationChange(m_currentWeapon);
+                m_equipItems[m_curEquipItem].gameObject.SetActive(true);
+                WeaponAnimationChange(m_equipItems[m_curEquipItem]);
             }
+            else
+                WeaponAnimationChange(null);
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
     }
@@ -1475,6 +1462,8 @@ public class PlayerController : MonoBehaviour {
             m_currentWeapon.gameObject.SetActive(true);
             WeaponAnimationChange(m_currentWeapon);
         }
+        else
+            WeaponAnimationChange(null);
 
         m_nearSpaceShip.StopSpaceShipEngineCharge();
         AudioPlay(m_spaceShipChargeFail);
@@ -1484,8 +1473,10 @@ public class PlayerController : MonoBehaviour {
     #region Damage Effect Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     public void DamageEffect(bool showHitEffect = true,bool characterDamageAnimationShow = true)
     {
-        if(showHitEffect == true)
+        if(showHitEffect == true && GameManager.Instance().WINNER == false)
             CameraManager.Instance().ShowHitEffect();
+        else
+            CameraManager.Instance().HideHitEffect();
         m_renderer.material = HIT_MATERIAL;
         if (characterDamageAnimationShow == true 
             && GameManager.Instance().PLAYER.m_hp > 0.0f)
@@ -1496,10 +1487,11 @@ public class PlayerController : MonoBehaviour {
 
     public void OxyDamageEffect()
     {
-        CameraManager.Instance().ShowHitEffect(false);
-        //m_renderer.material = HIT_MATERIAL;
-        //m_camAnimator.SetInteger("DAMAGE" , 1);
-      //  Invoke("DamgeEffectEnd" , 0.1f);
+        if (GameManager.Instance().WINNER == false)
+            CameraManager.Instance().ShowHitEffect(false);
+        else
+            CameraManager.Instance().HideHitEffect();
+
 
     }
     #endregion
@@ -1577,15 +1569,24 @@ public class PlayerController : MonoBehaviour {
 
     public void WeaponAnimationChange(Item item)
     {
-        switch (item.ITEM_TYPE)
+        NetworkManager.Instance().C2SRequestPlayerAnimation(NetworkManager.Instance().USER_NAME , "CW" , -1);
+        if (item == null)
         {
-            case Item.ItemType.GUN: SetAnimation(AnimationType.ANI_GUN01); break;
-            case Item.ItemType.RIFLE: SetAnimation(AnimationType.ANI_GUN02); break;
-            case Item.ItemType.MELEE: SetAnimation(AnimationType.ANI_MELEE); break;
-            case Item.ItemType.ROCKETLAUNCHER: SetAnimation(AnimationType.ANI_ROCKETLAUNCHER); break;
-            case Item.ItemType.ETC_GRENADE: SetAnimation(AnimationType.ANI_ETC); break;
-            case Item.ItemType.ETC_RECOVERY: SetAnimation(AnimationType.ANI_ETC); break;
+            SetAnimation(AnimationType.ANI_BAREHAND);
+            return;
+        }else
+        {
+            switch (item.ITEM_TYPE)
+            {
+                case Item.ItemType.GUN: SetAnimation(AnimationType.ANI_GUN01); break;
+                case Item.ItemType.RIFLE: SetAnimation(AnimationType.ANI_GUN02); break;
+                case Item.ItemType.MELEE: SetAnimation(AnimationType.ANI_MELEE); break;
+                case Item.ItemType.ROCKETLAUNCHER: SetAnimation(AnimationType.ANI_ROCKETLAUNCHER); break;
+                case Item.ItemType.ETC_GRENADE: SetAnimation(AnimationType.ANI_ETC); break;
+                case Item.ItemType.ETC_RECOVERY: SetAnimation(AnimationType.ANI_ETC); break;
+            }
         }
+       
     }
 
     public void AttackAnimationEvent()
@@ -1593,14 +1594,20 @@ public class PlayerController : MonoBehaviour {
         // 애니메이션 상에서 어택 시점을 조절해야 할 경우 여기로 들어옴
         if(m_equipItems[m_curEquipItem] != null)
         {
-            (m_equipItems[m_curEquipItem] as WeaponItem).AnimationEventAttack();
+            WeaponItem item = (m_equipItems[m_curEquipItem] as WeaponItem);
+            item.AnimationEventAttack();
+
+            if(item.ITEM_TYPE == Item.ItemType.ETC_GRENADE)
+            {
+                m_equipItems[m_curEquipItem] = null;
+            }
         }
     }
 
     void WalkAnimation(int value)
     {
-        if (m_animator.GetInteger("WALK") == value)
-            return;
+        //if (m_animator.GetInteger("WALK") == value)
+        //    return;
         m_animator.SetInteger("WALK" , value);
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestPlayerAnimation(
@@ -1609,8 +1616,8 @@ public class PlayerController : MonoBehaviour {
 
     void JumpAnimation(int value)
     {
-        if (m_animator.GetInteger("JUMP") == value)
-            return;
+        //if (m_animator.GetInteger("JUMP") == value)
+        //    return;
         m_animator.SetInteger("JUMP" , value);
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestPlayerAnimation(
@@ -1619,12 +1626,12 @@ public class PlayerController : MonoBehaviour {
 
     public void AttackAnimation(int value)
     {    
-        if (m_animator.GetInteger("ATTACK") == value)
-            return;
+        //if (m_animator.GetInteger("ATTACK") == value)
+        //    return;
         if (value == 0)
             m_isMoveAble = true;
         m_animator.SetInteger("ATTACK" , value);
-        if (m_equipItems[m_curEquipItem] != null)
+        if (m_equipItems[m_curEquipItem] != null && m_equipItems[m_curEquipItem].ITEM_TYPE != Item.ItemType.ETC_RECOVERY)
             (m_equipItems[m_curEquipItem] as WeaponItem).AnimationEventAttackEnd();
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestPlayerAnimation(
@@ -1633,8 +1640,8 @@ public class PlayerController : MonoBehaviour {
 
     public void InteractionAnimation(int value)
     {
-        if (m_animator.GetInteger("INTERACTION") == value)
-            return;
+        //if (m_animator.GetInteger("INTERACTION") == value)
+        //    return;
         m_animator.SetInteger("INTERACTION" , value);
 
         if (NetworkManager.Instance() != null)
@@ -1726,7 +1733,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (m_playerLoopSource.clip != null && m_playerLoopSource.clip == clip && m_playerLoopSource.isPlaying == true)
             return;
-        Debug.Log("재생 ");
+
         m_playerLoopSource.clip = clip;
         m_playerLoopSource.Play();
     }

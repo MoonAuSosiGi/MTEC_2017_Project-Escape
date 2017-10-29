@@ -169,6 +169,7 @@ void Server::ServerRun()
 		return;
 	}
 
+	cout << "Time For Escape :: Server 20171022 Build -------------------------" << endl;
 	
 	// 클라이언트가 들어왔다 
 	m_netServer->OnClientJoin = [this](CNetClientInfo *clientInfo) { OnClientJoin(clientInfo); };
@@ -286,7 +287,7 @@ void Server::ServerReset()
 	m_oxyChargerMap.clear();
 	m_spaceShipMap.clear();
 	s_deathZoneCommingSec = 180;
-	s_spaceShipLockTime = 60;
+	s_spaceShipLockTime = 10;
 
 	// 파일입출력 전
 	for (int i = 0; i < 10; i++)
@@ -804,7 +805,8 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 
 		string itemID = "temp"; // 여기서 줘야하는데 일단은 클라에서 주는 것으로..
 		cout << "item Code " << itemID << endl;
-		string networkID = "server_" + m_itemBoxCreateItemIndex;
+		string networkID = "server_" + itemBoxIndex;
+		networkID += "_" + sendHostID;
 
 		m_proxy.NotifyUseItemBox(m_playerP2PGroup, RmiContext::ReliableSend,
 			sendHostID, itemBoxIndex, itemID, networkID);

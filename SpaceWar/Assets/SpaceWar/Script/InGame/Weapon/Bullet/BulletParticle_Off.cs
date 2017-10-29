@@ -22,6 +22,7 @@ public class BulletParticle_Off : MonoBehaviour {
 
     public void Reset()
     {
+        Debug.Log("Particle Reset ");
         gameObject.SetActive(true);
     }
 }

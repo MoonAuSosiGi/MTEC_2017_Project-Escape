@@ -119,7 +119,7 @@ public class Grenade : WeaponItem {
         // 비활성화
         gameObject.SetActive(false);
 
-        if(m_isNetwork)
+        if(m_isNetwork == false)
         {
             // 삭제 요청을 보낸다
             NetworkManager.Instance().C2SRequestItemDelete(m_itemNetworkID);
@@ -174,7 +174,7 @@ public class Grenade : WeaponItem {
         if (m_positionFollower == null || m_angleFollowerX == null || m_angleFollowerY == null || m_angleFollowerZ == null)
             return;
         GameManager.Instance().m_inGameUI.ShowDebugLabel("Network Update Grenade ");
-        Debug.Log("Network Update Grenade ");
+
         m_positionFollower.FrameMove(Time.deltaTime);
         m_angleFollowerX.FrameMove(Time.deltaTime);
         m_angleFollowerY.FrameMove(Time.deltaTime);
@@ -230,6 +230,7 @@ public class Grenade : WeaponItem {
                 }
                 else
                 {
+                    m_isShot = false;
                     return;
                 }
             }

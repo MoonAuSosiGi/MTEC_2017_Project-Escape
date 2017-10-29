@@ -129,7 +129,9 @@ public class WeaponManager : Singletone<WeaponManager> {
             bullet.NetworkBulletEnable();
         }
 
-        bullet.BULLET_TRAIL_EFFECT.GetComponentInChildren<TrailRenderer>().Clear();
+        var renderer = bullet.BULLET_TRAIL_EFFECT.GetComponentInChildren<TrailRenderer>();
+        if (renderer != null)
+            renderer.Clear();
         bullet.NETWORK_ID = bulletID;
 
         bullet.IS_REMOTE = true;
@@ -146,7 +148,7 @@ public class WeaponManager : Singletone<WeaponManager> {
 
         bullet.TARGET_ID = hostID;
         // 정상 생성 되었는지 확인용
-        Debug.Log("총알 정상 생성 여부 " + (bullet != null));
+
     }
 
     // 이동 
@@ -218,6 +220,7 @@ public class WeaponManager : Singletone<WeaponManager> {
             if (m_myDeadBulletList[i].WEAPON_ID.Equals(weaponID))
             {
                 bullet = m_myDeadBulletList[i];
+           
                 break;
             }
         }
@@ -235,8 +238,9 @@ public class WeaponManager : Singletone<WeaponManager> {
             // 프리팹에서 사용할 Bullet Component 를 꺼냄
             bullet = prefab.GetComponent<Bullet>();
         }
-        
-        bullet.BULLET_TRAIL_EFFECT.GetComponentInChildren<TrailRenderer>().Clear();
+        var renderer = bullet.BULLET_TRAIL_EFFECT.GetComponentInChildren<TrailRenderer>();
+        if (renderer != null)
+            renderer.Clear();
         bullet.DAMAGE = m_weaponDict[weaponID].Damage;
 
         // 부모 바꿈

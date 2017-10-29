@@ -10,8 +10,11 @@ public class NetworkPlayer : MonoBehaviour {
     public Animator PlayerAnim;
     public HostID m_hostID;
     public WeaponItem m_weapon = null;
+    public Item[] m_weapons = new Item[4];
+    public HealPackItem m_curHealPack = null;
     public GameObject m_weaponAnchor;
     public string m_userName = null;
+    private int m_index = -1;
     [SerializeField] private TextMesh m_userNameUI = null;
 
     private bool m_isDeath = false;
@@ -137,8 +140,34 @@ public class NetworkPlayer : MonoBehaviour {
 
     public void RecvNetworkAnimation(string animationName,int aniValue)
     {
+        PlayerController p = this.GetComponent<PlayerController>();
         //test code
-        if (aniValue == 1234)
+        if (animationName.Equals("CW"))
+        {
+            if(m_weapon != null)
+            {
+                m_weapon.gameObject.SetActive(true);
+                switch (m_weapon.ITEM_TYPE)
+                {
+                    case Item.ItemType.GUN: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
+                    case Item.ItemType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
+                    case Item.ItemType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
+                    case Item.ItemType.ROCKETLAUNCHER: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ROCKETLAUNCHER); break;
+                    case Item.ItemType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                    case Item.ItemType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                }
+            }
+            else if(m_curHealPack != null)
+            {
+                PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); 
+            }
+            else
+            {
+                PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
+            }
+
+        }
+        else if (aniValue == 1234)
         {
             if(animationName.Equals("Damage"))
             {
@@ -149,6 +178,16 @@ public class NetworkPlayer : MonoBehaviour {
         }
         else
         {
+            if (animationName.Equals("INTERACTION") && aniValue != 0)
+            {
+                if (m_weapon != null && m_weapon.ITEM_TYPE != Item.ItemType.ETC_GRENADE && m_weapon.ITEM_TYPE != Item.ItemType.ETC_RECOVERY)
+                    m_weapon.gameObject.SetActive(false);
+
+                PlayerAnim.runtimeAnimatorController = this.GetComponent<PlayerController>().GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC);
+            }
+            else if (m_weapon != null && m_weapon.gameObject.activeSelf == false)
+                m_weapon.gameObject.SetActive(true);
+
             PlayerAnim.SetInteger(animationName , aniValue);
 
             if(animationName.Equals("WALK") && aniValue == 3)
@@ -163,7 +202,8 @@ public class NetworkPlayer : MonoBehaviour {
             if (m_weapon == null)
                 return;
             
-            m_weapon.SoundPlay();
+            if(animationName.Equals("ATTACK") && aniValue == 1)
+              m_weapon.SoundPlay();
 
             // 근거리 무기용
             if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.ITEM_TYPE == Item.ItemType.MELEE)
@@ -261,9 +301,38 @@ public class NetworkPlayer : MonoBehaviour {
 
     public void EquipWeapon(GameObject weapon)
     {
-        if(weapon != null)
+        PlayerController p = this.GetComponent<PlayerController>();
+        if (weapon != null)
         {
-            m_weapon = weapon.GetComponent<WeaponItem>() ;
+            int newIndex = p.GetEquipItemIndex(weapon.GetComponent<Item>().ITEM_TYPE);
+            if (m_index != -1 && m_weapons[m_index] != null)
+            {
+                m_weapons[m_index].gameObject.SetActive(false);
+               
+                if ( m_weapons[newIndex] != null && m_weapons[newIndex].ITEM_ID != weapon.GetComponent<Item>().ITEM_ID)
+                {
+                    m_weapons[newIndex].gameObject.SetActive(false);
+                }
+               
+            }
+
+            m_weapons[newIndex] = weapon.GetComponent<Item>();
+            m_index = newIndex;
+
+            if (m_weapons[m_index].GetComponent<HealPackItem>() != null)
+            {
+                // 힐팩은 여기서 처리
+                m_curHealPack = weapon.GetComponent<HealPackItem>();
+                m_curHealPack.transform.parent = m_weaponAnchor.transform;
+                m_curHealPack.transform.localPosition = m_curHealPack.LOCAL_SET_POS;
+                m_curHealPack.transform.localRotation = Quaternion.Euler(m_weapon.LOCAL_SET_ROT);
+                m_curHealPack.transform.localScale = m_curHealPack.LOCAL_SET_SCALE;
+                m_curHealPack.GetComponent<SphereCollider>().enabled = false;
+                Debug.Log("m_curHealPack " + m_curHealPack.ITEM_NETWORK_ID + " type " + m_curHealPack.ITEM_TYPE + " name " + m_curHealPack.name);
+                PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC);
+                return;
+            }
+            m_weapon = m_weapons[m_index].GetComponent<WeaponItem>() ;
             Debug.Log("Weapon " + m_weapon.ITEM_NETWORK_ID + " type " + m_weapon.ITEM_TYPE + " name " + m_weapon.name);
             m_weapon.transform.parent = m_weaponAnchor.transform;
             m_weapon.transform.localPosition = m_weapon.LOCAL_SET_POS;
@@ -271,7 +340,6 @@ public class NetworkPlayer : MonoBehaviour {
             m_weapon.transform.localScale = m_weapon.LOCAL_SET_SCALE;
             m_weapon.GetComponent<SphereCollider>().enabled = false;
 
-            PlayerController p = this.GetComponent<PlayerController>();
             
             switch (m_weapon.ITEM_TYPE)
             {
@@ -294,7 +362,14 @@ public class NetworkPlayer : MonoBehaviour {
 
     public void UnEquipWeapon(UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
     {
-        if(m_weapon != null)
+        Debug.Log("UnEquip 상대방이 버렸는데 " + (m_curHealPack == null));
+
+        PlayerController p = this.GetComponent<PlayerController>();
+        int newIndex = p.GetEquipItemIndex(m_weapons[m_index].ITEM_TYPE);
+
+        m_weapons[newIndex] = null;
+
+        if (m_weapon != null)
         {
             // 버리는 로직
             m_weapon.transform.parent = null;
@@ -302,9 +377,21 @@ public class NetworkPlayer : MonoBehaviour {
             m_weapon.transform.eulerAngles = rot;
             m_weapon.GetComponent<SphereCollider>().enabled = true;
             m_weapon.SHOT_EFFECT.SetActive(false);
-            PlayerController p = this.GetComponent<PlayerController>();
 
-            Debug.Log("UnEquip ");
+            m_weapon = null;
+           
+            PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
+        }
+        else if(m_curHealPack != null)
+        {
+            m_curHealPack.transform.parent = null;
+            m_curHealPack.transform.position = pos;
+            m_curHealPack.transform.eulerAngles = rot;
+            m_curHealPack.GetComponent<SphereCollider>().enabled = true;
+
+            m_curHealPack = null;
+
+
             PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
         }
     }

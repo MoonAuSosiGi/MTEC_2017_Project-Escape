@@ -36,6 +36,8 @@ public class CameraSpriteEffect : MonoBehaviour {
     {
         if (m_targetMaterial == null)
             return;
+
+
         iTween.ValueTo(gameObject , iTween.Hash(
             "from" , m_StartColor.a ,
             "to" , m_TargetColor.a ,
@@ -50,6 +52,12 @@ public class CameraSpriteEffect : MonoBehaviour {
     {
         if (m_targetMaterial == null)
             return;
+        if (GameManager.Instance().WINNER == true)
+        {
+            iTween.Stop(gameObject);
+            AlphaEffectEnd();
+            return;
+        }
         Color c = m_targetMaterial.GetColor("_TintColor");
         m_targetMaterial.SetColor("_TintColor" , new Color(c.r , c.g , c.b , v));
     }
@@ -57,7 +65,8 @@ public class CameraSpriteEffect : MonoBehaviour {
     void AlphaEffectEnd()
     {
         m_targetMaterial.SetColor("_TintColor" , m_StartColor);
-        CameraManager.Instance().EffectRemove(gameObject);
+        gameObject.SetActive(false);
+        //GameObject.Destroy(gameObject);
     }
     #endregion
 }

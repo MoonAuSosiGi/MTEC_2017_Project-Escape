@@ -193,7 +193,10 @@ public class Bullet : MonoBehaviour {
             m_bulletTrailEffect.SetActive(true);
         
         this.GetComponent<SphereCollider>().enabled = true;
-        
+        var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
+        if (destroyTime != null)
+            destroyTime.CancelInvoke("HideBullet");
+
         m_shotRot = GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation;
         m_startPos = GravityManager.Instance().GRAVITY_TARGET.transform.position;
         if (m_shotOtherObjectEffect != null)
@@ -205,6 +208,7 @@ public class Bullet : MonoBehaviour {
 
     public void BulletDelete()
     {
+        Debug.Log("## 완전삭제 @@");
         BulletEffectReset();
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(false);
@@ -238,6 +242,8 @@ public class Bullet : MonoBehaviour {
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+        if (m_hitEnemy == true)
+            return;
         if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
         {
             //Debug.Log("other " + other.name + " tag " + other.tag);
@@ -252,9 +258,7 @@ public class Bullet : MonoBehaviour {
                     if (IS_REMOTE == true && TARGET_ID == (int)p.HOST_ID)
                         return;
 
-                    if (m_shotEffect != null)
-                        m_shotEffect.SetActive(true);
-
+                    MainHitEffect();
                     SoundPlay(m_hitMain);
                     if (IS_REMOTE == false)
                         NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage ,m_startPos);
@@ -268,20 +272,14 @@ public class Bullet : MonoBehaviour {
             else if(string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
             {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
-                if (m_shotOtherObjectEffect != null)
-                    m_shotOtherObjectEffect.SetActive(true);
-                if(m_shotEffect != null)
-                    m_shotEffect.SetActive(true);
-
+                MainHitEffect();
+                StoneHitEffect();
                 SoundPlay(m_hitland);
-
-
             }
             else
             {
                 // 기타 오브젝트
-                if (m_shotEffect != null)
-                    m_shotEffect.SetActive(true);
+                MainHitEffect();
                 //        BULLET_TRAIL_EFFECT.SetActive(false);
 
                 if (other.CompareTag("SpaceShipControlPanel"))
@@ -297,6 +295,20 @@ public class Bullet : MonoBehaviour {
 
     }
 
+    // 메인 폭발 이펙트 
+    protected void MainHitEffect()
+    {
+        if (m_shotEffect != null)
+            m_shotEffect.SetActive(true);
+    }
+
+    // 돌 폭발
+    protected void StoneHitEffect()
+    {
+        if (m_shotOtherObjectEffect != null)
+            m_shotOtherObjectEffect.SetActive(true);
+    }
+
     void SoundPlay(AudioClip clip)
     {
         if(clip != null)
@@ -307,10 +319,10 @@ public class Bullet : MonoBehaviour {
     }
 
     // 파티클 등의 이펙트 처리용
-    void BulletHitEvent()
+    protected void BulletHitEvent()
     {
         var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
-
+        Debug.Log("## DEstroy Time " + destroyTime);
         for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
             Transform t = transform.GetChild(0).GetChild(i);
@@ -320,9 +332,10 @@ public class Bullet : MonoBehaviour {
             var rateOff = t.GetComponent<BulletParticle_RateOff>();
 
             if (off != null)            off.BulletHitEvent();
-            if (destroyTime != null)    destroyTime.BulletHitEvent();
             if (rateOff != null)        rateOff.BulletHitEvent();
         }
+
+        if (destroyTime != null) destroyTime.BulletHitEvent();
     }
 
     // 파티클 등의 이펙트 리셋
@@ -335,7 +348,11 @@ public class Bullet : MonoBehaviour {
             var off = t.GetComponent<BulletParticle_Off>();
             var rateOff = t.GetComponent<BulletParticle_RateOff>();
 
-            if (off != null)        off.Reset();
+            if (off != null)
+            {
+                off.gameObject.SetActive(true);
+                off.Reset();
+            }
             if (rateOff != null)    rateOff.Reset();
         }
     }

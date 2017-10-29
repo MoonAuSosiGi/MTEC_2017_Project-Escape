@@ -77,8 +77,11 @@ public class HealPackItem : Item {
             player.RecoveryItemUseEnd();
             
             GameManager.Instance().SLIDER_UI.HideSlider();
+
             if (NetworkManager.Instance() != null)
+            {
                 NetworkManager.Instance().RequestHpUpdate(GameManager.Instance().PLAYER.m_hp + HEAL);
+            }
         }
 
     }
@@ -87,6 +90,7 @@ public class HealPackItem : Item {
         m_recoveryKitValue = 0.0f;
         GameManager.Instance().SLIDER_UI.Reset();
         GameManager.Instance().SLIDER_UI.HideSlider();
+        
     }
     #endregion
 }

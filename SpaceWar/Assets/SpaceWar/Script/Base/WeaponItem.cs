@@ -105,7 +105,7 @@ public class WeaponItem : Item {
             //    EnableMeleeColider();
                 break;
             case ItemType.ETC_GRENADE:
-                GrenadeAttack();
+              //  GrenadeAttack();
                 break;
         }
     }
@@ -126,7 +126,9 @@ public class WeaponItem : Item {
             case ItemType.MELEE:
                 AttackSword();
                 break;
-                
+            case ItemType.ETC_GRENADE:
+                GrenadeAttack();
+                break;
         }
     }
 
@@ -147,11 +149,11 @@ public class WeaponItem : Item {
     #region Guns Weapon Attack
     void GunAttack(Transform character)
     {
-        if (AMMO <= 0)
-        {
-            // 여기는 더이상 쏠 수 없다는 것을 알려야함
-            return;
-        }
+        //if (AMMO <= 0)
+        //{
+        //    // 여기는 더이상 쏠 수 없다는 것을 알려야함
+        //    return;
+        //}
 
         int maxBullet = WeaponManager.Instance().GetWeaponData(ITEM_ID).Bulletcount;
         AMMO--;
@@ -177,11 +179,11 @@ public class WeaponItem : Item {
 
     void RocketAttack(Transform character)
     {
-        if (AMMO <= 0)
-        {
-            // 여기는 더이상 쏠 수 없다는 것을 알려야함
-            return;
-        }
+        //if (AMMO <= 0)
+        //{
+        //    // 여기는 더이상 쏠 수 없다는 것을 알려야함
+        //    return;
+        //}
 
         int maxBullet = WeaponManager.Instance().GetWeaponData(ITEM_ID).Bulletcount;
         AMMO--;

@@ -248,6 +248,9 @@ public class CameraManager : Singletone<CameraManager>
 
     public void ShowHitEffect(bool damageEffect = true)
     {
+        if (GameManager.Instance().WINNER)
+            return;
+
         GameObject effect = null;
 
         if (damageEffect)
@@ -266,7 +269,7 @@ public class CameraManager : Singletone<CameraManager>
         }
         effect.SetActive(true);
         effect.transform.position = new Vector3(0.0f , 0.0f , 0.533f);
-        effect.transform.SetParent(transform , false);
+        effect.transform.SetParent(transform.GetChild(2) , false);
         
 
         CameraSpriteEffect e = effect.GetComponent<CameraSpriteEffect>();
@@ -284,6 +287,12 @@ public class CameraManager : Singletone<CameraManager>
         HideHitEffect(effect);
         //Invoke("HideHitEffect" , 0.1f);
 
+    }
+
+    public void HideHitEffect()
+    {
+        EffectRemove(m_curDamageEffect);
+        EffectRemove(m_curOxyEffect);
     }
 
     public void HideHitEffect(GameObject effect)
@@ -318,7 +327,7 @@ public class CameraManager : Singletone<CameraManager>
         }
         m_notEnoughHpEffect = GameObject.Instantiate(m_damageEffect);
         m_notEnoughHpEffect.transform.position = new Vector3(0.0f , 0.0f , 0.533f);
-        m_notEnoughHpEffect.transform.SetParent(transform , false);
+        m_notEnoughHpEffect.transform.SetParent(transform.GetChild(2) , false);
 
         GameObject.Destroy(m_notEnoughHpEffect.GetComponent<CameraSpriteEffect>());
         m_notEnoughHpEffect.SetActive(true);
@@ -336,7 +345,7 @@ public class CameraManager : Singletone<CameraManager>
         }
         m_notEnoughOxyEffect = GameObject.Instantiate(m_oxyEffect);
         m_notEnoughOxyEffect.transform.position = new Vector3(0.0f , 0.0f , 0.533f);
-        m_notEnoughOxyEffect.transform.SetParent(transform , false);
+        m_notEnoughOxyEffect.transform.SetParent(transform.GetChild(2) , false);
         GameObject.Destroy(m_notEnoughOxyEffect.GetComponent<CameraSpriteEffect>());
         m_notEnoughOxyEffect.SetActive(true);
     }
@@ -367,6 +376,11 @@ public class CameraManager : Singletone<CameraManager>
     void BlurAbHide(float v)
     {
         m_hitBlur.chromaticAberration = v;
+    }
+
+    public void EffectHitExit()
+    {
+        transform.GetChild(2).gameObject.SetActive(false);
     }
 
     public void EffectRemove(GameObject effect)

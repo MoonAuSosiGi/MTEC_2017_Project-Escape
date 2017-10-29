@@ -451,9 +451,11 @@ public class NetworkManager : Singletone<NetworkManager> {
 
             if (item != null) 
             {
+                Debug.Log(" 버렸다  다른놈이 " + networkID);
                 foreach (var p in m_players)
                 {
-                    p.UnEquipWeapon(pos , rot);
+                    if((int)p.HOST_ID == hostID)
+                        p.UnEquipWeapon(pos , rot);
                     break;
                 }
             }
@@ -544,7 +546,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             int targetHostID , string name , float hp , float prevhp , float maxhp,UnityEngine.Vector3 dir) =>
         {
             GameManager.Instance().m_inGameUI.ShowDebugLabel("damage host " + (int)m_hostID + " target " + targetHostID);
-            if ((int)m_hostID == targetHostID)
+            if ((int)m_hostID == targetHostID && GameManager.Instance().WINNER == false)
             {
                 if (hp <= 0.0f)
                 {
@@ -597,7 +599,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyPlayerChangeOxygen = (HostID remote , RmiContext rmiContext ,
             int targetHostID , string name , float oxygen , float prevoxy , float maxoxy) =>
         {
-            if ((int)m_hostID == targetHostID)
+            if ((int)m_hostID == targetHostID && GameManager.Instance().WINNER == false)
             {
                 // 10% 체크
                 if (oxygen <= maxoxy * 0.1f)
@@ -751,7 +753,6 @@ public class NetworkManager : Singletone<NetworkManager> {
                 GameManager.Instance().ALERT.AlertHide("SpaceStart_" + spaceShipID);
             }else
             {
-
                 GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.ENGINE_STARTING ,
                     "SpaceStart_" + spaceShipID , Mathf.RoundToInt(10.0f - (fuel * 10.0f)) , "우주선 조작");
             }
@@ -951,6 +952,11 @@ public class NetworkManager : Singletone<NetworkManager> {
     {
         if (m_netClient != null)
             m_netClient.FrameMove();
+
+        if(m_itemDict != null && GameManager.Instance() != null)
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("item " + m_itemDict.Count);
+        }
     }
     #endregion
 

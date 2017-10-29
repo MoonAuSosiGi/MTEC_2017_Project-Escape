@@ -99,6 +99,7 @@ public class SpaceShip : MonoBehaviour {
                 Camera.main.transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
                 CameraManager.Instance().HideNotEnoughHpEffect();
                 CameraManager.Instance().HideNotEnoughOxyEffect();
+                CameraManager.Instance().EffectHitExit();
                 GameManager.Instance().PLAYER.m_player.gameObject.SetActive(false);
                 this.gameObject.AddComponent<AudioListener>();
             }
