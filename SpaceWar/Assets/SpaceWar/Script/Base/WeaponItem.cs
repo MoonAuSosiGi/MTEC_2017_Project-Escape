@@ -40,10 +40,6 @@ public class WeaponItem : Item {
     private int m_ammo = 0;
     public int AMMO { get { return m_ammo; } set { m_ammo = value; } }
 
-    //수류탄 전용
-    private bool m_isGrenadeStart = false;
-
-
     // 총알 나가는 위치
     [SerializeField] private Transform m_firePoint = null;
     public Transform FIRE_POS { get { return m_firePoint; } set { m_firePoint = value; } }

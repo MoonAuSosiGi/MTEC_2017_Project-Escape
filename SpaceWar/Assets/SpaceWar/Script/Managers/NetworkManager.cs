@@ -653,7 +653,8 @@ public class NetworkManager : Singletone<NetworkManager> {
             int targetHostID , int oxyChargerIndex) =>
         {
             GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 가능 상태");
-            GameManager.Instance().PLAYER.m_player.OXY_CHARGE_ENABLE = true;
+            GameManager.Instance().PLAYER.m_player.OxyChargerEnableSetup();
+            m_oxyChargerList[oxyChargerIndex].OXY_CHARGER_ENABLE = true;
             return true;
         };
 
@@ -661,7 +662,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyUseFailedOxyCharger = (HostID remote , RmiContext rmiContext , int targetHostID , int oxyChargerIndex) =>
         {
             GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 거부 상태 "+targetHostID + " 가 먼저 점유하였음 ");
-            GameManager.Instance().PLAYER.m_player.OXY_CHARGE_ENABLE = false;
+            m_oxyChargerList[oxyChargerIndex].OXY_CHARGER_ENABLE = false;
             return true;
         };
 

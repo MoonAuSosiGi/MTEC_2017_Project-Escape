@@ -6,15 +6,20 @@ using UnityEngine.Audio;
 
 public class PlayerController : MonoBehaviour {
 
-    #region PlayerController_INFO
+    #region PlayerController_INFO ---------------------------------------------------------------------------
+    //싱글 모드일때 처리 -- 171029 기준으로 아직 미동작 따로 처리 해야함
     [SerializeField]  private bool m_signleMode = false;
 
-    private CharacterController m_characterController = null;
+    // 중력 처리를 받기 위한 리지드바디
     private Rigidbody m_rigidBody = null;
-    private Camera m_camera = null;
+
+    // 애니메이션 제어용 애니메이터
     [SerializeField] private Animator m_animator = null;
     public Animator ANIMATOR { get { return m_animator; } }
 
+
+    #region HIT EFFECT ------------------------------------------------------------------------------------
+    // Hit Effect 전용 렌더러 받기
     [SerializeField]
     private SkinnedMeshRenderer m_renderer = null;
 
@@ -23,18 +28,25 @@ public class PlayerController : MonoBehaviour {
 
     public Material HIT_MATERIAL { get { return m_hitMaterial; } }
     public Material ORIGIN_MATERIAL { get { return m_originMaterial; } }
+    #endregion -------------------------------------------------------------------------------------------
 
-    #region Equip Inven System ---------------------------------------------------------------------------
+    #region Equip Inven System ----------------------------------------------------------------------------
+    // 착용 중인 아이템 다섯개
     [SerializeField] Item[] m_equipItems = new Item[5];
+    // 그 전에 착용한 아이템 인덱스
     private int m_prevEquipItem = -1;
+    // 현재 착용중인 아이템 인덱스
     private int m_curEquipItem = 0;
 
+    // 현재 착용중인 아이템 인덱스는 다른 곳에서도 사용가능해야함
     public int CUR_EQUIP_INDEX { get { return m_curEquipItem; } }
-    #endregion
+    // 현재 착용중인 무기
+    public WeaponItem CURRENT_WEAPON { get { return m_equipItems[m_curEquipItem] as WeaponItem; } }    // 무기
 
-    #region Camera Anchor
-    //public Transform m_ThirdAnchor = null;
-    //public Transform m_FpsAnchor = null;
+    #endregion --------------------------------------------------------------------------------------------
+
+    #region Camera Anchor ---------------------------------------------------------------------------------
+    // 카메라 앵커용 
     public Transform m_camAnchor1 = null;
     public Transform m_camAnchor2 = null;
     public Transform m_camAnchor3 = null;
@@ -42,61 +54,90 @@ public class PlayerController : MonoBehaviour {
     public Animator m_camAnimator = null;
     #endregion
 
-    #region Player Info --------------------------------------------------------------------------------------------------
-    [SerializeField] private GameObject m_modeObject = null;
+    #region Player Info -----------------------------------------------------------------------------------
+
+    #region Player Status Data -----------------------------------------------------------------------------
+    // 걷는 속도 -- 테이블로 조작
     [SerializeField] private float m_walkSpeed;
+    // 뛰는 속도 -- 테이블로 조작
     [SerializeField] private float m_runSpeed;
+    // 대시 속도 -- 테이블로 조작
     [SerializeField] private float m_dashSpeed = 3.0f;
+    // 대시 유지 시간 -- 테이블로 조작
     [SerializeField] private float m_dashTick = 1.0f;
+    // 대시 사용시 사용 산소 -- 테이블로 조작
     [SerializeField] private float m_dashUseOxy = 20.0f;
+    // 점프 파워 -- 테이블로 조작 
     [SerializeField] private float m_jumpHeight = 3.0f;
+    // 점프 유지 시간 -- 테이블로 조작
     [SerializeField] private float m_jumpTick = 1.0f;
+    // 점프 그래프
     [SerializeField] private AnimationCurve m_jumpCurve = null;
+    // 대시 그래프
     [SerializeField] private AnimationCurve m_dashCurve = null;
+
+    // 속도
+    public float WALK_SPEED { get { return m_walkSpeed; } set { m_walkSpeed = value; } }
+    public float RUN_SPEED { get { return m_runSpeed; } set { m_runSpeed = value; } }
+    #endregion -----------------------------------------------------------------------------------------------
+
+    #region Use Effect -------------------------------------------------------------------------------------
+    // F 키 이펙트
     [SerializeField] private GameObject m_useEffect = null;
     [SerializeField] private TextMesh m_nearText = null;
     [SerializeField] private Transform m_forward = null;
+    #endregion ---------------------------------------------------------------------------------------------
 
-    // 똥꼬 대시
+    #region Dash Effect ------------------------------------------------------------------------------------
+    // 대시 이펙트
     [SerializeField] private GameObject m_dashEffect = null;
-    private Vector3 m_dashEffectAngle = Vector3.zero;
 
-    // 대시 방향
+    // 대시 진행 방향
     private Vector3 m_dashDirection = Vector3.forward;
+
+    // 현재 대시 중인지 (애니메이션과는 별개)
     private bool m_isDash = false;
 
-    //네트워크용
+    // NetworkPlayer 에서 가져올 수 있어야 함
     public GameObject DASH_EFFECT { get { return m_dashEffect; } }
+    #endregion ---------------------------------------------------------------------------------------------
 
+    #region Network Name -----------------------------------------------------------------------------------
     // 유저네임  
     [SerializeField] private TextMesh m_userNameUI = null;
     public TextMesh USERNAME_UI { get { return m_userNameUI; } }
     public void SetUserName(string name) { m_userNameUI.text = name; }
-    // 콜라이더
-    CapsuleCollider m_collider = null;
+    #endregion ---------------------------------------------------------------------------------------------
 
-    // USE EFFECT ANCHOR
+    #region Effect Anchor ----------------------------------------------------------------------------------
+    // EFFECT 를 띄우기 위한 위치
+    // 머리 
     [SerializeField] private GameObject m_useEffectHeadAnchor = null;
+    // 손
     [SerializeField] private GameObject m_useEffectHandAnchor = null;
 
-    public GameObject HEAD_ANCHOR { get { return m_useEffectHandAnchor; } }
+    //머리는 네트워크상의 캐릭터 HP 바를 띄우기 위한 것으로도 사용
+    public GameObject HEAD_ANCHOR { get { return m_useEffectHeadAnchor; } }
     // 무기 앵커
     [SerializeField] private GameObject m_weaponEquipAnchor = null;
     public GameObject WEAPON_ANCHOR { get { return m_weaponEquipAnchor; } }
+    #endregion ---------------------------------------------------------------------------------------------
 
-    // 무기
-    public WeaponItem CURRENT_WEAPON { get { return m_equipItems[m_curEquipItem] as WeaponItem; } }
-
+    #region COOL TIME --------------------------------------------------------------------------------------
     // 공격 쿨타임
     private float m_lastCoolTime = 0.0f;
 
-    // 데미지 쿨타임
+    // 데미지 쿨타임 -- 일반적으로 메테오 쿨타임에 사용
     private float m_damageCoolTime = 0.0f;
 
     // 메테오 데미지 쿨타임
     private float m_meteorCoolTime = 0.0f;
+    #endregion ----------------------------------------------------------------------------------------------
 
-    [SerializeField] private List<AnimationController> m_animationControllerList = new List<AnimationController>();
+    #region Animator ---------------------------------------------------------------------------------------
+    // 모든 애니메이션 컨트롤러  // 단검 - 건 - 라이플 - 로켓런처 - 기타
+    [SerializeField]
+    private List<AnimationController> m_animationControllerList = new List<AnimationController>();
 
     [Serializable]
     public class AnimationController
@@ -114,11 +155,12 @@ public class PlayerController : MonoBehaviour {
         ANI_MELEE,
         ANI_ROCKETLAUNCHER
     }
+    #endregion ---------------------------------------------------------------------------------------------
 
-
+    #region Action Control ---------------------------------------------------------------------------------
     private bool m_isMoveAble = true;
     private bool m_isJumpAble = true;
-    private bool m_isAttackAble = true;   
+    private bool m_isAttackAble = true;
     //shelter 안인지?
     private bool m_isShelter = false;
 
@@ -126,21 +168,26 @@ public class PlayerController : MonoBehaviour {
     public bool IS_JUMP_ABLE { get { return m_isJumpAble; } set { m_isJumpAble = value; } }
     public bool IS_ATTACK_ABLE { get { return m_isAttackAble; } set { m_isAttackAble = value; } }
     public bool IS_SHELTER { get { return m_isShelter; } set { m_isShelter = value; } }
+    #endregion ---------------------------------------------------------------------------------------------
 
-    // 속도
-    public float WALK_SPEED { get { return m_walkSpeed; } set { m_walkSpeed = value; } }
-    public float RUN_SPEED { get { return m_runSpeed; } set { m_runSpeed = value; } }
-
-    #region Interaction Object -----------------------------------------------------------------------------------------------
+    #region Interaction Object -----------------------------------------------------------------------------
     // 상호작용 오브젝트와 관련된 것
+
+    // 현재 근처에 있는 아이템
     private GameObject m_nearItem = null;
+    // 근처에 있는 산소 충전기
     private OxyCharger m_nearOxyCharger = null;
+    // 근처에 있는 아이템 박스
     private ItemBox m_nearItemBox = null;
+    // 근처에 있는 쉘터
     private Shelter m_nearShelter = null;
 
-    #region SpaceShip
+    #region SpaceShip ---------------------------------------------------------------------------------------
+    // 근처에 있는 우주선
     private SpaceShip m_nearSpaceShip = null;
+    // 우주선 사용 요청을 보냈는지
     private bool m_spaceShipRequest = false;
+    // 네트워크 매니저에서 받아와야 함
     public bool SPACESHIP_REQUEST {
         get { return m_spaceShipRequest; }
         set {
@@ -148,30 +195,53 @@ public class PlayerController : MonoBehaviour {
             if (m_spaceShipRequest == false)
                 m_isMoveAble = true;
         } }
-    #endregion
+    #endregion ----------------------------------------------------------------------------------------------
+    #region Player Oxy Charger ------------------------------------------------------------------------------
+    // 산소 충전 UI
+    private float m_targetOxy = 0.0f;
+    private float m_plusOxy = 0.0f;
+    private bool m_oxyChargeRequest = false;
+    // 네트워크 매니저에서 받아와야함
+    public bool OXYCHARGER_REQUEST
+    {
+        get { return m_oxyChargeRequest; }
+        set
+        {
+            m_oxyChargeRequest = value;
+            if (m_oxyChargeRequest == false)
+            {
+                OxyChargerControlCancle();
+            }
+        }
+    }
 
+    #endregion ----------------------------------------------------------------------------------------------
 
-    #endregion
+    #endregion ----------------------------------------------------------------------------------------------
 
+    #endregion ----------------------------------------------------------------------------------------------
 
-    private WeaponItem m_currentWeapon = null;
-    #endregion
-
-    #region OXY -----------------------------------------------------------------------------------------------------------
+    #region OXY ---------------------------------------------------------------------------------------------
+    // IDLE 산소 소모량
     private float m_useOxyIDLE = 0.1f;
+    // WALK 산소 소모량
     private float m_useOxyWALK = 0.2f;
+    // RUN 산소 소모량 
     private float m_useOxyRUN = 1.5f;
+    // 산소 충전기에서 충전되는 산소량
     private float m_chargeOxy = 10.0f;
-    
+
+    // 기본으로 지속되는 산소 소모
     void UseOxy()
     {
-        if(NetworkManager.Instance() != null)
+        if (NetworkManager.Instance() != null)
         {
             float useOxy = 0.1f;//UnityEngine.Random.Range(0.1f , 10.0f);
 
             bool idle = (m_currentDir == PlayerMoveDir.NONE);
             bool run = (m_currentDir == PlayerMoveDir.RUN_BACK || m_currentDir == PlayerMoveDir.RUN_LEFT
-                || m_currentDir == PlayerMoveDir.RUN_RIGHT || m_currentDir == PlayerMoveDir.RUN_FOWARD || m_currentDir == PlayerMoveDir.RUN_FOWARD_LEFT || m_currentDir == PlayerMoveDir.RUN_FOWARD_RIGHT
+                || m_currentDir == PlayerMoveDir.RUN_RIGHT || m_currentDir == PlayerMoveDir.RUN_FOWARD
+                || m_currentDir == PlayerMoveDir.RUN_FOWARD_LEFT || m_currentDir == PlayerMoveDir.RUN_FOWARD_RIGHT
                 || m_currentDir == PlayerMoveDir.RUN_BACK_LEFT || m_currentDir == PlayerMoveDir.RUN_BACK_RIGHT);
             if (idle)// && m_currentWeapon == null)
             {
@@ -188,14 +258,13 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
-
-    #region Control Key -----------------------------------------------------------
+    #region Control Key -------------------------------------------------------------------------------------
     // 기본 이동 위 왼쪽 아래 오른쪽
-    [SerializeField] private KeyCode m_Up       = KeyCode.W;
-    [SerializeField] private KeyCode m_Left     = KeyCode.A;
-    [SerializeField] private KeyCode m_Down     = KeyCode.S;
-    [SerializeField] private KeyCode m_Right    = KeyCode.D;
-    [SerializeField] private KeyCode m_Get      = KeyCode.F;
+    [SerializeField] private KeyCode m_Up = KeyCode.W;
+    [SerializeField] private KeyCode m_Left = KeyCode.A;
+    [SerializeField] private KeyCode m_Down = KeyCode.S;
+    [SerializeField] private KeyCode m_Right = KeyCode.D;
+    [SerializeField] private KeyCode m_Get = KeyCode.F;
     [SerializeField] private KeyCode m_throwKey = KeyCode.T;
 
     // 대쉬
@@ -209,28 +278,28 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private KeyCode m_inven5 = KeyCode.Alpha5;
 
     // 점프
-    [SerializeField] private KeyCode m_Jump     = KeyCode.Space;
+    [SerializeField] private KeyCode m_Jump = KeyCode.Space;
 
     // 대시 키
-    [SerializeField] private KeyCode m_Dash     = KeyCode.LeftShift;
+    [SerializeField] private KeyCode m_Dash = KeyCode.LeftShift;
 
     // 인벤 자동 장착 키
     // 근거리
-    [SerializeField] private KeyCode m_ShortRangeWeaponEquip    = KeyCode.Q;
+    [SerializeField] private KeyCode m_ShortRangeWeaponEquip = KeyCode.Q;
     // 원거리
-    [SerializeField] private KeyCode m_LongRangeWeaponEquip     = KeyCode.E;
+    [SerializeField] private KeyCode m_LongRangeWeaponEquip = KeyCode.E;
     // 기타 무기
-    [SerializeField] private KeyCode m_EtcWeaponEquip           = KeyCode.C;
+    [SerializeField] private KeyCode m_EtcWeaponEquip = KeyCode.C;
 
     // 인벤토리 키
-    [SerializeField] private KeyCode m_InventoryActive          = KeyCode.I;
+    [SerializeField] private KeyCode m_InventoryActive = KeyCode.I;
 
     // 무기 사용
-    [SerializeField] private KeyCode m_AttackKey                = KeyCode.Mouse0;
+    [SerializeField] private KeyCode m_AttackKey = KeyCode.Mouse0;
 
-    #endregion
+    #endregion ---------------------------------------------------------------------------------------------
 
-    #region Player Rotate
+    #region Player Rotate -----------------------------------------------------------------------------------
     public enum PlayerMoveDir
     {
         NONE,                   // IDLE
@@ -253,9 +322,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     private PlayerMoveDir m_currentDir = PlayerMoveDir.NONE;
-    #endregion
+    #endregion --------------------------------------------------------------------------------------------
 
-    #region Player Animation Var ------------------------------------------------------------------------------
+    #region Player Animation Var ----------------------------------------------------------------------------
     private int m_attackAniVal = 0;
     private int m_walkAniVal = 0;
     private int m_jumpAniVal = 0;
@@ -268,7 +337,7 @@ public class PlayerController : MonoBehaviour {
         set
         {
             // 만약 기존에 재생중이었다면?
-            if(m_attackAniVal != 0 && value == 0 && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
+            if (m_attackAniVal != 0 && value == 0 && m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f)
             {
                 if (m_equipItems[m_curEquipItem] != null)
                     (m_equipItems[m_curEquipItem] as WeaponItem).AnimationEventAttackEnd();
@@ -283,7 +352,7 @@ public class PlayerController : MonoBehaviour {
                 JUMP_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
-            else if(m_lastCoolTime <= 0)
+            else if (m_lastCoolTime <= 0)
                 m_isAttackAble = true;
 
             AttackAnimation(m_attackAniVal);
@@ -299,11 +368,11 @@ public class PlayerController : MonoBehaviour {
             //if (m_isJumpAble == false)
             //    return;
             m_walkAniVal = value;
-            
+
             // 이동 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
             if (m_walkAniVal != 0)
             {
-              //  ATTACK_ANI_VALUE = 0;
+                //  ATTACK_ANI_VALUE = 0;
                 JUMP_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
@@ -323,7 +392,7 @@ public class PlayerController : MonoBehaviour {
             // 점프 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
             if (m_jumpAniVal != 0)
             {
-              //  ATTACK_ANI_VALUE = 0;
+                //  ATTACK_ANI_VALUE = 0;
                 WALK_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
@@ -342,7 +411,7 @@ public class PlayerController : MonoBehaviour {
             //    AttackAnimationEnd();
             if (m_interactionAniVal != 0)
             {
-             //   ATTACK_ANI_VALUE = 0;
+                //   ATTACK_ANI_VALUE = 0;
                 WALK_ANI_VALUE = 0;
                 JUMP_ANI_VALUE = 0;
             }
@@ -350,33 +419,9 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    #endregion
-    #region Player Oxy Charger 
-    private float m_targetOxy = 0.0f;
-    private float m_plusOxy = 0.0f;
-    private bool m_oxyChargeEnable = false;
-    private bool m_oxyChargeRequest = false;
-    public bool OXY_CHARGE_ENABLE
-    {
-        get { return m_oxyChargeEnable; }
-        set {
-            m_oxyChargeEnable = value;
-
-            if(m_oxyChargeEnable == false)
-            {
-                m_isMoveAble = true;
-                m_oxyChargeRequest = false;
-            }
-            else
-            {
-                OxyChargerEnableSetup();
-            }
-        }
-    }
-    #endregion
-
-
-    #region SOUND----------------------------------------------------------------------------------------------------
+    #endregion --------------------------------------------------------------------------------------------
+    
+    #region SOUND--------------------------------------------------------------------------------------------
     public AudioSource m_playerSoundSource = null;
     public AudioSource m_playerLoopSource = null;
     public AudioClip m_oxyChargerUseSound = null;
@@ -408,16 +453,19 @@ public class PlayerController : MonoBehaviour {
     #endregion
     #endregion
 
-    #region Meteor Damage -----------------------------------------------------------------------------------------
+    #region Meteor Damage -----------------------------------------------------------------------------------
     private float m_meteorHitDamage = 100.0f; // 메테오 직격타 데미지
     private float m_meteorDamage = 10.0f; // 메테오 공간에 있을 때 데미지 
     #endregion
 
-    #endregion
+    #endregion ----------------------------------------------------------------------------------------------
 
-    #region Table Setup
-    public void Setup()
+    #region Setup ###########################################################################################
+
+    // 테이블 값 세팅
+    public void TableSetup()
     {
+        m_forward = transform.GetChild(0);
         m_dashTick = GameManager.Instance().GetGameTableValue(GameManager.DASH_TICK);
         m_dashSpeed = GameManager.Instance().GetGameTableValue(GameManager.DASH_SPEED);
         m_jumpHeight = GameManager.Instance().GetGameTableValue(GameManager.JUMP_POWER);
@@ -433,40 +481,10 @@ public class PlayerController : MonoBehaviour {
 
         GameManager.Instance().PLAYER.m_player = this;
         GameManager.Instance().PLAYER.WEIGHT = 0.0f;
-        
-    }
-    #endregion
 
-    #region Player UI -----------------------------------------------------------------------------------------
-    // 이 함수는 Update 에서 호출되어야 함
-    void RotatePlayerName()
-    {
-        m_userNameUI.transform.rotation = this.transform.rotation;
     }
 
-    void ShowPlayerName(bool isShow)
-    {
-        m_userNameUI.gameObject.SetActive(isShow);
-    }
-
-    #endregion
-
-    #region Unity Method
-    void Start()
-    {
-        m_characterController = this.GetComponent<CharacterController>();
-        m_camera = Camera.main;
-
-        m_rigidBody = this.GetComponent<Rigidbody>();
-        m_collider = this.GetComponent<CapsuleCollider>();
-        m_dashEffectAngle = m_dashEffect.transform.localEulerAngles;
-
-        GravityManager.Instance().SetGravityTarget(m_rigidBody);
-        InvokeRepeating("UseOxy" , 1.0f , 1.0f);
-        if (m_signleMode)
-            SetCameraThirdPosition();
-    }
-
+    // 3인칭 카메라 세팅
     public void SetCameraThirdPosition()
     {
         CameraManager.Instance().Player = transform;
@@ -478,6 +496,33 @@ public class PlayerController : MonoBehaviour {
 
     }
 
+    #endregion ##############################################################################################
+
+    #region Player UI ---------------------------------------------------------------------------------------
+    // 이 함수는 Update 에서 호출되어야 함
+    void RotatePlayerName()
+    {
+        m_userNameUI.transform.rotation = this.transform.rotation;
+    }
+
+    void ShowPlayerName(bool isShow)
+    {
+        m_userNameUI.gameObject.SetActive(isShow);
+    }
+
+    #endregion ----------------------------------------------------------------------------------------------
+
+    #region Unity Method ####################################################################################
+
+    void Start()
+    {
+        m_rigidBody = this.GetComponent<Rigidbody>();
+
+        GravityManager.Instance().SetGravityTarget(m_rigidBody);
+        InvokeRepeating("UseOxy" , 1.0f , 1.0f);
+        if (m_signleMode)
+            SetCameraThirdPosition();
+    }
 
     void FixedUpdate()
     {
@@ -493,12 +538,12 @@ public class PlayerController : MonoBehaviour {
         if (IS_JUMP_ABLE)
             JumpProcess();
 
-        if (IS_ATTACK_ABLE && m_equipItems[m_curEquipItem] != null && 
-            m_equipItems[m_curEquipItem].EQUIP_STATE == true 
+        if (IS_ATTACK_ABLE && m_equipItems[m_curEquipItem] != null &&
+            m_equipItems[m_curEquipItem].EQUIP_STATE == true
             && m_equipItems[m_curEquipItem].ITEM_TYPE != Item.ItemType.ETC_RECOVERY)
         {
             AttackProcess();
-            
+
         }
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -507,14 +552,14 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID, GameManager.Instance().PLAYER.m_name ,"test",5.0f,Vector3.zero);
+            NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , GameManager.Instance().PLAYER.m_name , "test" , 5.0f , Vector3.zero);
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
             NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , 10.0f);
         }
 
-        m_userNameUI.transform.rotation = this.transform.rotation;
+        RotatePlayerName();
         HealPackProcess();
         GetItemProcess();
         ChangeItemProcess();
@@ -526,9 +571,10 @@ public class PlayerController : MonoBehaviour {
         Debug.DrawLine(transform.position , dir , Color.red);
 
     }
-    #endregion
 
-    #region Player Move ---------------------------------------------------------------------------------------
+    #endregion ##############################################################################################
+
+    #region Player Move --------------------------------------------------------------------------------------
 
     void MoveProcess()
     {
@@ -536,7 +582,7 @@ public class PlayerController : MonoBehaviour {
         bool realDash = Input.GetKeyDown(m_dashKey);
         float horizontalSpeed = 0.0f, verticalSpeed = 0.0f;
 
-        if(realDash && WALK_ANI_VALUE != 3 && m_isJumpAble == true
+        if (realDash && WALK_ANI_VALUE != 3 && m_isJumpAble == true
             && GameManager.Instance().PLAYER.m_oxy >= m_dashUseOxy && m_isDash == false)
         {
             transform.GetChild(0).localRotation =
@@ -553,12 +599,12 @@ public class PlayerController : MonoBehaviour {
         if (WALK_ANI_VALUE == 3 || m_isDash == true)
             return;
         // 가로 이동
-        if (Input.GetKey(m_Left))    horizontalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
-        if(Input.GetKey(m_Right))   horizontalSpeed = (dash) ? m_runSpeed : m_walkSpeed;
+        if (Input.GetKey(m_Left)) horizontalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
+        if (Input.GetKey(m_Right)) horizontalSpeed = (dash) ? m_runSpeed : m_walkSpeed;
 
         // 세로 이동
-        if(Input.GetKey(m_Up))      verticalSpeed = (dash) ? m_runSpeed : m_walkSpeed;
-        if (Input.GetKey(m_Down))   verticalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
+        if (Input.GetKey(m_Up)) verticalSpeed = (dash) ? m_runSpeed : m_walkSpeed;
+        if (Input.GetKey(m_Down)) verticalSpeed = (dash) ? -m_runSpeed : -m_walkSpeed;
 
         // 이동
         #region Move Logic
@@ -566,12 +612,12 @@ public class PlayerController : MonoBehaviour {
         float weaponWeight = 0.0f;
 
         // -- 애니메이션 세팅 --
-        if (( Mathf.Abs(verticalSpeed) > 0.0f || Mathf.Abs(horizontalSpeed) > 0.0f) )
+        if ((Mathf.Abs(verticalSpeed) > 0.0f || Mathf.Abs(horizontalSpeed) > 0.0f))
             WALK_ANI_VALUE = (dash) ? 2 : 1;
         //  WalkAnimation((dash) ? 2 : 1);
         else
             WALK_ANI_VALUE = 0;
-            //WalkAnimation(0);
+        //WalkAnimation(0);
 
         Vector3 speed = new Vector3(horizontalSpeed , 0 , verticalSpeed);
         speed *= Time.deltaTime;
@@ -642,10 +688,10 @@ public class PlayerController : MonoBehaviour {
         #endregion
 
         float rotateSpeed = 0.23f;
-       
-       // if(m_currentDir != PlayerMoveDir.NONE)
-        transform.GetChild(0).localRotation = 
-            Quaternion.Slerp(transform.GetChild(0).localRotation , 
+
+        // if(m_currentDir != PlayerMoveDir.NONE)
+        transform.GetChild(0).localRotation =
+            Quaternion.Slerp(transform.GetChild(0).localRotation ,
             Quaternion.Euler(GetCurrentAngle()) , rotateSpeed);
 
         #endregion
@@ -673,7 +719,7 @@ public class PlayerController : MonoBehaviour {
 
     public void DashAnimationEnd()
     {
-       // if (WALK_ANI_VALUE == 3)
+        // if (WALK_ANI_VALUE == 3)
         WALK_ANI_VALUE = 0;
     }
 
@@ -706,14 +752,15 @@ public class PlayerController : MonoBehaviour {
 
     void JumpProcess()
     {
-        if(Input.GetKey(m_Jump) && m_isJumpAble)
+        if (Input.GetKey(m_Jump) && m_isJumpAble)
         {
             StartCoroutine(JumpCall());
-            
+
             m_isJumpAble = false;
-            
+
         }
     }
+
     IEnumerator JumpCall()
     {
         float startTime = Time.time;
@@ -721,12 +768,12 @@ public class PlayerController : MonoBehaviour {
         //중력 적용 안함
         GravityManager.Instance().GRAVITY_POWER = 0.0f;
         //JumpAnimation(1);
-        
-       JUMP_ANI_VALUE = 1;
+
+        JUMP_ANI_VALUE = 1;
         while (Time.time - startTime < m_jumpTick)
         {
             float nowTick = (Time.time - startTime) / m_jumpTick;
-            transform.Translate(Vector3.up * 
+            transform.Translate(Vector3.up *
                 (m_jumpHeight * (m_jumpCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_jumpCurve.Evaluate(nowTick))));
             yield return new WaitForFixedUpdate();
         }
@@ -734,14 +781,14 @@ public class PlayerController : MonoBehaviour {
         JUMP_ANI_VALUE = 2;
         GravityManager.Instance().GRAVITY_POWER = 100.0f;
         m_isJumpAble = true;
-        
+
     }
 
     IEnumerator DashCall()
     {
         float startTime = Time.time;
 
-       
+
         m_dashEffect.SetActive(true);
         while (Time.time - startTime < m_dashTick)
         {
@@ -750,20 +797,20 @@ public class PlayerController : MonoBehaviour {
             if (Physics.Raycast(ray , out hit))
             {
                 float distance = Vector3.Distance(transform.position , hit.transform.position);
-                
-                if(!hit.transform.CompareTag("Untagged") && distance <= 5.0f)
+
+                if (!hit.transform.CompareTag("Untagged") && distance <= 5.0f)
                     yield return new WaitForFixedUpdate();
             }
             float nowTick = (Time.time - startTime) / m_dashTick;
             this.transform.RotateAround(
-                GravityManager.Instance().CurrentPlanet.transform.position , 
-                GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right,
+                GravityManager.Instance().CurrentPlanet.transform.position ,
+                GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right ,
                 (m_dashSpeed * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick))));
 
-            Vector3 velo = GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right * m_dashSpeed 
+            Vector3 velo = GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation * Vector3.right * m_dashSpeed
                 * (m_dashCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_dashCurve.Evaluate(nowTick));
 
-            MoveSend(velo);         
+            MoveSend(velo);
 
             yield return new WaitForFixedUpdate();
         }
@@ -779,7 +826,7 @@ public class PlayerController : MonoBehaviour {
         if (NetworkManager.Instance() == null)
             return;
 
-       // Vector3 velo = m_rigidBody.velocity;
+        // Vector3 velo = m_rigidBody.velocity;
 
         NetworkManager.Instance().C2SRequestPlayerMove(name ,
             transform.position , velo ,
@@ -787,18 +834,18 @@ public class PlayerController : MonoBehaviour {
             transform.GetChild(0).localRotation.eulerAngles);
     }
 
-    #endregion
+    #endregion ------------------------------------------------------------------------------------------------
 
-    #region Player Trigger Collider ------------------------------------------------------------------------
-    
+    #region Player Trigger Collider --------------------------------------------------------------------------
+
     void OnTriggerEnter(Collider col)
     {
         if (this.enabled == false)
             return;
-        
+
         // -- F 키를 띄워야 한다. // 근처에 있다면!
         ShowUseEffect(col);
-        
+
 
     }
 
@@ -817,11 +864,13 @@ public class PlayerController : MonoBehaviour {
             return;
         // F 키 닫기
         HideUseEffect(col);
-        
-    }
-    #endregion
 
-    #region Player Attack --------------------------------------------------------------------------------
+    }
+
+    #endregion -----------------------------------------------------------------------------------------------
+
+    #region Player Attack ------------------------------------------------------------------------------------
+
     void AttackProcess()
     {
         if (Input.GetKey(m_AttackKey) && !IsInvoking("AttackCoolTime") && ATTACK_ANI_VALUE != 1)
@@ -838,7 +887,7 @@ public class PlayerController : MonoBehaviour {
             {
                 item.Attack(transform);
 
-                if(item.ITEM_TYPE == Item.ItemType.ETC_GRENADE)
+                if (item.ITEM_TYPE == Item.ItemType.ETC_GRENADE)
                 {
                     // 수류탄의 경우 탈착 
                     GameManager.Instance().UnEquipWeapon(m_curEquipItem);
@@ -863,7 +912,7 @@ public class PlayerController : MonoBehaviour {
         m_isJumpAble = true;
         // 리커버리 끝
         (m_equipItems[m_curEquipItem]).gameObject.SetActive(false);
-        
+
         // 이부분에서 삭제요청
         NetworkManager.Instance().C2SRequestItemDelete(m_equipItems[m_curEquipItem].ITEM_NETWORK_ID);
 
@@ -872,12 +921,12 @@ public class PlayerController : MonoBehaviour {
         INTERACTION_ANI_VALUE = 0;
 
         //이부분에서 전에 들고있는 무기 체크 
-        if(m_equipItems[m_prevEquipItem] != null)
+        if (m_equipItems[m_prevEquipItem] != null)
         {
             EquipItem(m_equipItems[m_prevEquipItem]);
         }
         else
-         SetAnimation(AnimationType.ANI_BAREHAND);
+            SetAnimation(AnimationType.ANI_BAREHAND);
     }
 
     void AttackCoolTime()
@@ -892,26 +941,19 @@ public class PlayerController : MonoBehaviour {
         if (enabled == false || m_equipItems[m_curEquipItem] == null)
             return;
 
-        if(m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_GRENADE)
+        if (m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_GRENADE)
         {
             m_equipItems[m_curEquipItem] = null;
             SetAnimation(AnimationType.ANI_BAREHAND);
         }
 
-        
+
     }
-    #endregion
+    #endregion -----------------------------------------------------------------------------------------------
 
-
-    #region Player Object Interaction ---------------------------------------------------------------------
-
-    #region Show UI Logic :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    #region Show UI Logic ------------------------------------------------------------------------------------
     void ShowUseEffect(Collider col)
     {
-        if (m_useEffect.activeSelf)
-        {
-            
-        }
         m_nearText.gameObject.SetActive(false);
         if (col.CompareTag("Weapon"))
         {
@@ -932,7 +974,7 @@ public class PlayerController : MonoBehaviour {
         else if (col.CompareTag("ItemBox"))
         {
             m_nearItemBox = col.GetComponent<ItemBox>();
-            if(m_nearItemBox.OPENED)
+            if (m_nearItemBox.OPENED)
             {
                 m_nearItemBox = null;
                 return;
@@ -963,7 +1005,7 @@ public class PlayerController : MonoBehaviour {
             m_useEffect.transform.position = m_useEffectHeadAnchor.transform.position;
 
         }
-        else if(col.CompareTag("Recoverykit"))
+        else if (col.CompareTag("Recoverykit"))
         {
             m_nearItem = col.gameObject;//col.GetComponent<HealPackItem>();
             m_useEffect.SetActive(true);
@@ -983,6 +1025,10 @@ public class PlayerController : MonoBehaviour {
         }
         else if (col.CompareTag("OxyCharger"))
         {
+            if (m_oxyChargeRequest == true)
+            {
+                OxyChargerControlCancle();
+            }
             m_nearOxyCharger = null;
             m_useEffect.SetActive(false);
         }
@@ -1017,7 +1063,12 @@ public class PlayerController : MonoBehaviour {
         if (m_useEffect.activeSelf)
             m_useEffect.transform.GetChild(0).GetChild(0).rotation = this.transform.rotation;
     }
-    #endregion
+    #endregion -----------------------------------------------------------------------------------------------
+
+    #region Player Item Logic --------------------------------------------------------------------------------
+
+    #region Inven Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    // 아이템 변경 로직 FixedUpdate 에서 부름
     void ChangeItemProcess()
     {
         int index = -1;
@@ -1028,7 +1079,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(m_inven4)) index = 3;
         if (Input.GetKey(m_inven5)) index = 4;
 
-        if(index != -1)// && m_equipItems[index] != null)
+        if (index != -1)// && m_equipItems[index] != null)
         {
             GameManager.Instance().m_inGameUI.ShowDebugLabel("Inven index " + index + " cur " + m_curEquipItem);
 
@@ -1039,13 +1090,12 @@ public class PlayerController : MonoBehaviour {
                 m_equipItems[m_curEquipItem].gameObject.SetActive(false);
             }
 
-            EquipItem(m_equipItems[index],index,false);
+            EquipItem(m_equipItems[index] , index , false);
 
         }
     }
-    
 
-    // 새로운 줍는 로직
+    // 아이템 줍는 로직 FixedUpdate 에서 부름
     void GetItemProcess()
     {
         if (Input.GetKeyDown(m_Get) && m_nearItem != null)
@@ -1056,73 +1106,21 @@ public class PlayerController : MonoBehaviour {
 
             // 다만 item 의 type 이 원거리 무기 일 경우엔 
             // 1번 ,2번 인덱스에 나눠서 넣어야 한다.
-            if(index == 1)
+            if (index == 1)
             {
-                if(m_equipItems[index] != null)
+                if (m_equipItems[index] != null)
                 {
                     index = 2;
                 }
             }
-            
-            EquipItem(nearItem,index,true);
+
+            EquipItem(nearItem , index , true);
             m_nearItem = null;
         }
     }
 
-    public int GetEquipItemIndex(Item.ItemType type)
-    {
-        switch(type)
-        {
-            case Item.ItemType.NONE: return -1;
-            case Item.ItemType.MELEE: return 0;
-            case Item.ItemType.GUN: 
-            case Item.ItemType.RIFLE:
-            case Item.ItemType.ROCKETLAUNCHER: return 1;
-            default: return 3;
-        }
-    }   
-
-    void HealPackProcess()
-    {
-        if (m_equipItems[m_curEquipItem] != null && m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_RECOVERY)
-        {
-            if (Input.GetKey(m_AttackKey))
-            {
-                IS_MOVE_ABLE = false;
-                IS_JUMP_ABLE = false;
-             //   WeaponAnimationChange(m_currentRecoveryKit);
-
-                if (m_interactionAniVal != 1)
-                {
-                    INTERACTION_ANI_VALUE = 1;
-                }
-                (m_equipItems[m_curEquipItem] as HealPackItem).Recovery(this);
-
-            }
-
-            if (Input.GetKeyUp(m_AttackKey))
-            {
-                IS_MOVE_ABLE = true;
-                IS_JUMP_ABLE = true;
-                //애니메이션 끝 
-                INTERACTION_ANI_VALUE = 0;
-
-                (m_equipItems[m_curEquipItem] as HealPackItem).RecoveryUp();
-            }
-        }
-    }
-
-    void ControlWeaponObjectThrowProcess()
-    {
-        if (Input.GetKey(m_throwKey) && m_equipItems[m_curEquipItem] != null)
-        {
-            UnEquipItem(m_equipItems[m_curEquipItem],m_curEquipItem);
-        }
-    }
-
-    
     // 실 아이템 장비로직
-    void EquipItem(Item item , int curSelect = -1, bool getItem = false)
+    void EquipItem(Item item , int curSelect = -1 , bool getItem = false)
     {
         if (item == null)
         {
@@ -1132,7 +1130,7 @@ public class PlayerController : MonoBehaviour {
                 m_curEquipItem = curSelect;
             return;
         }
-        if(getItem)
+        if (getItem)
         {
             if (IsInvoking("HideInvenIcon"))
                 CancelInvoke("HideInvenIcon");
@@ -1142,7 +1140,7 @@ public class PlayerController : MonoBehaviour {
             GameManager.Instance().PLAYER.WEIGHT += item.ITEM_WEIGHT;
         }
         // 현재 착용중인 장비는 끈다
-        if(m_equipItems[m_curEquipItem] != null)
+        if (m_equipItems[m_curEquipItem] != null)
         {
             m_equipItems[m_curEquipItem].gameObject.SetActive(false);
         }
@@ -1176,20 +1174,14 @@ public class PlayerController : MonoBehaviour {
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestEquipItem(item.ITEM_ID ,
                 item.ITEM_NETWORK_ID);
-        
+
     }
-
-    void HideInvenIcon()
-    {
-        GameManager.Instance().m_inGameUI.HideInvenUI();
-    }
-
-
-    public void UnEquipItem(Item item,int index = -1)
+    // 장착해제
+    public void UnEquipItem(Item item , int index = -1)
     {
         if (index == -1)
             index = GetEquipItemIndex(item.ITEM_TYPE);
-        
+
         //장비 해제해야함
         item.gameObject.SetActive(true);
         item.EQUIP_STATE = false;
@@ -1224,30 +1216,155 @@ public class PlayerController : MonoBehaviour {
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestUnEquipItem(item.ITEM_ID , item.ITEM_NETWORK_ID ,
                 item.transform.position , item.transform.eulerAngles);
-        
+
         m_equipItems[index] = null;
 
 
         // 인벤 하이드
         if (IsInvoking("HideInvenIcon"))
-            CancelInvoke("HideInvenIcon");  
+            CancelInvoke("HideInvenIcon");
         Invoke("HideInvenIcon" , 3.0f);
         GameManager.Instance().m_inGameUI.ShowInvenUI();
     }
-    
-    // 수류탄의 경우는 일반적인 경우가 아님
+
+    // 장착해제 -- 수류탄 ( 수류탄만 예외 처리 )
     public void UnEquipGrenade(Item item)
     {
         item.transform.parent = null;
         if (GameManager.Instance() != null)
             GameManager.Instance().UnEquipWeapon(m_curEquipItem);
     }
+    // 버리는 로직 FixedUpdate 에서 부름
+    void ControlWeaponObjectThrowProcess()
+    {
+        if (Input.GetKey(m_throwKey) && m_equipItems[m_curEquipItem] != null)
+        {
+            UnEquipItem(m_equipItems[m_curEquipItem] , m_curEquipItem);
+        }
+    }
+    #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    #region Item Use Logic :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    // 힐팩 아이템 사용
+    void HealPackProcess()
+    {
+        if (m_equipItems[m_curEquipItem] != null 
+            && m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_RECOVERY)
+        {
+            if (Input.GetKey(m_AttackKey))
+            {
+                IS_MOVE_ABLE = false;
+                IS_JUMP_ABLE = false;
+                //   WeaponAnimationChange(m_currentRecoveryKit);
+
+                if (m_interactionAniVal != 1)
+                {
+                    INTERACTION_ANI_VALUE = 1;
+                }
+                (m_equipItems[m_curEquipItem] as HealPackItem).Recovery(this);
+
+            }
+
+            if (Input.GetKeyUp(m_AttackKey))
+            {
+                IS_MOVE_ABLE = true;
+                IS_JUMP_ABLE = true;
+                //애니메이션 끝 
+                INTERACTION_ANI_VALUE = 0;
+
+                (m_equipItems[m_curEquipItem] as HealPackItem).RecoveryUp();
+            }
+        }
+    }
+    #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    #endregion -----------------------------------------------------------------------------------------------
+
+    #region Player Damage And Dead ---------------------------------------------------------------------------
+
+    #region Damage Effect ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    // 데미지 이펙트 //
+    public void DamageEffect(bool showHitEffect = true , bool characterDamageAnimationShow = true)
+    {
+        if (showHitEffect == true && GameManager.Instance().WINNER == false)
+            CameraManager.Instance().ShowHitEffect();
+        else
+            CameraManager.Instance().HideHitEffect();
+        m_renderer.material = HIT_MATERIAL;
+        if (characterDamageAnimationShow == true
+            && GameManager.Instance().PLAYER.m_hp > 0.0f)
+            AnimationPlay("Damage");
+        Invoke("DamgeEffectEnd" , 0.1f);
+    }
+    // 카메라 데미지 애니메이션 재생 후 애니메이션을 꺼야 함
+    public void CameraDamageAnimationEnd()
+    {
+        m_camAnimator.SetInteger("DAMAGE" , 0);
+    }
+
+    void DamgeEffectEnd()
+    {
+        m_renderer.material = ORIGIN_MATERIAL;
+        if (GetComponent<NetworkPlayer>() != null)
+        {
+            Vector4[] vecs = { new Vector4(3.68276f , 0.0f , 6.0f) ,
+            new Vector4(0.0f , 6.0f , 0.7862077f) , new Vector4(0.0f , 3.517242f , 6.0f) };
+            int index = NetworkManager.Instance().NETWORK_PLAYERS.IndexOf(GetComponent<NetworkPlayer>());
+
+            if (index < vecs.Length)
+                transform.GetChild(0).GetChild(0).GetChild(3)
+                        .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" ,
+                        vecs[index]);
+        }
+
+    }
+    #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    // 데미지를 입을때
+    public void Damage(Vector3 dir , string reason = null)
+    {
+        DamageEffect(true , !reason.Equals("DeathZone") && !reason.Equals("Meteor") && !reason.Equals("oxy"));
+
+        AudioPlay(m_damageHit);
+        // 우주선 생성 도중 데미지를 입었을 경우 캔슬됨
+        if (m_nearSpaceShip != null && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
+            SpaceShipControlCancel();
+
+        if (m_nearOxyCharger != null && m_targetOxy > 0.0f && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
+        {
+            INTERACTION_ANI_VALUE = 0;
+            m_targetOxy = 0.0f;
+            if (CURRENT_WEAPON != null)
+            {
+                CURRENT_WEAPON.gameObject.SetActive(true);
+                WeaponAnimationChange(CURRENT_WEAPON);
+            }
+            GameManager.Instance().SLIDER_UI.HideSlider();
+
+            if (CURRENT_WEAPON != null)
+            {
+                CURRENT_WEAPON.gameObject.SetActive(true);
+                WeaponAnimationChange(CURRENT_WEAPON);
+            }
+            GameManager.Instance().SLIDER_UI.HideSlider();
+        }
+    }
+
+    // 사망
+    public void Dead()
+    {
+        AudioPlay(m_deadSound);
+    }
+
+    #endregion -----------------------------------------------------------------------------------------------
+
+    #region Player Object Interaction ------------------------------------------------------------------------
+
+    // 모든 상호작용 오브젝트 처리 FixedUpdate에서 부름
     void ControlObjectProcess()
     {
-    
-         if(Input.GetKeyDown(m_Get))
+        if (Input.GetKeyDown(m_Get))
         {
-
             if (m_nearItemBox != null)
             {
                 AudioPlay(m_pickSound);
@@ -1262,75 +1379,56 @@ public class PlayerController : MonoBehaviour {
 
             if (m_nearSpaceShip != null)
             {
-                if(m_currentWeapon != null)
-                   m_currentWeapon.gameObject.SetActive(false);
-                
+                if (CURRENT_WEAPON != null)
+                    CURRENT_WEAPON.gameObject.SetActive(false);
+
                 IS_MOVE_ABLE = false;
-                m_nearSpaceShip.StartSpaceShipEngineCharge();
-
-            }
-            
-        }
-
-        #region SpaceShip Interaction Logic ---------------------------------------------------------------------
-
-         // 사용 요청
-        if (m_spaceShipRequest == false && Input.GetKeyDown(m_Get) && m_nearSpaceShip != null)
-        {
-            m_spaceShipRequest = true;
-            m_isMoveAble = false;
-            NetworkManager.Instance().C2SRequestUseSpaceShip(m_nearSpaceShip.SPACESHIP_ID);
-        }
-
-        // 사용 가능 할때 
-        if (m_spaceShipRequest == true && Input.GetKey(m_Get) && m_nearSpaceShip.IS_SPACESHIP_ENABLED == true)
-        {
-            if (m_nearSpaceShip != null)
-            {
-                m_nearSpaceShip.SpaceShipEngineChargeProcess();
-            }
-        }
-
-        // 중도 취소 
-        if (Input.GetKeyUp(m_Get))
-        {
-            if (m_nearSpaceShip != null)
-            {
-                SpaceShipControlCancel();
             }
 
         }
-        #endregion
-
-        #region OxyCharger Interaction Logic -------------------------------------------------------------------
-        // 산소 충전 요청을 보내야 한다.
-        if (m_oxyChargeEnable == false)
-        {
-            if(m_nearOxyCharger != null && Input.GetKeyDown(m_Get) && m_oxyChargeRequest == false)
-            {
-                m_oxyChargeRequest = true;
-                m_isMoveAble = false;
-                NetworkManager.Instance().C2SRequestUseOxyChargerStart(m_nearOxyCharger);
-            }
-            
-            if(Input.GetKeyUp(m_Get))
-            {
-                if(m_nearOxyCharger != null)
-                    NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
-                m_isMoveAble = true;
-                m_oxyChargeRequest = false;
-            }
-
-        }else
-        {
-            ControlOxyChargerProcess();
-        }
-        #endregion
+        // 우주선 상호작용
+        SpaceShipInteraction();
+        // 산소 충전기 상호작용
+        OxyChargerInteraction();
 
     }
+
     #region OxyCharger Interaction Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    // 실 사용 로직
+    void OxyChargerInteraction()
+    {
+        // 산소 충전 요청을 보내야 한다.
+
+        //최초 사용 요청
+        if (m_oxyChargeRequest == false && Input.GetKeyDown(m_Get) && m_nearOxyCharger != null)
+        {
+            m_oxyChargeRequest = true;
+            m_isMoveAble = false;
+            NetworkManager.Instance().C2SRequestUseOxyChargerStart(m_nearOxyCharger);
+        }
+
+        // 사용 가능할때
+        if (m_oxyChargeRequest == true && Input.GetKey(m_Get))
+        {
+            if (m_nearOxyCharger != null && m_nearOxyCharger.OXY_CHARGER_ENABLE == true)
+            {
+                ControlOxyChargerProcess();
+            }
+            else
+                OxyChargerControlCancle();
+
+        }
+
+        // 중도 취소
+        if (Input.GetKeyUp(m_Get))
+        {
+            OxyChargerControlCancle();
+        }
+    }
+
     // 산소 충전 가능 상태가 되자마자 첨 세팅
-    void OxyChargerEnableSetup()
+    public void OxyChargerEnableSetup()
     {
         AudioPlay(m_oxyChargerUseSound);
         LoopAudioPlay(m_oxyChargeSound);
@@ -1352,13 +1450,13 @@ public class PlayerController : MonoBehaviour {
         if (m_nearOxyCharger == null)
             return;
 
-        if(Input.GetKey(m_Get))
+        if (Input.GetKey(m_Get))
         {
             float oxy = m_chargeOxy * Time.deltaTime;
             m_plusOxy += oxy;
             GameManager.Instance().SLIDER_UI.SliderProcess(m_plusOxy / m_targetOxy);
 
-            if(m_nearOxyCharger.CURRENT_OXY > 0.0f)
+            if (m_nearOxyCharger.CURRENT_OXY > 0.0f)
                 m_nearOxyCharger.UseOxy(oxy);
             else
             {
@@ -1377,25 +1475,24 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
 
-            if(GameManager.Instance().PLAYER.m_oxy >= GameManager.Instance().PLAYER.m_fullOxy)
+            if (GameManager.Instance().PLAYER.m_oxy >= GameManager.Instance().PLAYER.m_fullOxy)
             {
                 m_isMoveAble = true;
                 INTERACTION_ANI_VALUE = 0;
-                if(m_equipItems[m_curEquipItem] != null)
+                if (m_equipItems[m_curEquipItem] != null)
                 {
                     m_equipItems[m_curEquipItem].gameObject.SetActive(true);
                     WeaponAnimationChange(m_equipItems[m_curEquipItem]);
-                    
+
                 }
                 else
                     WeaponAnimationChange(null);
                 GameManager.Instance().SLIDER_UI.HideSlider();
             }
         }
-        if(Input.GetKeyUp(m_Get))
+        if (Input.GetKeyUp(m_Get))
         {
             m_oxyChargeRequest = false;
-            m_oxyChargeEnable = false;
             m_isMoveAble = true;
             //산소 충전 끝
             NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
@@ -1413,10 +1510,16 @@ public class PlayerController : MonoBehaviour {
             GameManager.Instance().SLIDER_UI.HideSlider();
         }
     }
+
+    void OxyChargerControlCancle()
+    {
+        m_isMoveAble = true;
+        m_oxyChargeRequest = false;
+        NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
+    }
     #endregion
 
-
-    #region Meteor Interaction Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    #region Meteor Interaction Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     // 메테오 데미지
     void MeteorDamage(Collider col)
     {
@@ -1441,7 +1544,41 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
-    #region SpaceShip Interaction Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    #region SpaceShip Interaction Logic :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+    // 실 사용 로직
+    void SpaceShipInteraction()
+    {
+        // 최초 사용 요청 
+        if (m_spaceShipRequest == false && Input.GetKeyDown(m_Get) && m_nearSpaceShip != null)
+        {
+            m_spaceShipRequest = true;
+            m_isMoveAble = false;
+            NetworkManager.Instance().C2SRequestUseSpaceShip(m_nearSpaceShip.SPACESHIP_ID);
+        }
+
+        // 사용 가능 할때 
+        if (m_spaceShipRequest == true && Input.GetKey(m_Get))
+        {
+            if (m_nearSpaceShip != null && m_nearSpaceShip.IS_SPACESHIP_ENABLED == true)
+            {
+                m_nearSpaceShip.SpaceShipEngineChargeProcess();
+            }
+            else
+                SpaceShipControlCancel();
+        }
+
+        // 중도 취소 
+        if (Input.GetKeyUp(m_Get))
+        {
+            if (m_nearSpaceShip != null)
+            {
+                SpaceShipControlCancel();
+            }
+
+        }
+    }
+
     // 우주선 사용가능 상태일때 최초 수행시 
     public void SpaceShipEnable()
     {
@@ -1449,6 +1586,7 @@ public class PlayerController : MonoBehaviour {
         INTERACTION_ANI_VALUE = 1;
         AudioPlay(m_spaceShipChargeSound);
         Debug.Log("우주선 사용가능 ");
+        m_nearSpaceShip.StartSpaceShipEngineCharge();
     }
 
     void SpaceShipControlCancel()
@@ -1457,10 +1595,10 @@ public class PlayerController : MonoBehaviour {
         INTERACTION_ANI_VALUE = 0;
         m_spaceShipRequest = false;
         NetworkManager.Instance().C2SRequestUseSpaceShipCancel(m_nearSpaceShip.SPACESHIP_ID);
-        if (m_currentWeapon != null)
+        if (CURRENT_WEAPON != null)
         {
-            m_currentWeapon.gameObject.SetActive(true);
-            WeaponAnimationChange(m_currentWeapon);
+            CURRENT_WEAPON.gameObject.SetActive(true);
+            WeaponAnimationChange(CURRENT_WEAPON);
         }
         else
             WeaponAnimationChange(null);
@@ -1470,125 +1608,11 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
-    #region Damage Effect Logic ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-    public void DamageEffect(bool showHitEffect = true,bool characterDamageAnimationShow = true)
-    {
-        if(showHitEffect == true && GameManager.Instance().WINNER == false)
-            CameraManager.Instance().ShowHitEffect();
-        else
-            CameraManager.Instance().HideHitEffect();
-        m_renderer.material = HIT_MATERIAL;
-        if (characterDamageAnimationShow == true 
-            && GameManager.Instance().PLAYER.m_hp > 0.0f)
-            AnimationPlay("Damage");
-        Invoke("DamgeEffectEnd" , 0.1f);
-    }
+    #endregion -----------------------------------------------------------------------------------------------
 
+    #region Animation Function -------------------------------------------------------------------------------
 
-    public void OxyDamageEffect()
-    {
-        if (GameManager.Instance().WINNER == false)
-            CameraManager.Instance().ShowHitEffect(false);
-        else
-            CameraManager.Instance().HideHitEffect();
-
-
-    }
-    #endregion
-
-    // 카메라 데미지 애니메이션 재생 후 애니메이션을 꺼야 함
-    public void CameraDamageAnimationEnd()
-    {
-        m_camAnimator.SetInteger("DAMAGE" , 0);
-    }
-
-    public void Damage(Vector3 dir,string reason = null)
-    {
-        DamageEffect(true,!reason.Equals("DeathZone") && !reason.Equals("Meteor") && !reason.Equals("oxy"));
-
-        AudioPlay(m_damageHit);
-        // 우주선 생성 도중 데미지를 입었을 경우 캔슬됨
-        if (m_nearSpaceShip != null && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
-            SpaceShipControlCancel();
-
-        if (m_nearOxyCharger != null && m_targetOxy > 0.0f && !reason.Equals("oxy") && !reason.Equals("DeathZone"))
-        {
-            INTERACTION_ANI_VALUE = 0;
-            m_targetOxy = 0.0f;
-            if (m_currentWeapon != null)
-            {
-                m_currentWeapon.gameObject.SetActive(true);
-                WeaponAnimationChange(m_currentWeapon);
-            }
-            GameManager.Instance().SLIDER_UI.HideSlider();
-            
-            if (m_currentWeapon != null)
-            {
-                m_currentWeapon.gameObject.SetActive(true);
-                WeaponAnimationChange(m_currentWeapon);
-            }
-            GameManager.Instance().SLIDER_UI.HideSlider();
-        }
-    }
-
-    void DamgeEffectEnd()
-    {
-        m_renderer.material = ORIGIN_MATERIAL;
-        if (GetComponent<NetworkPlayer>() != null)
-        {
-            Vector4[] vecs = { new Vector4(3.68276f , 0.0f , 6.0f) ,
-            new Vector4(0.0f , 6.0f , 0.7862077f) , new Vector4(0.0f , 3.517242f , 6.0f) };
-            int index = NetworkManager.Instance().NETWORK_PLAYERS.IndexOf(GetComponent<NetworkPlayer>());
-            
-            if(index < vecs.Length)
-                transform.GetChild(0).GetChild(0).GetChild(3)
-                        .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" , 
-                        vecs[index]);
-        }
-            
-    }
-
-    public void Dead()
-    {
-        AudioPlay(m_deadSound);
-    }
-
-    void DamageAniCheck()
-    {
-        if(m_animator.GetCurrentAnimatorStateInfo(0).IsName("Damage") == false)
-        {
-            CancelInvoke("DamageAniCheck");
-            CameraManager.Instance().PLAYER_ROTATE = true;
-        }
-    }
-
-    
-    #endregion
-
-    #region Animation Function
-
-    public void WeaponAnimationChange(Item item)
-    {
-        NetworkManager.Instance().C2SRequestPlayerAnimation(NetworkManager.Instance().USER_NAME , "CW" , -1);
-        if (item == null)
-        {
-            SetAnimation(AnimationType.ANI_BAREHAND);
-            return;
-        }else
-        {
-            switch (item.ITEM_TYPE)
-            {
-                case Item.ItemType.GUN: SetAnimation(AnimationType.ANI_GUN01); break;
-                case Item.ItemType.RIFLE: SetAnimation(AnimationType.ANI_GUN02); break;
-                case Item.ItemType.MELEE: SetAnimation(AnimationType.ANI_MELEE); break;
-                case Item.ItemType.ROCKETLAUNCHER: SetAnimation(AnimationType.ANI_ROCKETLAUNCHER); break;
-                case Item.ItemType.ETC_GRENADE: SetAnimation(AnimationType.ANI_ETC); break;
-                case Item.ItemType.ETC_RECOVERY: SetAnimation(AnimationType.ANI_ETC); break;
-            }
-        }
-       
-    }
-
+    // PlayerControlAttackTiming 에서 Attack 시점을 알려주었다,
     public void AttackAnimationEvent()
     {
         // 애니메이션 상에서 어택 시점을 조절해야 할 경우 여기로 들어옴
@@ -1606,8 +1630,6 @@ public class PlayerController : MonoBehaviour {
 
     void WalkAnimation(int value)
     {
-        //if (m_animator.GetInteger("WALK") == value)
-        //    return;
         m_animator.SetInteger("WALK" , value);
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestPlayerAnimation(
@@ -1616,18 +1638,14 @@ public class PlayerController : MonoBehaviour {
 
     void JumpAnimation(int value)
     {
-        //if (m_animator.GetInteger("JUMP") == value)
-        //    return;
         m_animator.SetInteger("JUMP" , value);
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestPlayerAnimation(
                 NetworkManager.Instance().USER_NAME , "JUMP" , value);
     }
 
-    public void AttackAnimation(int value)
+    void AttackAnimation(int value)
     {    
-        //if (m_animator.GetInteger("ATTACK") == value)
-        //    return;
         if (value == 0)
             m_isMoveAble = true;
         m_animator.SetInteger("ATTACK" , value);
@@ -1638,10 +1656,8 @@ public class PlayerController : MonoBehaviour {
                 NetworkManager.Instance().USER_NAME , "ATTACK" , value);
     }
 
-    public void InteractionAnimation(int value)
+    void InteractionAnimation(int value)
     {
-        //if (m_animator.GetInteger("INTERACTION") == value)
-        //    return;
         m_animator.SetInteger("INTERACTION" , value);
 
         if (NetworkManager.Instance() != null)
@@ -1649,6 +1665,7 @@ public class PlayerController : MonoBehaviour {
                 NetworkManager.Instance().USER_NAME , "INTERACTION" , value);
     }
 
+    // 애니메이션 강제 재생 / 현재 데미지 / 사망
     public void AnimationPlay(string aniName)
     {
         m_animator.Play(aniName);
@@ -1657,19 +1674,7 @@ public class PlayerController : MonoBehaviour {
            GameManager.Instance().PLAYER.m_name , aniName , 1234);
     }
 
-    bool CheckAnimaton(string stateName)
-    {
-        if (m_animator.GetNextAnimatorStateInfo(0).IsName(stateName))
-        {
-            if (!m_animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
-                return true;
-            else
-                return false;
-        }
-        else
-            return false;
-    }
-
+    // 애니메이션 체인지
     void SetAnimation(AnimationType type)
     {
         for(int i =0; i < m_animationControllerList.Count; i++)
@@ -1688,21 +1693,9 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public RuntimeAnimatorController GetCurrentAnimator(AnimationType type)
-    {
-        for (int i = 0; i < m_animationControllerList.Count; i++)
-        {
-            if (m_animationControllerList[i].m_type == type)
-            {
-                return m_animationControllerList[i].m_controller;
-            }
-        }
-        return null;
-    }
+    #endregion -----------------------------------------------------------------------------------------------
 
-    #endregion
-
-    #region Audio Control -----------------------------------------------------------------------------------------
+    #region Audio Control ------------------------------------------------------------------------------------
 
     // 주인공 체력 / 산소 부족시 재생시켜라
     public void NotEnoughHp()
@@ -1743,5 +1736,61 @@ public class PlayerController : MonoBehaviour {
         if (m_playerLoopSource.clip != null && m_playerLoopSource.isPlaying == true)
             m_playerLoopSource.Stop();
     }
-    #endregion
+
+    #endregion ------------------------------------------------------------------------------------------------
+
+    #region Util Method ---------------------------------------------------------------------------------------
+
+    // 아이템 인벤 어디에 해당되는지 알려주는 메소드
+    public int GetEquipItemIndex(Item.ItemType type)
+    {
+        switch (type)
+        {
+            case Item.ItemType.NONE: return -1;
+            case Item.ItemType.MELEE: return 0;
+            case Item.ItemType.GUN:
+            case Item.ItemType.RIFLE:
+            case Item.ItemType.ROCKETLAUNCHER: return 1;
+            default: return 3;
+        }
+    }
+
+    // 아이템 애니메이션 변경 
+    public void WeaponAnimationChange(Item item)
+    {
+        NetworkManager.Instance().C2SRequestPlayerAnimation(NetworkManager.Instance().USER_NAME , "CW" , -1);
+        if (item == null)
+        {
+            SetAnimation(AnimationType.ANI_BAREHAND);
+            return;
+        }
+        else
+        {
+            switch (item.ITEM_TYPE)
+            {
+                case Item.ItemType.GUN: SetAnimation(AnimationType.ANI_GUN01); break;
+                case Item.ItemType.RIFLE: SetAnimation(AnimationType.ANI_GUN02); break;
+                case Item.ItemType.MELEE: SetAnimation(AnimationType.ANI_MELEE); break;
+                case Item.ItemType.ROCKETLAUNCHER: SetAnimation(AnimationType.ANI_ROCKETLAUNCHER); break;
+                case Item.ItemType.ETC_GRENADE: SetAnimation(AnimationType.ANI_ETC); break;
+                case Item.ItemType.ETC_RECOVERY: SetAnimation(AnimationType.ANI_ETC); break;
+            }
+        }
+
+    }
+
+    // 현재 애니메이터 가져오기
+    public RuntimeAnimatorController GetCurrentAnimator(AnimationType type)
+    {
+        for (int i = 0; i < m_animationControllerList.Count; i++)
+        {
+            if (m_animationControllerList[i].m_type == type)
+            {
+                return m_animationControllerList[i].m_controller;
+            }
+        }
+        return null;
+    }
+
+    #endregion ------------------------------------------------------------------------------------------------
 }

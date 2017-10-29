@@ -181,8 +181,8 @@ public class GameManager : Singletone<GameManager> {
 
         float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 20.8f;
 
-        OnJoinedRoom(m_playerInfo.m_name , true ,// new Vector3(9.123454f , 48.63797f , -32.4867f));
-            GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
+            //GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
     }
 
     public float PLANET_XANGLE = 0.0f;
@@ -256,7 +256,7 @@ public class GameManager : Singletone<GameManager> {
 
             player.enabled = true;
             player.SetCameraThirdPosition();
-            player.Setup();
+            player.TableSetup();
             player.SetUserName(NetworkManager.Instance().USER_NAME);
 
             //Plant.GetComponent<Gravity>().TargetObject = MP.GetComponent<Rigidbody>();

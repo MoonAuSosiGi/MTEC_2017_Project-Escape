@@ -15,6 +15,10 @@ public class OxyCharger : MonoBehaviour {
         set { m_index = value; }
     }
     public float CURRENT_OXY { get { return m_oxy; } }
+
+    // 산소 충전기 사용 가능 상태인지                                                                                              
+    bool m_oxyChargerEnable = false;
+    public bool OXY_CHARGER_ENABLE { get { return m_oxyChargerEnable; } set { m_oxyChargerEnable = value; } }
     #endregion
 
     #region UnityMethod
