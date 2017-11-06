@@ -40,7 +40,6 @@ public class Shelter : MonoBehaviour
         m_shelterID = NetworkManager.Instance().GetShelterIndex(this);
     }
 
-
     #endregion
 
     #region Shelter_Method
@@ -74,12 +73,11 @@ public class Shelter : MonoBehaviour
     {
         if (m_curState)
             return;
-        Debug.Log("OpenDoor");
+        
         m_curState = true;
 
         m_shelterSoundSource.clip = m_openSound;
         m_shelterSoundSource.Play();
-     //   m_doorState = true;
 
         // 열렸다.
         GetComponent<Animator>().SetInteger("DOOR_OPEN_STATE" , 1);
@@ -91,9 +89,9 @@ public class Shelter : MonoBehaviour
     {
         if (!m_curState)
             return;
-        Debug.Log("CloseDoor");
+
         m_curState = false;
-      //  m_doorState = false;
+      
         m_shelterSoundSource.clip = m_closeSound;
         m_shelterSoundSource.Play();
         // 닫혔다
@@ -104,8 +102,6 @@ public class Shelter : MonoBehaviour
 
     public void LightOn()
     {
-        Debug.Log("LightOn");
-        //   GetComponent<Animator>().Play("LightON");
         m_lightState = true;
         GetComponent<Animator>().SetInteger("LIGHT_STATE" , 1);
 
@@ -123,9 +119,7 @@ public class Shelter : MonoBehaviour
 
     public void LightOff()
     {
-        Debug.Log("LightOff");
-        // 아무도 없다
-        //  GetComponent<Animator>().Play("LightOFF");
+        // 아무도 없다     
         m_lightState = false;
         GetComponent<Animator>().SetInteger("LIGHT_STATE" , 2);
         m_shelterSoundSource.clip = null;

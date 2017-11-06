@@ -19,6 +19,12 @@
     <Filter Include="NetworkObject">
       <UniqueIdentifier>{743a59a3-86f0-48cf-82d7-05ff2d214035}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Json">
+      <UniqueIdentifier>{854d70a0-2812-4ec1-9974-f5bb60606919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\GameRoom">
+      <UniqueIdentifier>{674f9c87-ce91-4f52-b441-c90b282d6951}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -45,14 +51,20 @@
     <ClInclude Include="Shelter.h">
       <Filter>NetworkObject</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>Server</Filter>
-    </ClInclude>
-    <ClInclude Include="GameRoom.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="SpaceShip.h">
       <Filter>NetworkObject</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json.h">
+      <Filter>Json</Filter>
+    </ClInclude>
+    <ClInclude Include="json\json-forwards.h">
+      <Filter>Json</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRoom.h">
+      <Filter>Server\GameRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomClient.h">
+      <Filter>Server\GameRoom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -71,14 +83,17 @@
     <ClCompile Include="Shelter.cpp">
       <Filter>NetworkObject</Filter>
     </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
-    <ClCompile Include="GameRoom.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="SpaceShip.cpp">
       <Filter>NetworkObject</Filter>
+    </ClCompile>
+    <ClCompile Include="jsoncpp.cpp">
+      <Filter>Json</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRoom.cpp">
+      <Filter>Server\GameRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomClient.cpp">
+      <Filter>Server\GameRoom</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -44,6 +44,12 @@ public class Item : MonoBehaviour {
     public float ITEM_WEIGHT { get { return m_itemWeight; } set { m_itemWeight = value; } }
     public string ITEM_NETWORK_ID { get { return m_itemNetworkID; } set { m_itemNetworkID = value; } }
 
+    // 메시 렌더러 얻기
+    private MeshRenderer m_renderer = null;
+    // 메테리얼 얻기
+    private Material m_originMat = null;
+
+
     // 어떤 호스트가 들고있는지 
     private int m_targetHostID = -1;
     public int TARGET_HOST_ID { get { return m_targetHostID; } set { m_targetHostID = value; } }
@@ -55,7 +61,21 @@ public class Item : MonoBehaviour {
     protected virtual void UnEquipItem() { }
     #endregion
 
-    #region ITEM Method
-    
-    #endregion
+    protected void Setup()
+    {
+        m_renderer = this.GetComponentInChildren<MeshRenderer>();
+        m_originMat = m_renderer.material;
+    }
+
+    public void OutLineShow()
+    {
+        if (m_renderer == null || m_renderer.material == null)
+            Debug.Log("name " + transform.name);
+        m_renderer.material = WeaponManager.Instance().ITEM_OUTLINE_MAT;
+    }
+
+    public void OutLineHide()
+    {
+        m_renderer.material = m_originMat;
+    }
 }

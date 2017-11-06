@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Material m_hitMaterial = null;
     [SerializeField] private Material m_originMaterial = null;
 
+    public SkinnedMeshRenderer RENDERER { get { return m_renderer; } }
     public Material HIT_MATERIAL { get { return m_hitMaterial; } }
     public Material ORIGIN_MATERIAL { get { return m_originMaterial; } }
     #endregion -------------------------------------------------------------------------------------------
@@ -83,8 +84,8 @@ public class PlayerController : MonoBehaviour {
 
     #region Use Effect -------------------------------------------------------------------------------------
     // F 키 이펙트
-    [SerializeField] private GameObject m_useEffect = null;
-    [SerializeField] private TextMesh m_nearText = null;
+    
+    
     [SerializeField] private Transform m_forward = null;
     #endregion ---------------------------------------------------------------------------------------------
 
@@ -175,6 +176,7 @@ public class PlayerController : MonoBehaviour {
 
     // 현재 근처에 있는 아이템
     private GameObject m_nearItem = null;
+
     // 근처에 있는 산소 충전기
     private OxyCharger m_nearOxyCharger = null;
     // 근처에 있는 아이템 박스
@@ -266,6 +268,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private KeyCode m_Right = KeyCode.D;
     [SerializeField] private KeyCode m_Get = KeyCode.F;
     [SerializeField] private KeyCode m_throwKey = KeyCode.T;
+
+    // 레이더
+    [SerializeField] private KeyCode m_Rader = KeyCode.R;
 
     // 대쉬
     [SerializeField] private KeyCode m_dashKey = KeyCode.LeftControl;
@@ -546,6 +551,8 @@ public class PlayerController : MonoBehaviour {
 
         }
 
+        RaderProcess();
+
         if (Input.GetKeyDown(KeyCode.K))
         {
             DamageEffect();
@@ -573,6 +580,19 @@ public class PlayerController : MonoBehaviour {
     }
 
     #endregion ##############################################################################################
+
+    #region Player Rader ------------------------------------------------------------------------------------
+    void RaderProcess()
+    {
+        if(Input.GetKeyDown(m_Rader))
+        {
+            if (CameraManager.Instance().RADER.IS_SHOW == false)
+                CameraManager.Instance().RADER.ShowRader();
+            else
+                CameraManager.Instance().RADER.HideRader();
+        }
+    }
+    #endregion ----------------------------------------------------------------------------------------------
 
     #region Player Move --------------------------------------------------------------------------------------
 
@@ -954,22 +974,22 @@ public class PlayerController : MonoBehaviour {
     #region Show UI Logic ------------------------------------------------------------------------------------
     void ShowUseEffect(Collider col)
     {
-        m_nearText.gameObject.SetActive(false);
+        
         if (col.CompareTag("Weapon"))
         {
             m_nearItem = col.gameObject;
             //m_nearWeapon = col.gameObject;
-            m_useEffect.SetActive(true);
-            m_useEffect.transform.position = m_nearItem.transform.position;
-            m_nearText.gameObject.SetActive(true);
-            m_nearText.text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<Item>().ITEM_ID).Name_kr;
+           
+           string text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<Item>().ITEM_ID).Name_kr;
+            GameManager.Instance().m_inGameUI.ShowObjectUI(text);
+            //test
+            m_nearItem.GetComponent<Item>().OutLineShow();
 
         }
         else if (col.CompareTag("OxyCharger"))
         {
             m_nearOxyCharger = col.GetComponent<OxyCharger>();
-            m_useEffect.SetActive(true);
-            m_useEffect.transform.position = m_useEffectHeadAnchor.transform.position;
+            GameManager.Instance().m_inGameUI.ShowObjectUI("");
         }
         else if (col.CompareTag("ItemBox"))
         {
@@ -980,14 +1000,12 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
 
-            m_useEffect.SetActive(true);
-            m_useEffect.transform.position = m_nearItemBox.transform.position;
+            GameManager.Instance().m_inGameUI.ShowObjectUI("");
         }
         else if (col.CompareTag("ShelterDoor"))
         {
             m_nearShelter = col.transform.parent.GetComponent<Shelter>();
-            m_useEffect.SetActive(true);
-            m_useEffect.transform.position = m_useEffectHandAnchor.transform.position;
+            GameManager.Instance().m_inGameUI.ShowObjectUI("");
         }
         else if (col.CompareTag("SpaceShipControlPanel"))
         {
@@ -1001,16 +1019,15 @@ public class PlayerController : MonoBehaviour {
                 GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 최초 잠김이 풀린 상태");
             }
             m_nearSpaceShip = col.GetComponent<SpaceShip>();
-            m_useEffect.SetActive(true);
-            m_useEffect.transform.position = m_useEffectHeadAnchor.transform.position;
+            GameManager.Instance().m_inGameUI.ShowObjectUI("");
 
         }
         else if (col.CompareTag("Recoverykit"))
         {
             m_nearItem = col.gameObject;//col.GetComponent<HealPackItem>();
-            m_useEffect.SetActive(true);
-            m_useEffect.transform.position = m_nearItem.transform.position;
-            m_nearText.text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<Item>().ITEM_ID).Name_kr;
+            
+            string text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<Item>().ITEM_ID).Name_kr;
+            GameManager.Instance().m_inGameUI.ShowObjectUI(text);
         }
     }
 
@@ -1019,9 +1036,10 @@ public class PlayerController : MonoBehaviour {
         LoopAudioStop();
         if (col.CompareTag("Weapon"))
         {
-            m_nearItem = null;
-            m_useEffect.SetActive(false);
-            m_nearText.gameObject.SetActive(false);
+            GameManager.Instance().m_inGameUI.HideObjectUI();
+
+            //  MeshRenderer renderer = m_nearItem.GetComponentInChildren<MeshRenderer>();
+            m_nearItem.GetComponent<Item>().OutLineHide();
         }
         else if (col.CompareTag("OxyCharger"))
         {
@@ -1030,17 +1048,17 @@ public class PlayerController : MonoBehaviour {
                 OxyChargerControlCancle();
             }
             m_nearOxyCharger = null;
-            m_useEffect.SetActive(false);
+            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("ItemBox"))
         {
             m_nearItemBox = null;
-            m_useEffect.SetActive(false);
+            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("ShelterDoor"))
         {
             m_nearShelter = null;
-            m_useEffect.SetActive(false);
+            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("SpaceShipControlPanel"))
         {
@@ -1048,20 +1066,19 @@ public class PlayerController : MonoBehaviour {
             if (m_nearSpaceShip != null)
                 m_nearSpaceShip.StopSpaceShipEngineCharge();
             m_nearSpaceShip = null;
-            m_useEffect.SetActive(false);
+            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("Recoverykit"))
         {
             m_nearItem = null;
-            m_useEffect.SetActive(false);
+            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
 
     }
 
     void RotateUseEffect()
     {
-        if (m_useEffect.activeSelf)
-            m_useEffect.transform.GetChild(0).GetChild(0).rotation = this.transform.rotation;
+
     }
     #endregion -----------------------------------------------------------------------------------------------
 
@@ -1130,13 +1147,9 @@ public class PlayerController : MonoBehaviour {
                 m_curEquipItem = curSelect;
             return;
         }
+
         if (getItem)
         {
-            if (IsInvoking("HideInvenIcon"))
-                CancelInvoke("HideInvenIcon");
-            Invoke("HideInvenIcon" , 3.0f);
-            GameManager.Instance().m_inGameUI.ShowInvenUI();
-
             GameManager.Instance().PLAYER.WEIGHT += item.ITEM_WEIGHT;
         }
         // 현재 착용중인 장비는 끈다
@@ -1161,15 +1174,18 @@ public class PlayerController : MonoBehaviour {
         item.transform.localPosition = item.LOCAL_SET_POS;
         item.transform.localRotation = Quaternion.Euler(item.LOCAL_SET_ROT);
         item.transform.localScale = item.LOCAL_SET_SCALE;
-        m_useEffect.SetActive(false);
+        GameManager.Instance().m_inGameUI.HideObjectUI();
 
         // 기존 코드에 이부분에 무기 발사 앵커를 세팅해주는게 있었지만 무기마다 다르니 무기껄로 쓰기로
 
         item.EQUIP_STATE = true;
 
-        m_useEffect.SetActive(false);
-
         WeaponAnimationChange(item);
+
+        GameManager.Instance().m_inGameUI.ShowInvenUI();
+        if (IsInvoking("HideInvenIcon"))
+            CancelInvoke("HideInvenIcon");
+        Invoke("HideInvenIcon" , 3.0f);
 
         if (NetworkManager.Instance() != null)
             NetworkManager.Instance().C2SRequestEquipItem(item.ITEM_ID ,
@@ -1227,12 +1243,17 @@ public class PlayerController : MonoBehaviour {
         GameManager.Instance().m_inGameUI.ShowInvenUI();
     }
 
+    void HideInvenIcon()
+    {
+        GameManager.Instance().m_inGameUI.HideInvenUI();
+    }
     // 장착해제 -- 수류탄 ( 수류탄만 예외 처리 )
     public void UnEquipGrenade(Item item)
     {
         item.transform.parent = null;
         if (GameManager.Instance() != null)
             GameManager.Instance().UnEquipWeapon(m_curEquipItem);
+        WeaponAnimationChange(null);
     }
     // 버리는 로직 FixedUpdate 에서 부름
     void ControlWeaponObjectThrowProcess()
@@ -1277,6 +1298,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
     #endregion :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
     #endregion -----------------------------------------------------------------------------------------------
 
     #region Player Damage And Dead ---------------------------------------------------------------------------
@@ -1513,9 +1535,11 @@ public class PlayerController : MonoBehaviour {
 
     void OxyChargerControlCancle()
     {
+        
         m_isMoveAble = true;
         m_oxyChargeRequest = false;
-        NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
+        if (m_nearOxyCharger != null)
+            NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
     }
     #endregion
 

@@ -58,7 +58,12 @@ public class InGameUI : MonoBehaviour
 
     #region Network Player HP
     [SerializeField] private GameObject m_hpOrigin = null;
-    
+
+    #endregion
+
+    #region Object UI 
+    [SerializeField] private GameObject m_objecUI;
+    [SerializeField] private UILabel m_objectUIShowName;
     #endregion
     #endregion
 
@@ -96,15 +101,15 @@ public class InGameUI : MonoBehaviour
     public void ShowInvenUI()
     {
         if (iTween.Count(m_invenIconObject) > 0)
-            iTween.Stop(m_invenIconObject);
-        iTween.MoveTo(m_invenIconObject , iTween.Hash("y" , m_showInvenTarget.position.y));
+            return;//iTween.Stop(m_invenIconObject);
+        iTween.MoveTo(m_invenIconObject , iTween.Hash("y" , m_showInvenTarget.position.y,"time",0.5f));
     }
 
     public void HideInvenUI()
     {
         if (iTween.Count(m_invenIconObject) > 0)
             iTween.Stop(m_invenIconObject);
-        iTween.MoveTo(m_invenIconObject , iTween.Hash("y" , m_hideInvenTarget.position.y));
+        iTween.MoveTo(m_invenIconObject , iTween.Hash("y" , m_hideInvenTarget.position.y,"time",0.5f));
     }
 
     public void EquipWeapon(string itemID,int index,int curCount,int maxCount)
@@ -158,9 +163,9 @@ public class InGameUI : MonoBehaviour
     public void UnEquipWeapon(int index)
     {
         //아이템 이름 세팅
-        m_curWeaponName.text = "";
-        GetWeaponName(m_InvenIconList[index]).text = "";
-        GetWeaponIcon(m_InvenIconList[index]).gameObject.SetActive(false);
+        //m_curWeaponName.text = "";
+        //GetWeaponName(m_InvenIconList[index]).text = "";
+        //GetWeaponIcon(m_InvenIconList[index]).gameObject.SetActive(false);
         m_equipInfo.SetActive(false);
     }
 
@@ -242,6 +247,19 @@ public class InGameUI : MonoBehaviour
         Vector3 p = Camera.main.WorldToScreenPoint(pos);
         p = m_uiCamera.ScreenToWorldPoint(p);
         return new Vector3(p.x , p.y + 0.25f , 0.0f);
+    }
+    #endregion
+
+    #region Object UI Method
+    public void ShowObjectUI(string msg)
+    {
+        m_objectUIShowName.text = msg;
+        m_objecUI.SetActive(true);
+    }
+
+    public void HideObjectUI()
+    {
+        m_objecUI.SetActive(false);
     }
     #endregion
 }

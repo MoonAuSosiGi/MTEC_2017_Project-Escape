@@ -953,11 +953,6 @@ public class NetworkManager : Singletone<NetworkManager> {
     {
         if (m_netClient != null)
             m_netClient.FrameMove();
-
-        if(m_itemDict != null && GameManager.Instance() != null)
-        {
-            GameManager.Instance().m_inGameUI.ShowDebugLabel("item " + m_itemDict.Count);
-        }
     }
     #endregion
 

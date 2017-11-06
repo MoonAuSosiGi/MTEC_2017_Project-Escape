@@ -152,10 +152,12 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h" />
     <ClInclude Include="GameRoom.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="json\json-forwards.h" />
+    <ClInclude Include="json\json.h" />
     <ClInclude Include="OxyCharger.h" />
+    <ClInclude Include="RoomClient.h" />
     <ClInclude Include="Shelter.h" />
     <ClInclude Include="SpaceShip.h" />
     <ClInclude Include="SP_Marshaler.h" />
@@ -164,10 +166,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp" />
     <ClCompile Include="GameRoom.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="jsoncpp.cpp" />
     <ClCompile Include="OxyCharger.cpp" />
+    <ClCompile Include="RoomClient.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Shelter.cpp" />
     <ClCompile Include="SpaceShip.cpp" />

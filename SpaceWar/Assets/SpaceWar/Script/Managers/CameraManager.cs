@@ -71,6 +71,11 @@ public class CameraManager : Singletone<CameraManager>
 
     #endregion
 
+    #region Rader
+    [SerializeField] private RaderObject m_rader = null;
+    public RaderObject RADER { get { return m_rader; } }
+    #endregion
+
     #endregion
 
     #region UnityMethod

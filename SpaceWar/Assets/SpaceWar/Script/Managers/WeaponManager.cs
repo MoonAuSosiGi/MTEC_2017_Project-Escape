@@ -8,6 +8,12 @@ public class WeaponManager : Singletone<WeaponManager> {
     // 네트워크 생성 요청 / 이동 / 삭제 또한 여기서 하도록
     #region Weapon Manager INFO ----------------------------------------------------------------------------
 
+    // 게임 아이템 아웃라인 머테리얼
+    [SerializeField]
+    private Material m_outLineMat = null;
+
+    public Material ITEM_OUTLINE_MAT { get { return m_outLineMat; } }
+
     public enum WeaponType
     {
         GUN = 0,

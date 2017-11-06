@@ -6,6 +6,8 @@ using Nettention.Proud;
 public class NetworkPlayer : MonoBehaviour {
 
     #region NetworkPlayer_INFO
+
+    private PlayerController m_playerController = null;
     // -- Network Player -----------------------------------------------------------//
     public Animator PlayerAnim;
     public HostID m_hostID;
@@ -88,6 +90,22 @@ public class NetworkPlayer : MonoBehaviour {
     public HostID HOST_ID { get { return m_hostID; } }
     #endregion
     #endregion
+
+    void Start()
+    {
+        m_playerController = this.GetComponent<PlayerController>();
+    }
+
+    public void ChangeRaderMode()
+    {
+        m_playerController.RENDERER.material = WeaponManager.Instance().ITEM_OUTLINE_MAT;
+    }
+
+    public void ChangeOriginalMode()
+    {
+        m_playerController.RENDERER.material = m_playerController.ORIGIN_MATERIAL;
+    }
+
 
     public void NetworkPlayerSetup(HostID hostID,string userName)
     {

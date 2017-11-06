@@ -68,6 +68,7 @@ public class WeaponItem : Item {
     #region Unity Method 
     void Start()
     {
+        Setup();
         m_source = this.GetComponent<AudioSource>();
     }
     #endregion
