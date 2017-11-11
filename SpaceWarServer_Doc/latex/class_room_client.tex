@@ -1,0 +1,1235 @@
+\hypertarget{class_room_client}{}\section{Room\+Client 클래스 참조}
+\label{class_room_client}\index{Room\+Client@{Room\+Client}}
+
+
+{\ttfamily \#include $<$Room\+Client.\+h$>$}
+
+
+
+Room\+Client에 대한 협력 다이어그램\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=181pt]{class_room_client__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_room_client_a2cc526d1912c14c38858f07e5bac880d}{Room\+Client} (Host\+ID host\+ID, string user\+Name, bool host=false)
+\begin{DoxyCompactList}\small\item\em 생성자, Host\+ID / 유저 이름 / host 유무 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_aa8ad3112c6dcf60baa32ad9561d78616}{Set\+Team\+Color} (bool red)
+\begin{DoxyCompactList}\small\item\em 팀 컬러 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a4f80f0ce1869b8ea80ad82aeef16e44b}{Set\+Ready} (bool ready)
+\begin{DoxyCompactList}\small\item\em 레디 정보 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_abe7c9a89ab9ac294036914ca7ff169da}{Set\+Host} (bool host)
+\begin{DoxyCompactList}\small\item\em 방장 정보 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_aa16788473bcf0c328d6ac3b1f269cfe6}{Set\+Game\+Scene} (bool game\+Scene)
+\begin{DoxyCompactList}\small\item\em 현재 게임씬인지에 대한 정보 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a6d250158da90c56d62a0b5ec7ecdd5aa}{Set\+Assist\+Count} (int assist)
+\begin{DoxyCompactList}\small\item\em 어시스트 정보 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_af86bb780657acddb5b79a5fe9b21b134}{Set\+Kill\+Count} (int kill\+Count)
+\begin{DoxyCompactList}\small\item\em 킬 카운트 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_af009e20b4d9f6209308ba65a99108132}{Set\+Death\+Count} (int death)
+\begin{DoxyCompactList}\small\item\em 데스 카운트 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_room_client_a96701bcafe8b043c50c68b444fcc4ce5}{Get\+Death\+Count} ()
+\begin{DoxyCompactList}\small\item\em 데스 카운트 얻기 \end{DoxyCompactList}\item 
+int \hyperlink{class_room_client_aa83650c93a773c1e2bf80503d54137b4}{Get\+Kill\+Count} ()
+\begin{DoxyCompactList}\small\item\em 킬 카운트 얻기 \end{DoxyCompactList}\item 
+int \hyperlink{class_room_client_a95b4f7d48d426b554b1cb542450fb089}{Get\+Assist\+Count} ()
+\begin{DoxyCompactList}\small\item\em 어시스트 정보 얻기 \end{DoxyCompactList}\item 
+bool \hyperlink{class_room_client_a5e79fbf09ee0f8c5ed9500116fe04fb2}{Is\+Host} ()
+\begin{DoxyCompactList}\small\item\em 이 클라이언트가 방장인지 \end{DoxyCompactList}\item 
+bool \hyperlink{class_room_client_acd23b894bb8090e89d1bd7163c1db395}{Is\+Ready} ()
+\begin{DoxyCompactList}\small\item\em 레디 중인지 \end{DoxyCompactList}\item 
+bool \hyperlink{class_room_client_adc646ab59c5581d2f15b117d4eb51987}{Is\+Red\+Team} ()
+\begin{DoxyCompactList}\small\item\em 레드팀인지 \end{DoxyCompactList}\item 
+bool \hyperlink{class_room_client_ad906becf30abca17614ca70f00a3aa28}{Is\+Game\+Scene} ()
+\begin{DoxyCompactList}\small\item\em 게임씬인지 아닌지 \end{DoxyCompactList}\item 
+Host\+ID \hyperlink{class_room_client_abd9ca9b40211167cd5c995a628cb7c23}{Get\+Host\+ID} ()
+\begin{DoxyCompactList}\small\item\em Host ID 얻기 \end{DoxyCompactList}\item 
+string \hyperlink{class_room_client_ac7e064c639bf2bf2f2d5fdfceb75645b}{Get\+Name} ()
+\begin{DoxyCompactList}\small\item\em 유저 이름 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a0f21c1dbda294ebe79195248c5d32dc6}{Set\+Position} (Vector3 pos)
+\begin{DoxyCompactList}\small\item\em 현재 포지션 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a4b76c74d4c9fdaaac4f876f6d35a8bfb}{Set\+Position} (float x, float y, float z)
+\begin{DoxyCompactList}\small\item\em 현재 포지션 세팅 \end{DoxyCompactList}\item 
+Vector3 \hyperlink{class_room_client_a3016a1d1ab8ec0976c11e85c4c7312e5}{Get\+Position} ()
+\begin{DoxyCompactList}\small\item\em 현재 포지션 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_ade76f054278add2b12575b82802402c7}{Set\+Hp} (float new\+Hp)
+\begin{DoxyCompactList}\small\item\em Hp 값 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a18c7c0229d3c71c755b33a57b804b996}{Hp\+Update} (float val)
+\begin{DoxyCompactList}\small\item\em 더해질 hp \end{DoxyCompactList}\item 
+float \hyperlink{class_room_client_a5f65e0e924f26ebbc6f14721655a0af4}{Get\+Hp} ()
+\begin{DoxyCompactList}\small\item\em hp 리턴 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a2e18fdd17364dc295fd0bd6da61e3727}{Set\+Oxy} (float new\+Oxy)
+\begin{DoxyCompactList}\small\item\em Oxy 값 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_afa031772ae59a775b4f4a5d8981aabb6}{Oxy\+Update} (float val)
+\begin{DoxyCompactList}\small\item\em 더해질 oxy \end{DoxyCompactList}\item 
+float \hyperlink{class_room_client_a5d43788e44e43ddf5ac897195ab2d977}{Get\+Oxy} ()
+\begin{DoxyCompactList}\small\item\em Oxy 리턴 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a2391082059ef2e5148ba9e74baf6259e}{Set\+State} (int state)
+\begin{DoxyCompactList}\small\item\em State 변경 \end{DoxyCompactList}\item 
+int \hyperlink{class_room_client_a813a45c92f0d6869546539093ab5c18a}{Get\+State} ()
+\begin{DoxyCompactList}\small\item\em State 리턴 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a0ba33e4df82c58b4d7f8278daefc6bd9}{Game\+Reset} ()
+\begin{DoxyCompactList}\small\item\em 게임 리셋시 호출 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_a16bae0bd06c33e1f96b5a3ac675db567}{Damage\+Client} (int host\+ID, float time)
+\begin{DoxyCompactList}\small\item\em 어시스트 계산을 위해 때린 녀석 기록 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_aa1914f4585c26f5073c3f8639d38aa41}{Player\+Dead} (float dead\+Time)
+\begin{DoxyCompactList}\small\item\em 플레이어가 죽었을 때의 처리 \end{DoxyCompactList}\item 
+void \hyperlink{class_room_client_aab61bfaebafc8159336c3ec72aa21758}{Player\+Win} ()
+\begin{DoxyCompactList}\small\item\em 이 플레이어가 승리했을 경우에 대한 처리 \end{DoxyCompactList}\item 
+forward\+\_\+list$<$ int $>$ \hyperlink{class_room_client_a77d6732bdd92fd7222949f8408a1a4d4}{Get\+Assist\+Client\+List} ()
+\begin{DoxyCompactList}\small\item\em 이 클라이언트가 죽었을때, 어시스트한 클라이언트 리스트 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+Host\+ID \hyperlink{class_room_client_a44db06515969e9ef7d4fad346bc01a7c}{m\+\_\+host\+ID}
+\begin{DoxyCompactList}\small\item\em 클라이언트의 Host\+ID \end{DoxyCompactList}\item 
+string \hyperlink{class_room_client_ae501fdc166c6ae17dc2286ecd382ae71}{m\+\_\+user\+Name}
+\begin{DoxyCompactList}\small\item\em 클라이언트의 유저 이름 \end{DoxyCompactList}\item 
+bool \hyperlink{class_room_client_a4552bc59af3cf8137a506cdfbe7540cb}{m\+\_\+red\+Team}
+\begin{DoxyCompactList}\small\item\em 적색 팀인지 (팀전일 경우에만 해당) \end{DoxyCompactList}\item 
+bool \hyperlink{class_room_client_a09fb4ef6ca643e53d68ad771761e8289}{m\+\_\+is\+Ready}
+\begin{DoxyCompactList}\small\item\em 레디 상태인지 ( 대기실, 방장이 아닐때 ) \end{DoxyCompactList}\item 
+bool \hyperlink{class_room_client_a09df06af0caa37c9ee7d3b91fe80b317}{m\+\_\+is\+Host}
+\begin{DoxyCompactList}\small\item\em 방장인지 아닌지 \end{DoxyCompactList}\item 
+bool \hyperlink{class_room_client_a491106d1b6fbf97fd76a7d1449bf5de9}{m\+\_\+is\+Game\+Scene}
+\begin{DoxyCompactList}\small\item\em 현재 게임씬 안인지 \end{DoxyCompactList}\item 
+Vector3 \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\+\_\+pos}
+\begin{DoxyCompactList}\small\item\em 현재 위치 \end{DoxyCompactList}\item 
+float \hyperlink{class_room_client_a2b4f07062f9927aa30772306a1b9d18a}{m\+\_\+hp}
+\begin{DoxyCompactList}\small\item\em 현재 클라이언트의 체력 \end{DoxyCompactList}\item 
+float \hyperlink{class_room_client_a8c0bd64aa8b2d03f23b9a1ab5c2c2c1a}{m\+\_\+oxy}
+\begin{DoxyCompactList}\small\item\em 현재 클라이언트의 산소량 \end{DoxyCompactList}\item 
+int \hyperlink{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}{m\+\_\+state}
+\begin{DoxyCompactList}\small\item\em 살아있는지 죽어있는지 우주선인지 등에 대한 Player\+State \end{DoxyCompactList}\item 
+int \hyperlink{class_room_client_a4427d3725926876237d44ae4b088c57f}{m\+\_\+death\+Count}
+\begin{DoxyCompactList}\small\item\em 죽은 횟수 \end{DoxyCompactList}\item 
+int \hyperlink{class_room_client_a221340e3b573d5b8e3c09fcc16bbb01b}{m\+\_\+kill\+Count}
+\begin{DoxyCompactList}\small\item\em 죽인 횟수 \end{DoxyCompactList}\item 
+int \hyperlink{class_room_client_adacb97c1fec85cb0efef063dc43073f5}{m\+\_\+assist\+Count}
+\begin{DoxyCompactList}\small\item\em 어시스트 횟수 \end{DoxyCompactList}\item 
+unordered\+\_\+map$<$ int, float $>$ \hyperlink{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}{m\+\_\+assist\+Check}
+\begin{DoxyCompactList}\small\item\em 어시스트 관련 체크용 맵 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+
+Room\+Client.\+h 파일의 13 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_room_client_a2cc526d1912c14c38858f07e5bac880d}\label{class_room_client_a2cc526d1912c14c38858f07e5bac880d}} 
+\index{Room\+Client@{Room\+Client}!Room\+Client@{Room\+Client}}
+\index{Room\+Client@{Room\+Client}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Room\+Client()}{RoomClient()}}
+{\footnotesize\ttfamily Room\+Client\+::\+Room\+Client (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID,  }\item[{string}]{user\+Name,  }\item[{bool}]{host = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+생성자, Host\+ID / 유저 이름 / host 유무 
+
+\hyperlink{class_room_client}{Room\+Client} 생성  대기실 / 인게임 에서 활용되는 클라이언트에 대한 정보 클래스 생성자
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 클라이언트 Host\+ID ( 고유함 ) \\
+\hline
+{\em user\+Name} & 유저 이름 \\
+\hline
+{\em host} & 방장 유무 ( 기본 false ) \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 11 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+12 \{
+13     \hyperlink{class_room_client_a44db06515969e9ef7d4fad346bc01a7c}{m\_hostID} = hostID;
+14     \hyperlink{class_room_client_ae501fdc166c6ae17dc2286ecd382ae71}{m\_userName} = userName;
+15     \hyperlink{class_room_client_a4552bc59af3cf8137a506cdfbe7540cb}{m\_redTeam} = \textcolor{keyword}{true};
+16     \hyperlink{class_room_client_a09fb4ef6ca643e53d68ad771761e8289}{m\_isReady} = \textcolor{keyword}{false};
+17     \hyperlink{class_room_client_a09df06af0caa37c9ee7d3b91fe80b317}{m\_isHost} = host;
+18     \hyperlink{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}{m\_state} = \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1a4f34c5c191d6e0d028ca831b6c0b1571}{ALIVE};
+19     \hyperlink{class_room_client_a2b4f07062f9927aa30772306a1b9d18a}{m\_hp} = \hyperlink{stdafx_8h_ae6144c7aefdd59e0f9db907fbebfc909}{MAX\_HP};
+20     \hyperlink{class_room_client_a8c0bd64aa8b2d03f23b9a1ab5c2c2c1a}{m\_oxy} = \hyperlink{stdafx_8h_a39c49682d3bf28fbe2338718981f5d1f}{MAX\_OXY};
+21 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_room_client_a16bae0bd06c33e1f96b5a3ac675db567}\label{class_room_client_a16bae0bd06c33e1f96b5a3ac675db567}} 
+\index{Room\+Client@{Room\+Client}!Damage\+Client@{Damage\+Client}}
+\index{Damage\+Client@{Damage\+Client}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Damage\+Client()}{DamageClient()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Damage\+Client (\begin{DoxyParamCaption}\item[{int}]{host\+ID,  }\item[{float}]{time }\end{DoxyParamCaption})}
+
+
+
+어시스트 계산을 위해 때린 녀석 기록 
+
+어시스트 리스트 계산을 위한 저장 함수  때린 클라이언트들을 저장하는데, 때린 시간 기록
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 때린 클라이언트 \\
+\hline
+{\em time} & 때린 시간 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 312 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+313 \{
+314     \hyperlink{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}{m\_assistCheck}[hostID] = time;
+315 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a0ba33e4df82c58b4d7f8278daefc6bd9}\label{class_room_client_a0ba33e4df82c58b4d7f8278daefc6bd9}} 
+\index{Room\+Client@{Room\+Client}!Game\+Reset@{Game\+Reset}}
+\index{Game\+Reset@{Game\+Reset}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Game\+Reset()}{GameReset()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Game\+Reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+게임 리셋시 호출 
+
+게임 상태 리셋
+
+\begin{DoxyRefDesc}{할일}
+\item[\hyperlink{todo__todo000001}{할일}]체력값 등은 테이블에서 받아올 것 \end{DoxyRefDesc}
+
+
+Room\+Client.\+cpp 파일의 290 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+291 \{
+292     \hyperlink{class_room_client_a491106d1b6fbf97fd76a7d1449bf5de9}{m\_isGameScene} = \textcolor{keyword}{false};
+293     \hyperlink{class_room_client_a09fb4ef6ca643e53d68ad771761e8289}{m\_isReady} = \textcolor{keyword}{false};
+294 
+295     \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\_pos}.x = \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\_pos}.y = \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\_pos}.z = 0.0f;
+296 \textcolor{comment}{/*}
+297 \textcolor{comment}{    m\_hp = MAX\_HP;}
+298 \textcolor{comment}{    m\_oxy = MAX\_OXY;*/}
+299     \hyperlink{class_room_client_a221340e3b573d5b8e3c09fcc16bbb01b}{m\_killCount} = 0;
+300     \hyperlink{class_room_client_adacb97c1fec85cb0efef063dc43073f5}{m\_assistCount} = 0;
+301     \hyperlink{class_room_client_a4427d3725926876237d44ae4b088c57f}{m\_deathCount} = 0;
+302 
+303     \hyperlink{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}{m\_state} = \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1a4f34c5c191d6e0d028ca831b6c0b1571}{ALIVE};
+304 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a77d6732bdd92fd7222949f8408a1a4d4}\label{class_room_client_a77d6732bdd92fd7222949f8408a1a4d4}} 
+\index{Room\+Client@{Room\+Client}!Get\+Assist\+Client\+List@{Get\+Assist\+Client\+List}}
+\index{Get\+Assist\+Client\+List@{Get\+Assist\+Client\+List}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Assist\+Client\+List()}{GetAssistClientList()}}
+{\footnotesize\ttfamily forward\+\_\+list$<$ int $>$ Room\+Client\+::\+Get\+Assist\+Client\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+이 클라이언트가 죽었을때, 어시스트한 클라이언트 리스트 
+
+현재 플레이어의 사망에 관여한 클라이언트 리스트
+
+\begin{DoxyRefDesc}{할일}
+\item[\hyperlink{todo__todo000003}{할일}]로직 점검 요망 \end{DoxyRefDesc}
+
+
+Room\+Client.\+cpp 파일의 357 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+358 \{
+359     forward\_list<int> list;
+360 
+361     \textcolor{keyword}{auto} iter = \hyperlink{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}{m\_assistCheck}.begin();
+362 
+363     \textcolor{keywordflow}{while} (iter != \hyperlink{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}{m\_assistCheck}.end())
+364     \{
+365         list.push\_front(iter->first);
+366         iter++;
+367     \}
+368 
+369     \textcolor{keywordflow}{return} list;
+370 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a95b4f7d48d426b554b1cb542450fb089}\label{class_room_client_a95b4f7d48d426b554b1cb542450fb089}} 
+\index{Room\+Client@{Room\+Client}!Get\+Assist\+Count@{Get\+Assist\+Count}}
+\index{Get\+Assist\+Count@{Get\+Assist\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Assist\+Count()}{GetAssistCount()}}
+{\footnotesize\ttfamily int Room\+Client\+::\+Get\+Assist\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+어시스트 정보 얻기 
+
+어시스트 얻기
+
+\begin{DoxyReturn}{반환값}
+어시스트를 얼마나 올렸는지 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 110 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+111 \{
+112     \textcolor{keywordflow}{return} \hyperlink{class_room_client_adacb97c1fec85cb0efef063dc43073f5}{m\_assistCount};
+113 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a96701bcafe8b043c50c68b444fcc4ce5}\label{class_room_client_a96701bcafe8b043c50c68b444fcc4ce5}} 
+\index{Room\+Client@{Room\+Client}!Get\+Death\+Count@{Get\+Death\+Count}}
+\index{Get\+Death\+Count@{Get\+Death\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Death\+Count()}{GetDeathCount()}}
+{\footnotesize\ttfamily int Room\+Client\+::\+Get\+Death\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+데스 카운트 얻기 
+
+죽은 횟수 얻기
+
+\begin{DoxyReturn}{반환값}
+죽은 횟수를 리턴한다. 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 93 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+94 \{
+95     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a4427d3725926876237d44ae4b088c57f}{m\_deathCount};
+96 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_abd9ca9b40211167cd5c995a628cb7c23}\label{class_room_client_abd9ca9b40211167cd5c995a628cb7c23}} 
+\index{Room\+Client@{Room\+Client}!Get\+Host\+ID@{Get\+Host\+ID}}
+\index{Get\+Host\+ID@{Get\+Host\+ID}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Host\+I\+D()}{GetHostID()}}
+{\footnotesize\ttfamily Host\+ID Room\+Client\+::\+Get\+Host\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Host ID 얻기 
+
+클라이언트의 Host\+ID 얻기
+
+\begin{DoxyReturn}{반환값}
+해당 클라이언트의 Host\+ID 를 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 156 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+157 \{
+158     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a44db06515969e9ef7d4fad346bc01a7c}{m\_hostID}; 
+159 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a5f65e0e924f26ebbc6f14721655a0af4}\label{class_room_client_a5f65e0e924f26ebbc6f14721655a0af4}} 
+\index{Room\+Client@{Room\+Client}!Get\+Hp@{Get\+Hp}}
+\index{Get\+Hp@{Get\+Hp}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Hp()}{GetHp()}}
+{\footnotesize\ttfamily float Room\+Client\+::\+Get\+Hp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+hp 리턴 
+
+체력 반환
+
+\begin{DoxyReturn}{반환값}
+hp를 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 229 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+230 \{
+231     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a2b4f07062f9927aa30772306a1b9d18a}{m\_hp};
+232 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_aa83650c93a773c1e2bf80503d54137b4}\label{class_room_client_aa83650c93a773c1e2bf80503d54137b4}} 
+\index{Room\+Client@{Room\+Client}!Get\+Kill\+Count@{Get\+Kill\+Count}}
+\index{Get\+Kill\+Count@{Get\+Kill\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Kill\+Count()}{GetKillCount()}}
+{\footnotesize\ttfamily int Room\+Client\+::\+Get\+Kill\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+킬 카운트 얻기 
+
+\begin{DoxyReturn}{반환값}
+킬 카운트 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 102 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+103 \{
+104     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a221340e3b573d5b8e3c09fcc16bbb01b}{m\_killCount};
+105 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_ac7e064c639bf2bf2f2d5fdfceb75645b}\label{class_room_client_ac7e064c639bf2bf2f2d5fdfceb75645b}} 
+\index{Room\+Client@{Room\+Client}!Get\+Name@{Get\+Name}}
+\index{Get\+Name@{Get\+Name}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Name()}{GetName()}}
+{\footnotesize\ttfamily string Room\+Client\+::\+Get\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+유저 이름 얻기 
+
+클라이언트의 유저 이름 얻기
+
+\begin{DoxyReturn}{반환값}
+해당 클라이언트의 user\+Name을 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 165 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+166 \{ 
+167     \textcolor{keywordflow}{return} \hyperlink{class_room_client_ae501fdc166c6ae17dc2286ecd382ae71}{m\_userName}; 
+168 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a5d43788e44e43ddf5ac897195ab2d977}\label{class_room_client_a5d43788e44e43ddf5ac897195ab2d977}} 
+\index{Room\+Client@{Room\+Client}!Get\+Oxy@{Get\+Oxy}}
+\index{Get\+Oxy@{Get\+Oxy}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Oxy()}{GetOxy()}}
+{\footnotesize\ttfamily float Room\+Client\+::\+Get\+Oxy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Oxy 리턴 
+
+산소 리턴
+
+\begin{DoxyReturn}{반환값}
+oxy를 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 258 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+259 \{
+260     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a8c0bd64aa8b2d03f23b9a1ab5c2c2c1a}{m\_oxy};
+261 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a3016a1d1ab8ec0976c11e85c4c7312e5}\label{class_room_client_a3016a1d1ab8ec0976c11e85c4c7312e5}} 
+\index{Room\+Client@{Room\+Client}!Get\+Position@{Get\+Position}}
+\index{Get\+Position@{Get\+Position}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+Position()}{GetPosition()}}
+{\footnotesize\ttfamily Vector3 Room\+Client\+::\+Get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+현재 포지션 얻기 
+
+현재 포지션 얻기  현재 위치지만 대략적인 위치를 리턴
+
+\begin{DoxyReturn}{반환값}
+현재 플레이어의 position 을 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 200 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+201 \{ 
+202     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\_pos}; 
+203 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a813a45c92f0d6869546539093ab5c18a}\label{class_room_client_a813a45c92f0d6869546539093ab5c18a}} 
+\index{Room\+Client@{Room\+Client}!Get\+State@{Get\+State}}
+\index{Get\+State@{Get\+State}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Get\+State()}{GetState()}}
+{\footnotesize\ttfamily int Room\+Client\+::\+Get\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+State 리턴 
+
+플레이어 상태 리턴
+
+\begin{DoxyReturn}{반환값}
+state 리턴 ( P\+L\+A\+Y\+E\+R\+\_\+\+S\+T\+A\+TE Enum ) 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 277 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+278 \{
+279     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}{m\_state};
+280 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a18c7c0229d3c71c755b33a57b804b996}\label{class_room_client_a18c7c0229d3c71c755b33a57b804b996}} 
+\index{Room\+Client@{Room\+Client}!Hp\+Update@{Hp\+Update}}
+\index{Hp\+Update@{Hp\+Update}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Hp\+Update()}{HpUpdate()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Hp\+Update (\begin{DoxyParamCaption}\item[{float}]{val }\end{DoxyParamCaption})}
+
+
+
+더해질 hp 
+
+체력 업데이트  현재 체력을 새로운 값과 더함
+
+
+\begin{DoxyParams}{매개변수}
+{\em val} & hp에 더해질 값 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 220 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+221 \{
+222     \hyperlink{class_room_client_a2b4f07062f9927aa30772306a1b9d18a}{m\_hp} += val;
+223 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_ad906becf30abca17614ca70f00a3aa28}\label{class_room_client_ad906becf30abca17614ca70f00a3aa28}} 
+\index{Room\+Client@{Room\+Client}!Is\+Game\+Scene@{Is\+Game\+Scene}}
+\index{Is\+Game\+Scene@{Is\+Game\+Scene}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Is\+Game\+Scene()}{IsGameScene()}}
+{\footnotesize\ttfamily bool Room\+Client\+::\+Is\+Game\+Scene (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+게임씬인지 아닌지 
+
+게임씬인지 반환
+
+\begin{DoxyReturn}{반환값}
+현재 게임씬일 경우 true 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 147 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+148 \{
+149     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a491106d1b6fbf97fd76a7d1449bf5de9}{m\_isGameScene}; 
+150 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a5e79fbf09ee0f8c5ed9500116fe04fb2}\label{class_room_client_a5e79fbf09ee0f8c5ed9500116fe04fb2}} 
+\index{Room\+Client@{Room\+Client}!Is\+Host@{Is\+Host}}
+\index{Is\+Host@{Is\+Host}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Is\+Host()}{IsHost()}}
+{\footnotesize\ttfamily bool Room\+Client\+::\+Is\+Host (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+이 클라이언트가 방장인지 
+
+방장 유무 반환
+
+\begin{DoxyReturn}{반환값}
+방장일 경우 true 를 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 119 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+120 \{
+121     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a09df06af0caa37c9ee7d3b91fe80b317}{m\_isHost};
+122 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_acd23b894bb8090e89d1bd7163c1db395}\label{class_room_client_acd23b894bb8090e89d1bd7163c1db395}} 
+\index{Room\+Client@{Room\+Client}!Is\+Ready@{Is\+Ready}}
+\index{Is\+Ready@{Is\+Ready}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Is\+Ready()}{IsReady()}}
+{\footnotesize\ttfamily bool Room\+Client\+::\+Is\+Ready (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+레디 중인지 
+
+레디 유무 반환
+
+\begin{DoxyReturn}{반환값}
+레디 상태일 경우 true 를 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 128 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+129 \{ 
+130     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a09fb4ef6ca643e53d68ad771761e8289}{m\_isReady}; 
+131 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_adc646ab59c5581d2f15b117d4eb51987}\label{class_room_client_adc646ab59c5581d2f15b117d4eb51987}} 
+\index{Room\+Client@{Room\+Client}!Is\+Red\+Team@{Is\+Red\+Team}}
+\index{Is\+Red\+Team@{Is\+Red\+Team}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Is\+Red\+Team()}{IsRedTeam()}}
+{\footnotesize\ttfamily bool Room\+Client\+::\+Is\+Red\+Team (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+레드팀인지 
+
+적색 팀인지 반환  팀전일 경우에만 사용
+
+\begin{DoxyReturn}{반환값}
+적색 팀일 경우 true 를 리턴 
+\end{DoxyReturn}
+
+
+Room\+Client.\+cpp 파일의 138 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+139 \{
+140     \textcolor{keywordflow}{return} \hyperlink{class_room_client_a4552bc59af3cf8137a506cdfbe7540cb}{m\_redTeam}; 
+141 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_afa031772ae59a775b4f4a5d8981aabb6}\label{class_room_client_afa031772ae59a775b4f4a5d8981aabb6}} 
+\index{Room\+Client@{Room\+Client}!Oxy\+Update@{Oxy\+Update}}
+\index{Oxy\+Update@{Oxy\+Update}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Oxy\+Update()}{OxyUpdate()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Oxy\+Update (\begin{DoxyParamCaption}\item[{float}]{val }\end{DoxyParamCaption})}
+
+
+
+더해질 oxy 
+
+산소 업데이트  현재 산소를 새로운 값과 더함
+
+
+\begin{DoxyParams}{매개변수}
+{\em val} & oxy에 더해질 값 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 249 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+250 \{
+251     \hyperlink{class_room_client_a8c0bd64aa8b2d03f23b9a1ab5c2c2c1a}{m\_oxy} += val;
+252 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_aa1914f4585c26f5073c3f8639d38aa41}\label{class_room_client_aa1914f4585c26f5073c3f8639d38aa41}} 
+\index{Room\+Client@{Room\+Client}!Player\+Dead@{Player\+Dead}}
+\index{Player\+Dead@{Player\+Dead}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Player\+Dead()}{PlayerDead()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Player\+Dead (\begin{DoxyParamCaption}\item[{float}]{dead\+Time }\end{DoxyParamCaption})}
+
+
+
+플레이어가 죽었을 때의 처리 
+
+플레이어가 사망시에 따른 처리  플레이어가 죽었을 경우 결과창 보여주기 관련 처리 ( 어시스트 등 )
+
+\begin{DoxyRefDesc}{할일}
+\item[\hyperlink{todo__todo000002}{할일}]어시스트 허용시간 테이블 값으로 가져오기 / 어시스트 로직 점검 \end{DoxyRefDesc}
+
+
+Room\+Client.\+cpp 파일의 322 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+323 \{
+324     cout << \textcolor{stringliteral}{"Player Dead : "} << (int)\hyperlink{class_room_client_a44db06515969e9ef7d4fad346bc01a7c}{m\_hostID} << \textcolor{stringliteral}{" Dead Time : "} << deadTime << endl;
+325     \hyperlink{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}{m\_state} = \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1aa65c1c1f61d319e66a6269441cdcbd71}{DEATH};
+326     \hyperlink{class_room_client_a4427d3725926876237d44ae4b088c57f}{m\_deathCount}++;
+327     \textcolor{comment}{// 어시스트의 목록을 만들어야 함}
+328     \textcolor{keyword}{auto} iter = \hyperlink{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}{m\_assistCheck}.begin();
+329 
+330     \textcolor{keywordflow}{while} (iter != \hyperlink{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}{m\_assistCheck}.end())
+331     \{
+332         \textcolor{keywordtype}{float} timeCheck = deadTime - iter->second;
+333 
+334         \textcolor{keywordflow}{if} (timeCheck > 7000)
+335         \{
+336             \textcolor{comment}{//어시스트 허용 시간을 넘었다!}
+337             \textcolor{comment}{// 삭제}
+338             iter = \hyperlink{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}{m\_assistCheck}.erase(iter);
+339         \}
+340         \textcolor{keywordflow}{else}
+341             iter++;
+342     \}
+343 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_aab61bfaebafc8159336c3ec72aa21758}\label{class_room_client_aab61bfaebafc8159336c3ec72aa21758}} 
+\index{Room\+Client@{Room\+Client}!Player\+Win@{Player\+Win}}
+\index{Player\+Win@{Player\+Win}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Player\+Win()}{PlayerWin()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Player\+Win (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+이 플레이어가 승리했을 경우에 대한 처리 
+
+플레이어가 이겼을 때의 처리 
+
+Room\+Client.\+cpp 파일의 348 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+349 \{
+350     \hyperlink{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}{m\_state} = \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1a5848c1d9acabf42d71255e110aee24c2}{SPACESHIP};
+351 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a6d250158da90c56d62a0b5ec7ecdd5aa}\label{class_room_client_a6d250158da90c56d62a0b5ec7ecdd5aa}} 
+\index{Room\+Client@{Room\+Client}!Set\+Assist\+Count@{Set\+Assist\+Count}}
+\index{Set\+Assist\+Count@{Set\+Assist\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Assist\+Count()}{SetAssistCount()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Assist\+Count (\begin{DoxyParamCaption}\item[{int}]{assist }\end{DoxyParamCaption})}
+
+
+
+어시스트 정보 세팅 
+
+어시스트세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em 세팅할} & 어시스트 변수 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 66 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+67 \{
+68     \hyperlink{class_room_client_adacb97c1fec85cb0efef063dc43073f5}{m\_assistCount} = assist;
+69 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_af009e20b4d9f6209308ba65a99108132}\label{class_room_client_af009e20b4d9f6209308ba65a99108132}} 
+\index{Room\+Client@{Room\+Client}!Set\+Death\+Count@{Set\+Death\+Count}}
+\index{Set\+Death\+Count@{Set\+Death\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Death\+Count()}{SetDeathCount()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Death\+Count (\begin{DoxyParamCaption}\item[{int}]{death }\end{DoxyParamCaption})}
+
+
+
+데스 카운트 세팅 
+
+죽은 횟수 세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em 죽은} & 횟수를 세팅한다. \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 84 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+85 \{
+86     \hyperlink{class_room_client_a4427d3725926876237d44ae4b088c57f}{m\_deathCount} = death;
+87 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_aa16788473bcf0c328d6ac3b1f269cfe6}\label{class_room_client_aa16788473bcf0c328d6ac3b1f269cfe6}} 
+\index{Room\+Client@{Room\+Client}!Set\+Game\+Scene@{Set\+Game\+Scene}}
+\index{Set\+Game\+Scene@{Set\+Game\+Scene}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Game\+Scene()}{SetGameScene()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Game\+Scene (\begin{DoxyParamCaption}\item[{bool}]{game\+Scene }\end{DoxyParamCaption})}
+
+
+
+현재 게임씬인지에 대한 정보 세팅 
+
+현재 게임씬인지 아닌지에 대한 정보 세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em game\+Scene} & 게임씬일 경우 true \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 57 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+58 \{
+59     \hyperlink{class_room_client_a491106d1b6fbf97fd76a7d1449bf5de9}{m\_isGameScene} = gameScene;
+60 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_abe7c9a89ab9ac294036914ca7ff169da}\label{class_room_client_abe7c9a89ab9ac294036914ca7ff169da}} 
+\index{Room\+Client@{Room\+Client}!Set\+Host@{Set\+Host}}
+\index{Set\+Host@{Set\+Host}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Host()}{SetHost()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Host (\begin{DoxyParamCaption}\item[{bool}]{host }\end{DoxyParamCaption})}
+
+
+
+방장 정보 세팅 
+
+클라이언트가 방장인지 아닌지 세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em host} & 방장 유무 정보 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 48 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+49 \{
+50     \hyperlink{class_room_client_a09df06af0caa37c9ee7d3b91fe80b317}{m\_isHost} = host;
+51 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_ade76f054278add2b12575b82802402c7}\label{class_room_client_ade76f054278add2b12575b82802402c7}} 
+\index{Room\+Client@{Room\+Client}!Set\+Hp@{Set\+Hp}}
+\index{Set\+Hp@{Set\+Hp}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Hp()}{SetHp()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Hp (\begin{DoxyParamCaption}\item[{float}]{new\+Hp }\end{DoxyParamCaption})}
+
+
+
+Hp 값 세팅 
+
+체력 세팅  체력 값 강제 변경
+
+
+\begin{DoxyParams}{매개변수}
+{\em new\+Hp} & 바꿀 hp값 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 210 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+211 \{
+212     \hyperlink{class_room_client_a2b4f07062f9927aa30772306a1b9d18a}{m\_hp} = newHp;
+213 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_af86bb780657acddb5b79a5fe9b21b134}\label{class_room_client_af86bb780657acddb5b79a5fe9b21b134}} 
+\index{Room\+Client@{Room\+Client}!Set\+Kill\+Count@{Set\+Kill\+Count}}
+\index{Set\+Kill\+Count@{Set\+Kill\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Kill\+Count()}{SetKillCount()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Kill\+Count (\begin{DoxyParamCaption}\item[{int}]{kill\+Count }\end{DoxyParamCaption})}
+
+
+
+킬 카운트 세팅 
+
+
+\begin{DoxyParams}{매개변수}
+{\em 세팅할} & 킬 카운트 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 75 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+76 \{
+77     \hyperlink{class_room_client_a221340e3b573d5b8e3c09fcc16bbb01b}{m\_killCount} = killCount;
+78 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a2e18fdd17364dc295fd0bd6da61e3727}\label{class_room_client_a2e18fdd17364dc295fd0bd6da61e3727}} 
+\index{Room\+Client@{Room\+Client}!Set\+Oxy@{Set\+Oxy}}
+\index{Set\+Oxy@{Set\+Oxy}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Oxy()}{SetOxy()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Oxy (\begin{DoxyParamCaption}\item[{float}]{new\+Oxy }\end{DoxyParamCaption})}
+
+
+
+Oxy 값 세팅 
+
+산소 세팅  산소값 강제 변경
+
+
+\begin{DoxyParams}{매개변수}
+{\em new\+Oxy} & \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 239 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+240 \{
+241     \hyperlink{class_room_client_a8c0bd64aa8b2d03f23b9a1ab5c2c2c1a}{m\_oxy} = newOxy;
+242 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a0f21c1dbda294ebe79195248c5d32dc6}\label{class_room_client_a0f21c1dbda294ebe79195248c5d32dc6}} 
+\index{Room\+Client@{Room\+Client}!Set\+Position@{Set\+Position}}
+\index{Set\+Position@{Set\+Position}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Position()}{SetPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Position (\begin{DoxyParamCaption}\item[{Vector3}]{pos }\end{DoxyParamCaption})}
+
+
+
+현재 포지션 세팅 
+
+현재 위치 세팅  현재 위치지만 대략적인 위치 ( 클라이언트에서 이동을 처리하기 때문 )
+
+
+\begin{DoxyParams}{매개변수}
+{\em pos} & Vector형태의 포지션 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 178 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+179 \{
+180     \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\_pos} = pos;
+181 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a4b76c74d4c9fdaaac4f876f6d35a8bfb}\label{class_room_client_a4b76c74d4c9fdaaac4f876f6d35a8bfb}} 
+\index{Room\+Client@{Room\+Client}!Set\+Position@{Set\+Position}}
+\index{Set\+Position@{Set\+Position}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Position()}{SetPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Position (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})}
+
+
+
+현재 포지션 세팅 
+
+현재 위치 세팅  현재 위치지만 대략적인 위치 ( 클라이언트에서 이동을 처리하기 때문 )
+
+
+\begin{DoxyParams}{매개변수}
+{\em x} & 플레이어의 x좌표 \\
+\hline
+{\em y} & 플레이어의 y좌표 \\
+\hline
+{\em z} & 플레이어의 z좌표 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 190 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+191 \{
+192     \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\_pos}.x = x; \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\_pos}.y = y; \hyperlink{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}{m\_pos}.z = z;
+193 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a4f80f0ce1869b8ea80ad82aeef16e44b}\label{class_room_client_a4f80f0ce1869b8ea80ad82aeef16e44b}} 
+\index{Room\+Client@{Room\+Client}!Set\+Ready@{Set\+Ready}}
+\index{Set\+Ready@{Set\+Ready}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Ready()}{SetReady()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Ready (\begin{DoxyParamCaption}\item[{bool}]{ready }\end{DoxyParamCaption})}
+
+
+
+레디 정보 세팅 
+
+클라이언트 레디 정보 세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em ready} & 레디 유무 정보 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 39 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+40 \{
+41     \hyperlink{class_room_client_a09fb4ef6ca643e53d68ad771761e8289}{m\_isReady} = ready;
+42 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_a2391082059ef2e5148ba9e74baf6259e}\label{class_room_client_a2391082059ef2e5148ba9e74baf6259e}} 
+\index{Room\+Client@{Room\+Client}!Set\+State@{Set\+State}}
+\index{Set\+State@{Set\+State}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+State()}{SetState()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+State (\begin{DoxyParamCaption}\item[{int}]{state }\end{DoxyParamCaption})}
+
+
+
+State 변경 
+
+플레이어 상태 변경  A\+L\+I\+VE , D\+E\+AD , S\+P\+A\+C\+E\+S\+H\+IP 등의 상태
+
+
+\begin{DoxyParams}{매개변수}
+{\em state} & P\+L\+A\+Y\+E\+R\+\_\+\+S\+T\+A\+TE Enum 사용 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 268 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+269 \{
+270     \hyperlink{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}{m\_state} = state;
+271 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_room_client_aa8ad3112c6dcf60baa32ad9561d78616}\label{class_room_client_aa8ad3112c6dcf60baa32ad9561d78616}} 
+\index{Room\+Client@{Room\+Client}!Set\+Team\+Color@{Set\+Team\+Color}}
+\index{Set\+Team\+Color@{Set\+Team\+Color}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{Set\+Team\+Color()}{SetTeamColor()}}
+{\footnotesize\ttfamily void Room\+Client\+::\+Set\+Team\+Color (\begin{DoxyParamCaption}\item[{bool}]{red }\end{DoxyParamCaption})}
+
+
+
+팀 컬러 세팅 
+
+팀 컬러 세팅  적 / 청 팀 세팅 메서드
+
+
+\begin{DoxyParams}{매개변수}
+{\em red} & 적색 팀인지 / 청색 팀인지 \\
+\hline
+\end{DoxyParams}
+
+
+Room\+Client.\+cpp 파일의 30 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+31 \{
+32     \hyperlink{class_room_client_a4552bc59af3cf8137a506cdfbe7540cb}{m\_redTeam} = red;
+33 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}\label{class_room_client_a9f63a98f8a902a52bf272f23af3e5f82}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+assist\+Check@{m\+\_\+assist\+Check}}
+\index{m\+\_\+assist\+Check@{m\+\_\+assist\+Check}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+assist\+Check}{m\_assistCheck}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$int, float$>$ Room\+Client\+::m\+\_\+assist\+Check\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+어시스트 관련 체크용 맵 
+
+
+
+Room\+Client.\+h 파일의 34 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_adacb97c1fec85cb0efef063dc43073f5}\label{class_room_client_adacb97c1fec85cb0efef063dc43073f5}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+assist\+Count@{m\+\_\+assist\+Count}}
+\index{m\+\_\+assist\+Count@{m\+\_\+assist\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+assist\+Count}{m\_assistCount}}
+{\footnotesize\ttfamily int Room\+Client\+::m\+\_\+assist\+Count\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+어시스트 횟수 
+
+
+
+Room\+Client.\+h 파일의 32 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a4427d3725926876237d44ae4b088c57f}\label{class_room_client_a4427d3725926876237d44ae4b088c57f}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+death\+Count@{m\+\_\+death\+Count}}
+\index{m\+\_\+death\+Count@{m\+\_\+death\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+death\+Count}{m\_deathCount}}
+{\footnotesize\ttfamily int Room\+Client\+::m\+\_\+death\+Count\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+죽은 횟수 
+
+
+
+Room\+Client.\+h 파일의 30 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a44db06515969e9ef7d4fad346bc01a7c}\label{class_room_client_a44db06515969e9ef7d4fad346bc01a7c}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+host\+ID@{m\+\_\+host\+ID}}
+\index{m\+\_\+host\+ID@{m\+\_\+host\+ID}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+host\+ID}{m\_hostID}}
+{\footnotesize\ttfamily Host\+ID Room\+Client\+::m\+\_\+host\+ID\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+클라이언트의 Host\+ID 
+
+
+
+Room\+Client.\+h 파일의 17 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a2b4f07062f9927aa30772306a1b9d18a}\label{class_room_client_a2b4f07062f9927aa30772306a1b9d18a}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+hp@{m\+\_\+hp}}
+\index{m\+\_\+hp@{m\+\_\+hp}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+hp}{m\_hp}}
+{\footnotesize\ttfamily float Room\+Client\+::m\+\_\+hp\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+현재 클라이언트의 체력 
+
+
+
+Room\+Client.\+h 파일의 26 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a491106d1b6fbf97fd76a7d1449bf5de9}\label{class_room_client_a491106d1b6fbf97fd76a7d1449bf5de9}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+is\+Game\+Scene@{m\+\_\+is\+Game\+Scene}}
+\index{m\+\_\+is\+Game\+Scene@{m\+\_\+is\+Game\+Scene}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+is\+Game\+Scene}{m\_isGameScene}}
+{\footnotesize\ttfamily bool Room\+Client\+::m\+\_\+is\+Game\+Scene\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+현재 게임씬 안인지 
+
+
+
+Room\+Client.\+h 파일의 23 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a09df06af0caa37c9ee7d3b91fe80b317}\label{class_room_client_a09df06af0caa37c9ee7d3b91fe80b317}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+is\+Host@{m\+\_\+is\+Host}}
+\index{m\+\_\+is\+Host@{m\+\_\+is\+Host}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+is\+Host}{m\_isHost}}
+{\footnotesize\ttfamily bool Room\+Client\+::m\+\_\+is\+Host\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+방장인지 아닌지 
+
+
+
+Room\+Client.\+h 파일의 22 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a09fb4ef6ca643e53d68ad771761e8289}\label{class_room_client_a09fb4ef6ca643e53d68ad771761e8289}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+is\+Ready@{m\+\_\+is\+Ready}}
+\index{m\+\_\+is\+Ready@{m\+\_\+is\+Ready}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+is\+Ready}{m\_isReady}}
+{\footnotesize\ttfamily bool Room\+Client\+::m\+\_\+is\+Ready\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+레디 상태인지 ( 대기실, 방장이 아닐때 ) 
+
+
+
+Room\+Client.\+h 파일의 21 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a221340e3b573d5b8e3c09fcc16bbb01b}\label{class_room_client_a221340e3b573d5b8e3c09fcc16bbb01b}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+kill\+Count@{m\+\_\+kill\+Count}}
+\index{m\+\_\+kill\+Count@{m\+\_\+kill\+Count}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+kill\+Count}{m\_killCount}}
+{\footnotesize\ttfamily int Room\+Client\+::m\+\_\+kill\+Count\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+죽인 횟수 
+
+
+
+Room\+Client.\+h 파일의 31 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a8c0bd64aa8b2d03f23b9a1ab5c2c2c1a}\label{class_room_client_a8c0bd64aa8b2d03f23b9a1ab5c2c2c1a}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+oxy@{m\+\_\+oxy}}
+\index{m\+\_\+oxy@{m\+\_\+oxy}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+oxy}{m\_oxy}}
+{\footnotesize\ttfamily float Room\+Client\+::m\+\_\+oxy\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+현재 클라이언트의 산소량 
+
+
+
+Room\+Client.\+h 파일의 27 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}\label{class_room_client_a7000a6db44ab9d2f646d625d33c8d8b7}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+pos@{m\+\_\+pos}}
+\index{m\+\_\+pos@{m\+\_\+pos}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+pos}{m\_pos}}
+{\footnotesize\ttfamily Vector3 Room\+Client\+::m\+\_\+pos\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+현재 위치 
+
+
+
+Room\+Client.\+h 파일의 25 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a4552bc59af3cf8137a506cdfbe7540cb}\label{class_room_client_a4552bc59af3cf8137a506cdfbe7540cb}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+red\+Team@{m\+\_\+red\+Team}}
+\index{m\+\_\+red\+Team@{m\+\_\+red\+Team}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+red\+Team}{m\_redTeam}}
+{\footnotesize\ttfamily bool Room\+Client\+::m\+\_\+red\+Team\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+적색 팀인지 (팀전일 경우에만 해당) 
+
+
+
+Room\+Client.\+h 파일의 20 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}\label{class_room_client_a247e5deb46a11e0d1a0e8e9029d87d54}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+state@{m\+\_\+state}}
+\index{m\+\_\+state@{m\+\_\+state}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+state}{m\_state}}
+{\footnotesize\ttfamily int Room\+Client\+::m\+\_\+state\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+살아있는지 죽어있는지 우주선인지 등에 대한 Player\+State 
+
+
+
+Room\+Client.\+h 파일의 29 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_room_client_ae501fdc166c6ae17dc2286ecd382ae71}\label{class_room_client_ae501fdc166c6ae17dc2286ecd382ae71}} 
+\index{Room\+Client@{Room\+Client}!m\+\_\+user\+Name@{m\+\_\+user\+Name}}
+\index{m\+\_\+user\+Name@{m\+\_\+user\+Name}!Room\+Client@{Room\+Client}}
+\subsubsection{\texorpdfstring{m\+\_\+user\+Name}{m\_userName}}
+{\footnotesize\ttfamily string Room\+Client\+::m\+\_\+user\+Name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+클라이언트의 유저 이름 
+
+
+
+Room\+Client.\+h 파일의 18 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/\hyperlink{_room_client_8h}{Room\+Client.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{_room_client_8cpp}{Room\+Client.\+cpp}\end{DoxyCompactItemize}

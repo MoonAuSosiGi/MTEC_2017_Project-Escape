@@ -187,6 +187,7 @@ void Server::ServerFileLoad()
 
 /**
  * @brief	Server 설정 파일을 토대로 테이블 값을 로드한다.
+ * @todo	JSON 테스트 필요 ( 아직 미테스트 )
  * @detail	기본값을 로드해 세팅한다.
 */
 bool Server::ServerTableSetup()
@@ -556,19 +557,6 @@ DEFRMI_SpaceWar_RequestServerConnect(Server)
 	
 
 	m_proxy.NotifyLoginSuccess(remote, RmiContext::ReliableSend,(int)remote,(count == 1));
-	
-	// 로비에서 처리하는걸로
-	/*if (m_gameRoom != nullptr)
-	{
-		forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
-		auto iter = list.begin();
-
-		while (iter != list.end())
-		{
-			m_proxy.NotifyNetworkConnectUser(*iter, RmiContext::ReliableSend, (int)remote, id);
-			iter++;
-		}
-	}*/
 	return true;
 }
 

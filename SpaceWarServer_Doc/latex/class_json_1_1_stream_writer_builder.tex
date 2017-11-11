@@ -1,0 +1,307 @@
+\hypertarget{class_json_1_1_stream_writer_builder}{}\section{Json\+:\+:Stream\+Writer\+Builder 클래스 참조}
+\label{class_json_1_1_stream_writer_builder}\index{Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}}
+
+
+Build a \hyperlink{class_json_1_1_stream_writer}{Stream\+Writer} implementation.  
+
+
+
+
+{\ttfamily \#include $<$json.\+h$>$}
+
+
+
+Json\+:\+:Stream\+Writer\+Builder에 대한 상속 다이어그램 \+: \nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=211pt]{class_json_1_1_stream_writer_builder__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Json\+:\+:Stream\+Writer\+Builder에 대한 협력 다이어그램\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_json_1_1_stream_writer_builder__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_stream_writer_builder_ab95b76179c152673ad14abc639a46ee4}{Stream\+Writer\+Builder} ()
+\item 
+\hyperlink{class_json_1_1_stream_writer_builder_a93263f8ef1e2d22593907075d8f0aaef}{$\sim$\+Stream\+Writer\+Builder} () \hyperlink{json_8h_a824d6199c91488107e443226fa6022c5}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+V\+E\+R\+R\+I\+DE}
+\item 
+\hyperlink{class_json_1_1_stream_writer}{Stream\+Writer} $\ast$ \hyperlink{class_json_1_1_stream_writer_builder_ab9ee278609f88ae04a7c1a84e1f559e6}{new\+Stream\+Writer} () const \hyperlink{json_8h_a824d6199c91488107e443226fa6022c5}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+V\+E\+R\+R\+I\+DE}
+\item 
+bool \hyperlink{class_json_1_1_stream_writer_builder_a12353b97766841db7d049da84658da09}{validate} (\hyperlink{class_json_1_1_value}{Json\+::\+Value} $\ast$invalid) const
+\item 
+\hyperlink{class_json_1_1_value}{Value} \& \hyperlink{class_json_1_1_stream_writer_builder_af68f6b59cb20b074052ed12bb3d336a3}{operator\mbox{[}$\,$\mbox{]}} (\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} key)
+\end{DoxyCompactItemize}
+\subsection*{정적 Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{class_json_1_1_stream_writer_builder_a53bf106b141e28637b01ad0ecd2acbf6}{set\+Defaults} (\hyperlink{class_json_1_1_value}{Json\+::\+Value} $\ast$settings)
+\end{DoxyCompactItemize}
+\subsection*{Public 속성}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_value}{Json\+::\+Value} \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+Build a \hyperlink{class_json_1_1_stream_writer}{Stream\+Writer} implementation. 
+
+Usage\+: 
+\begin{DoxyCode}
+\textcolor{keyword}{using namespace }\hyperlink{namespace_json}{Json};
+\hyperlink{class_json_1_1_value}{Value} value = ...;
+\hyperlink{class_json_1_1_stream_writer_builder}{StreamWriterBuilder} builder;
+builder[\textcolor{stringliteral}{"commentStyle"}] = \textcolor{stringliteral}{"None"};
+builder[\textcolor{stringliteral}{"indentation"}] = \textcolor{stringliteral}{"   "};  \textcolor{comment}{// or whatever you like}
+std::unique\_ptr<Json::StreamWriter> writer(
+    builder.\hyperlink{class_json_1_1_stream_writer_builder_ab9ee278609f88ae04a7c1a84e1f559e6}{newStreamWriter}());
+writer->write(value, &std::cout);
+std::cout << std::endl;  \textcolor{comment}{// add lf and flush}
+\end{DoxyCode}
+ 
+
+json.\+h 파일의 1837 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_json_1_1_stream_writer_builder_ab95b76179c152673ad14abc639a46ee4}\label{class_json_1_1_stream_writer_builder_ab95b76179c152673ad14abc639a46ee4}} 
+\index{Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}!Stream\+Writer\+Builder@{Stream\+Writer\+Builder}}
+\index{Stream\+Writer\+Builder@{Stream\+Writer\+Builder}!Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}}
+\subsubsection{\texorpdfstring{Stream\+Writer\+Builder()}{StreamWriterBuilder()}}
+{\footnotesize\ttfamily Json\+::\+Stream\+Writer\+Builder\+::\+Stream\+Writer\+Builder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 5207 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+5208 \{
+5209   \hyperlink{class_json_1_1_stream_writer_builder_a53bf106b141e28637b01ad0ecd2acbf6}{setDefaults}(&\hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_});
+5210 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_stream_writer_builder_a93263f8ef1e2d22593907075d8f0aaef}\label{class_json_1_1_stream_writer_builder_a93263f8ef1e2d22593907075d8f0aaef}} 
+\index{Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}!````~Stream\+Writer\+Builder@{$\sim$\+Stream\+Writer\+Builder}}
+\index{````~Stream\+Writer\+Builder@{$\sim$\+Stream\+Writer\+Builder}!Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}}
+\subsubsection{\texorpdfstring{$\sim$\+Stream\+Writer\+Builder()}{~StreamWriterBuilder()}}
+{\footnotesize\ttfamily Json\+::\+Stream\+Writer\+Builder\+::$\sim$\+Stream\+Writer\+Builder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 5211 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+5212 \{\}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_json_1_1_stream_writer_builder_ab9ee278609f88ae04a7c1a84e1f559e6}\label{class_json_1_1_stream_writer_builder_ab9ee278609f88ae04a7c1a84e1f559e6}} 
+\index{Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}!new\+Stream\+Writer@{new\+Stream\+Writer}}
+\index{new\+Stream\+Writer@{new\+Stream\+Writer}!Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}}
+\subsubsection{\texorpdfstring{new\+Stream\+Writer()}{newStreamWriter()}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_stream_writer}{Stream\+Writer} $\ast$ Json\+::\+Stream\+Writer\+Builder\+::new\+Stream\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+\begin{DoxyExceptions}{예외}
+{\em std\+::exception} & if something goes wrong (e.\+g. invalid settings) \\
+\hline
+\end{DoxyExceptions}
+
+
+\hyperlink{class_json_1_1_stream_writer_1_1_factory_a9d30ec53e8288cd53befccf1009c5f31}{Json\+::\+Stream\+Writer\+::\+Factory}를 구현.
+
+
+
+jsoncpp.\+cpp 파일의 5213 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+5214 \{
+5215   \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} indentation = \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}[\textcolor{stringliteral}{"indentation"}].
+      \hyperlink{class_json_1_1_value_ae3f9b0d38f820ccdd8888aa92ea6e792}{asString}();
+5216   \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} cs\_str = \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}[\textcolor{stringliteral}{"commentStyle"}].
+      \hyperlink{class_json_1_1_value_ae3f9b0d38f820ccdd8888aa92ea6e792}{asString}();
+5217   \textcolor{keywordtype}{bool} eyc = \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}[\textcolor{stringliteral}{"enableYAMLCompatibility"}].\hyperlink{class_json_1_1_value_ab693fb7b9b1595bb0adc49658bbf780d}{asBool}();
+5218   \textcolor{keywordtype}{bool} dnp = \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}[\textcolor{stringliteral}{"dropNullPlaceholders"}].\hyperlink{class_json_1_1_value_ab693fb7b9b1595bb0adc49658bbf780d}{asBool}();
+5219   \textcolor{keywordtype}{bool} usf = \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}[\textcolor{stringliteral}{"useSpecialFloats"}].\hyperlink{class_json_1_1_value_ab693fb7b9b1595bb0adc49658bbf780d}{asBool}(); 
+5220   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} pre = \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}[\textcolor{stringliteral}{"precision"}].\hyperlink{class_json_1_1_value_a74b305583ec3aacf4f9dd06e799dc265}{asUInt}();
+5221   \hyperlink{struct_json_1_1_comment_style_a51fc08f3518fd81eba12f340d19a3d0c}{CommentStyle::Enum} cs = \hyperlink{struct_json_1_1_comment_style_a51fc08f3518fd81eba12f340d19a3d0ca32302c0b97190c1808b3e38f367fef01}{CommentStyle::All};
+5222   \textcolor{keywordflow}{if} (cs\_str == \textcolor{stringliteral}{"All"}) \{
+5223     cs = \hyperlink{struct_json_1_1_comment_style_a51fc08f3518fd81eba12f340d19a3d0ca32302c0b97190c1808b3e38f367fef01}{CommentStyle::All};
+5224   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cs\_str == \textcolor{stringliteral}{"None"}) \{
+5225     cs = \hyperlink{struct_json_1_1_comment_style_a51fc08f3518fd81eba12f340d19a3d0cac8b32a8bae63414c8647d4919da8d437}{CommentStyle::None};
+5226   \} \textcolor{keywordflow}{else} \{
+5227     \hyperlink{namespace_json_a0ab7ff7f99788262d92d9ff3d924e065}{throwRuntimeError}(\textcolor{stringliteral}{"commentStyle must be 'All' or 'None'"});
+5228   \}
+5229   \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} colonSymbol = \textcolor{stringliteral}{" : "};
+5230   \textcolor{keywordflow}{if} (eyc) \{
+5231     colonSymbol = \textcolor{stringliteral}{": "};
+5232   \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (indentation.empty()) \{
+5233     colonSymbol = \textcolor{stringliteral}{":"};
+5234   \}
+5235   \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} nullSymbol = \textcolor{stringliteral}{"null"};
+5236   \textcolor{keywordflow}{if} (dnp) \{
+5237     nullSymbol = \textcolor{stringliteral}{""};
+5238   \}
+5239   \textcolor{keywordflow}{if} (pre > 17) pre = 17;
+5240   \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} endingLineFeedSymbol = \textcolor{stringliteral}{""};
+5241   \textcolor{keywordflow}{return} \textcolor{keyword}{new} \hyperlink{struct_json_1_1_built_styled_stream_writer}{BuiltStyledStreamWriter}(
+5242       indentation, cs,
+5243       colonSymbol, nullSymbol, endingLineFeedSymbol, usf, pre);
+5244 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_stream_writer_builder_ab9ee278609f88ae04a7c1a84e1f559e6_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=337pt]{class_json_1_1_stream_writer_builder_ab9ee278609f88ae04a7c1a84e1f559e6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_stream_writer_builder_af68f6b59cb20b074052ed12bb3d336a3}\label{class_json_1_1_stream_writer_builder_af68f6b59cb20b074052ed12bb3d336a3}} 
+\index{Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_value}{Value} \& Json\+::\+Stream\+Writer\+Builder\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG}}]{key }\end{DoxyParamCaption})}
+
+A simple way to update a specific setting. 
+
+jsoncpp.\+cpp 파일의 5272 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+5273 \{
+5274   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}[key];
+5275 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_stream_writer_builder_a53bf106b141e28637b01ad0ecd2acbf6}\label{class_json_1_1_stream_writer_builder_a53bf106b141e28637b01ad0ecd2acbf6}} 
+\index{Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}!set\+Defaults@{set\+Defaults}}
+\index{set\+Defaults@{set\+Defaults}!Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}}
+\subsubsection{\texorpdfstring{set\+Defaults()}{setDefaults()}}
+{\footnotesize\ttfamily void Json\+::\+Stream\+Writer\+Builder\+::set\+Defaults (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_value}{Json\+::\+Value} $\ast$}]{settings }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Called by ctor, but you can use this to reset settings\+\_\+. \begin{DoxyPrecond}{전제조건}
+\textquotesingle{}settings\textquotesingle{} != N\+U\+LL (but Json\+::null is fine) 
+\end{DoxyPrecond}
+\begin{DoxyRemark}{Remarks}
+Defaults\+: 
+\begin{DoxyCodeInclude}
+\end{DoxyCodeInclude}
+
+\end{DoxyRemark}
+\mbox{[}Stream\+Writer\+Builder\+Defaults\mbox{]}
+
+\mbox{[}Stream\+Writer\+Builder\+Defaults\mbox{]} 
+
+jsoncpp.\+cpp 파일의 5277 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+5278 \{
+5280   (*settings)[\textcolor{stringliteral}{"commentStyle"}] = \textcolor{stringliteral}{"All"};
+5281   (*settings)[\textcolor{stringliteral}{"indentation"}] = \textcolor{stringliteral}{"\(\backslash\)t"};
+5282   (*settings)[\textcolor{stringliteral}{"enableYAMLCompatibility"}] = \textcolor{keyword}{false};
+5283   (*settings)[\textcolor{stringliteral}{"dropNullPlaceholders"}] = \textcolor{keyword}{false};
+5284   (*settings)[\textcolor{stringliteral}{"useSpecialFloats"}] = \textcolor{keyword}{false};
+5285   (*settings)[\textcolor{stringliteral}{"precision"}] = 17;
+5287 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_stream_writer_builder_a12353b97766841db7d049da84658da09}\label{class_json_1_1_stream_writer_builder_a12353b97766841db7d049da84658da09}} 
+\index{Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}!validate@{validate}}
+\index{validate@{validate}!Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}}
+\subsubsection{\texorpdfstring{validate()}{validate()}}
+{\footnotesize\ttfamily bool Json\+::\+Stream\+Writer\+Builder\+::validate (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_value}{Json\+::\+Value} $\ast$}]{invalid }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{반환값}
+true if \textquotesingle{}settings\textquotesingle{} are legal and consistent; otherwise, indicate bad settings via \textquotesingle{}invalid\textquotesingle{}. 
+\end{DoxyReturn}
+
+
+jsoncpp.\+cpp 파일의 5255 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+5256 \{
+5257   \hyperlink{class_json_1_1_value}{Json::Value} my\_invalid;
+5258   \textcolor{keywordflow}{if} (!invalid) invalid = &my\_invalid;  \textcolor{comment}{// so we do not need to test for NULL}
+5259   \hyperlink{class_json_1_1_value}{Json::Value}& inv = *invalid;
+5260   std::set<JSONCPP\_STRING> valid\_keys;
+5261   \hyperlink{namespace_json_a77ffcc6bb405332d84c260d304d4384e}{getValidWriterKeys}(&valid\_keys);
+5262   \hyperlink{class_json_1_1_value_a9ae9069983fc38f1928d76f9c79ac64d}{Value::Members} keys = \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}.\hyperlink{class_json_1_1_value_a79d7725dce6260317333e69022367ac9}{getMemberNames}();
+5263   \textcolor{keywordtype}{size\_t} n = keys.size();
+5264   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} i = 0; i < n; ++i) \{
+5265     \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} \textcolor{keyword}{const}& key = keys[i];
+5266     \textcolor{keywordflow}{if} (valid\_keys.find(key) == valid\_keys.end()) \{
+5267       inv[key] = \hyperlink{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}{settings\_}[key];
+5268     \}
+5269   \}
+5270   \textcolor{keywordflow}{return} 0u == inv.\hyperlink{class_json_1_1_value_a0ec2808e1d7efa4e9fad938d6667be44}{size}();
+5271 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_stream_writer_builder_a12353b97766841db7d049da84658da09_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}\label{class_json_1_1_stream_writer_builder_a79bdf2e639a52f4e758c0b95bd1d3423}} 
+\index{Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}!settings\+\_\+@{settings\+\_\+}}
+\index{settings\+\_\+@{settings\+\_\+}!Json\+::\+Stream\+Writer\+Builder@{Json\+::\+Stream\+Writer\+Builder}}
+\subsubsection{\texorpdfstring{settings\+\_\+}{settings\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_value}{Json\+::\+Value} Json\+::\+Stream\+Writer\+Builder\+::settings\+\_\+}
+
+Configuration of this builder. Available settings (case-\/sensitive)\+:
+\begin{DoxyItemize}
+\item \char`\"{}comment\+Style\char`\"{}\+: \char`\"{}\+None\char`\"{} or \char`\"{}\+All\char`\"{}
+\item \char`\"{}indentation\char`\"{}\+: \char`\"{}$<$anything$>$\char`\"{}
+\item \char`\"{}enable\+Y\+A\+M\+L\+Compatibility\char`\"{}\+: false or true
+\begin{DoxyItemize}
+\item slightly change the whitespace around colons
+\end{DoxyItemize}
+\item \char`\"{}drop\+Null\+Placeholders\char`\"{}\+: false or true
+\begin{DoxyItemize}
+\item Drop the \char`\"{}null\char`\"{} string from the writer\textquotesingle{}s output for null\+Values. Strictly speaking, this is not valid J\+S\+ON. But when the output is being fed to a browser\textquotesingle{}s Javascript, it makes for smaller output and the browser can handle the output just fine.
+\end{DoxyItemize}
+\item \char`\"{}use\+Special\+Floats\char`\"{}\+: false or true
+\begin{DoxyItemize}
+\item If true, outputs non-\/finite floating point values in the following way\+: NaN values as \char`\"{}\+Na\+N\char`\"{}, positive infinity as \char`\"{}\+Infinity\char`\"{}, and negative infinity as \char`\"{}-\/\+Infinity\char`\"{}.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+You can examine \textquotesingle{}settings\+\_\+` yourself to see the defaults. You can also write and read them just like any J\+S\+ON \hyperlink{class_json_1_1_value}{Value}. \begin{DoxySeeAlso}{참고}
+\hyperlink{class_json_1_1_stream_writer_builder_a53bf106b141e28637b01ad0ecd2acbf6}{set\+Defaults()} 
+\end{DoxySeeAlso}
+
+
+json.\+h 파일의 1862 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/json/\hyperlink{json_8h}{json.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{jsoncpp_8cpp}{jsoncpp.\+cpp}\end{DoxyCompactItemize}

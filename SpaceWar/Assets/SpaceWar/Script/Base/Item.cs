@@ -71,11 +71,13 @@ public class Item : MonoBehaviour {
     {
         if (m_renderer == null || m_renderer.material == null)
             Debug.Log("name " + transform.name);
+        Debug.Log("null ? " + (WeaponManager.Instance().ITEM_OUTLINE_MAT == null)+ " +  " + (m_renderer == null));
         m_renderer.material = WeaponManager.Instance().ITEM_OUTLINE_MAT;
     }
 
     public void OutLineHide()
     {
+        Debug.Log("OutLine Hide " + (m_originMat == null) + " r " + (m_renderer == null));
         m_renderer.material = m_originMat;
     }
 }

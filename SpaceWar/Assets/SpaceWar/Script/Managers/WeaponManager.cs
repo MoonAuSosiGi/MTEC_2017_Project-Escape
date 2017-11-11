@@ -110,7 +110,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         int index = -1;
         for(int i = 0; i < m_networkDeadBulletList.Count; i++)
         {
-            if (!m_networkDeadBulletList[i].WEAPON_ID.Equals(weaponID))
+            if (!m_networkDeadBulletList[i].WEAPON_ID.Equals(weaponID) || m_networkDeadBulletList[i].IS_ALIVE == true)
                 continue;
 
             bullet = m_networkDeadBulletList[i];
@@ -223,12 +223,13 @@ public class WeaponManager : Singletone<WeaponManager> {
         //재사용 가능한게 있는지 체크
         for(int i = 0; i < m_myDeadBulletList.Count; i++)
         {
-            if (m_myDeadBulletList[i].WEAPON_ID.Equals(weaponID))
+            if (!m_myDeadBulletList[i].WEAPON_ID.Equals(weaponID) || m_myDeadBulletList[i].IS_ALIVE == true)
             {
-                bullet = m_myDeadBulletList[i];
-           
-                break;
+                continue;
             }
+            bullet = m_myDeadBulletList[i];
+
+            break;
         }
     
         // 재사용 로직
@@ -255,7 +256,6 @@ public class WeaponManager : Singletone<WeaponManager> {
         bullet.IS_REMOTE = false;
         m_myAlivebulletList.Add(bullet);
         
-
         // 위치 변경
         bullet.transform.position = pos;
         bullet.transform.localEulerAngles = rot;
@@ -292,7 +292,7 @@ public class WeaponManager : Singletone<WeaponManager> {
     // 랜덤으로 무기 ID 뽑기
     public string GetRandomWeaponID()
     {
-        return m_weaponTable.dataArray[Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
+        return m_weaponTable.dataArray[m_weaponTable.dataArray.Length-1].Id;//Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
     }
 
     // 총알 만들기
@@ -369,12 +369,15 @@ public class WeaponManager : Singletone<WeaponManager> {
                     r.GRAVITY_POWER = data.Launchergravity;
                     r.WEAPON_ID = weaponID;
 
-                    if(isME)
+                    //if(isME)
                     {
                         // 폭발 콜라이더 넣기
                         col = r.BULLET_HIT_EFFECT.AddComponent<SphereCollider>();
                         col.isTrigger = true;
                         col.radius = data.Boomeffectcolliderradius;
+                        col.center = new Vector3(data.Boomeffectcollidercenter_x ,
+                            data.Boomeffectcollidercenter_y ,
+                            data.Boomeffectcollidercenter_z);
                         col = r.BULLET_OTHER_HIT_EFFECT.AddComponent<SphereCollider>();
                         col.isTrigger = true;
                         col.radius = data.Boomeffectcolliderradius;
@@ -400,47 +403,55 @@ public class WeaponManager : Singletone<WeaponManager> {
         bb.AUDIO_SOURCE.rolloffMode = AudioRolloffMode.Logarithmic;
         bb.AUDIO_SOURCE.minDistance = 1.0f;
         bb.AUDIO_SOURCE.maxDistance = 10.0f;
-        string[] temp = data.Otherhitsound.Split(',');
-        if (!IsSound(data.Hitsound))
+        if(!string.IsNullOrEmpty(data.Otherhitsound))
         {
-            bb.HIT_MAIN = Resources.Load("Sound/Weapons/" + data.Hitsound) as AudioClip;
-            m_bulletSoundList.Add(data.Hitsound , bb.HIT_MAIN);
-        }
-        else
-        {
-            bb.HIT_MAIN = m_bulletSoundList[data.Hitsound];
+            string[] temp = data.Otherhitsound.Split(',');
+            if (!IsSound(data.Hitsound))
+            {
+                bb.HIT_MAIN = Resources.Load("Sound/Weapons/" + data.Hitsound) as AudioClip;
+                m_bulletSoundList.Add(data.Hitsound , bb.HIT_MAIN);
+            }
+            else
+            {
+                bb.HIT_MAIN = m_bulletSoundList[data.Hitsound];
+            }
+
+            if (!IsSound(temp[0]))
+            {
+                bb.HIT_LAND = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
+                m_bulletSoundList.Add(temp[0] , bb.HIT_LAND);
+            }
+            else
+            {
+                bb.HIT_LAND = m_bulletSoundList[temp[0]];
+            }
+            if (!IsSound(temp[1]))
+            {
+                bb.HIT_SPACESHIP = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
+                m_bulletSoundList.Add(temp[1] , bb.HIT_SPACESHIP);
+            }
+            else
+            {
+                bb.HIT_SPACESHIP = m_bulletSoundList[temp[0]];
+            }
+            if (!IsSound(temp[2]))
+            {
+                bb.HIT_SHELTER = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
+                m_bulletSoundList.Add(temp[2] , bb.HIT_SHELTER);
+            }
+            else
+            {
+                bb.HIT_SHELTER = m_bulletSoundList[temp[2]];
+            }
         }
 
-        if (!IsSound(temp[0]))
-        {
-           bb.HIT_LAND = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
-            m_bulletSoundList.Add(temp[0] , bb.HIT_LAND);
-        }
-        else
-        {
-            bb.HIT_LAND = m_bulletSoundList[temp[0]];
-        }
-        if (!IsSound(temp[1]))
-        {
-            bb.HIT_SPACESHIP = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
-            m_bulletSoundList.Add(temp[1] , bb.HIT_SPACESHIP);
-        }
-        else
-        {
-            bb.HIT_SPACESHIP = m_bulletSoundList[temp[0]];
-        }
-        if (!IsSound(temp[2]))
-        {
-            bb.HIT_SHELTER = Resources.Load("Sound/Weapons/" + temp[0]) as AudioClip;
-            m_bulletSoundList.Add(temp[2] , bb.HIT_SHELTER);
-        }
-        else
-        {
-            bb.HIT_SHELTER = m_bulletSoundList[temp[2]];
-        }
 
-        // 
-        bullet.transform.GetComponentInChildren<Bullet_DestroyTime>().TARGET_BULLET = bullet.GetComponentInChildren<Bullet>();
+        //
+        var destroy = bullet.transform.GetComponentInChildren<Bullet_DestroyTime>();
+        if (destroy != null)
+            destroy.TARGET_BULLET = bullet.GetComponentInChildren<Bullet>();
+        else
+            Debug.LogError("Bullet DestryTime is null");
         return bullet;
     }
 

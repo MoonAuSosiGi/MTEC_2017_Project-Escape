@@ -1,0 +1,4 @@
+<map id="Json::Reader::getFormatedErrorMessages" name="Json::Reader::getFormatedErrorMessages">
+<area shape="rect" id="node2" href="$class_json_1_1_reader.html#ae638a7b1f36f7ccf99ba89fa36ccf222" title="Returns a user friendly string that list errors in the parsed document. " alt="" coords="232,5,415,47"/>
+<area shape="rect" id="node3" href="$class_json_1_1_reader.html#a8b2fb6af24382c3914fd4643b092c675" title="Json::Reader::getLocation\lLineAndColumn" alt="" coords="463,5,636,47"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="SpaceWarServer/Server/Server.h" name="SpaceWarServer/Server/Server.h">
+<area shape="rect" id="node2" href="$_item_8h.html" title="Item.h" alt="" coords="468,184,527,211"/>
+<area shape="rect" id="node30" href="$_shelter_8h.html" title="Shelter :: 네트워크 오브젝트 " alt="" coords="728,102,803,129"/>
+<area shape="rect" id="node31" href="$_game_room_8h.html" title="GameRoom :: 게임이 수행되는 방 관리 " alt="" coords="550,102,653,129"/>
+<area shape="rect" id="node33" href="$_oxy_charger_8h.html" title="OxyCharger :: 네트워크 오브젝트 " alt="" coords="827,102,930,129"/>
+<area shape="rect" id="node34" href="$_space_ship_8h.html" title="SpaceShip :: 네트워크 오브젝트 " alt="" coords="955,102,1051,129"/>
+<area shape="rect" id="node35" href="$_s_p___marshaler_8h.html" title="SP_Marshaler.h" alt="" coords="676,184,791,211"/>
+<area shape="rect" id="node3" href="$stdafx_8h.html" title="stdafx.h" alt="" coords="567,259,635,285"/>
+<area shape="rect" id="node4" href="$targetver_8h.html" title="targetver.h" alt="" coords="17,333,100,360"/>
+<area shape="rect" id="node19" href="$json_8h.html" title="json\\json.h" alt="" coords="639,333,724,360"/>
+<area shape="rect" id="node32" href="$_room_client_8h.html" title="RoomClient :: 대기실 , 게임방에 들어와있는 클라이언트 " alt="" coords="551,184,651,211"/>
+</map>

@@ -1,0 +1,142 @@
+\hypertarget{class_json_1_1_our_char_reader}{}\section{Json\+:\+:Our\+Char\+Reader 클래스 참조}
+\label{class_json_1_1_our_char_reader}\index{Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}}
+
+
+Json\+:\+:Our\+Char\+Reader에 대한 상속 다이어그램 \+: \nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=190pt]{class_json_1_1_our_char_reader__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Json\+:\+:Our\+Char\+Reader에 대한 협력 다이어그램\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_json_1_1_our_char_reader__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_our_char_reader_a5015506620e7ba7bab417756fa1ca9fe}{Our\+Char\+Reader} (bool collect\+Comments, \hyperlink{class_json_1_1_our_features}{Our\+Features} const \&features)
+\item 
+bool \hyperlink{class_json_1_1_our_char_reader_a547f08ec5a9951ca69e8bb2e90296c83}{parse} (char const $\ast$begin\+Doc, char const $\ast$end\+Doc, \hyperlink{class_json_1_1_value}{Value} $\ast$root, \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} $\ast$errs) \hyperlink{json_8h_a824d6199c91488107e443226fa6022c5}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+V\+E\+R\+R\+I\+DE}
+\begin{DoxyCompactList}\small\item\em Read a \hyperlink{class_json_1_1_value}{Value} from a \href{http://www.json.org}{\tt J\+S\+ON} document. The document must be a U\+T\+F-\/8 encoded string containing the document to read. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+bool const \hyperlink{class_json_1_1_our_char_reader_aa6afd3d0f754cadad0f6d2be38bcfee0}{collect\+Comments\+\_\+}
+\item 
+\hyperlink{class_json_1_1_our_reader}{Our\+Reader} \hyperlink{class_json_1_1_our_char_reader_aedd4520b8570654ed7aa0726075ee58d}{reader\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+
+jsoncpp.\+cpp 파일의 2113 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_json_1_1_our_char_reader_a5015506620e7ba7bab417756fa1ca9fe}\label{class_json_1_1_our_char_reader_a5015506620e7ba7bab417756fa1ca9fe}} 
+\index{Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}!Our\+Char\+Reader@{Our\+Char\+Reader}}
+\index{Our\+Char\+Reader@{Our\+Char\+Reader}!Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}}
+\subsubsection{\texorpdfstring{Our\+Char\+Reader()}{OurCharReader()}}
+{\footnotesize\ttfamily Json\+::\+Our\+Char\+Reader\+::\+Our\+Char\+Reader (\begin{DoxyParamCaption}\item[{bool}]{collect\+Comments,  }\item[{\hyperlink{class_json_1_1_our_features}{Our\+Features} const \&}]{features }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+jsoncpp.\+cpp 파일의 2117 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2120   : \hyperlink{class_json_1_1_our_char_reader_aa6afd3d0f754cadad0f6d2be38bcfee0}{collectComments\_}(collectComments)
+2121   , \hyperlink{class_json_1_1_our_char_reader_aedd4520b8570654ed7aa0726075ee58d}{reader\_}(features)
+2122   \{\}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_json_1_1_our_char_reader_a547f08ec5a9951ca69e8bb2e90296c83}\label{class_json_1_1_our_char_reader_a547f08ec5a9951ca69e8bb2e90296c83}} 
+\index{Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}!parse@{parse}}
+\index{parse@{parse}!Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}}
+\subsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Char\+Reader\+::parse (\begin{DoxyParamCaption}\item[{char const $\ast$}]{begin\+Doc,  }\item[{char const $\ast$}]{end\+Doc,  }\item[{\hyperlink{class_json_1_1_value}{Value} $\ast$}]{root,  }\item[{\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} $\ast$}]{errs }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Read a \hyperlink{class_json_1_1_value}{Value} from a \href{http://www.json.org}{\tt J\+S\+ON} document. The document must be a U\+T\+F-\/8 encoded string containing the document to read. 
+
+
+\begin{DoxyParams}{매개변수}
+{\em begin\+Doc} & Pointer on the beginning of the U\+T\+F-\/8 encoded string of the document to read. \\
+\hline
+{\em end\+Doc} & Pointer on the end of the U\+T\+F-\/8 encoded string of the document to read. Must be $>$= begin\+Doc. \\
+\hline
+{\em root} & \mbox{[}out\mbox{]} Contains the root value of the document if it was successfully parsed. \\
+\hline
+{\em errs} & \mbox{[}out\mbox{]} Formatted error messages (if not N\+U\+LL) a user friendly string that lists errors in the parsed document. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{반환값}
+{\ttfamily true} if the document was successfully parsed, {\ttfamily false} if an error occurred. 
+\end{DoxyReturn}
+
+
+\hyperlink{class_json_1_1_char_reader_a7983680d50fd0745f371c43b162e78e1}{Json\+::\+Char\+Reader}를 구현.
+
+
+
+jsoncpp.\+cpp 파일의 2123 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2125                                                           \{
+2126     \textcolor{keywordtype}{bool} ok = \hyperlink{class_json_1_1_our_char_reader_aedd4520b8570654ed7aa0726075ee58d}{reader\_}.\hyperlink{class_json_1_1_our_reader_aba4f8749aab7f02ec17f107e392caf80}{parse}(beginDoc, endDoc, *root, 
+      \hyperlink{class_json_1_1_our_char_reader_aa6afd3d0f754cadad0f6d2be38bcfee0}{collectComments\_});
+2127     \textcolor{keywordflow}{if} (errs) \{
+2128       *errs = \hyperlink{class_json_1_1_our_char_reader_aedd4520b8570654ed7aa0726075ee58d}{reader\_}.\hyperlink{class_json_1_1_our_reader_a7971de51d73bb4aee5b0c4742c4aaaac}{getFormattedErrorMessages}();
+2129     \}
+2130     \textcolor{keywordflow}{return} ok;
+2131   \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_char_reader_a547f08ec5a9951ca69e8bb2e90296c83_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_json_1_1_our_char_reader_aa6afd3d0f754cadad0f6d2be38bcfee0}\label{class_json_1_1_our_char_reader_aa6afd3d0f754cadad0f6d2be38bcfee0}} 
+\index{Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}!collect\+Comments\+\_\+@{collect\+Comments\+\_\+}}
+\index{collect\+Comments\+\_\+@{collect\+Comments\+\_\+}!Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}}
+\subsubsection{\texorpdfstring{collect\+Comments\+\_\+}{collectComments\_}}
+{\footnotesize\ttfamily bool const Json\+::\+Our\+Char\+Reader\+::collect\+Comments\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 2114 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_char_reader_aedd4520b8570654ed7aa0726075ee58d}\label{class_json_1_1_our_char_reader_aedd4520b8570654ed7aa0726075ee58d}} 
+\index{Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}!reader\+\_\+@{reader\+\_\+}}
+\index{reader\+\_\+@{reader\+\_\+}!Json\+::\+Our\+Char\+Reader@{Json\+::\+Our\+Char\+Reader}}
+\subsubsection{\texorpdfstring{reader\+\_\+}{reader\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_reader}{Our\+Reader} Json\+::\+Our\+Char\+Reader\+::reader\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 2115 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/\hyperlink{jsoncpp_8cpp}{jsoncpp.\+cpp}\end{DoxyCompactItemize}

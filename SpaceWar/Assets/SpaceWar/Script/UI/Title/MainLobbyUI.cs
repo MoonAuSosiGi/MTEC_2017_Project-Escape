@@ -100,7 +100,7 @@ public class MainLobbyUI : MonoBehaviour {
     {
         //UIButton bt = targetButton.GetComponent<UIButton>();
         iTween.MoveBy(targetButton.gameObject , iTween.Hash("x" , 0.05f,
-            "time" , 0.3f ,
+            "time" , 0.1f ,
             "oncompletetarget" ,gameObject,
             "oncomplete", "DefaultOpenTweenEnd",
             "oncompleteparams",targetButton));
@@ -125,7 +125,7 @@ public class MainLobbyUI : MonoBehaviour {
     {
         iTween.MoveBy(targetButton.gameObject , iTween.Hash("x" , 0.656f ,
             "oncompletetarget" , gameObject ,
-            "time" , 0.3f ,
+            "time" , 0.1f ,
             "oncomplete" , "SubMenuOpenTweenRightEnd" ,
             "oncompleteparams" , targetButton));
     }
@@ -151,7 +151,7 @@ public class MainLobbyUI : MonoBehaviour {
         data.targetButton = targetButton;
         iTween.MoveBy(targetButton.gameObject , iTween.Hash("y" , -0.13f * index,
            "oncompletetarget" , gameObject ,
-           "time" , 0.3f ,
+           "time" , 0.1f ,
            "oncomplete" , "SubMenuOpenTweenDownEnd" ,
            "oncompleteparams" , data));
     }
@@ -222,7 +222,7 @@ public class MainLobbyUI : MonoBehaviour {
 
         iTween.MoveBy(targetButton.gameObject , iTween.Hash("y" , 0.13f ,
            "oncompletetarget" , gameObject ,
-           "time" , 0.3f ,
+           "time" , 0.1f ,
            "oncomplete" , "SubMenuCloseTweenUpEnd" ,
            "oncompleteparams" , data));
     }
@@ -244,7 +244,7 @@ public class MainLobbyUI : MonoBehaviour {
     {
         iTween.MoveBy(targetButton.gameObject , iTween.Hash("x" , -0.656f ,
             "oncompletetarget" , gameObject ,
-            "time" , 0.3f ,
+            "time" , 0.1f ,
             "oncomplete" , "SubMenuCloseTweenLeftEnd" ,
             "oncompleteparams" , targetButton));
     }
@@ -260,7 +260,7 @@ public class MainLobbyUI : MonoBehaviour {
     {
         //UIButton bt = targetButton.GetComponent<UIButton>();
         iTween.MoveBy(targetButton.gameObject , iTween.Hash("x" , -0.05f ,
-            "time" , 0.3f ,
+            "time" , 0.1f ,
             "oncompletetarget" , gameObject ,
             "oncomplete" , "DefaultCloseTweenEnd" ,
             "oncompleteparams" , targetButton));

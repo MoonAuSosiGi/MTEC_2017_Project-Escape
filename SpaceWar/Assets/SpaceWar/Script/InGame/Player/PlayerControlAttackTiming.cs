@@ -28,10 +28,19 @@ public class PlayerControlAttackTiming : MonoBehaviour {
     public void FootSoundPlay()
     {
         AudioClip clip = null;
-        if (m_player.IS_SHELTER)
-            clip = m_walkSound_shelter;
+        if(m_player != null)
+        {
+            if (m_player.IS_SHELTER)
+                clip = m_walkSound_shelter;
+            else
+                clip = m_walkSound_land;
+        }
         else
-            clip = m_walkSound_land;
+        {
+            // loading 임시
+            clip = m_walkSound_shelter;
+        }
+      
 
         m_walkSource.clip = clip;
         m_walkSource.Play();

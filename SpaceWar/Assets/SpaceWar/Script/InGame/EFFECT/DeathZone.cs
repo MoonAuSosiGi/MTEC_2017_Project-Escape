@@ -88,7 +88,6 @@ public class DeathZone : MonoBehaviour {
 
         if (m_deathLineIndex >= m_deathZoneLines.Count)
         {
-            Debug.Log("tt" + Vector3.Distance(pos , m_targetPos));
             if (Vector3.Distance(pos , m_targetPos) >= 10.0f)
                 return;
             

@@ -17,6 +17,7 @@ public class BulletParticle_Off : MonoBehaviour {
 
     public void BulletHitEvent()
     {
+        Debug.Log("Particle Off");
         gameObject.SetActive(false);
     }
 

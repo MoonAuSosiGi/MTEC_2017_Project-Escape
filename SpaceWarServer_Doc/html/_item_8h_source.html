@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TimeForEscape_Server: SpaceWarServer/Server/Item.h 소스 파일</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">TimeForEscape_Server
+   &#160;<span id="projectnumber">0.0.1</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','검색');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('_item_8h_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">Item.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_item_8h.html">이 파일의 문서화 페이지로 가기</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef ITEM_H</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define ITEM_H</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="stdafx_8h.html">stdafx.h</a>&quot;</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div><div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_item.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_item.html">Item</a></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;{</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">private</span>:</div><div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_item.html#a8a89e78c25c95fe6f27d61d2416df1e5">   16</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_item.html#a8a89e78c25c95fe6f27d61d2416df1e5">m_itemID</a>;    </div><div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="class_item.html#a3e5eae9a0cc3f98e421bc065c5b6f906">   17</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_item.html#a3e5eae9a0cc3f98e421bc065c5b6f906">m_networkID</a>; </div><div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_item.html#a6b35031bbc368a4d04c2298f1b094973">   18</a></span>&#160;    Vector3 <a class="code" href="class_item.html#a6b35031bbc368a4d04c2298f1b094973">m_pos</a>;      </div><div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_item.html#a8442ba52568d84d584117ed8e4f11883">   19</a></span>&#160;    Vector3 <a class="code" href="class_item.html#a8442ba52568d84d584117ed8e4f11883">m_rot</a>;      </div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <a class="code" href="class_item.html#a08bbc0cfcebaee215cdcc6ea910850eb">Item</a>(<span class="keywordtype">string</span> itemID,<span class="keywordtype">string</span> networkID); </div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#pragma region Get / Set Method ==================================================</span></div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_item.html#a449b9493c2980231cd23633d935568e0">GetItemID</a>(); </div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">string</span> <a class="code" href="class_item.html#ab3ee43a2b973e4a595e65ce44c68ad18">GetNetworkID</a>(); </div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_item.html#ae98790cd9fb0ef12e3bfc8149db4453f">SetPosition</a>(Vector3 pos); </div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_item.html#ae98790cd9fb0ef12e3bfc8149db4453f">SetPosition</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> z); </div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    Vector3 <a class="code" href="class_item.html#a557cd503b1645e0e610ee66ad25f283c">GetPosition</a>(); </div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_item.html#a9886c6d5ae9a2778d5e8b1526d29f27e">SetRotation</a>(Vector3 rot); </div><div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_item.html#a9886c6d5ae9a2778d5e8b1526d29f27e">SetRotation</a>(<span class="keywordtype">float</span> rotx, <span class="keywordtype">float</span> roty, <span class="keywordtype">float</span> rotz); </div><div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    Vector3 <a class="code" href="class_item.html#a6c9f4e62259d7ff025f5e4d09597cdba">GetRotation</a>(); </div><div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#pragma endregion ================================================================</span></div><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;};</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="class_item_html_a6b35031bbc368a4d04c2298f1b094973"><div class="ttname"><a href="class_item.html#a6b35031bbc368a4d04c2298f1b094973">Item::m_pos</a></div><div class="ttdeci">Vector3 m_pos</div><div class="ttdoc">아이템의 네트워크 좌표 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8h_source.html#l00018">Item.h:18</a></div></div>
+<div class="ttc" id="class_item_html_a8a89e78c25c95fe6f27d61d2416df1e5"><div class="ttname"><a href="class_item.html#a8a89e78c25c95fe6f27d61d2416df1e5">Item::m_itemID</a></div><div class="ttdeci">string m_itemID</div><div class="ttdoc">아이템 아이디 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8h_source.html#l00016">Item.h:16</a></div></div>
+<div class="ttc" id="class_item_html_a9886c6d5ae9a2778d5e8b1526d29f27e"><div class="ttname"><a href="class_item.html#a9886c6d5ae9a2778d5e8b1526d29f27e">Item::SetRotation</a></div><div class="ttdeci">void SetRotation(Vector3 rot)</div><div class="ttdoc">아이템 회전값 세팅 (벡터) </div><div class="ttdef"><b>Definition:</b> <a href="_item_8cpp_source.html#l00068">Item.cpp:68</a></div></div>
+<div class="ttc" id="class_item_html_a6c9f4e62259d7ff025f5e4d09597cdba"><div class="ttname"><a href="class_item.html#a6c9f4e62259d7ff025f5e4d09597cdba">Item::GetRotation</a></div><div class="ttdeci">Vector3 GetRotation()</div><div class="ttdoc">아이템 회전값 얻기 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8cpp_source.html#l00091">Item.cpp:91</a></div></div>
+<div class="ttc" id="class_item_html"><div class="ttname"><a href="class_item.html">Item</a></div><div class="ttdef"><b>Definition:</b> <a href="_item_8h_source.html#l00013">Item.h:13</a></div></div>
+<div class="ttc" id="stdafx_8h_html"><div class="ttname"><a href="stdafx_8h.html">stdafx.h</a></div></div>
+<div class="ttc" id="class_item_html_a3e5eae9a0cc3f98e421bc065c5b6f906"><div class="ttname"><a href="class_item.html#a3e5eae9a0cc3f98e421bc065c5b6f906">Item::m_networkID</a></div><div class="ttdeci">string m_networkID</div><div class="ttdoc">아이템의 네트워크 아이디 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8h_source.html#l00017">Item.h:17</a></div></div>
+<div class="ttc" id="class_item_html_a449b9493c2980231cd23633d935568e0"><div class="ttname"><a href="class_item.html#a449b9493c2980231cd23633d935568e0">Item::GetItemID</a></div><div class="ttdeci">string GetItemID()</div><div class="ttdoc">아이템 아이디 얻기 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8cpp_source.html#l00020">Item.cpp:20</a></div></div>
+<div class="ttc" id="class_item_html_ae98790cd9fb0ef12e3bfc8149db4453f"><div class="ttname"><a href="class_item.html#ae98790cd9fb0ef12e3bfc8149db4453f">Item::SetPosition</a></div><div class="ttdeci">void SetPosition(Vector3 pos)</div><div class="ttdoc">아이템 포지션 세팅 (벡터) </div><div class="ttdef"><b>Definition:</b> <a href="_item_8cpp_source.html#l00037">Item.cpp:37</a></div></div>
+<div class="ttc" id="class_item_html_ab3ee43a2b973e4a595e65ce44c68ad18"><div class="ttname"><a href="class_item.html#ab3ee43a2b973e4a595e65ce44c68ad18">Item::GetNetworkID</a></div><div class="ttdeci">string GetNetworkID()</div><div class="ttdoc">아이템의 네트워크 아이디 얻기 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8cpp_source.html#l00028">Item.cpp:28</a></div></div>
+<div class="ttc" id="class_item_html_a8442ba52568d84d584117ed8e4f11883"><div class="ttname"><a href="class_item.html#a8442ba52568d84d584117ed8e4f11883">Item::m_rot</a></div><div class="ttdeci">Vector3 m_rot</div><div class="ttdoc">아이템의 네트워크 회전값 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8h_source.html#l00019">Item.h:19</a></div></div>
+<div class="ttc" id="class_item_html_a557cd503b1645e0e610ee66ad25f283c"><div class="ttname"><a href="class_item.html#a557cd503b1645e0e610ee66ad25f283c">Item::GetPosition</a></div><div class="ttdeci">Vector3 GetPosition()</div><div class="ttdoc">아이템 좌표 얻기 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8cpp_source.html#l00058">Item.cpp:58</a></div></div>
+<div class="ttc" id="class_item_html_a08bbc0cfcebaee215cdcc6ea910850eb"><div class="ttname"><a href="class_item.html#a08bbc0cfcebaee215cdcc6ea910850eb">Item::Item</a></div><div class="ttdeci">Item(string itemID, string networkID)</div><div class="ttdoc">생성자 </div><div class="ttdef"><b>Definition:</b> <a href="_item_8cpp_source.html#l00009">Item.cpp:9</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_4ab6802a4ec7e9b29bb862e0c72f776c.html">SpaceWarServer</a></li><li class="navelem"><a class="el" href="dir_80e38def3dca4464fad1962256fc85d0.html">Server</a></li><li class="navelem"><a class="el" href="_item_8h.html">Item.h</a></li>
+    <li class="footer">다음에 의해 생성됨 : 
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
+</body>
+</html>

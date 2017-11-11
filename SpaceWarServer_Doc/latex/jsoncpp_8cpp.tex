@@ -1,0 +1,222 @@
+\hypertarget{jsoncpp_8cpp}{}\section{Space\+War\+Server/\+Server/jsoncpp.cpp 파일 참조}
+\label{jsoncpp_8cpp}\index{Space\+War\+Server/\+Server/jsoncpp.\+cpp@{Space\+War\+Server/\+Server/jsoncpp.\+cpp}}
+{\ttfamily \#include \char`\"{}stdafx.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}json/json.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$clocale$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$cstdio$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$istream$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+jsoncpp.\+cpp에 대한 include 의존 그래프\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{jsoncpp_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{클래스}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_json_1_1_our_features}{Json\+::\+Our\+Features}
+\item 
+class \hyperlink{class_json_1_1_our_reader}{Json\+::\+Our\+Reader}
+\item 
+struct \hyperlink{struct_json_1_1_our_reader_1_1_structured_error}{Json\+::\+Our\+Reader\+::\+Structured\+Error}
+\item 
+class \hyperlink{class_json_1_1_our_reader_1_1_token}{Json\+::\+Our\+Reader\+::\+Token}
+\item 
+class \hyperlink{class_json_1_1_our_reader_1_1_error_info}{Json\+::\+Our\+Reader\+::\+Error\+Info}
+\item 
+class \hyperlink{class_json_1_1_our_char_reader}{Json\+::\+Our\+Char\+Reader}
+\item 
+struct \hyperlink{struct_json_1_1_comment_style}{Json\+::\+Comment\+Style}
+\begin{DoxyCompactList}\small\item\em Scoped enums are not available until C++11. \end{DoxyCompactList}\item 
+struct \hyperlink{struct_json_1_1_built_styled_stream_writer}{Json\+::\+Built\+Styled\+Stream\+Writer}
+\end{DoxyCompactItemize}
+\subsection*{네임스페이스}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespace_json}{Json}
+\begin{DoxyCompactList}\small\item\em J\+S\+ON (Java\+Script Object Notation). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{매크로}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{jsoncpp_8cpp_abc5174d762d996e7d77cfcb90ca94834}{L\+I\+B\+\_\+\+J\+S\+O\+N\+C\+P\+P\+\_\+\+J\+S\+O\+N\+\_\+\+T\+O\+O\+L\+\_\+\+H\+\_\+\+I\+N\+C\+L\+U\+D\+ED}
+\item 
+\#define \hyperlink{jsoncpp_8cpp_a2cafee48bcedb9fa4e31ebcd78101855}{J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT}~1000
+\item 
+\#define \hyperlink{jsoncpp_8cpp_aa5e619e3e9388f6376a344dd8462c9cc}{J\+S\+O\+N\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+U\+N\+R\+E\+A\+C\+H\+A\+B\+LE}~assert(false)
+\item 
+\#define \hyperlink{jsoncpp_8cpp_a08a0024ebd1cc16ccc4a208e1e817f6e}{A\+L\+I\+G\+N\+AS}(byte\+\_\+alignment)
+\item 
+\#define \hyperlink{jsoncpp_8cpp_aab49fbe39624f083e45ef2d85e7e0705}{isfinite}~std\+::isfinite
+\end{DoxyCompactItemize}
+\subsection*{타입정의}
+\begin{DoxyCompactItemize}
+\item 
+typedef char \hyperlink{namespace_json_a602bcf69c2042fb61c3b243cb16f04ca}{Json\+::\+U\+Int\+To\+String\+Buffer}\mbox{[}uint\+To\+String\+Buffer\+Size\mbox{]}
+\item 
+typedef std\+::auto\+\_\+ptr$<$ \hyperlink{class_json_1_1_char_reader}{Char\+Reader} $>$ \hyperlink{namespace_json_a4724efb8d41614b47036cb8b54233837}{Json\+::\+Char\+Reader\+Ptr}
+\item 
+typedef std\+::auto\+\_\+ptr$<$ \hyperlink{class_json_1_1_stream_writer}{Stream\+Writer} $>$ \hyperlink{namespace_json_a7132404aeebfc96d7c6ad2c66260afb5}{Json\+::\+Stream\+Writer\+Ptr}
+\end{DoxyCompactItemize}
+\subsection*{열거형 타입}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \hyperlink{namespace_json_a2aacab54ef6fc18e833fbd4982a0a23aae4f2008c7919f20d81286121d1374424}{Json\+::uint\+To\+String\+Buffer\+Size} = 3 $\ast$ sizeof(Largest\+U\+Int) + 1
+ \}
+\end{DoxyCompactItemize}
+\subsection*{함수}
+\begin{DoxyCompactItemize}
+\item 
+static char \hyperlink{namespace_json_ac99d7a5551039dfa712dd1d143c25a16}{Json\+::get\+Decimal\+Point} ()
+\item 
+static \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{namespace_json_a33f8bda65a5b1fc4f5ddc39cb03dc742}{Json\+::code\+Point\+To\+U\+T\+F8} (unsigned int cp)
+\begin{DoxyCompactList}\small\item\em Converts a unicode code-\/point to U\+T\+F-\/8. \end{DoxyCompactList}\item 
+static bool \hyperlink{namespace_json_a0381e631737f51331065a388f4f59197}{Json\+::is\+Control\+Character} (char ch)
+\begin{DoxyCompactList}\small\item\em Returns true if ch is a control character (in range \mbox{[}1,31\mbox{]}). \end{DoxyCompactList}\item 
+static void \hyperlink{namespace_json_ac1ffd21a9e55122014353c773ccc496e}{Json\+::uint\+To\+String} (\hyperlink{namespace_json_ae202ecad69725e23443f465e257456d0}{Largest\+U\+Int} value, char $\ast$\&current)
+\item 
+static void \hyperlink{namespace_json_aa208904144dc7b11ccc28f47c9afab9a}{Json\+::fix\+Numeric\+Locale} (char $\ast$begin, char $\ast$end)
+\item 
+static void \hyperlink{namespace_json_ac142c270507391c8d86f35b550d36eb4}{Json\+::fix\+Numeric\+Locale\+Input} (char $\ast$begin, char $\ast$end)
+\item 
+static bool \hyperlink{namespace_json_a4d6ab0f651348832e5cc49b577a854d2}{Json\+::contains\+New\+Line} (\hyperlink{class_json_1_1_reader_a46795b5b272bf79a7730e406cb96375a}{Reader\+::\+Location} begin, \hyperlink{class_json_1_1_reader_a46795b5b272bf79a7730e406cb96375a}{Reader\+::\+Location} end)
+\item 
+static \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{namespace_json_a63123f3dd63f340ac517a59f44ea7aa4}{Json\+::normalize\+E\+OL} (\hyperlink{class_json_1_1_reader_a46795b5b272bf79a7730e406cb96375a}{Reader\+::\+Location} begin, \hyperlink{class_json_1_1_reader_a46795b5b272bf79a7730e406cb96375a}{Reader\+::\+Location} end)
+\item 
+static void \hyperlink{namespace_json_a8c38450840f3d88e9b981ae132f7ad0a}{Json\+::get\+Valid\+Reader\+Keys} (std\+::set$<$ \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} $>$ $\ast$valid\+\_\+keys)
+\item 
+bool \hyperlink{namespace_json_a38f903cfdb57a6c4e86a7dcc42f3712c}{Json\+::parse\+From\+Stream} (\hyperlink{class_json_1_1_char_reader_1_1_factory}{Char\+Reader\+::\+Factory} const \&fact, \hyperlink{json_8h_a15f2f70b2ce0a2abd0f8112393dbc4de}{J\+S\+O\+N\+C\+P\+P\+\_\+\+I\+S\+T\+R\+E\+AM} \&sin, \hyperlink{class_json_1_1_value}{Value} $\ast$root, \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} $\ast$errs)
+\item 
+\hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{json_8h_a15f2f70b2ce0a2abd0f8112393dbc4de}{J\+S\+O\+N\+C\+P\+P\+\_\+\+I\+S\+T\+R\+E\+AM} \& \hyperlink{namespace_json_a244ed0996aba750c40c1641c06bba449}{Json\+::operator$>$$>$} (\hyperlink{json_8h_a15f2f70b2ce0a2abd0f8112393dbc4de}{J\+S\+O\+N\+C\+P\+P\+\_\+\+I\+S\+T\+R\+E\+AM} \&, \hyperlink{class_json_1_1_value}{Value} \&)
+\begin{DoxyCompactList}\small\item\em Read from \textquotesingle{}sin\textquotesingle{} into \textquotesingle{}root\textquotesingle{}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T , typename U $>$ }\\static bool \hyperlink{namespace_json_aff0180507262a244de61b961178d7443}{Json\+::\+In\+Range} (double d, T min, U max)
+\item 
+static char $\ast$ \hyperlink{namespace_json_a678ac3a60cd70ec0fb4c9abfd40eb0c4}{Json\+::duplicate\+String\+Value} (const char $\ast$value, size\+\_\+t length)
+\item 
+static char $\ast$ \hyperlink{namespace_json_a9795a09a0141d1f12d307c4386aeaee6}{Json\+::duplicate\+And\+Prefix\+String\+Value} (const char $\ast$value, unsigned int length)
+\item 
+static void \hyperlink{namespace_json_aad8b4982c1acd164f541fba396ac9fb1}{Json\+::decode\+Prefixed\+String} (bool is\+Prefixed, char const $\ast$prefixed, unsigned $\ast$length, char const $\ast$$\ast$value)
+\item 
+static void \hyperlink{namespace_json_a48f4e3ea655e3b4a5d7f892c81f00511}{Json\+::release\+Prefixed\+String\+Value} (char $\ast$value)
+\item 
+static void \hyperlink{namespace_json_a3e0d81d514d0e8bddf33b08074214abd}{Json\+::release\+String\+Value} (char $\ast$value, unsigned)
+\item 
+\hyperlink{json_8h_a78c5ba441d8b48f24a5095b97f01f282}{J\+S\+O\+N\+C\+P\+P\+\_\+\+N\+O\+R\+E\+T\+U\+RN} void \hyperlink{namespace_json_a0ab7ff7f99788262d92d9ff3d924e065}{Json\+::throw\+Runtime\+Error} (\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} const \&msg)
+\begin{DoxyCompactList}\small\item\em used internally \end{DoxyCompactList}\item 
+\hyperlink{json_8h_a78c5ba441d8b48f24a5095b97f01f282}{J\+S\+O\+N\+C\+P\+P\+\_\+\+N\+O\+R\+E\+T\+U\+RN} void \hyperlink{namespace_json_a27790f21f17922fac81e7cd72a5659a5}{Json\+::throw\+Logic\+Error} (\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} const \&msg)
+\begin{DoxyCompactList}\small\item\em used internally \end{DoxyCompactList}\item 
+static bool \hyperlink{namespace_json_a1a04cc9d31e64b5912dade003c9b99b5}{Json\+::\+Is\+Integral} (double d)
+\item 
+static bool \hyperlink{namespace_json_aa11b210ff98a4f4dd4e2df19260f8c3a}{Json\+::contains\+Control\+Character} (const char $\ast$str)
+\item 
+static bool \hyperlink{namespace_json_ae8a357381f264cf28f46449e79ab1dea}{Json\+::contains\+Control\+Character0} (const char $\ast$str, unsigned len)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{namespace_json_a4732517cb28d203cfd4354d05952a81b}{Json\+::value\+To\+String} (\hyperlink{namespace_json_a218d880af853ce786cd985e82571d297}{Largest\+Int} value)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{namespace_json_a6283ea3db02efe9104ae6baff698245a}{Json\+::value\+To\+String} (\hyperlink{namespace_json_ae202ecad69725e23443f465e257456d0}{Largest\+U\+Int} value)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{Json\+::value\+To\+String} (\hyperlink{namespace_json_a08122e8005b706d982e48cca1e2119c7}{Int} value)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{namespace_json_ab2cb54f173193c8d27c3eb7f10b6e79a}{Json\+::value\+To\+String} (\hyperlink{namespace_json_a800fb90eb6ee8d5d62b600c06f87f7d4}{U\+Int} value)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{namespace_json_a3cf0c8dbbdb898c4a6fad54670b34bd1}{Json\+::value\+To\+String} (double value)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{namespace_json_a0a706a1fffba4fe8a8c1ef75b2dbbfab}{Json\+::value\+To\+String} (bool value)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{namespace_json_aaf777a6923bcb4cf63a2729973fe5315}{Json\+::value\+To\+Quoted\+String} (const char $\ast$value)
+\item 
+static char const  $\ast$ \hyperlink{namespace_json_a7492156d0c7d2dd2f672acacfb240320}{Json\+::strnpbrk} (char const $\ast$s, char const $\ast$accept, size\+\_\+t n)
+\item 
+static \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{namespace_json_a29aff81733b8fdaabf3f1acfc3ad339f}{Json\+::value\+To\+Quoted\+StringN} (const char $\ast$value, unsigned length)
+\item 
+static void \hyperlink{namespace_json_a77ffcc6bb405332d84c260d304d4384e}{Json\+::get\+Valid\+Writer\+Keys} (std\+::set$<$ \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} $>$ $\ast$valid\+\_\+keys)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{namespace_json_a00820c0084189e2a7533531c0f250e3f}{Json\+::write\+String} (\hyperlink{class_json_1_1_stream_writer_1_1_factory}{Stream\+Writer\+::\+Factory} const \&factory, \hyperlink{class_json_1_1_value}{Value} const \&root)
+\begin{DoxyCompactList}\small\item\em Write into stringstream, then return string, for convenience. A \hyperlink{class_json_1_1_stream_writer}{Stream\+Writer} will be created from the factory, used, and then deleted. \end{DoxyCompactList}\item 
+\hyperlink{json_8h_a1d61ffde86ce1a18fd83194ff0d9a206}{J\+S\+O\+N\+\_\+\+A\+PI} \hyperlink{json_8h_a37a25be5fca174927780caeb280094ce}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+S\+T\+R\+E\+AM} \& \hyperlink{namespace_json_a975d1dbca8aa7a06f38d373edcb9081c}{Json\+::operator$<$$<$} (\hyperlink{json_8h_a37a25be5fca174927780caeb280094ce}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+S\+T\+R\+E\+AM} \&, const \hyperlink{class_json_1_1_value}{Value} \&root)
+\begin{DoxyCompactList}\small\item\em Output using the \hyperlink{class_json_1_1_styled_stream_writer}{Styled\+Stream\+Writer}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{변수}
+\begin{DoxyCompactItemize}
+\item 
+static size\+\_\+t const \hyperlink{jsoncpp_8cpp_a924838165f45fcacf57b5cd03062b478}{stack\+Limit\+\_\+g} = \hyperlink{jsoncpp_8cpp_a2cafee48bcedb9fa4e31ebcd78101855}{J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT}
+\item 
+static const double \hyperlink{namespace_json_aecc0306aa526f25c5156f842182fb7fb}{Json\+::max\+U\+Int64\+As\+Double} = 18446744073709551615.\+0
+\end{DoxyCompactItemize}
+
+
+\subsection{매크로 문서화}
+\mbox{\Hypertarget{jsoncpp_8cpp_a08a0024ebd1cc16ccc4a208e1e817f6e}\label{jsoncpp_8cpp_a08a0024ebd1cc16ccc4a208e1e817f6e}} 
+\index{jsoncpp.\+cpp@{jsoncpp.\+cpp}!A\+L\+I\+G\+N\+AS@{A\+L\+I\+G\+N\+AS}}
+\index{A\+L\+I\+G\+N\+AS@{A\+L\+I\+G\+N\+AS}!jsoncpp.\+cpp@{jsoncpp.\+cpp}}
+\subsubsection{\texorpdfstring{A\+L\+I\+G\+N\+AS}{ALIGNAS}}
+{\footnotesize\ttfamily \#define A\+L\+I\+G\+N\+AS(\begin{DoxyParamCaption}\item[{}]{byte\+\_\+alignment }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 2480 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{jsoncpp_8cpp_aab49fbe39624f083e45ef2d85e7e0705}\label{jsoncpp_8cpp_aab49fbe39624f083e45ef2d85e7e0705}} 
+\index{jsoncpp.\+cpp@{jsoncpp.\+cpp}!isfinite@{isfinite}}
+\index{isfinite@{isfinite}!jsoncpp.\+cpp@{jsoncpp.\+cpp}}
+\subsubsection{\texorpdfstring{isfinite}{isfinite}}
+{\footnotesize\ttfamily \#define isfinite~std\+::isfinite}
+
+
+
+jsoncpp.\+cpp 파일의 4124 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{jsoncpp_8cpp_aa5e619e3e9388f6376a344dd8462c9cc}\label{jsoncpp_8cpp_aa5e619e3e9388f6376a344dd8462c9cc}} 
+\index{jsoncpp.\+cpp@{jsoncpp.\+cpp}!J\+S\+O\+N\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+U\+N\+R\+E\+A\+C\+H\+A\+B\+LE@{J\+S\+O\+N\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+U\+N\+R\+E\+A\+C\+H\+A\+B\+LE}}
+\index{J\+S\+O\+N\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+U\+N\+R\+E\+A\+C\+H\+A\+B\+LE@{J\+S\+O\+N\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+U\+N\+R\+E\+A\+C\+H\+A\+B\+LE}!jsoncpp.\+cpp@{jsoncpp.\+cpp}}
+\subsubsection{\texorpdfstring{J\+S\+O\+N\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+U\+N\+R\+E\+A\+C\+H\+A\+B\+LE}{JSON\_ASSERT\_UNREACHABLE}}
+{\footnotesize\ttfamily \#define J\+S\+O\+N\+\_\+\+A\+S\+S\+E\+R\+T\+\_\+\+U\+N\+R\+E\+A\+C\+H\+A\+B\+LE~assert(false)}
+
+
+
+jsoncpp.\+cpp 파일의 2470 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{jsoncpp_8cpp_a2cafee48bcedb9fa4e31ebcd78101855}\label{jsoncpp_8cpp_a2cafee48bcedb9fa4e31ebcd78101855}} 
+\index{jsoncpp.\+cpp@{jsoncpp.\+cpp}!J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT@{J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT}}
+\index{J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT@{J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT}!jsoncpp.\+cpp@{jsoncpp.\+cpp}}
+\subsubsection{\texorpdfstring{J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT}{JSONCPP\_DEPRECATED\_STACK\_LIMIT}}
+{\footnotesize\ttfamily \#define J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT~1000}
+
+
+
+jsoncpp.\+cpp 파일의 267 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{jsoncpp_8cpp_abc5174d762d996e7d77cfcb90ca94834}\label{jsoncpp_8cpp_abc5174d762d996e7d77cfcb90ca94834}} 
+\index{jsoncpp.\+cpp@{jsoncpp.\+cpp}!L\+I\+B\+\_\+\+J\+S\+O\+N\+C\+P\+P\+\_\+\+J\+S\+O\+N\+\_\+\+T\+O\+O\+L\+\_\+\+H\+\_\+\+I\+N\+C\+L\+U\+D\+ED@{L\+I\+B\+\_\+\+J\+S\+O\+N\+C\+P\+P\+\_\+\+J\+S\+O\+N\+\_\+\+T\+O\+O\+L\+\_\+\+H\+\_\+\+I\+N\+C\+L\+U\+D\+ED}}
+\index{L\+I\+B\+\_\+\+J\+S\+O\+N\+C\+P\+P\+\_\+\+J\+S\+O\+N\+\_\+\+T\+O\+O\+L\+\_\+\+H\+\_\+\+I\+N\+C\+L\+U\+D\+ED@{L\+I\+B\+\_\+\+J\+S\+O\+N\+C\+P\+P\+\_\+\+J\+S\+O\+N\+\_\+\+T\+O\+O\+L\+\_\+\+H\+\_\+\+I\+N\+C\+L\+U\+D\+ED}!jsoncpp.\+cpp@{jsoncpp.\+cpp}}
+\subsubsection{\texorpdfstring{L\+I\+B\+\_\+\+J\+S\+O\+N\+C\+P\+P\+\_\+\+J\+S\+O\+N\+\_\+\+T\+O\+O\+L\+\_\+\+H\+\_\+\+I\+N\+C\+L\+U\+D\+ED}{LIB\_JSONCPP\_JSON\_TOOL\_H\_INCLUDED}}
+{\footnotesize\ttfamily \#define L\+I\+B\+\_\+\+J\+S\+O\+N\+C\+P\+P\+\_\+\+J\+S\+O\+N\+\_\+\+T\+O\+O\+L\+\_\+\+H\+\_\+\+I\+N\+C\+L\+U\+D\+ED}
+
+Json-\/cpp amalgated source (\href{http://jsoncpp.sourceforge.net/}{\tt http\+://jsoncpp.\+sourceforge.\+net/}). It is intended to be used with \#include \char`\"{}json/json.\+h\char`\"{} 
+
+jsoncpp.\+cpp 파일의 93 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{변수 문서화}
+\mbox{\Hypertarget{jsoncpp_8cpp_a924838165f45fcacf57b5cd03062b478}\label{jsoncpp_8cpp_a924838165f45fcacf57b5cd03062b478}} 
+\index{jsoncpp.\+cpp@{jsoncpp.\+cpp}!stack\+Limit\+\_\+g@{stack\+Limit\+\_\+g}}
+\index{stack\+Limit\+\_\+g@{stack\+Limit\+\_\+g}!jsoncpp.\+cpp@{jsoncpp.\+cpp}}
+\subsubsection{\texorpdfstring{stack\+Limit\+\_\+g}{stackLimit\_g}}
+{\footnotesize\ttfamily size\+\_\+t const stack\+Limit\+\_\+g = \hyperlink{jsoncpp_8cpp_a2cafee48bcedb9fa4e31ebcd78101855}{J\+S\+O\+N\+C\+P\+P\+\_\+\+D\+E\+P\+R\+E\+C\+A\+T\+E\+D\+\_\+\+S\+T\+A\+C\+K\+\_\+\+L\+I\+M\+IT}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+jsoncpp.\+cpp 파일의 270 번째 라인에서 정의되었습니다.
+

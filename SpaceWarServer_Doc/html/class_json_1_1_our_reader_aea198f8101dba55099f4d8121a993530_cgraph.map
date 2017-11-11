@@ -1,0 +1,36 @@
+<map id="Json::OurReader::readObject" name="Json::OurReader::readObject">
+<area shape="rect" id="node2" href="$class_json_1_1_our_reader.html#a2acd5b1d53e7d7e17c21ff8e96edc09d" title="Json::OurReader::current\lValue" alt="" coords="747,323,913,365"/>
+<area shape="rect" id="node3" href="$class_json_1_1_value.html#a5263476047f20e2fc6de470e4de34fe5" title="Swap values but leave comments and source offsets in place. " alt="" coords="743,272,917,299"/>
+<area shape="rect" id="node6" href="$class_json_1_1_value.html#a92e32ea0f4f8a15853a3cf0beac9feb9" title="Json::Value::setOffsetStart" alt="" coords="741,440,919,467"/>
+<area shape="rect" id="node7" href="$class_json_1_1_our_reader.html#a0d1e66da47fe2e85f5033c59326dfdc3" title="Json::OurReader::readToken" alt="" coords="1223,640,1409,667"/>
+<area shape="rect" id="node21" href="$class_json_1_1_our_reader.html#a34e31d8b8399b7ad493359702b6de6c9" title="Json::OurReader::decodeString" alt="" coords="483,389,686,416"/>
+<area shape="rect" id="node23" href="$class_json_1_1_our_reader.html#a035651f0700a76a815e5f904c63ebb1c" title="Json::OurReader::recover\lFromError" alt="" coords="987,670,1155,711"/>
+<area shape="rect" id="node24" href="$class_json_1_1_our_reader.html#a272d271290933a89abfd5096dd69c9e9" title="Json::OurReader::decodeNumber" alt="" coords="477,339,692,365"/>
+<area shape="rect" id="node25" href="$class_json_1_1_value.html#ae3f9b0d38f820ccdd8888aa92ea6e792" title="Embedded zeroes are possible. " alt="" coords="263,85,410,112"/>
+<area shape="rect" id="node30" href="$class_json_1_1_our_reader.html#a074cf3d91e9404fe89e03cfc6a43e6fb" title="Json::OurReader::addError\lAndRecover" alt="" coords="742,694,918,735"/>
+<area shape="rect" id="node32" href="$namespace_json.html#a0ab7ff7f99788262d92d9ff3d924e065" title="used internally " alt="" coords="503,744,667,771"/>
+<area shape="rect" id="node33" href="$class_json_1_1_our_reader.html#a1765d9670d191c89a57a22ea5591d35f" title="Json::OurReader::readValue" alt="" coords="244,529,429,556"/>
+<area shape="rect" id="node4" href="$namespacestd.html#a22cc6fcbbb1f2f705c7888b615e43582" title="Specialize std::swap() for Json::Value. " alt="" coords="1032,297,1111,324"/>
+<area shape="rect" id="node5" href="$class_json_1_1_value.html#aab841120d78e296e1bc06a373345e822" title="Swap everything. " alt="" coords="1252,297,1380,324"/>
+<area shape="rect" id="node8" href="$class_json_1_1_our_reader.html#a6fbc6d58a4505e5ccadf330b57b17ca5" title="Json::OurReader::skipSpaces" alt="" coords="1464,421,1659,448"/>
+<area shape="rect" id="node9" href="$class_json_1_1_our_reader.html#a298285d035fdbc554caae09d9f0a5859" title="Json::OurReader::getNextChar" alt="" coords="1965,612,2164,639"/>
+<area shape="rect" id="node10" href="$class_json_1_1_our_reader.html#a5d39b12671499ec5975f3bbc84b7d438" title="Json::OurReader::readString" alt="" coords="1722,587,1909,613"/>
+<area shape="rect" id="node11" href="$class_json_1_1_our_reader.html#ac78592defdc333faf56c6d0908758da3" title="Json::OurReader::readString\lSingleQuote" alt="" coords="1468,473,1655,514"/>
+<area shape="rect" id="node12" href="$class_json_1_1_our_reader.html#a90f6bb9e55b2bc3d6c1880809495c222" title="Json::OurReader::readComment" alt="" coords="1457,691,1665,717"/>
+<area shape="rect" id="node19" href="$class_json_1_1_our_reader.html#aefcb9a78cc45870ccac2db2a66c8ec50" title="Json::OurReader::readNumber" alt="" coords="1463,640,1660,667"/>
+<area shape="rect" id="node20" href="$class_json_1_1_our_reader.html#a4a03f1b266def9b47c4fef35386557fb" title="Json::OurReader::match" alt="" coords="1480,741,1643,768"/>
+<area shape="rect" id="node13" href="$class_json_1_1_our_reader.html#aba784b125baa1b62387e767b791f2f89" title="Json::OurReader::readCStyle\lComment" alt="" coords="1720,739,1911,781"/>
+<area shape="rect" id="node14" href="$class_json_1_1_our_reader.html#ae3de80671f0f997053e1c1c8a47a45c5" title="Json::OurReader::readCpp\lStyleComment" alt="" coords="1728,805,1903,846"/>
+<area shape="rect" id="node15" href="$namespace_json.html#a4d6ab0f651348832e5cc49b577a854d2" title="Json::containsNewLine" alt="" coords="1738,688,1893,715"/>
+<area shape="rect" id="node16" href="$class_json_1_1_our_reader.html#ad7318c37469a9106069a236fb4b10e1f" title="Json::OurReader::addComment" alt="" coords="1713,871,1917,897"/>
+<area shape="rect" id="node17" href="$namespace_json.html#a63123f3dd63f340ac517a59f44ea7aa4" title="Json::normalizeEOL" alt="" coords="1995,871,2134,897"/>
+<area shape="rect" id="node18" href="$class_json_1_1_value.html#a29f3a30f7e5d3af6f38d57999bf5b480" title="Json::Value::setComment" alt="" coords="1979,921,2151,948"/>
+<area shape="rect" id="node22" href="$class_json_1_1_value.html#a5e4f5853fec138150c5df6004a8c2bcf" title="Json::Value::setOffsetLimit" alt="" coords="741,389,919,416"/>
+<area shape="rect" id="node26" href="$namespace_json.html#aad8b4982c1acd164f541fba396ac9fb1" title="Json::decodePrefixedString" alt="" coords="495,35,675,61"/>
+<area shape="rect" id="node29" href="$namespace_json.html#a498503e8f49d6a3811e3c9f6757da60d" title="Json::valueToString" alt="" coords="517,85,652,112"/>
+<area shape="rect" id="node27" href="$namespace_json.html#a48f4e3ea655e3b4a5d7f892c81f00511" title="Json::releasePrefixedString\lValue" alt="" coords="740,57,920,98"/>
+<area shape="rect" id="node28" href="$namespace_json.html#a3e0d81d514d0e8bddf33b08074214abd" title="Json::releaseStringValue" alt="" coords="747,5,913,32"/>
+<area shape="rect" id="node31" href="$class_json_1_1_our_reader.html#aa6a920311e6408ff3a45324d49da18a6" title="Json::OurReader::addError" alt="" coords="983,613,1159,640"/>
+<area shape="rect" id="node34" href="$class_json_1_1_our_reader.html#a856dea44d92578c276856d7a65a4ebdc" title="Json::OurReader::skipComment\lTokens" alt="" coords="968,746,1175,787"/>
+<area shape="rect" id="node35" href="$class_json_1_1_our_reader.html#a0b9f58faf4212c6ecb5d8e2a1ac10257" title="Json::OurReader::readArray" alt="" coords="493,541,676,568"/>
+</map>

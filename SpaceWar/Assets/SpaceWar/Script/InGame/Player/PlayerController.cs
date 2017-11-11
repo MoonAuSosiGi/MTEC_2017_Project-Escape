@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using TimeForEscape.Object;
 
 public class PlayerController : MonoBehaviour {
 
@@ -377,7 +378,7 @@ public class PlayerController : MonoBehaviour {
             // 이동 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
             if (m_walkAniVal != 0)
             {
-                //  ATTACK_ANI_VALUE = 0;
+                ATTACK_ANI_VALUE = 0;
                 JUMP_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
@@ -397,7 +398,7 @@ public class PlayerController : MonoBehaviour {
             // 점프 애니메이션을 재생할 때 다른 값들은 어떻게 되어야 하는가?
             if (m_jumpAniVal != 0)
             {
-                //  ATTACK_ANI_VALUE = 0;
+                ATTACK_ANI_VALUE = 0;
                 WALK_ANI_VALUE = 0;
                 INTERACTION_ANI_VALUE = 0;
             }
@@ -416,7 +417,7 @@ public class PlayerController : MonoBehaviour {
             //    AttackAnimationEnd();
             if (m_interactionAniVal != 0)
             {
-                //   ATTACK_ANI_VALUE = 0;
+                ATTACK_ANI_VALUE = 0;
                 WALK_ANI_VALUE = 0;
                 JUMP_ANI_VALUE = 0;
             }
@@ -862,9 +863,11 @@ public class PlayerController : MonoBehaviour {
     {
         if (this.enabled == false)
             return;
-
+        if (m_nearItem != null)
+            m_nearItem.GetComponent<Item>().OutLineHide();
         // -- F 키를 띄워야 한다. // 근처에 있다면!
         ShowUseEffect(col);
+
 
 
     }
@@ -885,6 +888,10 @@ public class PlayerController : MonoBehaviour {
         // F 키 닫기
         HideUseEffect(col);
 
+        if (m_nearItem != null)
+            m_nearItem.GetComponent<Item>().OutLineHide();
+        m_nearItem = null;
+
     }
 
     #endregion -----------------------------------------------------------------------------------------------
@@ -896,7 +903,7 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey(m_AttackKey) && !IsInvoking("AttackCoolTime") && ATTACK_ANI_VALUE != 1)
         {
             m_isAttackAble = false;
-
+            m_isMoveAble = false;
             ATTACK_ANI_VALUE = 1;
 
             // 공격할땐 정면을 보고 공격
@@ -922,8 +929,14 @@ public class PlayerController : MonoBehaviour {
             }
             m_lastCoolTime = item.COOL_TIME;
             Invoke("AttackCoolTime" , m_lastCoolTime);
+            Invoke("AttackMoveCancel" , 0.3f);
         }
 
+    }
+    // 일정시간동안 이동막는거 해제
+    void AttackMoveCancel()
+    {
+        m_isMoveAble = true;
     }
 
     public void RecoveryItemUseEnd()
@@ -1039,7 +1052,8 @@ public class PlayerController : MonoBehaviour {
             GameManager.Instance().m_inGameUI.HideObjectUI();
 
             //  MeshRenderer renderer = m_nearItem.GetComponentInChildren<MeshRenderer>();
-            m_nearItem.GetComponent<Item>().OutLineHide();
+            if(m_nearItem != null)
+                m_nearItem.GetComponent<Item>().OutLineHide();
         }
         else if (col.CompareTag("OxyCharger"))
         {
@@ -1174,6 +1188,7 @@ public class PlayerController : MonoBehaviour {
         item.transform.localPosition = item.LOCAL_SET_POS;
         item.transform.localRotation = Quaternion.Euler(item.LOCAL_SET_ROT);
         item.transform.localScale = item.LOCAL_SET_SCALE;
+        item.OutLineHide();
         GameManager.Instance().m_inGameUI.HideObjectUI();
 
         // 기존 코드에 이부분에 무기 발사 앵커를 세팅해주는게 있었지만 무기마다 다르니 무기껄로 쓰기로
@@ -1639,6 +1654,7 @@ public class PlayerController : MonoBehaviour {
     // PlayerControlAttackTiming 에서 Attack 시점을 알려주었다,
     public void AttackAnimationEvent()
     {
+        Debug.Log("총알이 나가는 시점!");
         // 애니메이션 상에서 어택 시점을 조절해야 할 경우 여기로 들어옴
         if(m_equipItems[m_curEquipItem] != null)
         {

@@ -1,0 +1,266 @@
+\hypertarget{class_oxy_charger}{}\section{Oxy\+Charger 클래스 참조}
+\label{class_oxy_charger}\index{Oxy\+Charger@{Oxy\+Charger}}
+
+
+{\ttfamily \#include $<$Oxy\+Charger.\+h$>$}
+
+
+
+Oxy\+Charger에 대한 협력 다이어그램\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=196pt]{class_oxy_charger__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_oxy_charger_a3aa077d7dc2310cdc7006a178f92f1f7}{Oxy\+Charger} ()
+\begin{DoxyCompactList}\small\item\em 기본 생성자 \end{DoxyCompactList}\item 
+void \hyperlink{class_oxy_charger_a27f5b27537e10ffb5c140b651de5fa06}{Set\+Oxy\+Charger\+ID} (int oxy\+Charger\+ID)
+\begin{DoxyCompactList}\small\item\em 산소 충전기 식별 아이디 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_oxy_charger_a478c6f15601d6fecab42c7d0c839a870}{Get\+Oxy\+Charger\+ID} ()
+\begin{DoxyCompactList}\small\item\em 산소 충전기 식별 아이디 얻기 \end{DoxyCompactList}\item 
+bool \hyperlink{class_oxy_charger_a7c8d2121a1ac586b2da477bc305c0f7d}{Is\+Locked} ()
+\begin{DoxyCompactList}\small\item\em 잠김 유무 얻기 \end{DoxyCompactList}\item 
+int \hyperlink{class_oxy_charger_adcc945553172f5f75af9f64b888d285a}{Get\+Use\+Host\+ID} ()
+\begin{DoxyCompactList}\small\item\em 사용 중인 유저의 Host\+ID 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_oxy_charger_a5d1f80c23638347ca7d5f9338c3a23b0}{Lock\+Oxy\+Charger} (int host\+ID)
+\begin{DoxyCompactList}\small\item\em 산소 충전기 잠금 \end{DoxyCompactList}\item 
+void \hyperlink{class_oxy_charger_abe01eac96e95d7a667d782829abd51dd}{Un\+Lock\+Oxy\+Charger} ()
+\begin{DoxyCompactList}\small\item\em 산소 충전기 잠금 해제 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_oxy_charger_a7229fb2e4423cad1f648bd710ee8d092}{m\+\_\+oxy\+Charger\+ID}
+\begin{DoxyCompactList}\small\item\em 산소 충전기 네트워크 식별 아이디 \end{DoxyCompactList}\item 
+bool \hyperlink{class_oxy_charger_af976be20b7f8cd8cf9c6f59857ba2f48}{m\+\_\+is\+Locked}
+\begin{DoxyCompactList}\small\item\em 잠금 여부 \end{DoxyCompactList}\item 
+int \hyperlink{class_oxy_charger_af10a0504b33a8e3b6ded341cf067b9ad}{m\+\_\+use\+Host\+ID}
+\begin{DoxyCompactList}\small\item\em 사용중인 플레이어의 식별 아이디 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+
+Oxy\+Charger.\+h 파일의 12 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_oxy_charger_a3aa077d7dc2310cdc7006a178f92f1f7}\label{class_oxy_charger_a3aa077d7dc2310cdc7006a178f92f1f7}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!Oxy\+Charger@{Oxy\+Charger}}
+\index{Oxy\+Charger@{Oxy\+Charger}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{Oxy\+Charger()}{OxyCharger()}}
+{\footnotesize\ttfamily Oxy\+Charger\+::\+Oxy\+Charger (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+기본 생성자 
+
+기본 생성자 / 사용 가능 상태로 만든다. 
+
+Oxy\+Charger.\+cpp 파일의 8 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+9 \{
+10     \hyperlink{class_oxy_charger_a7229fb2e4423cad1f648bd710ee8d092}{m\_oxyChargerID} = -1;
+11     \hyperlink{class_oxy_charger_abe01eac96e95d7a667d782829abd51dd}{UnLockOxyCharger}();
+12 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_oxy_charger_a3aa077d7dc2310cdc7006a178f92f1f7_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_oxy_charger_a478c6f15601d6fecab42c7d0c839a870}\label{class_oxy_charger_a478c6f15601d6fecab42c7d0c839a870}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!Get\+Oxy\+Charger\+ID@{Get\+Oxy\+Charger\+ID}}
+\index{Get\+Oxy\+Charger\+ID@{Get\+Oxy\+Charger\+ID}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{Get\+Oxy\+Charger\+I\+D()}{GetOxyChargerID()}}
+{\footnotesize\ttfamily int Oxy\+Charger\+::\+Get\+Oxy\+Charger\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+산소 충전기 식별 아이디 얻기 
+
+\begin{DoxyReturn}{반환값}
+산소 충전기 식별 아이디를 반환한다. ( -\/1 일 경우 세팅이 안되어있는 것 ) 
+\end{DoxyReturn}
+
+
+Oxy\+Charger.\+cpp 파일의 30 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+31 \{
+32     \textcolor{keywordflow}{return} \hyperlink{class_oxy_charger_a7229fb2e4423cad1f648bd710ee8d092}{m\_oxyChargerID};
+33 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_oxy_charger_adcc945553172f5f75af9f64b888d285a}\label{class_oxy_charger_adcc945553172f5f75af9f64b888d285a}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!Get\+Use\+Host\+ID@{Get\+Use\+Host\+ID}}
+\index{Get\+Use\+Host\+ID@{Get\+Use\+Host\+ID}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{Get\+Use\+Host\+I\+D()}{GetUseHostID()}}
+{\footnotesize\ttfamily int Oxy\+Charger\+::\+Get\+Use\+Host\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+사용 중인 유저의 Host\+ID 얻기 
+
+현재 조작중인 클라이언트 Host\+ID 리턴  -\/1 일경우 아무도 조작중이 아니다
+
+\begin{DoxyReturn}{반환값}
+현재 조작중인 클라이언트의 Host\+ID 가 int 형으로 리턴 
+\end{DoxyReturn}
+
+
+Oxy\+Charger.\+cpp 파일의 48 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+49 \{ 
+50     \textcolor{keywordflow}{return} \hyperlink{class_oxy_charger_af10a0504b33a8e3b6ded341cf067b9ad}{m\_useHostID}; 
+51 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_oxy_charger_a7c8d2121a1ac586b2da477bc305c0f7d}\label{class_oxy_charger_a7c8d2121a1ac586b2da477bc305c0f7d}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!Is\+Locked@{Is\+Locked}}
+\index{Is\+Locked@{Is\+Locked}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{Is\+Locked()}{IsLocked()}}
+{\footnotesize\ttfamily bool Oxy\+Charger\+::\+Is\+Locked (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+잠김 유무 얻기 
+
+잠겨있는지 리턴
+
+\begin{DoxyReturn}{반환값}
+true 일 경우 산소 충전기 잠겨있음 
+\end{DoxyReturn}
+
+
+Oxy\+Charger.\+cpp 파일의 38 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+39 \{ 
+40     \textcolor{keywordflow}{return} \hyperlink{class_oxy_charger_af976be20b7f8cd8cf9c6f59857ba2f48}{m\_isLocked}; 
+41 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_oxy_charger_a5d1f80c23638347ca7d5f9338c3a23b0}\label{class_oxy_charger_a5d1f80c23638347ca7d5f9338c3a23b0}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!Lock\+Oxy\+Charger@{Lock\+Oxy\+Charger}}
+\index{Lock\+Oxy\+Charger@{Lock\+Oxy\+Charger}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{Lock\+Oxy\+Charger()}{LockOxyCharger()}}
+{\footnotesize\ttfamily void Oxy\+Charger\+::\+Lock\+Oxy\+Charger (\begin{DoxyParamCaption}\item[{int}]{host\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+산소 충전기 잠금 
+
+
+
+Oxy\+Charger.\+h 파일의 29 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_oxy_charger_a27f5b27537e10ffb5c140b651de5fa06}\label{class_oxy_charger_a27f5b27537e10ffb5c140b651de5fa06}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!Set\+Oxy\+Charger\+ID@{Set\+Oxy\+Charger\+ID}}
+\index{Set\+Oxy\+Charger\+ID@{Set\+Oxy\+Charger\+ID}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{Set\+Oxy\+Charger\+I\+D()}{SetOxyChargerID()}}
+{\footnotesize\ttfamily void Oxy\+Charger\+::\+Set\+Oxy\+Charger\+ID (\begin{DoxyParamCaption}\item[{int}]{oxy\+Charger\+ID }\end{DoxyParamCaption})}
+
+
+
+산소 충전기 식별 아이디 세팅 
+
+
+\begin{DoxyParams}{매개변수}
+{\em oxy\+Charger\+ID} & 산소 충전기 네트워크 식별 아이디 \\
+\hline
+\end{DoxyParams}
+
+
+Oxy\+Charger.\+cpp 파일의 21 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+22 \{
+23     \hyperlink{class_oxy_charger_a7229fb2e4423cad1f648bd710ee8d092}{m\_oxyChargerID} = oxyChargerID;
+24 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_oxy_charger_abe01eac96e95d7a667d782829abd51dd}\label{class_oxy_charger_abe01eac96e95d7a667d782829abd51dd}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!Un\+Lock\+Oxy\+Charger@{Un\+Lock\+Oxy\+Charger}}
+\index{Un\+Lock\+Oxy\+Charger@{Un\+Lock\+Oxy\+Charger}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{Un\+Lock\+Oxy\+Charger()}{UnLockOxyCharger()}}
+{\footnotesize\ttfamily void Oxy\+Charger\+::\+Un\+Lock\+Oxy\+Charger (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+산소 충전기 잠금 해제 
+
+
+
+Oxy\+Charger.\+h 파일의 30 번째 라인에서 정의되었습니다.
+
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_oxy_charger_abe01eac96e95d7a667d782829abd51dd_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_oxy_charger_af976be20b7f8cd8cf9c6f59857ba2f48}\label{class_oxy_charger_af976be20b7f8cd8cf9c6f59857ba2f48}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!m\+\_\+is\+Locked@{m\+\_\+is\+Locked}}
+\index{m\+\_\+is\+Locked@{m\+\_\+is\+Locked}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{m\+\_\+is\+Locked}{m\_isLocked}}
+{\footnotesize\ttfamily bool Oxy\+Charger\+::m\+\_\+is\+Locked\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+잠금 여부 
+
+
+
+Oxy\+Charger.\+h 파일의 16 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_oxy_charger_a7229fb2e4423cad1f648bd710ee8d092}\label{class_oxy_charger_a7229fb2e4423cad1f648bd710ee8d092}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!m\+\_\+oxy\+Charger\+ID@{m\+\_\+oxy\+Charger\+ID}}
+\index{m\+\_\+oxy\+Charger\+ID@{m\+\_\+oxy\+Charger\+ID}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{m\+\_\+oxy\+Charger\+ID}{m\_oxyChargerID}}
+{\footnotesize\ttfamily int Oxy\+Charger\+::m\+\_\+oxy\+Charger\+ID\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+산소 충전기 네트워크 식별 아이디 
+
+
+
+Oxy\+Charger.\+h 파일의 15 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_oxy_charger_af10a0504b33a8e3b6ded341cf067b9ad}\label{class_oxy_charger_af10a0504b33a8e3b6ded341cf067b9ad}} 
+\index{Oxy\+Charger@{Oxy\+Charger}!m\+\_\+use\+Host\+ID@{m\+\_\+use\+Host\+ID}}
+\index{m\+\_\+use\+Host\+ID@{m\+\_\+use\+Host\+ID}!Oxy\+Charger@{Oxy\+Charger}}
+\subsubsection{\texorpdfstring{m\+\_\+use\+Host\+ID}{m\_useHostID}}
+{\footnotesize\ttfamily int Oxy\+Charger\+::m\+\_\+use\+Host\+ID\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+사용중인 플레이어의 식별 아이디 
+
+
+
+Oxy\+Charger.\+h 파일의 17 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/\hyperlink{_oxy_charger_8h}{Oxy\+Charger.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{_oxy_charger_8cpp}{Oxy\+Charger.\+cpp}\end{DoxyCompactItemize}

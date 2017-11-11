@@ -8,7 +8,7 @@ public class GameManager : Singletone<GameManager> {
 
     #region Table
     [SerializeField] GameTable m_gameTable = null;
-
+ 
     #region GameTable Tag
     public const string FULL_HP = "FullHP";
     public const string FULL_OXY = "FullOXY";
@@ -44,24 +44,11 @@ public class GameManager : Singletone<GameManager> {
     #region Game Manager Main
     // -- 게임 매니저 전반적인 것들을 관리합니다 ------------------------------------------//
     public GameObject PlayerPref;
-    public GameObject MainCam;
-    public GameObject Plant;
     public InGameUI m_inGameUI;
-    public GameObject m_map = null;
-    public GameObject m_itemParent = null;
     public GameObject m_meteorParent = null;
-    public Transform PlanetAnchor;
-
-
-    public GameObject[] Item;
+    
     public Transform ItemCreaterAnchor;
     public int CreateItemNum;
-
-    public List<GameObject> CreateWeaponList = new List<GameObject>();
-
-    public RaycastHit SponeHitInfo;
-
-    float deltaTime = 0.0f;
 
     public GameObject m_playersCreateParent = null;
 
@@ -74,11 +61,7 @@ public class GameManager : Singletone<GameManager> {
         get { return m_playerInfo; }
         set { m_playerInfo = value; }
     }
-
-    #region Network Item 
-    [SerializeField] private Transform m_networkItemParent = null;
-    [SerializeField] private List<GameObject> m_itemList = new List<GameObject>();
-    #endregion
+    
     #endregion
 
     #region NetworkObject
@@ -152,6 +135,9 @@ public class GameManager : Singletone<GameManager> {
                 m_player.RUN_SPEED = runSpeed;
             }
         }
+        public string NAME { get { return m_name; } set { m_name = value; } }
+        public float HP { get { return m_hp; } set { m_hp = value; } }
+        public float OXY { get { return m_oxy; } set { m_oxy = value; } }
     }
     #endregion
 
@@ -187,27 +173,6 @@ public class GameManager : Singletone<GameManager> {
 
     public float PLANET_XANGLE = 0.0f;
     public float PLANET_ZANGLE = 0.0f;
-
-    void Update()
-    {
-        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-    }
-
-    void OnGUI()
-    {
-        int w = Screen.width, h = Screen.height;
-
-        GUIStyle style = new GUIStyle();
-
-        Rect rect = new Rect(0 , 0 , w , h * 2 / 100);
-        style.alignment = TextAnchor.UpperLeft;
-        style.fontSize = h * 2 / 100;
-        style.normal.textColor = new Color(1.0f , 1.0f , 1.0f , 1.0f);
-        float msec = deltaTime * 1000.0f;
-        float fps = 1.0f / deltaTime;
-        string text = string.Format("{0:0.0} ms ({1:0.} fps)" , msec , fps);
-        GUI.Label(rect , text , style);
-    }
 
     #endregion
 
@@ -294,10 +259,10 @@ public class GameManager : Singletone<GameManager> {
     // 메테오 생성
     public void CreateMeteor(float anglex,float anglez,string meteorID)
     {
-        float planetScale = Plant.transform.localScale.x + 12.3f;
+        float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 12.3f;
 
-        Vector3 pos = GetPlanetPosition(planetScale , anglex , anglez);
-        Vector3 pos2 = GetPlanetPosition(planetScale + 30.0f , anglex , anglez);
+        Vector3 pos =  GravityManager.Instance().GetPlanetPosition(planetScale , anglex , anglez);
+ 
 
         m_meteorList.Add(meteorID , 30.0f);
         
@@ -337,16 +302,6 @@ public class GameManager : Singletone<GameManager> {
                 }
             }
         }
-    }
-    #endregion
-
-    #region Util Method
-    public Vector3 GetPlanetPosition(float scale,float anglex,float anglez)
-    {
-        float x = scale * Mathf.Sin(anglex * Mathf.Deg2Rad) * Mathf.Cos(anglez * Mathf.Deg2Rad);
-        float y = scale * Mathf.Sin(anglex * Mathf.Deg2Rad) * Mathf.Sin(anglez * Mathf.Deg2Rad);
-        float z = scale * Mathf.Cos(anglex * Mathf.Deg2Rad);
-        return new Vector3(x,y,z); 
     }
     #endregion
 
@@ -475,7 +430,7 @@ public class GameManager : Singletone<GameManager> {
 
 
             ItemCreaterAnchor.GetChild(0).LookAt(ItemCreaterAnchor);
-
+            RaycastHit SponeHitInfo;
             Physics.Raycast(ItemCreaterAnchor.GetChild(0).position , ItemCreaterAnchor.rotation * Vector3.forward , out SponeHitInfo , 30.0f);
 
 
@@ -521,12 +476,6 @@ public class GameManager : Singletone<GameManager> {
 
         }
     }
-    // 서버에서 생성 명령이 왔다.
-    public void RecvCreateItem(string itemCode,float angleX,float angleZ)
-    {
-        Vector3 targetPos = GravityManager.Instance().GetPlanetPosition(12.8f , angleX , angleZ);
-    }
-
     #region Network - ItemBox
     public void RecvItem(string itemID , string networkID , GameObject box)
     {
@@ -534,7 +483,7 @@ public class GameManager : Singletone<GameManager> {
         GameObject weapon = WeaponManager.Instance().CreateWeapon(itemID);
 
         weapon.transform.position = boxPos;
-        Vector3 scale = weapon.transform.localScale;
+      //  Vector3 scale = weapon.transform.localScale;
         //  weapon.transform.localScale = new Vector3(0.0f , 0.0f , 0.0f);
         Item item = weapon.GetComponent<Item>();
         item.ITEM_NETWORK_ID = networkID;

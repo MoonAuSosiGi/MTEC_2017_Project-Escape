@@ -1,0 +1,371 @@
+\hypertarget{class_item}{}\section{Item 클래스 참조}
+\label{class_item}\index{Item@{Item}}
+
+
+{\ttfamily \#include $<$Item.\+h$>$}
+
+
+
+Item에 대한 협력 다이어그램\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{class_item__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_item_a08bbc0cfcebaee215cdcc6ea910850eb}{Item} (string item\+ID, string network\+ID)
+\begin{DoxyCompactList}\small\item\em 생성자 \end{DoxyCompactList}\item 
+string \hyperlink{class_item_a449b9493c2980231cd23633d935568e0}{Get\+Item\+ID} ()
+\begin{DoxyCompactList}\small\item\em 아이템 아이디 얻기 \end{DoxyCompactList}\item 
+string \hyperlink{class_item_ab3ee43a2b973e4a595e65ce44c68ad18}{Get\+Network\+ID} ()
+\begin{DoxyCompactList}\small\item\em 아이템의 네트워크 아이디 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_item_ae98790cd9fb0ef12e3bfc8149db4453f}{Set\+Position} (Vector3 pos)
+\begin{DoxyCompactList}\small\item\em 아이템 포지션 세팅 (벡터) \end{DoxyCompactList}\item 
+void \hyperlink{class_item_ab4bb5f402c4ab8829c70d02c44128faa}{Set\+Position} (float x, float y, float z)
+\begin{DoxyCompactList}\small\item\em 아이템 포지션 세팅 \end{DoxyCompactList}\item 
+Vector3 \hyperlink{class_item_a557cd503b1645e0e610ee66ad25f283c}{Get\+Position} ()
+\begin{DoxyCompactList}\small\item\em 아이템 좌표 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_item_a9886c6d5ae9a2778d5e8b1526d29f27e}{Set\+Rotation} (Vector3 rot)
+\begin{DoxyCompactList}\small\item\em 아이템 회전값 세팅 (벡터) \end{DoxyCompactList}\item 
+void \hyperlink{class_item_af114b32d99e586a29f849ed4f3579d2c}{Set\+Rotation} (float rotx, float roty, float rotz)
+\begin{DoxyCompactList}\small\item\em 아이템 회전값 세팅 \end{DoxyCompactList}\item 
+Vector3 \hyperlink{class_item_a6c9f4e62259d7ff025f5e4d09597cdba}{Get\+Rotation} ()
+\begin{DoxyCompactList}\small\item\em 아이템 회전값 얻기 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{class_item_a8a89e78c25c95fe6f27d61d2416df1e5}{m\+\_\+item\+ID}
+\begin{DoxyCompactList}\small\item\em 아이템 아이디 \end{DoxyCompactList}\item 
+string \hyperlink{class_item_a3e5eae9a0cc3f98e421bc065c5b6f906}{m\+\_\+network\+ID}
+\begin{DoxyCompactList}\small\item\em 아이템의 네트워크 아이디 \end{DoxyCompactList}\item 
+Vector3 \hyperlink{class_item_a6b35031bbc368a4d04c2298f1b094973}{m\+\_\+pos}
+\begin{DoxyCompactList}\small\item\em 아이템의 네트워크 좌표 \end{DoxyCompactList}\item 
+Vector3 \hyperlink{class_item_a8442ba52568d84d584117ed8e4f11883}{m\+\_\+rot}
+\begin{DoxyCompactList}\small\item\em 아이템의 네트워크 회전값 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+
+Item.\+h 파일의 13 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_item_a08bbc0cfcebaee215cdcc6ea910850eb}\label{class_item_a08bbc0cfcebaee215cdcc6ea910850eb}} 
+\index{Item@{Item}!Item@{Item}}
+\index{Item@{Item}!Item@{Item}}
+\subsubsection{\texorpdfstring{Item()}{Item()}}
+{\footnotesize\ttfamily Item\+::\+Item (\begin{DoxyParamCaption}\item[{string}]{item\+ID,  }\item[{string}]{network\+ID }\end{DoxyParamCaption})}
+
+
+
+생성자 
+
+아이템의 생성자. 아이디와 네트워크 아이디 세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em item\+ID} & 아이템의 아이디 \\
+\hline
+{\em network\+ID} & 아이템의 네트워크 식별 아이디 \\
+\hline
+\end{DoxyParams}
+
+
+Item.\+cpp 파일의 9 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+10 \{
+11     \hyperlink{class_item_a8a89e78c25c95fe6f27d61d2416df1e5}{m\_itemID} = itemID;
+12     \hyperlink{class_item_a3e5eae9a0cc3f98e421bc065c5b6f906}{m\_networkID} = networkID;
+13 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_item_a449b9493c2980231cd23633d935568e0}\label{class_item_a449b9493c2980231cd23633d935568e0}} 
+\index{Item@{Item}!Get\+Item\+ID@{Get\+Item\+ID}}
+\index{Get\+Item\+ID@{Get\+Item\+ID}!Item@{Item}}
+\subsubsection{\texorpdfstring{Get\+Item\+I\+D()}{GetItemID()}}
+{\footnotesize\ttfamily string Item\+::\+Get\+Item\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+아이템 아이디 얻기 
+
+\begin{DoxyReturn}{반환값}
+아이템의 아이디를 리턴한다. null일 수 없다. 
+\end{DoxyReturn}
+
+
+Item.\+cpp 파일의 20 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+21 \{
+22     \textcolor{keywordflow}{return} \hyperlink{class_item_a8a89e78c25c95fe6f27d61d2416df1e5}{m\_itemID};
+23 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_ab3ee43a2b973e4a595e65ce44c68ad18}\label{class_item_ab3ee43a2b973e4a595e65ce44c68ad18}} 
+\index{Item@{Item}!Get\+Network\+ID@{Get\+Network\+ID}}
+\index{Get\+Network\+ID@{Get\+Network\+ID}!Item@{Item}}
+\subsubsection{\texorpdfstring{Get\+Network\+I\+D()}{GetNetworkID()}}
+{\footnotesize\ttfamily string Item\+::\+Get\+Network\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+아이템의 네트워크 아이디 얻기 
+
+\begin{DoxyReturn}{반환값}
+아이템의 네트워크 아이디를 리턴한다. null일 수 없다. 
+\end{DoxyReturn}
+
+
+Item.\+cpp 파일의 28 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+29 \{
+30     \textcolor{keywordflow}{return} \hyperlink{class_item_a3e5eae9a0cc3f98e421bc065c5b6f906}{m\_networkID};
+31 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_a557cd503b1645e0e610ee66ad25f283c}\label{class_item_a557cd503b1645e0e610ee66ad25f283c}} 
+\index{Item@{Item}!Get\+Position@{Get\+Position}}
+\index{Get\+Position@{Get\+Position}!Item@{Item}}
+\subsubsection{\texorpdfstring{Get\+Position()}{GetPosition()}}
+{\footnotesize\ttfamily Vector3 Item\+::\+Get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+아이템 좌표 얻기 
+
+아이템의 좌표를 얻어온다.
+
+\begin{DoxyReturn}{반환값}
+아이템의 좌표를 리턴 
+\end{DoxyReturn}
+
+
+Item.\+cpp 파일의 58 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+59 \{
+60     \textcolor{keywordflow}{return} \hyperlink{class_item_a6b35031bbc368a4d04c2298f1b094973}{m\_pos};
+61 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_a6c9f4e62259d7ff025f5e4d09597cdba}\label{class_item_a6c9f4e62259d7ff025f5e4d09597cdba}} 
+\index{Item@{Item}!Get\+Rotation@{Get\+Rotation}}
+\index{Get\+Rotation@{Get\+Rotation}!Item@{Item}}
+\subsubsection{\texorpdfstring{Get\+Rotation()}{GetRotation()}}
+{\footnotesize\ttfamily Vector3 Item\+::\+Get\+Rotation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+아이템 회전값 얻기 
+
+아이템의 회전값을 얻어온다.
+
+\begin{DoxyReturn}{반환값}
+아이템의 회전값을 리턴 
+\end{DoxyReturn}
+
+
+Item.\+cpp 파일의 91 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+92 \{
+93     \textcolor{keywordflow}{return} \hyperlink{class_item_a8442ba52568d84d584117ed8e4f11883}{m\_rot};
+94 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_ae98790cd9fb0ef12e3bfc8149db4453f}\label{class_item_ae98790cd9fb0ef12e3bfc8149db4453f}} 
+\index{Item@{Item}!Set\+Position@{Set\+Position}}
+\index{Set\+Position@{Set\+Position}!Item@{Item}}
+\subsubsection{\texorpdfstring{Set\+Position()}{SetPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Item\+::\+Set\+Position (\begin{DoxyParamCaption}\item[{Vector3}]{pos }\end{DoxyParamCaption})}
+
+
+
+아이템 포지션 세팅 (벡터) 
+
+아이템의 위치를 세팅한다.  아이템의 네트워크 상 포지션을 세팅한다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em pos} & 아이템의 포지션값 \\
+\hline
+\end{DoxyParams}
+
+
+Item.\+cpp 파일의 37 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+38 \{
+39     \hyperlink{class_item_a6b35031bbc368a4d04c2298f1b094973}{m\_pos} = pos;
+40 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_ab4bb5f402c4ab8829c70d02c44128faa}\label{class_item_ab4bb5f402c4ab8829c70d02c44128faa}} 
+\index{Item@{Item}!Set\+Position@{Set\+Position}}
+\index{Set\+Position@{Set\+Position}!Item@{Item}}
+\subsubsection{\texorpdfstring{Set\+Position()}{SetPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Item\+::\+Set\+Position (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})}
+
+
+
+아이템 포지션 세팅 
+
+아이템의 위치를 세팅한다.  아이템의 네트워크 상 포지션을 세팅한다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em x} & 아이템의 x좌표 \\
+\hline
+{\em y} & 아이템의 y좌표 \\
+\hline
+{\em z} & 아이템의 z좌표 \\
+\hline
+\end{DoxyParams}
+
+
+Item.\+cpp 파일의 48 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+49 \{
+50     \hyperlink{class_item_a6b35031bbc368a4d04c2298f1b094973}{m\_pos}.x = x;
+51     \hyperlink{class_item_a6b35031bbc368a4d04c2298f1b094973}{m\_pos}.y = y;
+52     \hyperlink{class_item_a6b35031bbc368a4d04c2298f1b094973}{m\_pos}.z = z;
+53 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_a9886c6d5ae9a2778d5e8b1526d29f27e}\label{class_item_a9886c6d5ae9a2778d5e8b1526d29f27e}} 
+\index{Item@{Item}!Set\+Rotation@{Set\+Rotation}}
+\index{Set\+Rotation@{Set\+Rotation}!Item@{Item}}
+\subsubsection{\texorpdfstring{Set\+Rotation()}{SetRotation()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Item\+::\+Set\+Rotation (\begin{DoxyParamCaption}\item[{Vector3}]{rot }\end{DoxyParamCaption})}
+
+
+
+아이템 회전값 세팅 (벡터) 
+
+아이템의 회전값을 세팅한다.  아이템의 네트워크 상 회전값을 세팅한다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em rot} & 아이템의 x,y,z의 회전값이 들어있는 벡터 \\
+\hline
+\end{DoxyParams}
+
+
+Item.\+cpp 파일의 68 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+69 \{
+70     \hyperlink{class_item_a8442ba52568d84d584117ed8e4f11883}{m\_rot} = rot;
+71 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_item_af114b32d99e586a29f849ed4f3579d2c}\label{class_item_af114b32d99e586a29f849ed4f3579d2c}} 
+\index{Item@{Item}!Set\+Rotation@{Set\+Rotation}}
+\index{Set\+Rotation@{Set\+Rotation}!Item@{Item}}
+\subsubsection{\texorpdfstring{Set\+Rotation()}{SetRotation()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Item\+::\+Set\+Rotation (\begin{DoxyParamCaption}\item[{float}]{rotx,  }\item[{float}]{roty,  }\item[{float}]{rotz }\end{DoxyParamCaption})}
+
+
+
+아이템 회전값 세팅 
+
+아이템의 회전값을 세팅한다.  아이템의 네트워크 상 회전값을 세팅한다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em rotx} & 아이템의 x회전값 \\
+\hline
+{\em roty} & 아이템의 y회전값 \\
+\hline
+{\em rotz} & 아이템의 z회전값 \\
+\hline
+\end{DoxyParams}
+
+
+Item.\+cpp 파일의 80 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+81 \{
+82     \hyperlink{class_item_a8442ba52568d84d584117ed8e4f11883}{m\_rot}.x = rotx;
+83     \hyperlink{class_item_a8442ba52568d84d584117ed8e4f11883}{m\_rot}.y = roty;
+84     \hyperlink{class_item_a8442ba52568d84d584117ed8e4f11883}{m\_rot}.z = rotz;
+85 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_item_a8a89e78c25c95fe6f27d61d2416df1e5}\label{class_item_a8a89e78c25c95fe6f27d61d2416df1e5}} 
+\index{Item@{Item}!m\+\_\+item\+ID@{m\+\_\+item\+ID}}
+\index{m\+\_\+item\+ID@{m\+\_\+item\+ID}!Item@{Item}}
+\subsubsection{\texorpdfstring{m\+\_\+item\+ID}{m\_itemID}}
+{\footnotesize\ttfamily string Item\+::m\+\_\+item\+ID\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+아이템 아이디 
+
+
+
+Item.\+h 파일의 16 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_item_a3e5eae9a0cc3f98e421bc065c5b6f906}\label{class_item_a3e5eae9a0cc3f98e421bc065c5b6f906}} 
+\index{Item@{Item}!m\+\_\+network\+ID@{m\+\_\+network\+ID}}
+\index{m\+\_\+network\+ID@{m\+\_\+network\+ID}!Item@{Item}}
+\subsubsection{\texorpdfstring{m\+\_\+network\+ID}{m\_networkID}}
+{\footnotesize\ttfamily string Item\+::m\+\_\+network\+ID\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+아이템의 네트워크 아이디 
+
+
+
+Item.\+h 파일의 17 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_item_a6b35031bbc368a4d04c2298f1b094973}\label{class_item_a6b35031bbc368a4d04c2298f1b094973}} 
+\index{Item@{Item}!m\+\_\+pos@{m\+\_\+pos}}
+\index{m\+\_\+pos@{m\+\_\+pos}!Item@{Item}}
+\subsubsection{\texorpdfstring{m\+\_\+pos}{m\_pos}}
+{\footnotesize\ttfamily Vector3 Item\+::m\+\_\+pos\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+아이템의 네트워크 좌표 
+
+
+
+Item.\+h 파일의 18 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_item_a8442ba52568d84d584117ed8e4f11883}\label{class_item_a8442ba52568d84d584117ed8e4f11883}} 
+\index{Item@{Item}!m\+\_\+rot@{m\+\_\+rot}}
+\index{m\+\_\+rot@{m\+\_\+rot}!Item@{Item}}
+\subsubsection{\texorpdfstring{m\+\_\+rot}{m\_rot}}
+{\footnotesize\ttfamily Vector3 Item\+::m\+\_\+rot\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+아이템의 네트워크 회전값 
+
+
+
+Item.\+h 파일의 19 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/\hyperlink{_item_8h}{Item.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{_item_8cpp}{Item.\+cpp}\end{DoxyCompactItemize}

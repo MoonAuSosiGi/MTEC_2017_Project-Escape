@@ -1,0 +1,17 @@
+<map id="Server::GetGameRoom" name="Server::GetGameRoom">
+<area shape="rect" id="node2" href="$_server_8cpp.html#aa49c05ac1cfbff49b47ca9ff62ae3761" title="서버스레드 :: 메테오, 데스존 관리 &#160;1초마다 호출됨 " alt="" coords="275,5,401,32"/>
+<area shape="rect" id="node5" href="$class_server.html#a1249766dc00efcf1f29a2aaad56f83ef" title="클라이언트가 서버에서 나갔다. " alt="" coords="263,56,413,83"/>
+<area shape="rect" id="node6" href="$_server_8cpp.html#ac61854c98ecd96eb1def8f1ebc989860" title="서버 연결 요청 &#160;게임 대기실 참가 요청 " alt="" coords="223,107,453,149"/>
+<area shape="rect" id="node7" href="$_server_8cpp.html#a9beabfb0ddf5642378d858e406784dd7" title="게임 스타트 요청 &#160;게임 시작. " alt="" coords="217,173,459,214"/>
+<area shape="rect" id="node8" href="$_server_8cpp.html#aa2b76908488d609ba6d3454b327f71d2" title="체력 변경 요청 &#160;데미지를 제외한 체력 변경 요청 " alt="" coords="233,238,443,279"/>
+<area shape="rect" id="node9" href="$_server_8cpp.html#afa37b07a4c2b02f36dc2a7b5279c07e5" title="데미지를 입었다. &#160;죽음 / 어시스트 등에 대한 처리 " alt="" coords="223,303,453,345"/>
+<area shape="rect" id="node10" href="$_server_8cpp.html#abddb1a34d4ebce25c2aa6b699054bb6d" title="산소를 사용했다. @ " alt="" coords="223,369,453,410"/>
+<area shape="rect" id="node11" href="$_server_8cpp.html#a315144354b987b5bbdd39e1d9ef02c31" title="플레이어가 이동했음을 알림 " alt="" coords="215,435,461,461"/>
+<area shape="rect" id="node12" href="$_server_8cpp.html#a8916e64f3664f5890f2fa6403d485e52" title="산소 충전기 조작중 " alt="" coords="229,486,447,527"/>
+<area shape="rect" id="node13" href="$_server_8cpp.html#a674e20c85308017d78150246500a998a" title="아이템 생성 요청 " alt="" coords="224,551,452,593"/>
+<area shape="rect" id="node14" href="$_server_8cpp.html#ae5b131a28780775ab2609cf87bfe47ef" title="우주선 연료를 전부 충전했을 때 보냄 &#160;서바이벌 &#45; 우주선 탈출 승리 " alt="" coords="209,617,467,644"/>
+<area shape="rect" id="node15" href="$_server_8cpp.html#a5c0212ac7b16d5722f7befe03f5f7536" title="무승부시 게임 결과 요청 " alt="" coords="227,669,449,710"/>
+<area shape="rect" id="node16" href="$_server_8cpp.html#abf341ef4337bac826faa9530cac0e106" title="일반적인 승리시 결과창 요청 " alt="" coords="212,735,464,761"/>
+<area shape="rect" id="node3" href="$class_server.html#acb327f7980ef16c40087bdafcef5ad7a" title="게임 서버 시작 " alt="" coords="515,31,640,57"/>
+<area shape="rect" id="node4" href="$_server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="서버 프로그램의 시작 지점 " alt="" coords="688,31,739,57"/>
+</map>

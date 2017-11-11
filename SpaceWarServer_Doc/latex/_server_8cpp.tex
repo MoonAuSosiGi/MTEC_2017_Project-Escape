@@ -1,0 +1,1692 @@
+\hypertarget{_server_8cpp}{}\section{Space\+War\+Server/\+Server/\+Server.cpp 파일 참조}
+\label{_server_8cpp}\index{Space\+War\+Server/\+Server/\+Server.\+cpp@{Space\+War\+Server/\+Server/\+Server.\+cpp}}
+{\ttfamily \#include \char`\"{}stdafx.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Server.\+h\char`\"{}}\newline
+Server.\+cpp에 대한 include 의존 그래프\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{함수}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{_server_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\begin{DoxyCompactList}\small\item\em 서버 프로그램의 시작 지점 \end{DoxyCompactList}\item 
+void \hyperlink{_server_8cpp_aa49c05ac1cfbff49b47ca9ff62ae3761}{Server\+Thread\+Loop} (void $\ast$)
+\begin{DoxyCompactList}\small\item\em 서버스레드 \+:\+: 메테오, 데스존 관리  1초마다 호출됨 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_ac61854c98ecd96eb1def8f1ebc989860}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 서버 연결 요청  게임 대기실 참가 요청 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_af54e8a59bd92b717584a958c0dd1165b}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 팀 변경 요청  서버에서 변경 후 해당 정보 브로드캐스팅 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a77fd4f20062a286945ef06f03820a0ce}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 정상 종료 요청 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a5a885f48144119e8848fa7fc6eec54f3}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 레디 변경 요청  서버에서 요청을 받고 해당 정보 브로드캐스팅 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a2602b8ab8827191ad8add9411c1ae9ec}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 로비씬에 들어왔다.  기존에 들어와있는 유저의 정보들을 보내준다. / 내 자신의 정보도 날린다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_ae8a94d0352e97b96c5b5f73a538503d5}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 게임 씬 로딩 완료 메시지  전부 접속시 접속 정보들( 초기 좌표 등 )을 보낸다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a199d41ba633a88d395fd9604c4c96a79}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 방장이 맵을 바꿨다.  맵이 바뀐 것을 브로드캐스팅 해준다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_accb625785f73ca1658bdc13c528734e3}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 플레이 가능한 플레이어 수를 변경했다.  플레이어 수 제한을 브로드캐스팅한다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a9aba92f1517efaea934ae74bacd8f7de}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 게임 모드 변경  게임 모드 변경 사항을 브로드캐스팅 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a9beabfb0ddf5642378d858e406784dd7}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 게임 스타트 요청  게임 시작. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_aaeec5d678581efbad73d93c003387325}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 방장이 나갔다.  다들 타이틀로 튕겨져 나가야 하므로 해당 메시지 브로드캐스트 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_aa2b76908488d609ba6d3454b327f71d2}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 체력 변경 요청  데미지를 제외한 체력 변경 요청 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_afa37b07a4c2b02f36dc2a7b5279c07e5}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 데미지를 입었다.  죽음 / 어시스트 등에 대한 처리 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_abddb1a34d4ebce25c2aa6b699054bb6d}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 산소를 사용했다. @ \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a315144354b987b5bbdd39e1d9ef02c31}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 플레이어가 이동했음을 알림 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a05b5dc46de63317c0af01f763a992552}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 플레이어가 아이템을 장비했다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_afea3737698578834e08689e2d3c6b0da}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 게임 내 산소 충전기를 등록한다.  등록하고부터 산소 충전기를 사용할 수 있다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_ad446f8d44072a69e24d1a1b1ff91b522}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 산소 충전기 조작 요청  잠겨있는지 체크 후 알맞게 처리 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a8916e64f3664f5890f2fa6403d485e52}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 산소 충전기 조작중 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a231a54b8149291e53e044abbae79f2aa}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 산소 충전기 사용 끝  잠금 해제 및 사용해제로 되돌림 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_ac2f1f02c8861f29fcf6bd240c567922b}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 아이템 박스 사용 요청  랜덤으로 아이템 코드 생성해 브로드캐스팅 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a29ff62bd3b59f7613b1d957ed32e929e}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 쉘터 등록  등록하고부터 쉘터를 사용할 수 있다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a8be6f3134c5828a0a6af860aaedebf71}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 쉘터 문 조작  쉘터 문을 조작 정보를 받고 반영한 뒤 브로드캐스팅 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a54a8f5761b18ba5ef18d22aac516ef8b}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 쉘터에 진입했다.  조명을 끄고 켜고 하는 처리를 수행 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a674e20c85308017d78150246500a998a}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 아이템 생성 요청 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a9556d13182d9dfc8a40442c38714202d}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 아이템 삭제 요청  실제 삭제는 클라이언트에 명령을 보내 처리 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a6a53619c6c2ae7fe040f11d86acea6c7}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 월드에서 아이템이 삭제되었음을 받음  실제 메모리에서도 삭제 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_aeec8a5b00443a89e62e01df160381898}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 우주선을 등록한다.  등록해야 우주선을 사용할 수 있다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_ae5b131a28780775ab2609cf87bfe47ef}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 우주선 연료를 전부 충전했을 때 보냄  서바이벌 -\/ 우주선 탈출 승리 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a140b84a1a2a7a7df2cca7c986fda96fe}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 우주선 사용 요청  잠겨있지 않을 때 사용 가능하게 처리 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a3c745b4e98ae7a71eddae2c5c179c350}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 우주선 사용 취소  우주선 잠금 해제 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_ad4a9d22692f69cc4e20a48a3baeae882}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 데스존이 가고 있는 행성 단계를 알려줌  클라에서 움직이고 -\/ 서버에 알려준다. \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_a5c0212ac7b16d5722f7befe03f5f7536}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 무승부시 게임 결과 요청 \end{DoxyCompactList}\item 
+\hyperlink{_server_8cpp_abf341ef4337bac826faa9530cac0e106}{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End} (\hyperlink{class_server}{Server})
+\begin{DoxyCompactList}\small\item\em 일반적인 승리시 결과창 요청 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{변수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_server}{Server} \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}
+\item 
+bool \hyperlink{_server_8cpp_a0e468d42ed25075707dd9738b1b67621}{s\+\_\+\+Game\+Running} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{함수 문서화}
+\mbox{\Hypertarget{_server_8cpp_a6a53619c6c2ae7fe040f11d86acea6c7}\label{_server_8cpp_a6a53619c6c2ae7fe040f11d86acea6c7}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item()}{DEFRMI\_SpaceWar\_NotifyDeleteItem()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+월드에서 아이템이 삭제되었음을 받음  실제 메모리에서도 삭제 
+
+
+
+Server.\+cpp 파일의 1257 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1258 \{
+1259     cout << \textcolor{stringliteral}{"NotifyDeleteItem "} << networkID << endl;
+1260 
+1261     \textcolor{keyword}{auto} iter = m\_itemMap.find(networkID);
+1262 
+1263     \textcolor{keywordflow}{if} (iter == m\_itemMap.end())
+1264     \{
+1265         cout << \textcolor{stringliteral}{"잘못된 요청"} << endl;
+1266         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1267     \}
+1268     \{
+1269         \textcolor{comment}{// 추가로직}
+1270         CriticalSectionLock lock(m\_critSec, \textcolor{keyword}{true});
+1271         m\_itemMap.erase(iter);
+1272     \}
+1273     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1274 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a05b5dc46de63317c0af01f763a992552}\label{_server_8cpp_a05b5dc46de63317c0af01f763a992552}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item()}{DEFRMI\_SpaceWar\_NotifyPlayerEquipItem()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+플레이어가 아이템을 장비했다. 
+
+
+
+Server.\+cpp 파일의 998 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+999 \{
+1000     cout << \textcolor{stringliteral}{"NotifyPlayerEquipItem "} << hostID << \textcolor{stringliteral}{" item "} << itemID << endl;
+1001     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1002 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a315144354b987b5bbdd39e1d9ef02c31}\label{_server_8cpp_a315144354b987b5bbdd39e1d9ef02c31}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move()}{DEFRMI\_SpaceWar\_NotifyPlayerMove()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+플레이어가 이동했음을 알림 
+
+
+
+Server.\+cpp 파일의 986 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+987 \{
+988     \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+989     clientMap[(HostID)hostID]->SetPosition(curX, curY, curZ);
+990 
+991     m\_gameRoom->GetClient((HostID)hostID)->SetPosition(curX, curY, curZ);
+992     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+993 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_a315144354b987b5bbdd39e1d9ef02c31_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_ad4a9d22692f69cc4e20a48a3baeae882}\label{_server_8cpp_ad4a9d22692f69cc4e20a48a3baeae882}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index()}{DEFRMI\_SpaceWar\_RequestDeathZoneMoveIndex()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+데스존이 가고 있는 행성 단계를 알려줌  클라에서 움직이고 -\/ 서버에 알려준다. 
+
+
+
+Server.\+cpp 파일의 1354 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1355 \{
+1356     cout << \textcolor{stringliteral}{"Death Zone Move Target Index "} << moveIndex << endl;
+1357     m\_deathZoneIndex = moveIndex;
+1358 
+1359     \textcolor{comment}{// 바뀔때 통보도 해주어야함}
+1360     m\_proxy.NotifyDeathZoneMoveHostAndIndexSetup(m\_playerP2PGroup, 
+1361         RmiContext::ReliableSend, m\_deathZoneHostID, m\_deathZoneIndex);
+1362 
+1363     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1364 \};
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a5c0212ac7b16d5722f7befe03f5f7536}\label{_server_8cpp_a5c0212ac7b16d5722f7befe03f5f7536}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result()}{DEFRMI\_SpaceWar\_RequestDrawGameResult()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+무승부시 게임 결과 요청 
+
+
+
+Server.\+cpp 파일의 1373 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1374 \{
+1375     cout << \textcolor{stringliteral}{"드로우 결과 요청 "} << endl;
+1376     \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+1377     \textcolor{keyword}{auto} iter = clientMap.begin();
+1378 
+1379     \textcolor{keywordtype}{float} playTime = m\_netServer->GetTimeMs() - m\_gameStartTime;
+1380 
+1381     \textcolor{keywordflow}{while} (iter != clientMap.end())
+1382     \{
+1383         HostID targetID = iter->first;
+1384         \textcolor{keywordtype}{int} winState = 2;
+1385 
+1386         m\_proxy.NotifyGameResultInfoMe(targetID, 
+1387             RmiContext::ReliableSend, \textcolor{stringliteral}{"test"}, winState,
+1388             playTime, iter->second->GetKillCount(),
+1389             iter->second->GetAssistCount(), 
+1390             iter->second->GetDeathCount(), 100);
+1391 
+1392         \textcolor{keyword}{auto} resultIter = clientMap.begin();
+1393         \textcolor{keywordflow}{while} (resultIter != clientMap.end())
+1394         \{
+1395             \textcolor{keywordflow}{if} (resultIter->first != iter->first)
+1396             \{
+1397                 cout << \textcolor{stringliteral}{" 정보 보내기 "} << endl;
+1398                 m\_proxy.NotifyGameResultInfoOther(targetID, 
+1399                     RmiContext::ReliableSend,
+1400                     resultIter->second->GetName(), resultIter->second->GetState());
+1401             \}
+1402 
+1403             resultIter++;
+1404         \}
+1405         m\_proxy.NotifyGameResultShow(targetID, RmiContext::ReliableSend);
+1406 
+1407         iter++;
+1408     \}
+1409 
+1410     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1411 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_a5c0212ac7b16d5722f7befe03f5f7536_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_abf341ef4337bac826faa9530cac0e106}\label{_server_8cpp_abf341ef4337bac826faa9530cac0e106}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End()}{DEFRMI\_SpaceWar\_RequestGameEnd()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+일반적인 승리시 결과창 요청 
+
+\begin{DoxyRefDesc}{할일}
+\item[\hyperlink{todo__todo000005}{할일}]버그 존재 ( 결과 ) \end{DoxyRefDesc}
+
+
+Server.\+cpp 파일의 1417 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1418 \{
+1419     cout << \textcolor{stringliteral}{"RequestGameEnd -- 게임 종료  - "} << endl;
+1420     \hyperlink{_server_8cpp_a0e468d42ed25075707dd9738b1b67621}{s\_GameRunning} = \textcolor{keyword}{false};
+1421 
+1422     \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+1423     \textcolor{comment}{// 여기서 문제 생겼었음}
+1424 
+1425     \textcolor{keywordflow}{if} (clientMap[remote]->GetState() != \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1a5848c1d9acabf42d71255e110aee24c2}{SPACESHIP})
+1426         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1427 
+1428 
+1429     \textcolor{keyword}{auto} iter = clientMap.begin();
+1430 
+1431     \textcolor{keywordtype}{float} playTime = m\_netServer->GetTimeMs() - m\_gameStartTime;
+1432 
+1433     \textcolor{keywordflow}{while} (iter != clientMap.end())
+1434     \{
+1435 
+1436         HostID targetID = iter->first;
+1437 
+1438         \textcolor{keywordtype}{int} winState = (clientMap[targetID]->GetState() == \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1a5848c1d9acabf42d71255e110aee24c2}{SPACESHIP}) ? 1 : 0;
+1439 
+1440         m\_proxy.NotifyGameResultInfoMe(targetID, 
+1441             RmiContext::ReliableSend, \textcolor{stringliteral}{"test"}, winState,
+1442             playTime, iter->second->GetKillCount(), 
+1443             iter->second->GetAssistCount() , 
+1444             iter->second->GetDeathCount(), 100);
+1445 
+1446         \textcolor{keyword}{auto} resultIter = clientMap.begin();
+1447         \textcolor{keywordflow}{while} (resultIter != clientMap.end())
+1448         \{
+1449             \textcolor{comment}{//  if (resultIter->first != iter->first)}
+1450             \{
+1451                 cout << \textcolor{stringliteral}{" 정보 보내기 "} << endl;
+1452                 m\_proxy.NotifyGameResultInfoOther(targetID, 
+1453                     RmiContext::ReliableSend,
+1454                     resultIter->second->GetName(), 
+1455                     resultIter->second->GetState());
+1456             \}
+1457 
+1458             resultIter++;
+1459         \}
+1460         m\_proxy.NotifyGameResultShow(targetID, RmiContext::ReliableSend);
+1461 
+1462         iter++;
+1463     \}
+1464 
+1465 
+1466 
+1467     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1468 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_abf341ef4337bac826faa9530cac0e106_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_a77fd4f20062a286945ef06f03820a0ce}\label{_server_8cpp_a77fd4f20062a286945ef06f03820a0ce}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit()}{DEFRMI\_SpaceWar\_RequestGameExit()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+정상 종료 요청 
+
+
+
+Server.\+cpp 파일의 600 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+601 \{
+602     ServerReset();
+603     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+604 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_a77fd4f20062a286945ef06f03820a0ce_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_ae8a94d0352e97b96c5b5f73a538503d5}\label{_server_8cpp_ae8a94d0352e97b96c5b5f73a538503d5}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join()}{DEFRMI\_SpaceWar\_RequestGameSceneJoin()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+게임 씬 로딩 완료 메시지  전부 접속시 접속 정보들( 초기 좌표 등 )을 보낸다. 
+
+
+
+Server.\+cpp 파일의 664 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+665 \{
+666     shared\_ptr<RoomClient> client = m\_gameRoom->GetClient(remote);
+667     \textcolor{comment}{// 게임 씬에 들어왔다.}
+668     client->SetGameScene(\textcolor{keyword}{true});
+669     client->SetPosition(pos);
+670 
+671     \textcolor{comment}{// 모든 클라이언트가 준비되었는지 확인 }
+672 
+673     cout << \textcolor{stringliteral}{"Game Scene Join :: "} << m\_gameRoom->IsGameSceneAllReady() << endl;
+674     \textcolor{keywordflow}{if} (m\_gameRoom->IsGameSceneAllReady())
+675     \{
+676         \textcolor{comment}{// 이 경우 이제 모든 클라에게 접속 정보를 보낸다.}
+677         forward\_list<HostID> list = m\_gameRoom->GetAllClient();
+678         \hyperlink{_server_8cpp_a0e468d42ed25075707dd9738b1b67621}{s\_GameRunning} = \textcolor{keyword}{true};
+679         \textcolor{keyword}{auto} iter = list.begin();
+680         \textcolor{keywordflow}{while} (iter != list.end())
+681         \{
+682             forward\_list<RoomClient> otherUsers = m\_gameRoom->GetOtherClientInfos(*iter);
+683 
+684             \textcolor{keyword}{auto} iter2 = otherUsers.begin();
+685             \textcolor{keywordflow}{while} (iter2 != otherUsers.end())
+686             \{
+687                 Vector3 pos = iter2->GetPosition();
+688                 \textcolor{comment}{// 접속 정보도 날린다.}
+689                 m\_proxy.NotifyOtherClientJoin(*iter, RmiContext::ReliableSend,
+690                     iter2->GetHostID(), iter2->GetName(), pos.x, pos.y, pos.z);
+691                 iter2++;
+692             \}
+693 
+694             \textcolor{comment}{// 호스트가 아니면 아이템 생성 명령도 보내야 함}
+695             \textcolor{keywordflow}{if} (m\_gameRoom->GetClient(*iter)->IsHost() == \textcolor{keyword}{false})
+696             \{
+697                 \textcolor{comment}{// 아이템 생성 샌드}
+698                 \textcolor{keywordflow}{for each}(\textcolor{keyword}{auto} item \textcolor{keywordflow}{in} m\_itemMap)
+699                 \{
+700                     m\_proxy.NotifyCreateItem(*iter, RmiContext::ReliableSend, (\textcolor{keywordtype}{int})HostID\_Server,
+701                         item.second->GetItemID(), item.second->GetNetworkID(), item.second->GetPosition(), 
+      item.second->GetRotation());
+702                 \}
+703             \}
+704 
+705 
+706             iter++;
+707         \}
+708     \}
+709 
+710 
+711     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+712 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_aa2b76908488d609ba6d3454b327f71d2}\label{_server_8cpp_aa2b76908488d609ba6d3454b327f71d2}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update()}{DEFRMI\_SpaceWar\_RequestHpUpdate()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+체력 변경 요청  데미지를 제외한 체력 변경 요청 
+
+
+
+Server.\+cpp 파일의 847 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+848 \{
+849     cout << \textcolor{stringliteral}{"HP Update 요청 "} << endl;
+850 
+851     \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+852     \textcolor{keyword}{auto} iter = clientMap.begin();
+853 
+854     \textcolor{keywordtype}{float} prevHp = 0.0f;
+855     \textcolor{keywordflow}{while} (iter != clientMap.end())
+856     \{
+857         \textcolor{keywordflow}{if} (iter->second->GetHostID() == remote)
+858         \{
+859             prevHp = iter->second->GetHp();
+860             iter->second->SetHp(hp);
+861             \textcolor{keywordflow}{break};
+862         \}
+863         iter++;
+864     \}
+865 
+866     iter = clientMap.begin();
+867     \textcolor{keywordflow}{while} (iter != clientMap.end())
+868     \{
+869         m\_proxy.NotifyPlayerChangeHP(iter->second->GetHostID(), RmiContext::ReliableSend, (int)remote, \textcolor{stringliteral}{"
+      HpUpdate"}, hp, prevHp, \hyperlink{stdafx_8h_ae6144c7aefdd59e0f9db907fbebfc909}{MAX\_HP}, Vector3(0.0, 0.0, 0.0));
+870         iter++;
+871     \}
+872     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+873 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_aa2b76908488d609ba6d3454b327f71d2_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_a9556d13182d9dfc8a40442c38714202d}\label{_server_8cpp_a9556d13182d9dfc8a40442c38714202d}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete()}{DEFRMI\_SpaceWar\_RequestItemDelete()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+아이템 삭제 요청  실제 삭제는 클라이언트에 명령을 보내 처리 
+
+
+
+Server.\+cpp 파일의 1244 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1245 \{
+1246     cout << \textcolor{stringliteral}{"Request Item Delete "} << networkID << endl;
+1247     \textcolor{comment}{// p2p 로 뿌려지고, 그제서야 실제 삭제 로직}
+1248 
+1249     m\_proxy.NotifyDeleteItem(m\_playerP2PGroup, RmiContext::ReliableSend, networkID);
+1250     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1251 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a2602b8ab8827191ad8add9411c1ae9ec}\label{_server_8cpp_a2602b8ab8827191ad8add9411c1ae9ec}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect()}{DEFRMI\_SpaceWar\_RequestLobbyConnect()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+로비씬에 들어왔다.  기존에 들어와있는 유저의 정보들을 보내준다. / 내 자신의 정보도 날린다. 
+
+
+
+Server.\+cpp 파일의 633 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+634 \{
+635     \textcolor{comment}{// 이제 이친구한테 모든 정보를 날린다.}
+636     cout << \textcolor{stringliteral}{"Lobby Connect "} << endl;
+637     forward\_list<RoomClient> list = m\_gameRoom->GetOtherClientInfos(remote);
+638 
+639     \textcolor{comment}{//먼저 게임모드를 날린다.}
+640     m\_proxy.NotifyNetworkGameModeChange(remote, RmiContext::ReliableSend, m\_gameRoom->GetGameMode(), 
+      m\_gameRoom->GetTeamMode());
+641 
+642     \textcolor{comment}{// 플레이 카운트도 날림}
+643     m\_proxy.NotifyNetworkGamePlayerCountChange(remote, RmiContext::ReliableSend, m\_gameRoom->
+      GetPlayerLimitCount());
+644 
+645     \textcolor{keyword}{auto} iter = list.begin();
+646 
+647     \textcolor{keywordflow}{while} (iter != list.end())
+648     \{
+649         \textcolor{comment}{// 유저 정보를 날린다.}
+650         m\_proxy.NotifyNetworkUserSetup(remote, RmiContext::ReliableSend, (\textcolor{keywordtype}{int})iter->GetHostID(), iter->
+      GetName(), iter->IsReady(), iter->IsRedTeam());
+651 
+652         \textcolor{comment}{// 이 유저가 들어왔음 또한 알려준다.}
+653         \textcolor{keywordflow}{if} (remote != iter->GetHostID())
+654             m\_proxy.NotifyNetworkConnectUser(iter->GetHostID(), RmiContext::ReliableSend, remote, 
+      m\_gameRoom->GetClient(remote)->GetName());
+655         iter++;
+656     \}
+657     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+658 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a199d41ba633a88d395fd9604c4c96a79}\label{_server_8cpp_a199d41ba633a88d395fd9604c4c96a79}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map()}{DEFRMI\_SpaceWar\_RequestNetworkChangeMap()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+방장이 맵을 바꿨다.  맵이 바뀐 것을 브로드캐스팅 해준다. 
+
+
+
+Server.\+cpp 파일의 720 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+721 \{
+722     cout << \textcolor{stringliteral}{" Map Change :: "} << endl;
+723 
+724     forward\_list<HostID> list = m\_gameRoom->GetOtherClients(remote);
+725 
+726     \textcolor{keyword}{auto} iter = list.begin();
+727     \textcolor{keywordflow}{while} (iter != list.end())
+728     \{
+729         \textcolor{comment}{// 바뀐 맵 정보 전송}
+730         m\_proxy.NotifyNetworkGameChangeMap(*iter, RmiContext::ReliableSend, mapName);
+731         iter++;
+732     \}
+733 
+734     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+735 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a9aba92f1517efaea934ae74bacd8f7de}\label{_server_8cpp_a9aba92f1517efaea934ae74bacd8f7de}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change()}{DEFRMI\_SpaceWar\_RequestNetworkGameModeChange()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+게임 모드 변경  게임 모드 변경 사항을 브로드캐스팅 
+
+\begin{DoxyRefDesc}{할일}
+\item[\hyperlink{todo__todo000004}{할일}]추후 데스매치 모드 관련 로직 추가 \end{DoxyRefDesc}
+
+
+Server.\+cpp 파일의 763 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+764 \{
+765     cout << \textcolor{stringliteral}{" Game Mode 변경 "} << endl;
+766 
+767     forward\_list<HostID> list = m\_gameRoom->GetOtherClients(remote);
+768 
+769     m\_gameRoom->SetGameMode(gameMode);
+770     m\_gameRoom->SetTeamMode(teamMode);
+771 
+772     \textcolor{keyword}{auto} iter = list.begin();
+773     \textcolor{keywordflow}{while} (iter != list.end())
+774     \{
+775         \textcolor{comment}{// 게임 모드 전송}
+776         m\_proxy.NotifyNetworkGameModeChange(*iter, RmiContext::ReliableSend, gameMode, teamMode);
+777         iter++;
+778     \}
+779     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+780 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a5a885f48144119e8848fa7fc6eec54f3}\label{_server_8cpp_a5a885f48144119e8848fa7fc6eec54f3}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready()}{DEFRMI\_SpaceWar\_RequestNetworkGameReady()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+레디 변경 요청  서버에서 요청을 받고 해당 정보 브로드캐스팅 
+
+
+
+Server.\+cpp 파일의 612 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+613 \{
+614     cout << \textcolor{stringliteral}{" Ready 변경 "} << endl;
+615 
+616     m\_gameRoom->SetReady(remote, ready);
+617 
+618     forward\_list<HostID> list = m\_gameRoom->GetOtherClients(remote);
+619 
+620     \textcolor{keyword}{auto} iter = list.begin();
+621     \textcolor{keywordflow}{while} (iter != list.end())
+622     \{
+623         m\_proxy.NotifyNetworkReady(*iter, RmiContext::ReliableSend, (\textcolor{keywordtype}{int})remote, m\_gameRoom->GetClient(
+      remote)->GetName(), ready);
+624         iter++;
+625     \}
+626     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+627 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a9beabfb0ddf5642378d858e406784dd7}\label{_server_8cpp_a9beabfb0ddf5642378d858e406784dd7}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start()}{DEFRMI\_SpaceWar\_RequestNetworkGameStart()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+게임 스타트 요청  게임 시작. 
+
+
+
+Server.\+cpp 파일의 786 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+787 \{
+788     cout << \textcolor{stringliteral}{" Game Start 변경 "} << endl;
+789     m\_itemMap.clear();
+790     \textcolor{comment}{// 게임을 시작할 수 있는 환경인지 체크}
+791     \textcolor{comment}{//if (!m\_gameRoom->GameStartCheck())}
+792     \textcolor{comment}{//\{}
+793     \textcolor{comment}{//  //실패}
+794     \textcolor{comment}{//  m\_proxy.NotifyNetworkGameStartFailed(m\_playerP2PGroup, RmiContext::ReliableSend);}
+795     \textcolor{comment}{//  return true;}
+796     \textcolor{comment}{//  }
+797     \textcolor{comment}{//\}}
+798 
+799     \textcolor{comment}{// 게임 시간 기록을 위해 시작 시간을 저장}
+800     m\_gameStartTime = m\_netServer->GetTimeMs();
+801     
+802     \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+803     \textcolor{keyword}{auto} iter = clientMap.begin();
+804     \textcolor{keywordflow}{while} (iter != clientMap.end())
+805     \{
+806         m\_proxy.NotifyNetworkGameStart(iter->second->GetHostID(), RmiContext::ReliableSend);
+807         iter++;
+808     \}
+809     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+810 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_a9beabfb0ddf5642378d858e406784dd7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_af54e8a59bd92b717584a958c0dd1165b}\label{_server_8cpp_af54e8a59bd92b717584a958c0dd1165b}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select()}{DEFRMI\_SpaceWar\_RequestNetworkGameTeamSelect()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+팀 변경 요청  서버에서 변경 후 해당 정보 브로드캐스팅 
+
+
+
+Server.\+cpp 파일의 579 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+580 \{
+581     cout << \textcolor{stringliteral}{"Team 변경 "} << endl;
+582     m\_gameRoom->TeamChange(remote, teamRed);
+583 
+584     forward\_list<HostID> list = m\_gameRoom->GetOtherClients(remote);
+585 
+586     \textcolor{keyword}{auto} iter = list.begin();
+587     \textcolor{keywordflow}{while} (iter != list.end())
+588     \{
+589         m\_proxy.NotifyNetworkGameTeamChange(*iter, RmiContext::ReliableSend, (\textcolor{keywordtype}{int})remote, teamRed);
+590         iter++;
+591     \}
+592 
+593 
+594     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+595 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_aaeec5d678581efbad73d93c003387325}\label{_server_8cpp_aaeec5d678581efbad73d93c003387325}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out()}{DEFRMI\_SpaceWar\_RequestNetworkHostOut()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+방장이 나갔다.  다들 타이틀로 튕겨져 나가야 하므로 해당 메시지 브로드캐스트 
+
+
+
+Server.\+cpp 파일의 816 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+817 \{
+818     forward\_list<HostID> list = m\_gameRoom->GetOtherClients(remote);
+819 
+820     \textcolor{keyword}{auto} iter = list.begin();
+821     \textcolor{keywordflow}{while} (iter != list.end())
+822     \{
+823         \textcolor{comment}{// 방장이 나갔음을 알림}
+824         m\_proxy.NotifyNetworkGameHostOut(*iter, RmiContext::ReliableSend);
+825         iter++;
+826     \}
+827 
+828 
+829     ServerReset();
+830     cout << \textcolor{stringliteral}{"호스트가 나갔으므로 게임 룸 클리어 "} << endl;
+831 
+832     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+833 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_aaeec5d678581efbad73d93c003387325_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_accb625785f73ca1658bdc13c528734e3}\label{_server_8cpp_accb625785f73ca1658bdc13c528734e3}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count()}{DEFRMI\_SpaceWar\_RequestNetworkPlayerCount()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+플레이 가능한 플레이어 수를 변경했다.  플레이어 수 제한을 브로드캐스팅한다. 
+
+
+
+Server.\+cpp 파일의 741 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+742 \{
+743     cout << \textcolor{stringliteral}{" Player Count 변경 "} << playerCount << endl;
+744 
+745     m\_gameRoom->SetPlayerLimitCount(playerCount);
+746     forward\_list<HostID> list = m\_gameRoom->GetOtherClients(remote);
+747 
+748     \textcolor{keyword}{auto} iter = list.begin();
+749     \textcolor{keywordflow}{while} (iter != list.end())
+750     \{
+751         \textcolor{comment}{// 플레이어 카운트 정보 전송}
+752         m\_proxy.NotifyNetworkGamePlayerCountChange(*iter, RmiContext::ReliableSend, playerCount);
+753         iter++;
+754     \}
+755     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+756 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_afea3737698578834e08689e2d3c6b0da}\label{_server_8cpp_afea3737698578834e08689e2d3c6b0da}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup()}{DEFRMI\_SpaceWar\_RequestOxyChargerStartSetup()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+게임 내 산소 충전기를 등록한다.  등록하고부터 산소 충전기를 사용할 수 있다. 
+
+
+
+Server.\+cpp 파일의 1012 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1013 \{
+1014     CriticalSectionLock lock(m\_critSec, \textcolor{keyword}{true});
+1015     \textcolor{keyword}{auto} newOxyCharger = make\_shared<OxyCharger>();
+1016     m\_oxyChargerMap[oxyChargerID] = newOxyCharger;
+1017     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1018 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_afa37b07a4c2b02f36dc2a7b5279c07e5}\label{_server_8cpp_afa37b07a4c2b02f36dc2a7b5279c07e5}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage()}{DEFRMI\_SpaceWar\_RequestPlayerDamage()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+데미지를 입었다.  죽음 / 어시스트 등에 대한 처리 
+
+
+
+Server.\+cpp 파일의 879 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+880 \{
+881     \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+882     cout << \textcolor{stringliteral}{"Request Player Damage 때린놈 "} << sendHostID << \textcolor{stringliteral}{" 맞은놈 "} << targetHostID << \textcolor{stringliteral}{" 데미지 "} << damage << \textcolor{stringliteral}{"
+       무기 이름 "} << weaponName << endl;
+883     cout << \textcolor{stringliteral}{"현재 총인원 "} << clientMap.size() << endl;
+884 
+885     \textcolor{keywordflow}{if} (clientMap[(HostID)targetHostID]->GetState() == \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1aa65c1c1f61d319e66a6269441cdcbd71}{DEATH})
+886         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+887 
+888     \textcolor{keywordtype}{float} prevHp = clientMap[(HostID)targetHostID]->GetHp();
+889     clientMap[(HostID)targetHostID]->SetHp(prevHp - damage);
+890 
+891     \textcolor{keywordflow}{if} (clientMap[(HostID)targetHostID]->GetHp() <= 0.0f)
+892     \{
+893         cout << \textcolor{stringliteral}{" 죽었다 "} + targetHostID << endl;
+894         clientMap[(HostID)targetHostID]->SetHp(0.0f);
+895         clientMap[(HostID)targetHostID]->PlayerDead(m\_netServer->GetTimeMs());
+896 
+897         \textcolor{comment}{// 죽은 후에 어시스트 목록 갱신}
+898         forward\_list<int> list = clientMap[(HostID)targetHostID]->GetAssistClientList();
+899         \textcolor{keywordflow}{for} (\textcolor{keyword}{auto} value : list)
+900         \{
+901             \textcolor{comment}{//킬한놈}
+902             \textcolor{keywordflow}{if} ((HostID)sendHostID == (HostID)value)
+903                 \textcolor{keywordflow}{continue};
+904             clientMap[(HostID)value]->SetAssistCount(clientMap[(HostID)value]->GetAssistCount());
+905             m\_proxy.NotifyKillInfo((HostID)value, RmiContext::ReliableSend, 
+906                 clientMap[(HostID)targetHostID]->GetName(), \textcolor{keyword}{false}, 
+907                 clientMap[(HostID)value]->GetDeathCount(), 
+908                 clientMap[(HostID)value]->GetAssistCount());
+909         \}
+910 
+911         \textcolor{keywordflow}{if} (sendHostID != targetHostID)
+912             clientMap[(HostID)sendHostID]->SetKillCount(clientMap[(HostID)sendHostID]->GetKillCount()+1);
+913 
+914         m\_proxy.NotifyKillInfo((HostID)sendHostID, 
+915             RmiContext::ReliableSend, 
+916             clientMap[(HostID)targetHostID]->GetName(), \textcolor{keyword}{true}, 
+917             clientMap[(HostID)sendHostID]->GetKillCount(),
+918             clientMap[(HostID)sendHostID]->GetAssistCount());
+919 
+920         \textcolor{comment}{// 이 부분에서 다 죽었는지 체크}
+921         \textcolor{keywordtype}{int} deadCheck = 0;
+922         \textcolor{keyword}{auto} iter = clientMap.begin();
+923         \textcolor{keywordflow}{while} (iter != clientMap.end())
+924         \{
+925             deadCheck += (iter->second->GetState() == \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1aa65c1c1f61d319e66a6269441cdcbd71}{DEATH}) ? 0 : 1;
+926             iter++;
+927         \}
+928 
+929         \textcolor{comment}{// 다죽음 - 즉 드로우 게임 }
+930         \textcolor{keywordflow}{if} (deadCheck == 0)
+931         \{
+932             iter = clientMap.begin();
+933             \textcolor{keywordflow}{while} (iter != clientMap.end())
+934             \{
+935                 \textcolor{comment}{// 드로우 게임임을 날린다}
+936                 m\_proxy.NotifyDrawGame(iter->second->GetHostID(), RmiContext::ReliableSend);
+937                 iter++;
+938             \}
+939         \}
+940     \}
+941     \textcolor{keywordflow}{else}
+942     \{
+943         \textcolor{comment}{// 이녀석은 어시스트 체크를 해야함}
+944         \textcolor{keywordflow}{if} (targetHostID != sendHostID)
+945             clientMap[(HostID)targetHostID]->DamageClient((\textcolor{keywordtype}{int})sendHostID, m\_netServer->GetTimeMs());
+946     \}
+947 
+948 
+949     m\_proxy.NotifyPlayerChangeHP(m\_playerP2PGroup, RmiContext::ReliableSend, targetHostID, weaponName, 
+      clientMap[(HostID)targetHostID]->GetHp(), prevHp, \hyperlink{stdafx_8h_ae6144c7aefdd59e0f9db907fbebfc909}{MAX\_HP}, dir);
+950     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+951 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_afa37b07a4c2b02f36dc2a7b5279c07e5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_abddb1a34d4ebce25c2aa6b699054bb6d}\label{_server_8cpp_abddb1a34d4ebce25c2aa6b699054bb6d}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy()}{DEFRMI\_SpaceWar\_RequestPlayerUseOxy()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+산소를 사용했다. @ 
+
+
+
+Server.\+cpp 파일의 957 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+958 \{
+959     \textcolor{comment}{//cout << "RequestPlayerUseOxy " << useOxy << endl;}
+960     \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+961     \textcolor{keywordtype}{float} prevOxy = clientMap[(HostID)sendHostID]->GetOxy();
+962 
+963     \textcolor{keywordflow}{if} (prevOxy - useOxy < 0)
+964     \{
+965         clientMap[(HostID)sendHostID]->SetOxy(0.0f);
+966         m\_proxy.NotifyPlayerChangeOxygen(m\_playerP2PGroup,
+967             RmiContext::ReliableSend, sendHostID, 
+968             clientMap[(HostID)sendHostID]->GetName(), 0.0f, prevOxy, \hyperlink{stdafx_8h_a39c49682d3bf28fbe2338718981f5d1f}{MAX\_OXY});
+969         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+970     \}
+971 
+972 
+973     clientMap[(HostID)sendHostID]->SetOxy(prevOxy - useOxy);
+974 
+975     m\_proxy.NotifyPlayerChangeOxygen(m\_playerP2PGroup,
+976         RmiContext::ReliableSend, sendHostID, 
+977         clientMap[(HostID)sendHostID]->GetName(), 
+978         clientMap[(HostID)sendHostID]->GetOxy(), prevOxy, \hyperlink{stdafx_8h_a39c49682d3bf28fbe2338718981f5d1f}{MAX\_OXY});
+979 
+980     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+981 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_abddb1a34d4ebce25c2aa6b699054bb6d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_ac61854c98ecd96eb1def8f1ebc989860}\label{_server_8cpp_ac61854c98ecd96eb1def8f1ebc989860}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect()}{DEFRMI\_SpaceWar\_RequestServerConnect()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+서버 연결 요청  게임 대기실 참가 요청 
+
+
+
+Server.\+cpp 파일의 538 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+539 \{
+540     cout << \textcolor{stringliteral}{"C2S-- RequestServerConnect "} << \textcolor{keywordtype}{id} << \textcolor{stringliteral}{" remote "} << remote << endl;
+541 
+542     \textcolor{comment}{//게임 룸 입장}
+543     \textcolor{keywordflow}{if} (m\_gameRoom != \textcolor{keyword}{nullptr})
+544     \{
+545         \textcolor{keywordflow}{if} (m\_gameRoom->NewClientConnect(remote, \textcolor{keywordtype}{id}, m\_critSec) == \textcolor{keyword}{false})
+546         \{
+547             cout << \textcolor{stringliteral}{"Login Failed .. 더 이상 참여할 수 없습니다. "} << endl;
+548             m\_proxy.NotifyLoginFailed(remote, RmiContext::ReliableSend, \textcolor{stringliteral}{"더 이상 참여할 수 없습니다."});
+549             \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+550         \}
+551     \}
+552 
+553 
+554     \textcolor{keywordtype}{int} count = GetGameRoom()->GetClientMap().size();
+555     cout << \textcolor{stringliteral}{"Server : LoginSuccess "}<< count << endl;
+556     
+557 
+558     m\_proxy.NotifyLoginSuccess(remote, RmiContext::ReliableSend,(\textcolor{keywordtype}{int})remote,(count == 1));
+559     
+560     \textcolor{comment}{// 로비에서 처리하는걸로}
+561     \textcolor{comment}{/*if (m\_gameRoom != nullptr)}
+562 \textcolor{comment}{    \{}
+563 \textcolor{comment}{        forward\_list<HostID> list = m\_gameRoom->GetOtherClients(remote);}
+564 \textcolor{comment}{        auto iter = list.begin();}
+565 \textcolor{comment}{}
+566 \textcolor{comment}{        while (iter != list.end())}
+567 \textcolor{comment}{        \{}
+568 \textcolor{comment}{            m\_proxy.NotifyNetworkConnectUser(*iter, RmiContext::ReliableSend, (int)remote, id);}
+569 \textcolor{comment}{            iter++;}
+570 \textcolor{comment}{        \}}
+571 \textcolor{comment}{    \}*/}
+572     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+573 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_ac61854c98ecd96eb1def8f1ebc989860_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_a8be6f3134c5828a0a6af860aaedebf71}\label{_server_8cpp_a8be6f3134c5828a0a6af860aaedebf71}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control()}{DEFRMI\_SpaceWar\_RequestShelterDoorControl()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+쉘터 문 조작  쉘터 문을 조작 정보를 받고 반영한 뒤 브로드캐스팅 
+
+
+
+Server.\+cpp 파일의 1149 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1150 \{
+1151     cout << \textcolor{stringliteral}{"RequestShelterDoorControl "} << shelterID << \textcolor{stringliteral}{" state "} << doorState << endl;
+1152 
+1153     m\_shelterMap[shelterID]->ShelterDoorStateChange(doorState);
+1154 
+1156     \textcolor{comment}{//auto iter = m\_clientMap.begin();}
+1157     \textcolor{comment}{//while (iter != m\_clientMap.end())}
+1158     \textcolor{comment}{//\{}
+1159     \textcolor{comment}{//  if ((int)iter->second->m\_hostID != sendHostID)}
+1160     \textcolor{comment}{//      m\_proxy.NotifyShelterInfo(iter->second->m\_hostID,}
+1161     \textcolor{comment}{//          RmiContext::ReliableSend, sendHostID, shelterID,}
+1162     \textcolor{comment}{//          doorState, m\_shelterMap[shelterID]->m\_lightState);}
+1163 
+1164     \textcolor{comment}{//  iter++;}
+1165     \textcolor{comment}{//\}}
+1166 
+1167 
+1168     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1169 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a54a8f5761b18ba5ef18d22aac516ef8b}\label{_server_8cpp_a54a8f5761b18ba5ef18d22aac516ef8b}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter()}{DEFRMI\_SpaceWar\_RequestShelterEnter()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+쉘터에 진입했다.  조명을 끄고 켜고 하는 처리를 수행 
+
+
+
+Server.\+cpp 파일의 1175 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1176 \{
+1177     cout << \textcolor{stringliteral}{"RequestShelterEnter "} << sendHostID << endl;
+1178 
+1179     \textcolor{comment}{// 기존 상태 }
+1180     \textcolor{keywordtype}{bool} prevState = m\_shelterMap[shelterID]->IsLightOn();
+1181     \textcolor{keywordtype}{bool} prevDoorState = m\_shelterMap[shelterID]->IsDoorOpen();
+1182     \textcolor{keywordflow}{if} (enter)
+1183         m\_shelterMap[shelterID]->ShelterEnter();
+1184     \textcolor{keywordflow}{else}
+1185         m\_shelterMap[shelterID]->ShelterExit();
+1186 
+1188     \textcolor{comment}{//if (m\_shelterMap[shelterID]->m\_lightState != prevState ||}
+1189     \textcolor{comment}{//  m\_shelterMap[shelterID]->m\_doorState != prevDoorState)}
+1190     \textcolor{comment}{//\{}
+1191     \textcolor{comment}{//  // 상태 전송}
+1192     \textcolor{comment}{//  m\_proxy.NotifyShelterInfo(m\_playerP2PGroup,}
+1193     \textcolor{comment}{//      RmiContext::ReliableSend, sendHostID,}
+1194     \textcolor{comment}{//      shelterID, m\_shelterMap[shelterID]->m\_doorState, m\_shelterMap[shelterID]->m\_lightState);}
+1195     \textcolor{comment}{//\}}
+1196 
+1197 
+1198     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1199 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a29ff62bd3b59f7613b1d957ed32e929e}\label{_server_8cpp_a29ff62bd3b59f7613b1d957ed32e929e}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup()}{DEFRMI\_SpaceWar\_RequestShelterStartSetup()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+쉘터 등록  등록하고부터 쉘터를 사용할 수 있다. 
+
+
+
+Server.\+cpp 파일의 1135 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1136 \{
+1137     cout << \textcolor{stringliteral}{"RequestShelterStartSetup "} << shelterID << endl;
+1138 
+1139     \textcolor{keyword}{auto} newshelter = make\_shared<Shelter>();
+1140     newshelter->SetShelterID(shelterID);
+1141     m\_shelterMap[shelterID] = newshelter;
+1142     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1143 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_ae5b131a28780775ab2609cf87bfe47ef}\label{_server_8cpp_ae5b131a28780775ab2609cf87bfe47ef}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship()}{DEFRMI\_SpaceWar\_RequestSpaceShip()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+우주선 연료를 전부 충전했을 때 보냄  서바이벌 -\/ 우주선 탈출 승리 
+
+
+
+Server.\+cpp 파일의 1303 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1304 \{
+1305     \textcolor{keywordflow}{if} (m\_spaceShipLockTime > 0)
+1306         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1307     cout << \textcolor{stringliteral}{"이친구 우주선 탔다 "} << winPlayerID << endl;
+1308     GetGameRoom()->GetClientMap()[(HostID)winPlayerID]->PlayerWin();
+1309     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1310 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_ae5b131a28780775ab2609cf87bfe47ef_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_aeec8a5b00443a89e62e01df160381898}\label{_server_8cpp_aeec8a5b00443a89e62e01df160381898}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup()}{DEFRMI\_SpaceWar\_RequestSpaceShipSetup()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+우주선을 등록한다.  등록해야 우주선을 사용할 수 있다. 
+
+
+
+Server.\+cpp 파일의 1285 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1286 \{
+1287     cout << \textcolor{stringliteral}{"SpaceShip ID Setting "} << spaceShipID << endl;
+1288     CriticalSectionLock lock(m\_critSec, \textcolor{keyword}{true});
+1289     
+1290     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < spaceShipID; i++)
+1291     \{
+1292         \textcolor{keyword}{auto} newSpaceShip = make\_shared<SpaceShip>();
+1293         m\_spaceShipMap[i] = newSpaceShip;
+1294     \}
+1295 
+1296     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1297 \};
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_ac2f1f02c8861f29fcf6bd240c567922b}\label{_server_8cpp_ac2f1f02c8861f29fcf6bd240c567922b}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box()}{DEFRMI\_SpaceWar\_RequestUseItemBox()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+아이템 박스 사용 요청  랜덤으로 아이템 코드 생성해 브로드캐스팅 
+
+
+
+Server.\+cpp 파일의 1089 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1090 \{
+1091     cout << \textcolor{stringliteral}{"RequestUseItemBox "} << itemBoxIndex << endl;
+1092 
+1093     \textcolor{comment}{// TESTCODE}
+1094     \textcolor{comment}{//  if (m\_itemBoxMap.find(itemBoxIndex) != m\_itemBoxMap.end())}
+1095     \{
+1096         \textcolor{comment}{/*Reader reader;}
+1097 \textcolor{comment}{        Value val;}
+1098 \textcolor{comment}{        bool parseCheck = reader.parse(m\_serverPropertiesData.c\_str(), val);}
+1099 \textcolor{comment}{}
+1100 \textcolor{comment}{        if (!parseCheck)}
+1101 \textcolor{comment}{        \{}
+1102 \textcolor{comment}{            cout << "JSON File Parse Failed..." << reader.getFormattedErrorMessages() << endl;}
+1103 \textcolor{comment}{            return true;}
+1104 \textcolor{comment}{        \}}
+1105 \textcolor{comment}{}
+1106 \textcolor{comment}{}
+1107 \textcolor{comment}{        s\_deathZoneCommingSec = val["DeathZoneFirstComming"].asInt();}
+1108 \textcolor{comment}{        s\_spaceShipLockTime = val["SpaceShipLockTime"].asInt();}
+1109 \textcolor{comment}{}
+1110 \textcolor{comment}{        int size = val["Items"].size();*/}
+1111 
+1112         \textcolor{keywordtype}{string} itemID = \textcolor{stringliteral}{"temp"};\textcolor{comment}{//val["Items"][RandomRange(0, size)]["Id"].asString();}
+1113         \textcolor{comment}{// 첫 사용}
+1114         m\_itemBoxMap[itemBoxIndex] = sendHostID;
+1115         cout << \textcolor{stringliteral}{"item Code "} << itemID << endl;
+1116         \textcolor{keywordtype}{string} networkID = \textcolor{stringliteral}{"server\_"} + itemBoxIndex;
+1117         networkID += \textcolor{stringliteral}{"\_"} + sendHostID;
+1118 
+1119         m\_proxy.NotifyUseItemBox(m\_playerP2PGroup, RmiContext::ReliableSend,
+1120             sendHostID, itemBoxIndex, itemID, networkID);
+1121         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1122     \}
+1123 
+1124     \textcolor{comment}{// 이미 사용중}
+1125     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1126 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a8916e64f3664f5890f2fa6403d485e52}\label{_server_8cpp_a8916e64f3664f5890f2fa6403d485e52}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger()}{DEFRMI\_SpaceWar\_RequestUseOxyCharger()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+산소 충전기 조작중 
+
+
+
+Server.\+cpp 파일의 1046 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1047 \{
+1048     cout << \textcolor{stringliteral}{"RequestUseOxyCharger "} << endl;
+1049 
+1050     \textcolor{keywordflow}{if} (m\_oxyChargerMap[oxyChargerIndex]->IsLocked() 
+1051         && m\_oxyChargerMap[oxyChargerIndex]->GetUseHostID() == (\textcolor{keywordtype}{int})remote)
+1052     \{
+1053         \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+1054         \textcolor{keywordtype}{float} prevOxy = clientMap[(HostID)sendHostID]->GetOxy();
+1055         clientMap[(HostID)sendHostID]->SetOxy(prevOxy + userOxy);
+1056 
+1057         m\_proxy.NotifyPlayerChangeOxygen(m\_playerP2PGroup, 
+1058             RmiContext::ReliableSend, sendHostID,
+1059             clientMap[(HostID)sendHostID]->GetName(), 
+1060             clientMap[(HostID)sendHostID]->GetOxy(), prevOxy, \hyperlink{stdafx_8h_a39c49682d3bf28fbe2338718981f5d1f}{MAX\_OXY});
+1061 
+1062         m\_proxy.NotifyUseOxyCharger(m\_playerP2PGroup, 
+1063             RmiContext::ReliableSend, sendHostID,
+1064             oxyChargerIndex, userOxy);
+1065     \}
+1066 
+1067     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1068 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_a8916e64f3664f5890f2fa6403d485e52_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_a231a54b8149291e53e044abbae79f2aa}\label{_server_8cpp_a231a54b8149291e53e044abbae79f2aa}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End()}{DEFRMI\_SpaceWar\_RequestUseOxyChargerEnd()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+산소 충전기 사용 끝  잠금 해제 및 사용해제로 되돌림 
+
+
+
+Server.\+cpp 파일의 1074 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1075 \{
+1076     cout << \textcolor{stringliteral}{"Request Use Oxy Charger End "} << oxyChargerIndex << endl;
+1077     \textcolor{keywordflow}{if} (m\_oxyChargerMap[oxyChargerIndex]->GetUseHostID() == (\textcolor{keywordtype}{int})remote)
+1078         m\_oxyChargerMap[oxyChargerIndex]->UnLockOxyCharger();
+1079     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1080 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_ad446f8d44072a69e24d1a1b1ff91b522}\label{_server_8cpp_ad446f8d44072a69e24d1a1b1ff91b522}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start()}{DEFRMI\_SpaceWar\_RequestUseOxyChargerStart()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+산소 충전기 조작 요청  잠겨있는지 체크 후 알맞게 처리 
+
+
+
+Server.\+cpp 파일의 1024 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1025 \{
+1026     \textcolor{comment}{// 잠겨있다면 거부}
+1027     \textcolor{keywordflow}{if} (m\_oxyChargerMap[oxyChargerIndex]->IsLocked())
+1028     \{
+1029         m\_proxy.NotifyUseFailedOxyCharger(remote, RmiContext::ReliableSend, 
+1030             m\_oxyChargerMap[oxyChargerIndex]->GetUseHostID(), oxyChargerIndex);
+1031     \}
+1032     \textcolor{comment}{// 잠겨있지 않다면 허용}
+1033     \textcolor{keywordflow}{else}
+1034     \{
+1035         \textcolor{comment}{//잠근다.}
+1036         m\_oxyChargerMap[oxyChargerIndex]->LockOxyCharger((\textcolor{keywordtype}{int})remote);
+1037         m\_proxy.NotifyUseSuccessedOxyCharger(remote, 
+1038             RmiContext::ReliableSend, (\textcolor{keywordtype}{int})remote, oxyChargerIndex);
+1039     \}
+1040     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1041 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a140b84a1a2a7a7df2cca7c986fda96fe}\label{_server_8cpp_a140b84a1a2a7a7df2cca7c986fda96fe}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship()}{DEFRMI\_SpaceWar\_RequestUseSpaceShip()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+우주선 사용 요청  잠겨있지 않을 때 사용 가능하게 처리 
+
+
+
+Server.\+cpp 파일의 1316 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1317 \{
+1318     \textcolor{comment}{// 잠겨있다면 거부}
+1319     \textcolor{keywordflow}{if} (m\_spaceShipMap[spaceShipID]->IsLock())
+1320     \{
+1321         cout << \textcolor{stringliteral}{"잠겨있음:: 사용 불가 "} << endl;
+1322         m\_proxy.NotifyUseSpaceShipFailed(remote, RmiContext::ReliableSend, spaceShipID, m\_spaceShipMap[
+      spaceShipID]->GetTargetHostID());
+1323     \}
+1324     \textcolor{keywordflow}{else}
+1325     \{
+1326         cout << \textcolor{stringliteral}{"잠겨있지 않음 "} << endl;
+1327         \textcolor{comment}{// 사용 가능하다면 잠금}
+1328         m\_spaceShipMap[spaceShipID]->LockSpaceShip((\textcolor{keywordtype}{int})remote);
+1329         \textcolor{comment}{// 성공 메시지 보냄}
+1330         m\_proxy.NotifyUseSpaceShipSuccess(remote, RmiContext::ReliableSend, spaceShipID);
+1331     \}
+1332     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1333 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a3c745b4e98ae7a71eddae2c5c179c350}\label{_server_8cpp_a3c745b4e98ae7a71eddae2c5c179c350}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel()}{DEFRMI\_SpaceWar\_RequestUseSpaceShipCancel()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+우주선 사용 취소  우주선 잠금 해제 
+
+
+
+Server.\+cpp 파일의 1339 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1340 \{
+1341     \textcolor{comment}{// 사용 취소이므로 해제}
+1342     m\_spaceShipMap[spaceShipID]->UnLockSpaceShip();
+1343     cout << \textcolor{stringliteral}{"중도 취소 이벤트 "} << endl;
+1344     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1345 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{_server_8cpp_a674e20c85308017d78150246500a998a}\label{_server_8cpp_a674e20c85308017d78150246500a998a}} 
+\index{Server.\+cpp@{Server.\+cpp}!D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item}}
+\index{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item@{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item()}{DEFRMI\_SpaceWar\_RequestWorldCreateItem()}}
+{\footnotesize\ttfamily D\+E\+F\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item (\begin{DoxyParamCaption}\item[{\hyperlink{class_server}{Server}}]{ }\end{DoxyParamCaption})}
+
+
+
+아이템 생성 요청 
+
+
+
+Server.\+cpp 파일의 1208 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1209 \{
+1210     cout << \textcolor{stringliteral}{"RequestWorldCreateItem  itemID : "} << itemID << \textcolor{stringliteral}{" x : "} << pos.x << \textcolor{stringliteral}{" y : "} << pos.y << \textcolor{stringliteral}{" z : 
+      "} << pos.z << endl;
+1211     \textcolor{keyword}{auto} clientMap = GetGameRoom()->GetClientMap();
+1212     \textcolor{keyword}{auto} iter = clientMap.find((HostID)hostID);
+1213 
+1214     \{
+1215         \textcolor{comment}{// 추가로직}
+1216         CriticalSectionLock lock(m\_critSec, \textcolor{keyword}{true});
+1217         \textcolor{keyword}{auto} newItem = make\_shared<Item>(itemID,networkID);
+1218         newItem->SetPosition(pos);
+1219         newItem->SetRotation(rot);
+1220         m\_itemMap[networkID] = newItem;
+1221     \}
+1222 
+1223     \textcolor{keywordflow}{if} (iter == clientMap.end())
+1224     \{
+1225         cout << \textcolor{stringliteral}{"잘못된 요청"} << endl;
+1226     \}
+1227 
+1228     \textcolor{comment}{// 보낸 사람 외에 생성 요청 보내기}
+1229     \textcolor{keywordflow}{for each}(\textcolor{keyword}{auto} c \textcolor{keywordflow}{in} clientMap)
+1230     \{
+1231         \textcolor{keywordflow}{if} (c.first != iter->first)
+1232         \{
+1233             m\_proxy.NotifyCreateItem(c.first, RmiContext::ReliableSend,
+1234                 (\textcolor{keywordtype}{int})(iter->first), itemID, networkID, pos, rot);
+1235         \}
+1236     \}
+1237     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1238 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_a674e20c85308017d78150246500a998a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{_server_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{Server.\+cpp@{Server.\+cpp}!main@{main}}
+\index{main@{main}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+서버 프로그램의 시작 지점 
+
+
+
+Server.\+cpp 파일의 11 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+12 \{
+13     srand((\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int})time(NULL));
+14     
+15     \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_abfc09109c7050e40d8fc1e3daea76edf}{ServerFileLoad}();
+16     \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_acb327f7980ef16c40087bdafcef5ad7a}{ServerRun}();
+17     \textcolor{keywordflow}{return} 0;
+18 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8cpp_aa49c05ac1cfbff49b47ca9ff62ae3761}\label{_server_8cpp_aa49c05ac1cfbff49b47ca9ff62ae3761}} 
+\index{Server.\+cpp@{Server.\+cpp}!Server\+Thread\+Loop@{Server\+Thread\+Loop}}
+\index{Server\+Thread\+Loop@{Server\+Thread\+Loop}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{Server\+Thread\+Loop()}{ServerThreadLoop()}}
+{\footnotesize\ttfamily void Server\+Thread\+Loop (\begin{DoxyParamCaption}\item[{void $\ast$}]{ }\end{DoxyParamCaption})}
+
+
+
+서버스레드 \+:\+: 메테오, 데스존 관리  1초마다 호출됨 
+
+
+
+Server.\+cpp 파일의 35 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+36 \{
+37     \textcolor{keywordflow}{if} (\hyperlink{_server_8cpp_a0e468d42ed25075707dd9738b1b67621}{s\_GameRunning} == \textcolor{keyword}{false})
+38         \textcolor{keywordflow}{return};
+39     \textcolor{comment}{// 우주선 잠금 해제 시간}
+40 
+41     \textcolor{keywordflow}{if} (\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a4ad8b199648bad8ea03b9e161b1bcb10}{GetSpaceShipLockTime}() > 0 )
+42     \{
+43         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a3866f3d6a99358d0068cee3d5bc529d2}{SetSpaceShipLockTime}(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.
+      \hyperlink{class_server_a4ad8b199648bad8ea03b9e161b1bcb10}{GetSpaceShipLockTime}() - 1);
+44         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ae62a9437703d205c2d02737dfce45a33}{GetProxy}()->NotifySpaceShipLockTime(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.
+      \hyperlink{class_server_ac6e03fa95f91583bd117f4910257b7be}{GetP2PID}(), 
+45             RmiContext::ReliableSend, \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a4ad8b199648bad8ea03b9e161b1bcb10}{GetSpaceShipLockTime}());
+46     \}
+47     
+48     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 1; i++)
+49     \{
+50         \textcolor{keywordflow}{if} (\hyperlink{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}{s\_meteorCommingTime}[i] > 0)
+51         \{
+52             \hyperlink{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}{s\_meteorCommingTime}[i] -= 1;
+53             \textcolor{keywordflow}{if}(\hyperlink{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}{s\_meteorCommingTime}[i] % 5)
+54                 cout << \textcolor{stringliteral}{"메테오 "}<< i << \textcolor{stringliteral}{"번 "} << \hyperlink{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}{s\_meteorCommingTime}[i] << \textcolor{stringliteral}{" 초 남음 "} << 
+      \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a044bc662d96361b3bda25230533ec63b}{GetServer}()->GetTimeMs() << endl;
+55             \textcolor{keywordflow}{if} (\hyperlink{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}{s\_meteorCommingTime}[i] <= 0.0f)
+56             \{
+57                 \textcolor{keywordtype}{float} anglex = \hyperlink{_server_8h_ade3d882172359ea96a915f1cab5f681b}{RandomRange}(-360.0f, 360.0f);
+58                 \textcolor{keywordtype}{float} anglez = \hyperlink{_server_8h_ade3d882172359ea96a915f1cab5f681b}{RandomRange}(-360.0f, 360.0f);
+59                 \textcolor{keywordtype}{string} meteorID = \textcolor{stringliteral}{"meteor"};
+60                 
+61                 meteorID += to\_string(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a2c9b6a25a8add5d74b5f3bcfeff956ec}{GetMeteorID}());
+62                 \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a582ad4eb2272b1ab92daad71dc700e8d}{SetMeteorID}(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a2c9b6a25a8add5d74b5f3bcfeff956ec}{GetMeteorID}() + 1);
+63                 cout << \textcolor{stringliteral}{"anglex "} << anglex << \textcolor{stringliteral}{" anglez "} << anglez;
+64 
+65                 \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ae62a9437703d205c2d02737dfce45a33}{GetProxy}()->NotifyMeteorCreate(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.
+      \hyperlink{class_server_ac6e03fa95f91583bd117f4910257b7be}{GetP2PID}(), 
+66                     RmiContext::ReliableSend, anglex, anglez, meteorID);
+67 
+68                 \hyperlink{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}{s\_meteorCommingTime}[i] = 60;
+69             \}
+70         \}
+71     \}
+72     
+73     \textcolor{keywordflow}{if} (\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_abd194d047570b5959ae56948d4bbc9bd}{GetDeathZoneCommingTime}() >= 0)
+74     \{
+75         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a0c817a017f9b2cb6f92de01e693b8e35}{SetDeathZoneCommingTime}(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.
+      \hyperlink{class_server_abd194d047570b5959ae56948d4bbc9bd}{GetDeathZoneCommingTime}() - 1);
+76         
+77         \textcolor{keywordtype}{string} s = \textcolor{stringliteral}{"deathZone"};
+78         s += to\_string(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ad0f632640a71c4d229e17e7b9eb2257d}{GetDeathZoneID}());
+79         cout << \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_abd194d047570b5959ae56948d4bbc9bd}{GetDeathZoneCommingTime}() << endl;
+80 
+81         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ae62a9437703d205c2d02737dfce45a33}{GetProxy}()->NotifyDeathZoneCommingTime(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.
+      \hyperlink{class_server_ac6e03fa95f91583bd117f4910257b7be}{GetP2PID}(),
+82             RmiContext::ReliableSend, \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_abd194d047570b5959ae56948d4bbc9bd}{GetDeathZoneCommingTime}(),s);
+83     \}
+84 
+85     \textcolor{comment}{// 여기는 데스존 체크}
+86     \textcolor{keywordflow}{if} (\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_abd194d047570b5959ae56948d4bbc9bd}{GetDeathZoneCommingTime}() == 0)
+87     \{
+88         \textcolor{keywordtype}{int} index = (int)\hyperlink{_server_8h_ade3d882172359ea96a915f1cab5f681b}{RandomRange}(0, \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.
+      \hyperlink{class_server_a43c5961b9519b2358127956c817a2120}{GetSpaceShipCount}());
+89         \textcolor{keywordtype}{string} deathZoneID = \textcolor{stringliteral}{"deathZone"};
+90         deathZoneID += to\_string(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ad0f632640a71c4d229e17e7b9eb2257d}{GetDeathZoneID}());
+91         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a97583a37e049f390e255a61afbac02a2}{SetDeathZoneID}(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ad0f632640a71c4d229e17e7b9eb2257d}{GetDeathZoneID}() + 1);
+92         \textcolor{comment}{// 생성}
+93         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ae62a9437703d205c2d02737dfce45a33}{GetProxy}()->NotifyDeathZoneCreate(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.
+      \hyperlink{class_server_ac6e03fa95f91583bd117f4910257b7be}{GetP2PID}(), 
+94             RmiContext::ReliableSend, index, deathZoneID);
+95 
+96         \textcolor{keywordflow}{if} (\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ab5d6fa91446df16909dfbea64abddf76}{GetGameRoom}() == \textcolor{keyword}{nullptr})
+97             \textcolor{keywordflow}{return};
+98         \textcolor{keyword}{auto} clientMap = \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ab5d6fa91446df16909dfbea64abddf76}{GetGameRoom}()->GetClientMap();
+99 
+100         \textcolor{comment}{// 움직이는 주체 설정}
+101         \textcolor{keyword}{auto} iter = clientMap.begin();
+102         \textcolor{keywordflow}{while} (iter != clientMap.end())
+103         \{
+104             \textcolor{keywordflow}{if} (iter->second->GetState() == \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1a4f34c5c191d6e0d028ca831b6c0b1571}{ALIVE})
+105             \{
+106                 \textcolor{comment}{// 움직이는 주체 통보}
+107                 \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ae62a9437703d205c2d02737dfce45a33}{GetProxy}()->NotifyDeathZoneMoveHostAndIndexSetup(
+108                     \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ac6e03fa95f91583bd117f4910257b7be}{GetP2PID}(),
+109                     RmiContext::ReliableSend,
+110                     (int)iter->second->GetHostID(), 
+111                     \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a636f3c3d5fe8406197f9ea30409fb725}{GetDeathZoneIndex}());
+112                 \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a78cb51003b1a243780c2845263e75b29}{SetDeathZoneHostID}((\textcolor{keywordtype}{int})iter->second->GetHostID());
+113                 \textcolor{keywordflow}{break};
+114             \}
+115             iter++;
+116         \}
+117         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a0c817a017f9b2cb6f92de01e693b8e35}{SetDeathZoneCommingTime}(\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.
+      \hyperlink{class_server_abd194d047570b5959ae56948d4bbc9bd}{GetDeathZoneCommingTime}() - 1);
+118         
+119     \}
+120     \textcolor{comment}{// 데스존이 움직이는 루프 }
+121     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_abd194d047570b5959ae56948d4bbc9bd}{GetDeathZoneCommingTime}() == -1)
+122     \{
+123         \textcolor{keywordflow}{if} (\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ab5d6fa91446df16909dfbea64abddf76}{GetGameRoom}() == \textcolor{keyword}{nullptr})
+124             \textcolor{keywordflow}{return};
+125         \textcolor{keyword}{auto} clientMap = \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ab5d6fa91446df16909dfbea64abddf76}{GetGameRoom}()->GetClientMap();
+126         \textcolor{keywordflow}{if}(clientMap.size() <= 0)
+127             \textcolor{keywordflow}{return};
+128         \textcolor{keywordflow}{if} (clientMap.find((HostID)\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a2e2dda4eb32e6f0a43ca8aba93d4d9a9}{GetDeathZoneHostID}()) == clientMap.end())
+129             \textcolor{keywordflow}{return};
+130         \textcolor{keywordflow}{if} (clientMap[(HostID)\hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a2e2dda4eb32e6f0a43ca8aba93d4d9a9}{GetDeathZoneHostID}()]->GetState() != 
+      \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1a4f34c5c191d6e0d028ca831b6c0b1571}{ALIVE})
+131         \{
+132             \textcolor{comment}{// 움직이는 주체 설정}
+133             \textcolor{keyword}{auto} iter = clientMap.begin();
+134             \textcolor{keywordflow}{while} (iter != clientMap.end())
+135             \{
+136                 \textcolor{keywordflow}{if} (iter->second->GetState() == \hyperlink{stdafx_8h_a3c730f37b1b3a893159bada67637fdb1a4f34c5c191d6e0d028ca831b6c0b1571}{ALIVE})
+137                 \{
+138                     \textcolor{comment}{// 움직이는 주체 통보}
+139                     \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ae62a9437703d205c2d02737dfce45a33}{GetProxy}()->NotifyDeathZoneMoveHostAndIndexSetup(
+140                         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_ac6e03fa95f91583bd117f4910257b7be}{GetP2PID}(),
+141                         RmiContext::ReliableSend,
+142                         (int)iter->second->GetHostID(),
+143                         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a636f3c3d5fe8406197f9ea30409fb725}{GetDeathZoneIndex}());
+144                     \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a78cb51003b1a243780c2845263e75b29}{SetDeathZoneHostID}((\textcolor{keywordtype}{int})iter->second->GetHostID());
+145                     \textcolor{keywordflow}{break};
+146                 \}
+147                 iter++;
+148             \}
+149         \}
+150     \}
+151 
+152 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{_server_8cpp_aa49c05ac1cfbff49b47ca9ff62ae3761_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8cpp_aa49c05ac1cfbff49b47ca9ff62ae3761_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{변수 문서화}
+\mbox{\Hypertarget{_server_8cpp_a0e468d42ed25075707dd9738b1b67621}\label{_server_8cpp_a0e468d42ed25075707dd9738b1b67621}} 
+\index{Server.\+cpp@{Server.\+cpp}!s\+\_\+\+Game\+Running@{s\+\_\+\+Game\+Running}}
+\index{s\+\_\+\+Game\+Running@{s\+\_\+\+Game\+Running}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{s\+\_\+\+Game\+Running}{s\_GameRunning}}
+{\footnotesize\ttfamily bool s\+\_\+\+Game\+Running = false}
+
+
+
+Server.\+cpp 파일의 4 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{_server_8cpp_afd1a82c786509e03b540bae82af2c137}\label{_server_8cpp_afd1a82c786509e03b540bae82af2c137}} 
+\index{Server.\+cpp@{Server.\+cpp}!server@{server}}
+\index{server@{server}!Server.\+cpp@{Server.\+cpp}}
+\subsubsection{\texorpdfstring{server}{server}}
+{\footnotesize\ttfamily \hyperlink{class_server}{Server} server}
+
+
+
+Server.\+cpp 파일의 3 번째 라인에서 정의되었습니다.
+

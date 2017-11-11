@@ -1,0 +1,320 @@
+\hypertarget{class_json_1_1_fast_writer}{}\section{Json\+:\+:Fast\+Writer 클래스 참조}
+\label{class_json_1_1_fast_writer}\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+
+
+Outputs a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+ON} format without formatting (not human friendly).  
+
+
+
+
+{\ttfamily \#include $<$json.\+h$>$}
+
+
+
+Json\+:\+:Fast\+Writer에 대한 상속 다이어그램 \+: \nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{class_json_1_1_fast_writer__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Json\+:\+:Fast\+Writer에 대한 협력 다이어그램\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{class_json_1_1_fast_writer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_fast_writer_a1bbc73ce1a1cc7b09cd1e02db3905170}{Fast\+Writer} ()
+\item 
+\hyperlink{class_json_1_1_fast_writer_a34152eac509fe00c9b2e15ce2fc94ab8}{$\sim$\+Fast\+Writer} () \hyperlink{json_8h_a824d6199c91488107e443226fa6022c5}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+V\+E\+R\+R\+I\+DE}
+\item 
+void \hyperlink{class_json_1_1_fast_writer_a78d98e9f76d33660ad6e6a1abe287d45}{enable\+Y\+A\+M\+L\+Compatibility} ()
+\item 
+void \hyperlink{class_json_1_1_fast_writer_a6e93d8dce951e408517311026a065b40}{drop\+Null\+Placeholders} ()
+\begin{DoxyCompactList}\small\item\em Drop the \char`\"{}null\char`\"{} string from the writer\textquotesingle{}s output for null\+Values. Strictly speaking, this is not valid J\+S\+ON. But when the output is being fed to a browser\textquotesingle{}s Javascript, it makes for smaller output and the browser can handle the output just fine. \end{DoxyCompactList}\item 
+void \hyperlink{class_json_1_1_fast_writer_af4ee077d365d75941fb2688d97207a55}{omit\+Ending\+Line\+Feed} ()
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_fast_writer_a93d45ba4bc312371d08beb3e3dfbe654}{write} (const \hyperlink{class_json_1_1_value}{Value} \&root) \hyperlink{json_8h_a824d6199c91488107e443226fa6022c5}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+V\+E\+R\+R\+I\+DE}
+\end{DoxyCompactItemize}
+\subsection*{Private 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_json_1_1_fast_writer_a2ef4a2ce13a341171f01f414f4fdd765}{write\+Value} (const \hyperlink{class_json_1_1_value}{Value} \&value)
+\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\+\_\+}
+\item 
+bool \hyperlink{class_json_1_1_fast_writer_a4c4c1911179bf472d24492915b0e489a}{yaml\+Compatiblity\+Enabled\+\_\+}
+\item 
+bool \hyperlink{class_json_1_1_fast_writer_a97e9d4ff84b59a48756dcc27a71b5904}{drop\+Null\+Placeholders\+\_\+}
+\item 
+bool \hyperlink{class_json_1_1_fast_writer_abd6e13851db6dcf59d84af68d48d50ac}{omit\+Ending\+Line\+Feed\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+Outputs a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+ON} format without formatting (not human friendly). 
+
+The J\+S\+ON document is written in a single line. It is not intended for \textquotesingle{}human\textquotesingle{} consumption, but may be usefull to support feature such as R\+PC where bandwith is limited. \begin{DoxySeeAlso}{참고}
+\hyperlink{class_json_1_1_reader}{Reader}, \hyperlink{class_json_1_1_value}{Value} 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{잘못된 코드}
+\item[\hyperlink{deprecated__deprecated000008}{잘못된 코드}]Use \hyperlink{class_json_1_1_stream_writer_builder}{Stream\+Writer\+Builder}. \end{DoxyRefDesc}
+
+
+json.\+h 파일의 1907 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a1bbc73ce1a1cc7b09cd1e02db3905170}\label{class_json_1_1_fast_writer_a1bbc73ce1a1cc7b09cd1e02db3905170}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!Fast\+Writer@{Fast\+Writer}}
+\index{Fast\+Writer@{Fast\+Writer}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{Fast\+Writer()}{FastWriter()}}
+{\footnotesize\ttfamily Json\+::\+Fast\+Writer\+::\+Fast\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 4406 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4407     : \hyperlink{class_json_1_1_fast_writer_a4c4c1911179bf472d24492915b0e489a}{yamlCompatiblityEnabled\_}(\textcolor{keyword}{false}), 
+      \hyperlink{class_json_1_1_fast_writer_a97e9d4ff84b59a48756dcc27a71b5904}{dropNullPlaceholders\_}(\textcolor{keyword}{false}),
+4408       \hyperlink{class_json_1_1_fast_writer_abd6e13851db6dcf59d84af68d48d50ac}{omitEndingLineFeed\_}(\textcolor{keyword}{false}) \{\}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a34152eac509fe00c9b2e15ce2fc94ab8}\label{class_json_1_1_fast_writer_a34152eac509fe00c9b2e15ce2fc94ab8}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!````~Fast\+Writer@{$\sim$\+Fast\+Writer}}
+\index{````~Fast\+Writer@{$\sim$\+Fast\+Writer}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{$\sim$\+Fast\+Writer()}{~FastWriter()}}
+{\footnotesize\ttfamily Json\+::\+Fast\+Writer\+::$\sim$\+Fast\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+json.\+h 파일의 1911 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1911 \{\}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a6e93d8dce951e408517311026a065b40}\label{class_json_1_1_fast_writer_a6e93d8dce951e408517311026a065b40}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!drop\+Null\+Placeholders@{drop\+Null\+Placeholders}}
+\index{drop\+Null\+Placeholders@{drop\+Null\+Placeholders}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{drop\+Null\+Placeholders()}{dropNullPlaceholders()}}
+{\footnotesize\ttfamily void Json\+::\+Fast\+Writer\+::drop\+Null\+Placeholders (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Drop the \char`\"{}null\char`\"{} string from the writer\textquotesingle{}s output for null\+Values. Strictly speaking, this is not valid J\+S\+ON. But when the output is being fed to a browser\textquotesingle{}s Javascript, it makes for smaller output and the browser can handle the output just fine. 
+
+
+
+jsoncpp.\+cpp 파일의 4412 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4412 \{ \hyperlink{class_json_1_1_fast_writer_a97e9d4ff84b59a48756dcc27a71b5904}{dropNullPlaceholders\_} = \textcolor{keyword}{true}; \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a78d98e9f76d33660ad6e6a1abe287d45}\label{class_json_1_1_fast_writer_a78d98e9f76d33660ad6e6a1abe287d45}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!enable\+Y\+A\+M\+L\+Compatibility@{enable\+Y\+A\+M\+L\+Compatibility}}
+\index{enable\+Y\+A\+M\+L\+Compatibility@{enable\+Y\+A\+M\+L\+Compatibility}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{enable\+Y\+A\+M\+L\+Compatibility()}{enableYAMLCompatibility()}}
+{\footnotesize\ttfamily void Json\+::\+Fast\+Writer\+::enable\+Y\+A\+M\+L\+Compatibility (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 4410 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4410 \{ \hyperlink{class_json_1_1_fast_writer_a4c4c1911179bf472d24492915b0e489a}{yamlCompatiblityEnabled\_} = \textcolor{keyword}{true}; \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_fast_writer_af4ee077d365d75941fb2688d97207a55}\label{class_json_1_1_fast_writer_af4ee077d365d75941fb2688d97207a55}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!omit\+Ending\+Line\+Feed@{omit\+Ending\+Line\+Feed}}
+\index{omit\+Ending\+Line\+Feed@{omit\+Ending\+Line\+Feed}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{omit\+Ending\+Line\+Feed()}{omitEndingLineFeed()}}
+{\footnotesize\ttfamily void Json\+::\+Fast\+Writer\+::omit\+Ending\+Line\+Feed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 4414 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4414 \{ \hyperlink{class_json_1_1_fast_writer_abd6e13851db6dcf59d84af68d48d50ac}{omitEndingLineFeed\_} = \textcolor{keyword}{true}; \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a93d45ba4bc312371d08beb3e3dfbe654}\label{class_json_1_1_fast_writer_a93d45ba4bc312371d08beb3e3dfbe654}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!write@{write}}
+\index{write@{write}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Fast\+Writer\+::write (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{root }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\hyperlink{class_json_1_1_writer_a61c55882b82c7651d0b9b683c6d3f371}{Json\+::\+Writer}를 구현.
+
+
+
+jsoncpp.\+cpp 파일의 4416 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4416                                                   \{
+4417   \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} = \textcolor{stringliteral}{""};
+4418   \hyperlink{class_json_1_1_fast_writer_a2ef4a2ce13a341171f01f414f4fdd765}{writeValue}(root);
+4419   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_fast_writer_abd6e13851db6dcf59d84af68d48d50ac}{omitEndingLineFeed\_})
+4420     \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \textcolor{stringliteral}{"\(\backslash\)n"};
+4421   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_};
+4422 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_fast_writer_a93d45ba4bc312371d08beb3e3dfbe654_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a2ef4a2ce13a341171f01f414f4fdd765}\label{class_json_1_1_fast_writer_a2ef4a2ce13a341171f01f414f4fdd765}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!write\+Value@{write\+Value}}
+\index{write\+Value@{write\+Value}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{write\+Value()}{writeValue()}}
+{\footnotesize\ttfamily void Json\+::\+Fast\+Writer\+::write\+Value (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4424 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4424                                               \{
+4425   \textcolor{keywordflow}{switch} (value.\hyperlink{class_json_1_1_value_a8ce61157a011894f0252ceed232312de}{type}()) \{
+4426   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4ea7d9899633b4409bd3fc107e6737f8391}{nullValue}:
+4427     \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_fast_writer_a97e9d4ff84b59a48756dcc27a71b5904}{dropNullPlaceholders\_})
+4428       \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \textcolor{stringliteral}{"null"};
+4429     \textcolor{keywordflow}{break};
+4430   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eae5a9d708d5c9e23ae9bf98898522512d}{intValue}:
+4431     \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{valueToString}(value.\hyperlink{class_json_1_1_value_ab16f2ea2a117a1b3b576acab8b6a700d}{asLargestInt}());
+4432     \textcolor{keywordflow}{break};
+4433   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eaea788d9a3bb00adc6d68d97d43e1ccd3}{uintValue}:
+4434     \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{valueToString}(value.\hyperlink{class_json_1_1_value_ad03548101e0bf3d2d9eac75c64a0b8d7}{asLargestUInt}());
+4435     \textcolor{keywordflow}{break};
+4436   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eab837c7b869c14d8be712deb45c9e490e}{realValue}:
+4437     \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{valueToString}(value.\hyperlink{class_json_1_1_value_afd24002a18aef907ad746b1cb9eda0a2}{asDouble}());
+4438     \textcolor{keywordflow}{break};
+4439   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4ea804ef857affea2d415843c73f261c258}{stringValue}:
+4440   \{
+4441     \textcolor{comment}{// Is NULL possible for value.string\_? No.}
+4442     \textcolor{keywordtype}{char} \textcolor{keyword}{const}* str;
+4443     \textcolor{keywordtype}{char} \textcolor{keyword}{const}* end;
+4444     \textcolor{keywordtype}{bool} ok = value.\hyperlink{class_json_1_1_value_a2e1b7be6bde2fe23f15290d9ddbbdf8a}{getString}(&str, &end);
+4445     \textcolor{keywordflow}{if} (ok) \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \hyperlink{namespace_json_a29aff81733b8fdaabf3f1acfc3ad339f}{valueToQuotedStringN}(str, static\_cast<unsigned>(end-
+      str));
+4446     \textcolor{keywordflow}{break};
+4447   \}
+4448   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4ea14c30dbf4da86f7b809be299f671f7fd}{booleanValue}:
+4449     \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{valueToString}(value.\hyperlink{class_json_1_1_value_ab693fb7b9b1595bb0adc49658bbf780d}{asBool}());
+4450     \textcolor{keywordflow}{break};
+4451   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4}{arrayValue}: \{
+4452     \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \textcolor{charliteral}{'['};
+4453     \hyperlink{namespace_json_a8048e741f2177c3b5d9ede4a5b8c53c2}{ArrayIndex} size = value.\hyperlink{class_json_1_1_value_a0ec2808e1d7efa4e9fad938d6667be44}{size}();
+4454     \textcolor{keywordflow}{for} (\hyperlink{namespace_json_a8048e741f2177c3b5d9ede4a5b8c53c2}{ArrayIndex} index = 0; index < size; ++index) \{
+4455       \textcolor{keywordflow}{if} (index > 0)
+4456         \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \textcolor{charliteral}{','};
+4457       \hyperlink{class_json_1_1_fast_writer_a2ef4a2ce13a341171f01f414f4fdd765}{writeValue}(value[index]);
+4458     \}
+4459     \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \textcolor{charliteral}{']'};
+4460   \} \textcolor{keywordflow}{break};
+4461   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6}{objectValue}: \{
+4462     \hyperlink{class_json_1_1_value_a9ae9069983fc38f1928d76f9c79ac64d}{Value::Members} members(value.\hyperlink{class_json_1_1_value_a79d7725dce6260317333e69022367ac9}{getMemberNames}());
+4463     \hyperlink{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}{document\_} += \textcolor{charliteral}{'\{'};
+4464     \textcolor{keywordflow}{for} (Value::Members::iterator it = members.begin(); it != members.end();
+4465          ++it) \{
+4466       \textcolor{keyword}{const} \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING}& name = *it;
+4467       \textcolor{keywordflow}{if} (it != members.begin())
+4468         document\_ += \textcolor{charliteral}{','};
+4469       document\_ += \hyperlink{namespace_json_a29aff81733b8fdaabf3f1acfc3ad339f}{valueToQuotedStringN}(name.data(), \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(name.length(
+      )));
+4470       document\_ += \hyperlink{class_json_1_1_fast_writer_a4c4c1911179bf472d24492915b0e489a}{yamlCompatiblityEnabled\_} ? \textcolor{stringliteral}{": "} : \textcolor{stringliteral}{":"};
+4471       \hyperlink{class_json_1_1_fast_writer_a2ef4a2ce13a341171f01f414f4fdd765}{writeValue}(value[name]);
+4472     \}
+4473     document\_ += \textcolor{charliteral}{'\}'};
+4474   \} \textcolor{keywordflow}{break};
+4475   \}
+4476 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_fast_writer_a2ef4a2ce13a341171f01f414f4fdd765_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_fast_writer_a2ef4a2ce13a341171f01f414f4fdd765_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}\label{class_json_1_1_fast_writer_a5e08c44579db8704dba1ebe37d39fdba}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!document\+\_\+@{document\+\_\+}}
+\index{document\+\_\+@{document\+\_\+}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{document\+\_\+}{document\_}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Fast\+Writer\+::document\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 1930 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a97e9d4ff84b59a48756dcc27a71b5904}\label{class_json_1_1_fast_writer_a97e9d4ff84b59a48756dcc27a71b5904}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!drop\+Null\+Placeholders\+\_\+@{drop\+Null\+Placeholders\+\_\+}}
+\index{drop\+Null\+Placeholders\+\_\+@{drop\+Null\+Placeholders\+\_\+}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{drop\+Null\+Placeholders\+\_\+}{dropNullPlaceholders\_}}
+{\footnotesize\ttfamily bool Json\+::\+Fast\+Writer\+::drop\+Null\+Placeholders\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 1932 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_fast_writer_abd6e13851db6dcf59d84af68d48d50ac}\label{class_json_1_1_fast_writer_abd6e13851db6dcf59d84af68d48d50ac}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!omit\+Ending\+Line\+Feed\+\_\+@{omit\+Ending\+Line\+Feed\+\_\+}}
+\index{omit\+Ending\+Line\+Feed\+\_\+@{omit\+Ending\+Line\+Feed\+\_\+}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{omit\+Ending\+Line\+Feed\+\_\+}{omitEndingLineFeed\_}}
+{\footnotesize\ttfamily bool Json\+::\+Fast\+Writer\+::omit\+Ending\+Line\+Feed\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 1933 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_fast_writer_a4c4c1911179bf472d24492915b0e489a}\label{class_json_1_1_fast_writer_a4c4c1911179bf472d24492915b0e489a}} 
+\index{Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}!yaml\+Compatiblity\+Enabled\+\_\+@{yaml\+Compatiblity\+Enabled\+\_\+}}
+\index{yaml\+Compatiblity\+Enabled\+\_\+@{yaml\+Compatiblity\+Enabled\+\_\+}!Json\+::\+Fast\+Writer@{Json\+::\+Fast\+Writer}}
+\subsubsection{\texorpdfstring{yaml\+Compatiblity\+Enabled\+\_\+}{yamlCompatiblityEnabled\_}}
+{\footnotesize\ttfamily bool Json\+::\+Fast\+Writer\+::yaml\+Compatiblity\+Enabled\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 1931 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/json/\hyperlink{json_8h}{json.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{jsoncpp_8cpp}{jsoncpp.\+cpp}\end{DoxyCompactItemize}

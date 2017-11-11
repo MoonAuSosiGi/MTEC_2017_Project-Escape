@@ -1,0 +1,764 @@
+\hypertarget{class_json_1_1_styled_stream_writer}{}\section{Json\+:\+:Styled\+Stream\+Writer 클래스 참조}
+\label{class_json_1_1_styled_stream_writer}\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+
+
+Writes a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+ON} format in a human friendly way, to a stream rather than to a string.  
+
+
+
+
+{\ttfamily \#include $<$json.\+h$>$}
+
+
+
+Json\+:\+:Styled\+Stream\+Writer에 대한 협력 다이어그램\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{class_json_1_1_styled_stream_writer__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_styled_stream_writer_a5e41c4e40f11266046bd0ea8f8f5a75e}{Styled\+Stream\+Writer} (\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} indentation=\char`\"{}\textbackslash{})
+\item 
+\hyperlink{class_json_1_1_styled_stream_writer_a17444a59f617970279714e97b0ddfa46}{$\sim$\+Styled\+Stream\+Writer} ()
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_a5d89d984fe675641e42c4370cd247774}{write} (\hyperlink{json_8h_a37a25be5fca174927780caeb280094ce}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+S\+T\+R\+E\+AM} \&out, const \hyperlink{class_json_1_1_value}{Value} \&root)
+\begin{DoxyCompactList}\small\item\em Serialize a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+ON} format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private 타입}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::vector$<$ \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} $>$ \hyperlink{class_json_1_1_styled_stream_writer_a259bf9d99847b2ea64ec9c6dd441944e}{Child\+Values}
+\end{DoxyCompactItemize}
+\subsection*{Private 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae}{write\+Value} (const \hyperlink{class_json_1_1_value}{Value} \&value)
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_a606f2ddd58093c9b019d452c1b6f09fe}{write\+Array\+Value} (const \hyperlink{class_json_1_1_value}{Value} \&value)
+\item 
+bool \hyperlink{class_json_1_1_styled_stream_writer_a88f4d342cf25c73aabf77c1b8ba01e44}{is\+Multine\+Array} (const \hyperlink{class_json_1_1_value}{Value} \&value)
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{push\+Value} (const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&value)
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d}{write\+Indent} ()
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}{write\+With\+Indent} (const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&value)
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_ab49409578422aa73b060e3492dd6c72a}{indent} ()
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_a74d8fb9beecd29759d7b79f430386358}{unindent} ()
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_a79c3c2b320475035c47b2db484a3e434}{write\+Comment\+Before\+Value} (const \hyperlink{class_json_1_1_value}{Value} \&root)
+\item 
+void \hyperlink{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7}{write\+Comment\+After\+Value\+On\+Same\+Line} (const \hyperlink{class_json_1_1_value}{Value} \&root)
+\item 
+bool \hyperlink{class_json_1_1_styled_stream_writer_ad2892f57171919fa4f8a5ae5574755cf}{has\+Comment\+For\+Value} (const \hyperlink{class_json_1_1_value}{Value} \&value)
+\end{DoxyCompactItemize}
+\subsection*{정적 Private 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_styled_stream_writer_ae481322d7a439881b257ba7aeda6d19b}{normalize\+E\+OL} (const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&text)
+\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_styled_stream_writer_a259bf9d99847b2ea64ec9c6dd441944e}{Child\+Values} \hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{child\+Values\+\_\+}
+\item 
+\hyperlink{json_8h_a37a25be5fca174927780caeb280094ce}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+S\+T\+R\+E\+AM} $\ast$ \hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\+\_\+}
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}{indent\+String\+\_\+}
+\item 
+unsigned int \hyperlink{class_json_1_1_styled_stream_writer_a94299ec0a9bb925b2dbbab7c1f2b390a}{right\+Margin\+\_\+}
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_styled_stream_writer_aa45d8fb4ca82d0550be9042012303713}{indentation\+\_\+}
+\item 
+bool \hyperlink{class_json_1_1_styled_stream_writer_a4e4bb7fc223b2652b72b523b1ce414fa}{add\+Child\+Values\+\_\+}\+: 1
+\item 
+bool \hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\+\_\+}\+: 1
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+Writes a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+ON} format in a human friendly way, to a stream rather than to a string. 
+
+The rules for line break and indent are as follow\+:
+\begin{DoxyItemize}
+\item Object value\+:
+\begin{DoxyItemize}
+\item if empty then print \{\} without indent and line break
+\item if not empty the print \textquotesingle{}\{\textquotesingle{}, line break \& indent, print one value per line and then unindent and line break and print \textquotesingle{}\}\textquotesingle{}.
+\end{DoxyItemize}
+\item Array value\+:
+\begin{DoxyItemize}
+\item if empty then print \mbox{[}\mbox{]} without indent and line break
+\item if the array contains no object value, empty array or some other value types, and all the values fit on one lines, then print the array on a single line.
+\item otherwise, it the values do not fit on one line, or the array contains object or non empty array, then print one value per line.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+If the \hyperlink{class_json_1_1_value}{Value} have comments then they are outputed according to their \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351}{Comment\+Placement}.
+
+
+\begin{DoxyParams}{매개변수}
+{\em indentation} & Each level will be indented by this amount extra. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_json_1_1_reader}{Reader}, \hyperlink{class_json_1_1_value}{Value}, \hyperlink{class_json_1_1_value_a29f3a30f7e5d3af6f38d57999bf5b480}{Value\+::set\+Comment()} 
+\end{DoxySeeAlso}
+\begin{DoxyRefDesc}{잘못된 코드}
+\item[\hyperlink{deprecated__deprecated000010}{잘못된 코드}]Use \hyperlink{class_json_1_1_stream_writer_builder}{Stream\+Writer\+Builder}. \end{DoxyRefDesc}
+
+
+json.\+h 파일의 2022 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{멤버 타입정의 문서화}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a259bf9d99847b2ea64ec9c6dd441944e}\label{class_json_1_1_styled_stream_writer_a259bf9d99847b2ea64ec9c6dd441944e}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!Child\+Values@{Child\+Values}}
+\index{Child\+Values@{Child\+Values}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{Child\+Values}{ChildValues}}
+{\footnotesize\ttfamily typedef std\+::vector$<$\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG}$>$ \hyperlink{class_json_1_1_styled_stream_writer_a259bf9d99847b2ea64ec9c6dd441944e}{Json\+::\+Styled\+Stream\+Writer\+::\+Child\+Values}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 2050 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a5e41c4e40f11266046bd0ea8f8f5a75e}\label{class_json_1_1_styled_stream_writer_a5e41c4e40f11266046bd0ea8f8f5a75e}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!Styled\+Stream\+Writer@{Styled\+Stream\+Writer}}
+\index{Styled\+Stream\+Writer@{Styled\+Stream\+Writer}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{Styled\+Stream\+Writer()}{StyledStreamWriter()}}
+{\footnotesize\ttfamily Json\+::\+Styled\+Stream\+Writer\+::\+Styled\+Stream\+Writer (\begin{DoxyParamCaption}\item[{\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG}}]{indentation = {\ttfamily \char`\"{}\textbackslash{}t\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 4694 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4695     : \hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_}(NULL), \hyperlink{class_json_1_1_styled_stream_writer_a94299ec0a9bb925b2dbbab7c1f2b390a}{rightMargin\_}(74), \hyperlink{class_json_1_1_styled_stream_writer_aa45d8fb4ca82d0550be9042012303713}{indentation\_}(indentation),
+4696       \hyperlink{class_json_1_1_styled_stream_writer_a4e4bb7fc223b2652b72b523b1ce414fa}{addChildValues\_}() \{\}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a17444a59f617970279714e97b0ddfa46}\label{class_json_1_1_styled_stream_writer_a17444a59f617970279714e97b0ddfa46}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!````~Styled\+Stream\+Writer@{$\sim$\+Styled\+Stream\+Writer}}
+\index{````~Styled\+Stream\+Writer@{$\sim$\+Styled\+Stream\+Writer}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{$\sim$\+Styled\+Stream\+Writer()}{~StyledStreamWriter()}}
+{\footnotesize\ttfamily Json\+::\+Styled\+Stream\+Writer\+::$\sim$\+Styled\+Stream\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+json.\+h 파일의 2025 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2025 \{\}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{class_json_1_1_styled_stream_writer_a17444a59f617970279714e97b0ddfa46_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_ad2892f57171919fa4f8a5ae5574755cf}\label{class_json_1_1_styled_stream_writer_ad2892f57171919fa4f8a5ae5574755cf}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!has\+Comment\+For\+Value@{has\+Comment\+For\+Value}}
+\index{has\+Comment\+For\+Value@{has\+Comment\+For\+Value}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{has\+Comment\+For\+Value()}{hasCommentForValue()}}
+{\footnotesize\ttfamily bool Json\+::\+Styled\+Stream\+Writer\+::has\+Comment\+For\+Value (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4900 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4900                                                               \{
+4901   \textcolor{keywordflow}{return} value.\hyperlink{class_json_1_1_value_a65d8e3ab6a5871cbd019a3e0f0b944a3}{hasComment}(\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a52f1733775460517b2ea6bedf4906d52}{commentBefore}) ||
+4902          value.\hyperlink{class_json_1_1_value_a65d8e3ab6a5871cbd019a3e0f0b944a3}{hasComment}(\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a008a230a0586de54f30b76afe70fdcfa}{commentAfterOnSameLine}) ||
+4903          value.\hyperlink{class_json_1_1_value_a65d8e3ab6a5871cbd019a3e0f0b944a3}{hasComment}(\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351ac5784ca53b12250888ddb642b06aebef}{commentAfter});
+4904 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_ad2892f57171919fa4f8a5ae5574755cf_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_ad2892f57171919fa4f8a5ae5574755cf_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_ab49409578422aa73b060e3492dd6c72a}\label{class_json_1_1_styled_stream_writer_ab49409578422aa73b060e3492dd6c72a}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!indent@{indent}}
+\index{indent@{indent}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{indent()}{indent()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::indent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4864 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4864 \{ \hyperlink{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}{indentString\_} += \hyperlink{class_json_1_1_styled_stream_writer_aa45d8fb4ca82d0550be9042012303713}{indentation\_}; \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_ab49409578422aa73b060e3492dd6c72a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a88f4d342cf25c73aabf77c1b8ba01e44}\label{class_json_1_1_styled_stream_writer_a88f4d342cf25c73aabf77c1b8ba01e44}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!is\+Multine\+Array@{is\+Multine\+Array}}
+\index{is\+Multine\+Array@{is\+Multine\+Array}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{is\+Multine\+Array()}{isMultineArray()}}
+{\footnotesize\ttfamily bool Json\+::\+Styled\+Stream\+Writer\+::is\+Multine\+Array (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4816 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4816                                                           \{
+4817   \hyperlink{namespace_json_a8048e741f2177c3b5d9ede4a5b8c53c2}{ArrayIndex} \textcolor{keyword}{const} size = value.\hyperlink{class_json_1_1_value_a0ec2808e1d7efa4e9fad938d6667be44}{size}();
+4818   \textcolor{keywordtype}{bool} isMultiLine = size * 3 >= \hyperlink{class_json_1_1_styled_stream_writer_a94299ec0a9bb925b2dbbab7c1f2b390a}{rightMargin\_};
+4819   \hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{childValues\_}.clear();
+4820   \textcolor{keywordflow}{for} (\hyperlink{namespace_json_a8048e741f2177c3b5d9ede4a5b8c53c2}{ArrayIndex} index = 0; index < size && !isMultiLine; ++index) \{
+4821     \textcolor{keyword}{const} \hyperlink{class_json_1_1_value}{Value}& childValue = value[index];
+4822     isMultiLine = ((childValue.\hyperlink{class_json_1_1_value_a1627eb9d6568d6d0252fa8bb711c0a59}{isArray}() || childValue.\hyperlink{class_json_1_1_value_a8cf96c0f2a552051fcfc78ffee60e037}{isObject}()) &&
+4823                         childValue.\hyperlink{class_json_1_1_value_a0ec2808e1d7efa4e9fad938d6667be44}{size}() > 0);
+4824   \}
+4825   \textcolor{keywordflow}{if} (!isMultiLine) \textcolor{comment}{// check if line length > max line length}
+4826   \{
+4827     \hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{childValues\_}.reserve(size);
+4828     \hyperlink{class_json_1_1_styled_stream_writer_a4e4bb7fc223b2652b72b523b1ce414fa}{addChildValues\_} = \textcolor{keyword}{true};
+4829     \hyperlink{namespace_json_a8048e741f2177c3b5d9ede4a5b8c53c2}{ArrayIndex} lineLength = 4 + (size - 1) * 2; \textcolor{comment}{// '[ ' + ', '*n + ' ]'}
+4830     \textcolor{keywordflow}{for} (\hyperlink{namespace_json_a8048e741f2177c3b5d9ede4a5b8c53c2}{ArrayIndex} index = 0; index < size; ++index) \{
+4831       \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_styled_stream_writer_ad2892f57171919fa4f8a5ae5574755cf}{hasCommentForValue}(value[index])) \{
+4832         isMultiLine = \textcolor{keyword}{true};
+4833       \}
+4834       \hyperlink{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae}{writeValue}(value[index]);
+4835       lineLength += \textcolor{keyword}{static\_cast<}\hyperlink{namespace_json_a8048e741f2177c3b5d9ede4a5b8c53c2}{ArrayIndex}\textcolor{keyword}{>}(\hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{childValues\_}[index].length());
+4836     \}
+4837     \hyperlink{class_json_1_1_styled_stream_writer_a4e4bb7fc223b2652b72b523b1ce414fa}{addChildValues\_} = \textcolor{keyword}{false};
+4838     isMultiLine = isMultiLine || lineLength >= \hyperlink{class_json_1_1_styled_stream_writer_a94299ec0a9bb925b2dbbab7c1f2b390a}{rightMargin\_};
+4839   \}
+4840   \textcolor{keywordflow}{return} isMultiLine;
+4841 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a88f4d342cf25c73aabf77c1b8ba01e44_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a88f4d342cf25c73aabf77c1b8ba01e44_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_ae481322d7a439881b257ba7aeda6d19b}\label{class_json_1_1_styled_stream_writer_ae481322d7a439881b257ba7aeda6d19b}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!normalize\+E\+OL@{normalize\+E\+OL}}
+\index{normalize\+E\+OL@{normalize\+E\+OL}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{normalize\+E\+O\+L()}{normalizeEOL()}}
+{\footnotesize\ttfamily static \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Styled\+Stream\+Writer\+::normalize\+E\+OL (\begin{DoxyParamCaption}\item[{const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}\label{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!push\+Value@{push\+Value}}
+\index{push\+Value@{push\+Value}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{push\+Value()}{pushValue()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::push\+Value (\begin{DoxyParamCaption}\item[{const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4843 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4843                                                               \{
+4844   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_styled_stream_writer_a4e4bb7fc223b2652b72b523b1ce414fa}{addChildValues\_})
+4845     \hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{childValues\_}.push\_back(value);
+4846   \textcolor{keywordflow}{else}
+4847     *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << value;
+4848 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a74d8fb9beecd29759d7b79f430386358}\label{class_json_1_1_styled_stream_writer_a74d8fb9beecd29759d7b79f430386358}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!unindent@{unindent}}
+\index{unindent@{unindent}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{unindent()}{unindent()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::unindent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4866 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4866                                   \{
+4867   assert(\hyperlink{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}{indentString\_}.size() >= \hyperlink{class_json_1_1_styled_stream_writer_aa45d8fb4ca82d0550be9042012303713}{indentation\_}.size());
+4868   \hyperlink{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}{indentString\_}.resize(\hyperlink{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}{indentString\_}.size() - 
+      \hyperlink{class_json_1_1_styled_stream_writer_aa45d8fb4ca82d0550be9042012303713}{indentation\_}.size());
+4869 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a74d8fb9beecd29759d7b79f430386358_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a5d89d984fe675641e42c4370cd247774}\label{class_json_1_1_styled_stream_writer_a5d89d984fe675641e42c4370cd247774}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!write@{write}}
+\index{write@{write}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::write (\begin{DoxyParamCaption}\item[{\hyperlink{json_8h_a37a25be5fca174927780caeb280094ce}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+S\+T\+R\+E\+AM} \&}]{out,  }\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{root }\end{DoxyParamCaption})}
+
+
+
+Serialize a \hyperlink{class_json_1_1_value}{Value} in \href{http://www.json.org}{\tt J\+S\+ON} format. 
+
+
+\begin{DoxyParams}{매개변수}
+{\em out} & Stream to write to. (Can be ostringstream, e.\+g.) \\
+\hline
+{\em root} & \hyperlink{class_json_1_1_value}{Value} to serialize. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{주의}
+There is no point in deriving from \hyperlink{class_json_1_1_writer}{Writer}, since \hyperlink{class_json_1_1_styled_stream_writer_a5d89d984fe675641e42c4370cd247774}{write()} should not return a value. 
+\end{DoxyNote}
+
+
+jsoncpp.\+cpp 파일의 4698 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4698                                                                       \{
+4699   \hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} = &out;
+4700   \hyperlink{class_json_1_1_styled_stream_writer_a4e4bb7fc223b2652b72b523b1ce414fa}{addChildValues\_} = \textcolor{keyword}{false};
+4701   \hyperlink{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}{indentString\_} = \textcolor{stringliteral}{""};
+4702   \hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_} = \textcolor{keyword}{true};
+4703   \hyperlink{class_json_1_1_styled_stream_writer_a79c3c2b320475035c47b2db484a3e434}{writeCommentBeforeValue}(root);
+4704   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_}) \hyperlink{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d}{writeIndent}();
+4705   \hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_} = \textcolor{keyword}{true};
+4706   \hyperlink{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae}{writeValue}(root);
+4707   \hyperlink{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7}{writeCommentAfterValueOnSameLine}(root);
+4708   *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << \textcolor{stringliteral}{"\(\backslash\)n"};
+4709   \hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} = NULL; \textcolor{comment}{// Forget the stream, for safety.}
+4710 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a5d89d984fe675641e42c4370cd247774_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a606f2ddd58093c9b019d452c1b6f09fe}\label{class_json_1_1_styled_stream_writer_a606f2ddd58093c9b019d452c1b6f09fe}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!write\+Array\+Value@{write\+Array\+Value}}
+\index{write\+Array\+Value@{write\+Array\+Value}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{write\+Array\+Value()}{writeArrayValue()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::write\+Array\+Value (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4771 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4771                                                            \{
+4772   \textcolor{keywordtype}{unsigned} size = value.\hyperlink{class_json_1_1_value_a0ec2808e1d7efa4e9fad938d6667be44}{size}();
+4773   \textcolor{keywordflow}{if} (size == 0)
+4774     \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\textcolor{stringliteral}{"[]"});
+4775   \textcolor{keywordflow}{else} \{
+4776     \textcolor{keywordtype}{bool} isArrayMultiLine = \hyperlink{class_json_1_1_styled_stream_writer_a88f4d342cf25c73aabf77c1b8ba01e44}{isMultineArray}(value);
+4777     \textcolor{keywordflow}{if} (isArrayMultiLine) \{
+4778       \hyperlink{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}{writeWithIndent}(\textcolor{stringliteral}{"["});
+4779       \hyperlink{class_json_1_1_styled_stream_writer_ab49409578422aa73b060e3492dd6c72a}{indent}();
+4780       \textcolor{keywordtype}{bool} hasChildValue = !\hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{childValues\_}.empty();
+4781       \textcolor{keywordtype}{unsigned} index = 0;
+4782       \textcolor{keywordflow}{for} (;;) \{
+4783         \textcolor{keyword}{const} \hyperlink{class_json_1_1_value}{Value}& childValue = value[index];
+4784         \hyperlink{class_json_1_1_styled_stream_writer_a79c3c2b320475035c47b2db484a3e434}{writeCommentBeforeValue}(childValue);
+4785         \textcolor{keywordflow}{if} (hasChildValue)
+4786           \hyperlink{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}{writeWithIndent}(\hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{childValues\_}[index]);
+4787         \textcolor{keywordflow}{else} \{
+4788           \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_}) \hyperlink{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d}{writeIndent}();
+4789           \hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_} = \textcolor{keyword}{true};
+4790           \hyperlink{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae}{writeValue}(childValue);
+4791           \hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_} = \textcolor{keyword}{false};
+4792         \}
+4793         \textcolor{keywordflow}{if} (++index == size) \{
+4794           \hyperlink{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7}{writeCommentAfterValueOnSameLine}(childValue);
+4795           \textcolor{keywordflow}{break};
+4796         \}
+4797         *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << \textcolor{stringliteral}{","};
+4798         \hyperlink{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7}{writeCommentAfterValueOnSameLine}(childValue);
+4799       \}
+4800       \hyperlink{class_json_1_1_styled_stream_writer_a74d8fb9beecd29759d7b79f430386358}{unindent}();
+4801       \hyperlink{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}{writeWithIndent}(\textcolor{stringliteral}{"]"});
+4802     \} \textcolor{keywordflow}{else} \textcolor{comment}{// output on a single line}
+4803     \{
+4804       assert(\hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{childValues\_}.size() == size);
+4805       *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << \textcolor{stringliteral}{"[ "};
+4806       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} index = 0; index < size; ++index) \{
+4807         \textcolor{keywordflow}{if} (index > 0)
+4808           *document\_ << \textcolor{stringliteral}{", "};
+4809         *document\_ << \hyperlink{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}{childValues\_}[index];
+4810       \}
+4811       *document\_ << \textcolor{stringliteral}{" ]"};
+4812     \}
+4813   \}
+4814 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a606f2ddd58093c9b019d452c1b6f09fe_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a606f2ddd58093c9b019d452c1b6f09fe_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7}\label{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!write\+Comment\+After\+Value\+On\+Same\+Line@{write\+Comment\+After\+Value\+On\+Same\+Line}}
+\index{write\+Comment\+After\+Value\+On\+Same\+Line@{write\+Comment\+After\+Value\+On\+Same\+Line}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{write\+Comment\+After\+Value\+On\+Same\+Line()}{writeCommentAfterValueOnSameLine()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::write\+Comment\+After\+Value\+On\+Same\+Line (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{root }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4889 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4889                                                                            \{
+4890   \textcolor{keywordflow}{if} (root.\hyperlink{class_json_1_1_value_a65d8e3ab6a5871cbd019a3e0f0b944a3}{hasComment}(\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a008a230a0586de54f30b76afe70fdcfa}{commentAfterOnSameLine}))
+4891     *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << \textcolor{charliteral}{' '} << root.\hyperlink{class_json_1_1_value_a82817229a986f0b254e31d5c83066ffe}{getComment}(
+      \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a008a230a0586de54f30b76afe70fdcfa}{commentAfterOnSameLine});
+4892 
+4893   \textcolor{keywordflow}{if} (root.\hyperlink{class_json_1_1_value_a65d8e3ab6a5871cbd019a3e0f0b944a3}{hasComment}(\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351ac5784ca53b12250888ddb642b06aebef}{commentAfter})) \{
+4894     \hyperlink{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d}{writeIndent}();
+4895     *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << root.\hyperlink{class_json_1_1_value_a82817229a986f0b254e31d5c83066ffe}{getComment}(\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351ac5784ca53b12250888ddb642b06aebef}{commentAfter});
+4896   \}
+4897   \hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_} = \textcolor{keyword}{false};
+4898 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a79c3c2b320475035c47b2db484a3e434}\label{class_json_1_1_styled_stream_writer_a79c3c2b320475035c47b2db484a3e434}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!write\+Comment\+Before\+Value@{write\+Comment\+Before\+Value}}
+\index{write\+Comment\+Before\+Value@{write\+Comment\+Before\+Value}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{write\+Comment\+Before\+Value()}{writeCommentBeforeValue()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::write\+Comment\+Before\+Value (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{root }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4871 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4871                                                                   \{
+4872   \textcolor{keywordflow}{if} (!root.\hyperlink{class_json_1_1_value_a65d8e3ab6a5871cbd019a3e0f0b944a3}{hasComment}(\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a52f1733775460517b2ea6bedf4906d52}{commentBefore}))
+4873     \textcolor{keywordflow}{return};
+4874 
+4875   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_}) \hyperlink{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d}{writeIndent}();
+4876   \textcolor{keyword}{const} \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING}& comment = root.\hyperlink{class_json_1_1_value_a82817229a986f0b254e31d5c83066ffe}{getComment}(
+      \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a52f1733775460517b2ea6bedf4906d52}{commentBefore});
+4877   JSONCPP\_STRING::const\_iterator iter = comment.begin();
+4878   \textcolor{keywordflow}{while} (iter != comment.end()) \{
+4879     *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << *iter;
+4880     \textcolor{keywordflow}{if} (*iter == \textcolor{charliteral}{'\(\backslash\)n'} &&
+4881        (iter != comment.end() && *(iter + 1) == \textcolor{charliteral}{'/'}))
+4882       \textcolor{comment}{// writeIndent();  // would include newline}
+4883       *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << \hyperlink{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}{indentString\_};
+4884     ++iter;
+4885   \}
+4886   \hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_} = \textcolor{keyword}{false};
+4887 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a79c3c2b320475035c47b2db484a3e434_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a79c3c2b320475035c47b2db484a3e434_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d}\label{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!write\+Indent@{write\+Indent}}
+\index{write\+Indent@{write\+Indent}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{write\+Indent()}{writeIndent()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::write\+Indent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4850 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4850                                      \{
+4851   \textcolor{comment}{// blep intended this to look at the so-far-written string}
+4852   \textcolor{comment}{// to determine whether we are already indented, but}
+4853   \textcolor{comment}{// with a stream we cannot do that. So we rely on some saved state.}
+4854   \textcolor{comment}{// The caller checks indented\_.}
+4855   *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << \textcolor{charliteral}{'\(\backslash\)n'} << \hyperlink{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}{indentString\_};
+4856 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae}\label{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!write\+Value@{write\+Value}}
+\index{write\+Value@{write\+Value}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{write\+Value()}{writeValue()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::write\+Value (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4712 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4712                                                       \{
+4713   \textcolor{keywordflow}{switch} (value.\hyperlink{class_json_1_1_value_a8ce61157a011894f0252ceed232312de}{type}()) \{
+4714   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4ea7d9899633b4409bd3fc107e6737f8391}{nullValue}:
+4715     \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\textcolor{stringliteral}{"null"});
+4716     \textcolor{keywordflow}{break};
+4717   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eae5a9d708d5c9e23ae9bf98898522512d}{intValue}:
+4718     \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{valueToString}(value.\hyperlink{class_json_1_1_value_ab16f2ea2a117a1b3b576acab8b6a700d}{asLargestInt}()));
+4719     \textcolor{keywordflow}{break};
+4720   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eaea788d9a3bb00adc6d68d97d43e1ccd3}{uintValue}:
+4721     \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{valueToString}(value.\hyperlink{class_json_1_1_value_ad03548101e0bf3d2d9eac75c64a0b8d7}{asLargestUInt}()));
+4722     \textcolor{keywordflow}{break};
+4723   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eab837c7b869c14d8be712deb45c9e490e}{realValue}:
+4724     \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{valueToString}(value.\hyperlink{class_json_1_1_value_afd24002a18aef907ad746b1cb9eda0a2}{asDouble}()));
+4725     \textcolor{keywordflow}{break};
+4726   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4ea804ef857affea2d415843c73f261c258}{stringValue}:
+4727   \{
+4728     \textcolor{comment}{// Is NULL possible for value.string\_? No.}
+4729     \textcolor{keywordtype}{char} \textcolor{keyword}{const}* str;
+4730     \textcolor{keywordtype}{char} \textcolor{keyword}{const}* end;
+4731     \textcolor{keywordtype}{bool} ok = value.\hyperlink{class_json_1_1_value_a2e1b7be6bde2fe23f15290d9ddbbdf8a}{getString}(&str, &end);
+4732     \textcolor{keywordflow}{if} (ok) \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\hyperlink{namespace_json_a29aff81733b8fdaabf3f1acfc3ad339f}{valueToQuotedStringN}(str, static\_cast<unsigned>(end-str)
+      ));
+4733     \textcolor{keywordflow}{else} \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\textcolor{stringliteral}{""});
+4734     \textcolor{keywordflow}{break};
+4735   \}
+4736   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4ea14c30dbf4da86f7b809be299f671f7fd}{booleanValue}:
+4737     \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\hyperlink{namespace_json_a498503e8f49d6a3811e3c9f6757da60d}{valueToString}(value.\hyperlink{class_json_1_1_value_ab693fb7b9b1595bb0adc49658bbf780d}{asBool}()));
+4738     \textcolor{keywordflow}{break};
+4739   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4}{arrayValue}:
+4740     \hyperlink{class_json_1_1_styled_stream_writer_a606f2ddd58093c9b019d452c1b6f09fe}{writeArrayValue}(value);
+4741     \textcolor{keywordflow}{break};
+4742   \textcolor{keywordflow}{case} \hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6}{objectValue}: \{
+4743     \hyperlink{class_json_1_1_value_a9ae9069983fc38f1928d76f9c79ac64d}{Value::Members} members(value.\hyperlink{class_json_1_1_value_a79d7725dce6260317333e69022367ac9}{getMemberNames}());
+4744     \textcolor{keywordflow}{if} (members.empty())
+4745       \hyperlink{class_json_1_1_styled_stream_writer_a9adb47185695f07b1979d8f4c5347592}{pushValue}(\textcolor{stringliteral}{"\{\}"});
+4746     \textcolor{keywordflow}{else} \{
+4747       \hyperlink{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}{writeWithIndent}(\textcolor{stringliteral}{"\{"});
+4748       \hyperlink{class_json_1_1_styled_stream_writer_ab49409578422aa73b060e3492dd6c72a}{indent}();
+4749       Value::Members::iterator it = members.begin();
+4750       \textcolor{keywordflow}{for} (;;) \{
+4751         \textcolor{keyword}{const} \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING}& name = *it;
+4752         \textcolor{keyword}{const} \hyperlink{class_json_1_1_value}{Value}& childValue = value[name];
+4753         \hyperlink{class_json_1_1_styled_stream_writer_a79c3c2b320475035c47b2db484a3e434}{writeCommentBeforeValue}(childValue);
+4754         \hyperlink{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}{writeWithIndent}(\hyperlink{namespace_json_aaf777a6923bcb4cf63a2729973fe5315}{valueToQuotedString}(name.c\_str()));
+4755         *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << \textcolor{stringliteral}{" : "};
+4756         \hyperlink{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae}{writeValue}(childValue);
+4757         \textcolor{keywordflow}{if} (++it == members.end()) \{
+4758           \hyperlink{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7}{writeCommentAfterValueOnSameLine}(childValue);
+4759           \textcolor{keywordflow}{break};
+4760         \}
+4761         *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << \textcolor{stringliteral}{","};
+4762         \hyperlink{class_json_1_1_styled_stream_writer_ad2ca860e317ca91d6b2932535b4ce9c7}{writeCommentAfterValueOnSameLine}(childValue);
+4763       \}
+4764       \hyperlink{class_json_1_1_styled_stream_writer_a74d8fb9beecd29759d7b79f430386358}{unindent}();
+4765       \hyperlink{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}{writeWithIndent}(\textcolor{stringliteral}{"\}"});
+4766     \}
+4767   \} \textcolor{keywordflow}{break};
+4768   \}
+4769 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a4359250e09273fa0144021684be001ae_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}\label{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!write\+With\+Indent@{write\+With\+Indent}}
+\index{write\+With\+Indent@{write\+With\+Indent}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{write\+With\+Indent()}{writeWithIndent()}}
+{\footnotesize\ttfamily void Json\+::\+Styled\+Stream\+Writer\+::write\+With\+Indent (\begin{DoxyParamCaption}\item[{const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 4858 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+4858                                                                     \{
+4859   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_}) \hyperlink{class_json_1_1_styled_stream_writer_a5a52fa5b406f1580a61dde3b5638e76d}{writeIndent}();
+4860   *\hyperlink{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}{document\_} << value;
+4861   \hyperlink{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}{indented\_} = \textcolor{keyword}{false};
+4862 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_styled_stream_writer_a4e64789373b359c9b7a7244509b918fc_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a4e4bb7fc223b2652b72b523b1ce414fa}\label{class_json_1_1_styled_stream_writer_a4e4bb7fc223b2652b72b523b1ce414fa}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!add\+Child\+Values\+\_\+@{add\+Child\+Values\+\_\+}}
+\index{add\+Child\+Values\+\_\+@{add\+Child\+Values\+\_\+}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{add\+Child\+Values\+\_\+}{addChildValues\_}}
+{\footnotesize\ttfamily bool Json\+::\+Styled\+Stream\+Writer\+::add\+Child\+Values\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 2057 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}\label{class_json_1_1_styled_stream_writer_aafd62e00a401df73fcacb2e410114b3d}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!child\+Values\+\_\+@{child\+Values\+\_\+}}
+\index{child\+Values\+\_\+@{child\+Values\+\_\+}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{child\+Values\+\_\+}{childValues\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_styled_stream_writer_a259bf9d99847b2ea64ec9c6dd441944e}{Child\+Values} Json\+::\+Styled\+Stream\+Writer\+::child\+Values\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 2052 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}\label{class_json_1_1_styled_stream_writer_aa8c4e4576f5c3dcb10955d133a092dd6}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!document\+\_\+@{document\+\_\+}}
+\index{document\+\_\+@{document\+\_\+}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{document\+\_\+}{document\_}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a37a25be5fca174927780caeb280094ce}{J\+S\+O\+N\+C\+P\+P\+\_\+\+O\+S\+T\+R\+E\+AM}$\ast$ Json\+::\+Styled\+Stream\+Writer\+::document\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 2053 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_aa45d8fb4ca82d0550be9042012303713}\label{class_json_1_1_styled_stream_writer_aa45d8fb4ca82d0550be9042012303713}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!indentation\+\_\+@{indentation\+\_\+}}
+\index{indentation\+\_\+@{indentation\+\_\+}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{indentation\+\_\+}{indentation\_}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Styled\+Stream\+Writer\+::indentation\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 2056 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}\label{class_json_1_1_styled_stream_writer_aa12db1753619a9b48da41f3e45e3275d}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!indented\+\_\+@{indented\+\_\+}}
+\index{indented\+\_\+@{indented\+\_\+}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{indented\+\_\+}{indented\_}}
+{\footnotesize\ttfamily bool Json\+::\+Styled\+Stream\+Writer\+::indented\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 2058 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}\label{class_json_1_1_styled_stream_writer_a1481433ebe1491ea83b0beb92aed56c2}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!indent\+String\+\_\+@{indent\+String\+\_\+}}
+\index{indent\+String\+\_\+@{indent\+String\+\_\+}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{indent\+String\+\_\+}{indentString\_}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Styled\+Stream\+Writer\+::indent\+String\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 2054 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_styled_stream_writer_a94299ec0a9bb925b2dbbab7c1f2b390a}\label{class_json_1_1_styled_stream_writer_a94299ec0a9bb925b2dbbab7c1f2b390a}} 
+\index{Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}!right\+Margin\+\_\+@{right\+Margin\+\_\+}}
+\index{right\+Margin\+\_\+@{right\+Margin\+\_\+}!Json\+::\+Styled\+Stream\+Writer@{Json\+::\+Styled\+Stream\+Writer}}
+\subsubsection{\texorpdfstring{right\+Margin\+\_\+}{rightMargin\_}}
+{\footnotesize\ttfamily unsigned int Json\+::\+Styled\+Stream\+Writer\+::right\+Margin\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 2055 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/json/\hyperlink{json_8h}{json.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{jsoncpp_8cpp}{jsoncpp.\+cpp}\end{DoxyCompactItemize}

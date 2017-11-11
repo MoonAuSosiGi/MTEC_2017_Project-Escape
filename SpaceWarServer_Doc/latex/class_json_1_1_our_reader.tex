@@ -1,0 +1,2130 @@
+\hypertarget{class_json_1_1_our_reader}{}\section{Json\+:\+:Our\+Reader 클래스 참조}
+\label{class_json_1_1_our_reader}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+
+
+Json\+:\+:Our\+Reader에 대한 협력 다이어그램\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_json_1_1_our_reader__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{클래스}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_json_1_1_our_reader_1_1_error_info}{Error\+Info}
+\item 
+struct \hyperlink{struct_json_1_1_our_reader_1_1_structured_error}{Structured\+Error}
+\item 
+class \hyperlink{class_json_1_1_our_reader_1_1_token}{Token}
+\end{DoxyCompactItemize}
+\subsection*{Public 타입}
+\begin{DoxyCompactItemize}
+\item 
+typedef char \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char}
+\item 
+typedef const \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} $\ast$ \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}
+\end{DoxyCompactItemize}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_our_reader_a48a850914b9c8d7781be172930c478e5}{Our\+Reader} (\hyperlink{class_json_1_1_our_features}{Our\+Features} const \&features)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_aba4f8749aab7f02ec17f107e392caf80}{parse} (const char $\ast$begin\+Doc, const char $\ast$end\+Doc, \hyperlink{class_json_1_1_value}{Value} \&root, bool collect\+Comments=true)
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_our_reader_a7971de51d73bb4aee5b0c4742c4aaaac}{get\+Formatted\+Error\+Messages} () const
+\item 
+std\+::vector$<$ \hyperlink{struct_json_1_1_our_reader_1_1_structured_error}{Structured\+Error} $>$ \hyperlink{class_json_1_1_our_reader_a0eb2420a6bef89a3f3256191e6e3de6d}{get\+Structured\+Errors} () const
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a700e9d8e0977fa7e0375d26690d7025f}{push\+Error} (const \hyperlink{class_json_1_1_value}{Value} \&value, const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&message)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_addccecfca74b79adaad6115ddd614477}{push\+Error} (const \hyperlink{class_json_1_1_value}{Value} \&value, const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&message, const \hyperlink{class_json_1_1_value}{Value} \&extra)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a63c7d874fa379397e0a5fa65f0843845}{good} () const
+\end{DoxyCompactItemize}
+\subsection*{Private 타입}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcc}{Token\+Type} \{ \newline
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca735d1f76eafc2c0c581ed79c077aaa7e}{token\+End\+Of\+Stream} = 0, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7495ef5c356d4faa39b702e528cc7e26}{token\+Object\+Begin}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{token\+Object\+End}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca45d229fce2f5f4b52dc0d6c39c853436}{token\+Array\+Begin}, 
+\newline
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}{token\+Array\+End}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccadb37e59e1e52cd5e7417bc418b611ce1}{token\+String}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca766aefde855b1246d89b8552240c70d1}{token\+Number}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccac7d2a552afcea291d47cf49dfefaf619}{token\+True}, 
+\newline
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccaab91e3ef98c1cb1326c3674e518c5126}{token\+False}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca4c80b7bb245e3863e38dc8e8586b3c51}{token\+Null}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca167898478691f1ac7a240981ccaa1713}{token\+NaN}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca800c7c7e896d569ebf6c2771eecc7060}{token\+Pos\+Inf}, 
+\newline
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca3cf3c4c72d6b5969f17f043a34b2ad4c}{token\+Neg\+Inf}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8ca62ab9091b149d52ec55828f8040f4}{token\+Array\+Separator}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7c95881fb1162316bce42c629bf06214}{token\+Member\+Separator}, 
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}{token\+Comment}, 
+\newline
+\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}{token\+Error}
+ \}
+\item 
+typedef std\+::deque$<$ \hyperlink{class_json_1_1_our_reader_1_1_error_info}{Error\+Info} $>$ \hyperlink{class_json_1_1_our_reader_a8cc69593ef7303e58e99bb5dbb767562}{Errors}
+\item 
+typedef std\+::stack$<$ \hyperlink{class_json_1_1_value}{Value} $\ast$ $>$ \hyperlink{class_json_1_1_our_reader_a8480a5ef159cee3a090f96358414d8d3}{Nodes}
+\end{DoxyCompactItemize}
+\subsection*{Private 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_our_reader_aee013005522c0d34d2e14962851487ac}{Our\+Reader} (\hyperlink{class_json_1_1_our_reader}{Our\+Reader} const \&)
+\item 
+void \hyperlink{class_json_1_1_our_reader_ad418de7c47bd3d0510888e22110b796e}{operator=} (\hyperlink{class_json_1_1_our_reader}{Our\+Reader} const \&)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{read\+Token} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token)
+\item 
+void \hyperlink{class_json_1_1_our_reader_a6fbc6d58a4505e5ccadf330b57b17ca5}{skip\+Spaces} ()
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}{match} (\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} pattern, int pattern\+Length)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a90f6bb9e55b2bc3d6c1880809495c222}{read\+Comment} ()
+\item 
+bool \hyperlink{class_json_1_1_our_reader_aba784b125baa1b62387e767b791f2f89}{read\+C\+Style\+Comment} ()
+\item 
+bool \hyperlink{class_json_1_1_our_reader_ae3de80671f0f997053e1c1c8a47a45c5}{read\+Cpp\+Style\+Comment} ()
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a5d39b12671499ec5975f3bbc84b7d438}{read\+String} ()
+\item 
+bool \hyperlink{class_json_1_1_our_reader_ac78592defdc333faf56c6d0908758da3}{read\+String\+Single\+Quote} ()
+\item 
+bool \hyperlink{class_json_1_1_our_reader_aefcb9a78cc45870ccac2db2a66c8ec50}{read\+Number} (bool check\+Inf)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a1765d9670d191c89a57a22ea5591d35f}{read\+Value} ()
+\item 
+bool \hyperlink{class_json_1_1_our_reader_aea198f8101dba55099f4d8121a993530}{read\+Object} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a0b9f58faf4212c6ecb5d8e2a1ac10257}{read\+Array} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a272d271290933a89abfd5096dd69c9e9}{decode\+Number} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a712270d53a2f023c2f406ac813548340}{decode\+Number} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token, \hyperlink{class_json_1_1_value}{Value} \&decoded)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a34e31d8b8399b7ad493359702b6de6c9}{decode\+String} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a5046dfa5d43b1770a091aac0a63a9f4b}{decode\+String} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token, \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&decoded)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a1d1c3b44f6720a0e7c39b5ae8de3981c}{decode\+Double} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_aa5c15a8cd32754f07430dedba3d1308e}{decode\+Double} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token, \hyperlink{class_json_1_1_value}{Value} \&decoded)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_ac1bf03c161ece082e48da450c50f528d}{decode\+Unicode\+Code\+Point} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token, \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} \&current, \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} end, unsigned int \&unicode)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_adb39be814cc6076b91a0919bdd5b24b0}{decode\+Unicode\+Escape\+Sequence} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token, \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} \&current, \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} end, unsigned int \&unicode)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{add\+Error} (const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&message, \hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token, \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} extra=0)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c}{recover\+From\+Error} (\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcc}{Token\+Type} skip\+Until\+Token)
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb}{add\+Error\+And\+Recover} (const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&message, \hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token, \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcc}{Token\+Type} skip\+Until\+Token)
+\item 
+void \hyperlink{class_json_1_1_our_reader_ad48bdaf5b686706f003e792fdbcbf102}{skip\+Until\+Space} ()
+\item 
+\hyperlink{class_json_1_1_value}{Value} \& \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{current\+Value} ()
+\item 
+\hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{get\+Next\+Char} ()
+\item 
+void \hyperlink{class_json_1_1_our_reader_af482c8e718615646e13a996292e18d74}{get\+Location\+Line\+And\+Column} (\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} location, int \&line, int \&column) const
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_our_reader_ac129e94cdc260822b2fd24e2ca35e636}{get\+Location\+Line\+And\+Column} (\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} location) const
+\item 
+void \hyperlink{class_json_1_1_our_reader_ad7318c37469a9106069a236fb4b10e1f}{add\+Comment} (\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} begin, \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} end, \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351}{Comment\+Placement} placement)
+\item 
+void \hyperlink{class_json_1_1_our_reader_a856dea44d92578c276856d7a65a4ebdc}{skip\+Comment\+Tokens} (\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&token)
+\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_our_reader_a8480a5ef159cee3a090f96358414d8d3}{Nodes} \hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\+\_\+}
+\item 
+\hyperlink{class_json_1_1_our_reader_a8cc69593ef7303e58e99bb5dbb767562}{Errors} \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\+\_\+}
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_our_reader_a726230af83d22d25e0c76cec3408ecf1}{document\+\_\+}
+\item 
+\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\+\_\+}
+\item 
+\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\+\_\+}
+\item 
+\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\+\_\+}
+\item 
+\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} \hyperlink{class_json_1_1_our_reader_a101eadc45e01c60628b53f0db3d13482}{last\+Value\+End\+\_\+}
+\item 
+\hyperlink{class_json_1_1_value}{Value} $\ast$ \hyperlink{class_json_1_1_our_reader_a9f994b6a2227c5d96e6ed6cbc74ed251}{last\+Value\+\_\+}
+\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{comments\+Before\+\_\+}
+\item 
+\hyperlink{class_json_1_1_our_features}{Our\+Features} const \hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\+\_\+}
+\item 
+bool \hyperlink{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}{collect\+Comments\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+
+jsoncpp.\+cpp 파일의 1138 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{멤버 타입정의 문서화}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}\label{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!Char@{Char}}
+\index{Char@{Char}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{Char}{Char}}
+{\footnotesize\ttfamily typedef char \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Json\+::\+Our\+Reader\+::\+Char}}
+
+
+
+jsoncpp.\+cpp 파일의 1140 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a8cc69593ef7303e58e99bb5dbb767562}\label{class_json_1_1_our_reader_a8cc69593ef7303e58e99bb5dbb767562}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!Errors@{Errors}}
+\index{Errors@{Errors}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{Errors}{Errors}}
+{\footnotesize\ttfamily typedef std\+::deque$<$\hyperlink{class_json_1_1_our_reader_1_1_error_info}{Error\+Info}$>$ \hyperlink{class_json_1_1_our_reader_a8cc69593ef7303e58e99bb5dbb767562}{Json\+::\+Our\+Reader\+::\+Errors}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1197 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}\label{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!Location@{Location}}
+\index{Location@{Location}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{Location}{Location}}
+{\footnotesize\ttfamily typedef const \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char}$\ast$ \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Json\+::\+Our\+Reader\+::\+Location}}
+
+
+
+jsoncpp.\+cpp 파일의 1141 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a8480a5ef159cee3a090f96358414d8d3}\label{class_json_1_1_our_reader_a8480a5ef159cee3a090f96358414d8d3}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!Nodes@{Nodes}}
+\index{Nodes@{Nodes}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{Nodes}{Nodes}}
+{\footnotesize\ttfamily typedef std\+::stack$<$\hyperlink{class_json_1_1_value}{Value}$\ast$$>$ \hyperlink{class_json_1_1_our_reader_a8480a5ef159cee3a090f96358414d8d3}{Json\+::\+Our\+Reader\+::\+Nodes}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1239 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{멤버 열거형 문서화}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcc}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcc}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!Token\+Type@{Token\+Type}}
+\index{Token\+Type@{Token\+Type}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{Token\+Type}{TokenType}}
+{\footnotesize\ttfamily enum \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcc}{Json\+::\+Our\+Reader\+::\+Token\+Type}\hspace{0.3cm}{\ttfamily [private]}}
+
+\begin{DoxyEnumFields}{열거형 멤버}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+End\+Of\+Stream@{token\+End\+Of\+Stream}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+End\+Of\+Stream@{token\+End\+Of\+Stream}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca735d1f76eafc2c0c581ed79c077aaa7e}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca735d1f76eafc2c0c581ed79c077aaa7e}} 
+token\+End\+Of\+Stream&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Object\+Begin@{token\+Object\+Begin}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Object\+Begin@{token\+Object\+Begin}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7495ef5c356d4faa39b702e528cc7e26}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7495ef5c356d4faa39b702e528cc7e26}} 
+token\+Object\+Begin&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Object\+End@{token\+Object\+End}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Object\+End@{token\+Object\+End}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}} 
+token\+Object\+End&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Array\+Begin@{token\+Array\+Begin}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Array\+Begin@{token\+Array\+Begin}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca45d229fce2f5f4b52dc0d6c39c853436}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca45d229fce2f5f4b52dc0d6c39c853436}} 
+token\+Array\+Begin&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Array\+End@{token\+Array\+End}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Array\+End@{token\+Array\+End}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}} 
+token\+Array\+End&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+String@{token\+String}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+String@{token\+String}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccadb37e59e1e52cd5e7417bc418b611ce1}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccadb37e59e1e52cd5e7417bc418b611ce1}} 
+token\+String&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Number@{token\+Number}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Number@{token\+Number}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca766aefde855b1246d89b8552240c70d1}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca766aefde855b1246d89b8552240c70d1}} 
+token\+Number&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+True@{token\+True}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+True@{token\+True}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccac7d2a552afcea291d47cf49dfefaf619}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccac7d2a552afcea291d47cf49dfefaf619}} 
+token\+True&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+False@{token\+False}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+False@{token\+False}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccaab91e3ef98c1cb1326c3674e518c5126}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccaab91e3ef98c1cb1326c3674e518c5126}} 
+token\+False&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Null@{token\+Null}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Null@{token\+Null}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca4c80b7bb245e3863e38dc8e8586b3c51}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca4c80b7bb245e3863e38dc8e8586b3c51}} 
+token\+Null&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+NaN@{token\+NaN}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+NaN@{token\+NaN}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca167898478691f1ac7a240981ccaa1713}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca167898478691f1ac7a240981ccaa1713}} 
+token\+NaN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Pos\+Inf@{token\+Pos\+Inf}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Pos\+Inf@{token\+Pos\+Inf}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca800c7c7e896d569ebf6c2771eecc7060}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca800c7c7e896d569ebf6c2771eecc7060}} 
+token\+Pos\+Inf&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Neg\+Inf@{token\+Neg\+Inf}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Neg\+Inf@{token\+Neg\+Inf}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca3cf3c4c72d6b5969f17f043a34b2ad4c}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca3cf3c4c72d6b5969f17f043a34b2ad4c}} 
+token\+Neg\+Inf&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Array\+Separator@{token\+Array\+Separator}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Array\+Separator@{token\+Array\+Separator}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8ca62ab9091b149d52ec55828f8040f4}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8ca62ab9091b149d52ec55828f8040f4}} 
+token\+Array\+Separator&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Member\+Separator@{token\+Member\+Separator}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Member\+Separator@{token\+Member\+Separator}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7c95881fb1162316bce42c629bf06214}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7c95881fb1162316bce42c629bf06214}} 
+token\+Member\+Separator&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Comment@{token\+Comment}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Comment@{token\+Comment}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}} 
+token\+Comment&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{token\+Error@{token\+Error}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!token\+Error@{token\+Error}}}\mbox{\Hypertarget{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}\label{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}} 
+token\+Error&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+jsoncpp.\+cpp 파일의 1163 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1163                  \{
+1164     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca735d1f76eafc2c0c581ed79c077aaa7e}{tokenEndOfStream} = 0,
+1165     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7495ef5c356d4faa39b702e528cc7e26}{tokenObjectBegin},
+1166     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd},
+1167     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca45d229fce2f5f4b52dc0d6c39c853436}{tokenArrayBegin},
+1168     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}{tokenArrayEnd},
+1169     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccadb37e59e1e52cd5e7417bc418b611ce1}{tokenString},
+1170     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca766aefde855b1246d89b8552240c70d1}{tokenNumber},
+1171     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccac7d2a552afcea291d47cf49dfefaf619}{tokenTrue},
+1172     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccaab91e3ef98c1cb1326c3674e518c5126}{tokenFalse},
+1173     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca4c80b7bb245e3863e38dc8e8586b3c51}{tokenNull},
+1174     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca167898478691f1ac7a240981ccaa1713}{tokenNaN},
+1175     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca800c7c7e896d569ebf6c2771eecc7060}{tokenPosInf},
+1176     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca3cf3c4c72d6b5969f17f043a34b2ad4c}{tokenNegInf},
+1177     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8ca62ab9091b149d52ec55828f8040f4}{tokenArraySeparator},
+1178     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7c95881fb1162316bce42c629bf06214}{tokenMemberSeparator},
+1179     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}{tokenComment},
+1180     \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}{tokenError}
+1181   \};
+\end{DoxyCode}
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a48a850914b9c8d7781be172930c478e5}\label{class_json_1_1_our_reader_a48a850914b9c8d7781be172930c478e5}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!Our\+Reader@{Our\+Reader}}
+\index{Our\+Reader@{Our\+Reader}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{Our\+Reader()}{OurReader()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Json\+::\+Our\+Reader\+::\+Our\+Reader (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_features}{Our\+Features} const \&}]{features }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 1256 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1257     : \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}(), \hyperlink{class_json_1_1_our_reader_a726230af83d22d25e0c76cec3408ecf1}{document\_}(), \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_}(), \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_}(), 
+      \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_}(), \hyperlink{class_json_1_1_our_reader_a101eadc45e01c60628b53f0db3d13482}{lastValueEnd\_}(),
+1258       \hyperlink{class_json_1_1_our_reader_a9f994b6a2227c5d96e6ed6cbc74ed251}{lastValue\_}(), \hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{commentsBefore\_}(),
+1259       \hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}(features), \hyperlink{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}{collectComments\_}() \{
+1260 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_our_reader_aee013005522c0d34d2e14962851487ac}\label{class_json_1_1_our_reader_aee013005522c0d34d2e14962851487ac}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!Our\+Reader@{Our\+Reader}}
+\index{Our\+Reader@{Our\+Reader}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{Our\+Reader()}{OurReader()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Json\+::\+Our\+Reader\+::\+Our\+Reader (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader}{Our\+Reader} const \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_json_1_1_our_reader_ad7318c37469a9106069a236fb4b10e1f}\label{class_json_1_1_our_reader_ad7318c37469a9106069a236fb4b10e1f}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!add\+Comment@{add\+Comment}}
+\index{add\+Comment@{add\+Comment}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{add\+Comment()}{addComment()}}
+{\footnotesize\ttfamily void Json\+::\+Our\+Reader\+::add\+Comment (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}}]{begin,  }\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}}]{end,  }\item[{\hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351}{Comment\+Placement}}]{placement }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1566 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1566                                                                               \{
+1567   assert(\hyperlink{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}{collectComments\_});
+1568   \textcolor{keyword}{const} \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING}& normalized = \hyperlink{namespace_json_a63123f3dd63f340ac517a59f44ea7aa4}{normalizeEOL}(begin, end);
+1569   \textcolor{keywordflow}{if} (placement == \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a008a230a0586de54f30b76afe70fdcfa}{commentAfterOnSameLine}) \{
+1570     assert(\hyperlink{class_json_1_1_our_reader_a9f994b6a2227c5d96e6ed6cbc74ed251}{lastValue\_} != 0);
+1571     \hyperlink{class_json_1_1_our_reader_a9f994b6a2227c5d96e6ed6cbc74ed251}{lastValue\_}->\hyperlink{class_json_1_1_value_a29f3a30f7e5d3af6f38d57999bf5b480}{setComment}(normalized, placement);
+1572   \} \textcolor{keywordflow}{else} \{
+1573     \hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{commentsBefore\_} += normalized;
+1574   \}
+1575 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ad7318c37469a9106069a236fb4b10e1f_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ad7318c37469a9106069a236fb4b10e1f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}\label{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!add\+Error@{add\+Error}}
+\index{add\+Error@{add\+Error}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{add\+Error()}{addError()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::add\+Error (\begin{DoxyParamCaption}\item[{const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&}]{message,  }\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token,  }\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}}]{extra = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1974 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1974                                                                                \{
+1975   ErrorInfo info;
+1976   info.token\_ = token;
+1977   info.message\_ = message;
+1978   info.extra\_ = extra;
+1979   \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.push\_back(info);
+1980   \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1981 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb}\label{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!add\+Error\+And\+Recover@{add\+Error\+And\+Recover}}
+\index{add\+Error\+And\+Recover@{add\+Error\+And\+Recover}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{add\+Error\+And\+Recover()}{addErrorAndRecover()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::add\+Error\+And\+Recover (\begin{DoxyParamCaption}\item[{const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&}]{message,  }\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token,  }\item[{\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcc}{Token\+Type}}]{skip\+Until\+Token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1996 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1998                                                           \{
+1999   \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(message, token);
+2000   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c}{recoverFromError}(skipUntilToken);
+2001 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}\label{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!current\+Value@{current\+Value}}
+\index{current\+Value@{current\+Value}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{current\+Value()}{currentValue()}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_value}{Value} \& Json\+::\+Our\+Reader\+::current\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 2003 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2003 \{ \textcolor{keywordflow}{return} *(\hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.top()); \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a1d1c3b44f6720a0e7c39b5ae8de3981c}\label{class_json_1_1_our_reader_a1d1c3b44f6720a0e7c39b5ae8de3981c}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!decode\+Double@{decode\+Double}}
+\index{decode\+Double@{decode\+Double}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{decode\+Double()}{decodeDouble()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::decode\+Double (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1803 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1803                                          \{
+1804   \hyperlink{class_json_1_1_value}{Value} decoded;
+1805   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a1d1c3b44f6720a0e7c39b5ae8de3981c}{decodeDouble}(token, decoded))
+1806     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1807   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(decoded);
+1808   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1809   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1810   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1811 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a1d1c3b44f6720a0e7c39b5ae8de3981c_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a1d1c3b44f6720a0e7c39b5ae8de3981c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_aa5c15a8cd32754f07430dedba3d1308e}\label{class_json_1_1_our_reader_aa5c15a8cd32754f07430dedba3d1308e}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!decode\+Double@{decode\+Double}}
+\index{decode\+Double@{decode\+Double}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{decode\+Double()}{decodeDouble()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::decode\+Double (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token,  }\item[{\hyperlink{class_json_1_1_value}{Value} \&}]{decoded }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1813 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1813                                                          \{
+1814   \textcolor{keywordtype}{double} value = 0;
+1815   \textcolor{keyword}{const} \textcolor{keywordtype}{int} bufferSize = 32;
+1816   \textcolor{keywordtype}{int} count;
+1817   ptrdiff\_t \textcolor{keyword}{const} length = token.end\_ - token.start\_;
+1818 
+1819   \textcolor{comment}{// Sanity check to avoid buffer overflow exploits.}
+1820   \textcolor{keywordflow}{if} (length < 0) \{
+1821     \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(\textcolor{stringliteral}{"Unable to parse token length"}, token);
+1822   \}
+1823   \textcolor{keywordtype}{size\_t} \textcolor{keyword}{const} ulength = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(length);
+1824 
+1825   \textcolor{comment}{// Avoid using a string constant for the format control string given to}
+1826   \textcolor{comment}{// sscanf, as this can cause hard to debug crashes on OS X. See here for more}
+1827   \textcolor{comment}{// info:}
+1828   \textcolor{comment}{//}
+1829   \textcolor{comment}{//    
+       http://developer.apple.com/library/mac/#DOCUMENTATION/DeveloperTools/gcc-4.0.1/gcc/Incompatibilities.html}
+1830   \textcolor{keywordtype}{char} format[] = \textcolor{stringliteral}{"%lf"};
+1831 
+1832   \textcolor{keywordflow}{if} (length <= bufferSize) \{
+1833     \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} buffer[bufferSize + 1];
+1834     memcpy(buffer, token.start\_, ulength);
+1835     buffer[length] = 0;
+1836     \hyperlink{namespace_json_ac142c270507391c8d86f35b550d36eb4}{fixNumericLocaleInput}(buffer, buffer + length);
+1837     count = sscanf(buffer, format, &value);
+1838   \} \textcolor{keywordflow}{else} \{
+1839     \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} buffer(token.start\_, token.end\_);
+1840     count = sscanf(buffer.c\_str(), format, &value);
+1841   \}
+1842 
+1843   \textcolor{keywordflow}{if} (count != 1)
+1844     \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(\textcolor{stringliteral}{"'"} + \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING}(token.start\_, token.end\_) +
+1845                         \textcolor{stringliteral}{"' is not a number."},
+1846                     token);
+1847   decoded = value;
+1848   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1849 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_aa5c15a8cd32754f07430dedba3d1308e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a272d271290933a89abfd5096dd69c9e9}\label{class_json_1_1_our_reader_a272d271290933a89abfd5096dd69c9e9}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!decode\+Number@{decode\+Number}}
+\index{decode\+Number@{decode\+Number}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{decode\+Number()}{decodeNumber()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::decode\+Number (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1753 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1753                                          \{
+1754   \hyperlink{class_json_1_1_value}{Value} decoded;
+1755   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a272d271290933a89abfd5096dd69c9e9}{decodeNumber}(token, decoded))
+1756     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1757   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(decoded);
+1758   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1759   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1760   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1761 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a272d271290933a89abfd5096dd69c9e9_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a272d271290933a89abfd5096dd69c9e9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a712270d53a2f023c2f406ac813548340}\label{class_json_1_1_our_reader_a712270d53a2f023c2f406ac813548340}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!decode\+Number@{decode\+Number}}
+\index{decode\+Number@{decode\+Number}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{decode\+Number()}{decodeNumber()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::decode\+Number (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token,  }\item[{\hyperlink{class_json_1_1_value}{Value} \&}]{decoded }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1763 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1763                                                          \{
+1764   \textcolor{comment}{// Attempts to parse the number as an integer. If the number is}
+1765   \textcolor{comment}{// larger than the maximum supported value of an integer then}
+1766   \textcolor{comment}{// we decode the number as a double.}
+1767   \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} current = token.start\_;
+1768   \textcolor{keywordtype}{bool} isNegative = *current == \textcolor{charliteral}{'-'};
+1769   \textcolor{keywordflow}{if} (isNegative)
+1770     ++current;
+1771   \textcolor{comment}{// TODO: Help the compiler do the div and mod at compile time or get rid of them.}
+1772   \hyperlink{class_json_1_1_value_a6682a3684d635e03fc06ba229fa24eec}{Value::LargestUInt} maxIntegerValue =
+1773       isNegative ? \hyperlink{class_json_1_1_value_a6682a3684d635e03fc06ba229fa24eec}{Value::LargestUInt}(-\hyperlink{class_json_1_1_value_af91df130daa50dd43d2cd89e6ee67706}{Value::minLargestInt})
+1774                  : \hyperlink{class_json_1_1_value}{Value}::maxLargestUInt;
+1775   Value::LargestUInt threshold = maxIntegerValue / 10;
+1776   Value::LargestUInt value = 0;
+1777   \textcolor{keywordflow}{while} (current < token.end\_) \{
+1778     \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = *current++;
+1779     \textcolor{keywordflow}{if} (c < '0' || c > \textcolor{charliteral}{'9'})
+1780       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a1d1c3b44f6720a0e7c39b5ae8de3981c}{decodeDouble}(token, decoded);
+1781     \hyperlink{class_json_1_1_value_a0933d59b45793ae4aade1757c322a98d}{Value::UInt} digit(static\_cast<Value::UInt>(c - \textcolor{charliteral}{'0'}));
+1782     \textcolor{keywordflow}{if} (value >= threshold) \{
+1783       \textcolor{comment}{// We've hit or exceeded the max value divided by 10 (rounded down). If}
+1784       \textcolor{comment}{// a) we've only just touched the limit, b) this is the last digit, and}
+1785       \textcolor{comment}{// c) it's small enough to fit in that rounding delta, we're okay.}
+1786       \textcolor{comment}{// Otherwise treat this number as a double to avoid overflow.}
+1787       \textcolor{keywordflow}{if} (value > threshold || current != token.end\_ ||
+1788           digit > maxIntegerValue % 10) \{
+1789         \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a1d1c3b44f6720a0e7c39b5ae8de3981c}{decodeDouble}(token, decoded);
+1790       \}
+1791     \}
+1792     value = value * 10 + digit;
+1793   \}
+1794   \textcolor{keywordflow}{if} (isNegative)
+1795     decoded = -\hyperlink{class_json_1_1_value_a1cbb82642ed05109b9833e49f042ece7}{Value::LargestInt}(value);
+1796   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (value <= Value::LargestUInt(\hyperlink{class_json_1_1_value_a978c799a8af3114ef7dab6fd0a310a1b}{Value::maxInt}))
+1797     decoded = \hyperlink{class_json_1_1_value_a1cbb82642ed05109b9833e49f042ece7}{Value::LargestInt}(value);
+1798   \textcolor{keywordflow}{else}
+1799     decoded = value;
+1800   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1801 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a712270d53a2f023c2f406ac813548340_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a34e31d8b8399b7ad493359702b6de6c9}\label{class_json_1_1_our_reader_a34e31d8b8399b7ad493359702b6de6c9}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!decode\+String@{decode\+String}}
+\index{decode\+String@{decode\+String}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{decode\+String()}{decodeString()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::decode\+String (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1851 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1851                                          \{
+1852   \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} decoded\_string;
+1853   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a34e31d8b8399b7ad493359702b6de6c9}{decodeString}(token, decoded\_string))
+1854     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1855   \hyperlink{class_json_1_1_value}{Value} decoded(decoded\_string);
+1856   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(decoded);
+1857   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1858   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1859   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1860 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a34e31d8b8399b7ad493359702b6de6c9_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a34e31d8b8399b7ad493359702b6de6c9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a5046dfa5d43b1770a091aac0a63a9f4b}\label{class_json_1_1_our_reader_a5046dfa5d43b1770a091aac0a63a9f4b}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!decode\+String@{decode\+String}}
+\index{decode\+String@{decode\+String}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{decode\+String()}{decodeString()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::decode\+String (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token,  }\item[{\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&}]{decoded }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1862 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1862                                                                   \{
+1863   decoded.reserve(static\_cast<size\_t>(token.end\_ - token.start\_ - 2));
+1864   \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} current = token.start\_ + 1; \textcolor{comment}{// skip '"'}
+1865   \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} end = token.end\_ - 1;       \textcolor{comment}{// do not include '"'}
+1866   \textcolor{keywordflow}{while} (current != end) \{
+1867     \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = *current++;
+1868     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'"'})
+1869       \textcolor{keywordflow}{break};
+1870     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}) \{
+1871       \textcolor{keywordflow}{if} (current == end)
+1872         \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(\textcolor{stringliteral}{"Empty escape sequence in string"}, token, current);
+1873       \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} escape = *current++;
+1874       \textcolor{keywordflow}{switch} (escape) \{
+1875       \textcolor{keywordflow}{case} \textcolor{charliteral}{'"'}:
+1876         decoded += \textcolor{charliteral}{'"'};
+1877         \textcolor{keywordflow}{break};
+1878       \textcolor{keywordflow}{case} \textcolor{charliteral}{'/'}:
+1879         decoded += \textcolor{charliteral}{'/'};
+1880         \textcolor{keywordflow}{break};
+1881       \textcolor{keywordflow}{case} \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}:
+1882         decoded += \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'};
+1883         \textcolor{keywordflow}{break};
+1884       \textcolor{keywordflow}{case} \textcolor{charliteral}{'b'}:
+1885         decoded += \textcolor{charliteral}{'\(\backslash\)b'};
+1886         \textcolor{keywordflow}{break};
+1887       \textcolor{keywordflow}{case} \textcolor{charliteral}{'f'}:
+1888         decoded += \textcolor{charliteral}{'\(\backslash\)f'};
+1889         \textcolor{keywordflow}{break};
+1890       \textcolor{keywordflow}{case} \textcolor{charliteral}{'n'}:
+1891         decoded += \textcolor{charliteral}{'\(\backslash\)n'};
+1892         \textcolor{keywordflow}{break};
+1893       \textcolor{keywordflow}{case} \textcolor{charliteral}{'r'}:
+1894         decoded += \textcolor{charliteral}{'\(\backslash\)r'};
+1895         \textcolor{keywordflow}{break};
+1896       \textcolor{keywordflow}{case} \textcolor{charliteral}{'t'}:
+1897         decoded += \textcolor{charliteral}{'\(\backslash\)t'};
+1898         \textcolor{keywordflow}{break};
+1899       \textcolor{keywordflow}{case} \textcolor{charliteral}{'u'}: \{
+1900         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} unicode;
+1901         \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_ac1bf03c161ece082e48da450c50f528d}{decodeUnicodeCodePoint}(token, current, end, unicode))
+1902           \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1903         decoded += \hyperlink{namespace_json_a33f8bda65a5b1fc4f5ddc39cb03dc742}{codePointToUTF8}(unicode);
+1904       \} \textcolor{keywordflow}{break};
+1905       \textcolor{keywordflow}{default}:
+1906         \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(\textcolor{stringliteral}{"Bad escape sequence in string"}, token, current);
+1907       \}
+1908     \} \textcolor{keywordflow}{else} \{
+1909       decoded += c;
+1910     \}
+1911   \}
+1912   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1913 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a5046dfa5d43b1770a091aac0a63a9f4b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_ac1bf03c161ece082e48da450c50f528d}\label{class_json_1_1_our_reader_ac1bf03c161ece082e48da450c50f528d}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!decode\+Unicode\+Code\+Point@{decode\+Unicode\+Code\+Point}}
+\index{decode\+Unicode\+Code\+Point@{decode\+Unicode\+Code\+Point}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{decode\+Unicode\+Code\+Point()}{decodeUnicodeCodePoint()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::decode\+Unicode\+Code\+Point (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token,  }\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} \&}]{current,  }\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}}]{end,  }\item[{unsigned int \&}]{unicode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1915 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1918                                                            \{
+1919 
+1920   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_adb39be814cc6076b91a0919bdd5b24b0}{decodeUnicodeEscapeSequence}(token, current, end, unicode))
+1921     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1922   \textcolor{keywordflow}{if} (unicode >= 0xD800 && unicode <= 0xDBFF) \{
+1923     \textcolor{comment}{// surrogate pairs}
+1924     \textcolor{keywordflow}{if} (end - current < 6)
+1925       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(
+1926           \textcolor{stringliteral}{"additional six characters expected to parse unicode surrogate pair."},
+1927           token,
+1928           current);
+1929     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} surrogatePair;
+1930     \textcolor{keywordflow}{if} (*(current++) == \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'} && *(current++) == \textcolor{charliteral}{'u'}) \{
+1931       \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_adb39be814cc6076b91a0919bdd5b24b0}{decodeUnicodeEscapeSequence}(token, current, end, surrogatePair)) \{
+1932         unicode = 0x10000 + ((unicode & 0x3FF) << 10) + (surrogatePair & 0x3FF);
+1933       \} \textcolor{keywordflow}{else}
+1934         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1935     \} \textcolor{keywordflow}{else}
+1936       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(\textcolor{stringliteral}{"expecting another \(\backslash\)\(\backslash\)u token to begin the second half of "}
+1937                       \textcolor{stringliteral}{"a unicode surrogate pair"},
+1938                       token,
+1939                       current);
+1940   \}
+1941   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1942 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ac1bf03c161ece082e48da450c50f528d_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ac1bf03c161ece082e48da450c50f528d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_adb39be814cc6076b91a0919bdd5b24b0}\label{class_json_1_1_our_reader_adb39be814cc6076b91a0919bdd5b24b0}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!decode\+Unicode\+Escape\+Sequence@{decode\+Unicode\+Escape\+Sequence}}
+\index{decode\+Unicode\+Escape\+Sequence@{decode\+Unicode\+Escape\+Sequence}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{decode\+Unicode\+Escape\+Sequence()}{decodeUnicodeEscapeSequence()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::decode\+Unicode\+Escape\+Sequence (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token,  }\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} \&}]{current,  }\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}}]{end,  }\item[{unsigned int \&}]{unicode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1944 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1947                                                                     \{
+1948   \textcolor{keywordflow}{if} (end - current < 4)
+1949     \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(
+1950         \textcolor{stringliteral}{"Bad unicode escape sequence in string: four digits expected."},
+1951         token,
+1952         current);
+1953   \textcolor{keywordtype}{int} unicode = 0;
+1954   \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} index = 0; index < 4; ++index) \{
+1955     \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = *current++;
+1956     unicode *= 16;
+1957     \textcolor{keywordflow}{if} (c >= \textcolor{charliteral}{'0'} && c <= \textcolor{charliteral}{'9'})
+1958       unicode += c - \textcolor{charliteral}{'0'};
+1959     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (c >= \textcolor{charliteral}{'a'} && c <= \textcolor{charliteral}{'f'})
+1960       unicode += c - \textcolor{charliteral}{'a'} + 10;
+1961     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (c >= \textcolor{charliteral}{'A'} && c <= \textcolor{charliteral}{'F'})
+1962       unicode += c - \textcolor{charliteral}{'A'} + 10;
+1963     \textcolor{keywordflow}{else}
+1964       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(
+1965           \textcolor{stringliteral}{"Bad unicode escape sequence in string: hexadecimal digit expected."},
+1966           token,
+1967           current);
+1968   \}
+1969   ret\_unicode = \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}\textcolor{keyword}{>}(unicode);
+1970   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1971 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_adb39be814cc6076b91a0919bdd5b24b0_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_adb39be814cc6076b91a0919bdd5b24b0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a7971de51d73bb4aee5b0c4742c4aaaac}\label{class_json_1_1_our_reader_a7971de51d73bb4aee5b0c4742c4aaaac}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!get\+Formatted\+Error\+Messages@{get\+Formatted\+Error\+Messages}}
+\index{get\+Formatted\+Error\+Messages@{get\+Formatted\+Error\+Messages}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{get\+Formatted\+Error\+Messages()}{getFormattedErrorMessages()}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Our\+Reader\+::get\+Formatted\+Error\+Messages (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+jsoncpp.\+cpp 파일의 2042 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2042                                                           \{
+2043   \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} formattedMessage;
+2044   \textcolor{keywordflow}{for} (Errors::const\_iterator itError = \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.begin();
+2045        itError != \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.end();
+2046        ++itError) \{
+2047     \textcolor{keyword}{const} ErrorInfo& error = *itError;
+2048     formattedMessage +=
+2049         \textcolor{stringliteral}{"* "} + \hyperlink{class_json_1_1_our_reader_af482c8e718615646e13a996292e18d74}{getLocationLineAndColumn}(error.token\_.start\_) + \textcolor{stringliteral}{"\(\backslash\)n"};
+2050     formattedMessage += \textcolor{stringliteral}{"  "} + error.message\_ + \textcolor{stringliteral}{"\(\backslash\)n"};
+2051     \textcolor{keywordflow}{if} (error.extra\_)
+2052       formattedMessage +=
+2053           \textcolor{stringliteral}{"See "} + \hyperlink{class_json_1_1_our_reader_af482c8e718615646e13a996292e18d74}{getLocationLineAndColumn}(error.extra\_) + \textcolor{stringliteral}{" for detail.\(\backslash\)n"};
+2054   \}
+2055   \textcolor{keywordflow}{return} formattedMessage;
+2056 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a7971de51d73bb4aee5b0c4742c4aaaac_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a7971de51d73bb4aee5b0c4742c4aaaac_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_af482c8e718615646e13a996292e18d74}\label{class_json_1_1_our_reader_af482c8e718615646e13a996292e18d74}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!get\+Location\+Line\+And\+Column@{get\+Location\+Line\+And\+Column}}
+\index{get\+Location\+Line\+And\+Column@{get\+Location\+Line\+And\+Column}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{get\+Location\+Line\+And\+Column()}{getLocationLineAndColumn()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Json\+::\+Our\+Reader\+::get\+Location\+Line\+And\+Column (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}}]{location,  }\item[{int \&}]{line,  }\item[{int \&}]{column }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 2011 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2013                                                          \{
+2014   \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} current = \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_};
+2015   \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} lastLineStart = current;
+2016   line = 0;
+2017   \textcolor{keywordflow}{while} (current < location && current != \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_}) \{
+2018     \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = *current++;
+2019     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)r'}) \{
+2020       \textcolor{keywordflow}{if} (*current == \textcolor{charliteral}{'\(\backslash\)n'})
+2021         ++current;
+2022       lastLineStart = current;
+2023       ++line;
+2024     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)n'}) \{
+2025       lastLineStart = current;
+2026       ++line;
+2027     \}
+2028   \}
+2029   \textcolor{comment}{// column & line start at 1}
+2030   column = int(location - lastLineStart) + 1;
+2031   ++line;
+2032 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_af482c8e718615646e13a996292e18d74_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_ac129e94cdc260822b2fd24e2ca35e636}\label{class_json_1_1_our_reader_ac129e94cdc260822b2fd24e2ca35e636}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!get\+Location\+Line\+And\+Column@{get\+Location\+Line\+And\+Column}}
+\index{get\+Location\+Line\+And\+Column@{get\+Location\+Line\+And\+Column}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{get\+Location\+Line\+And\+Column()}{getLocationLineAndColumn()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Our\+Reader\+::get\+Location\+Line\+And\+Column (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}}]{location }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 2034 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2034                                                                           \{
+2035   \textcolor{keywordtype}{int} line, column;
+2036   \hyperlink{class_json_1_1_our_reader_af482c8e718615646e13a996292e18d74}{getLocationLineAndColumn}(location, line, column);
+2037   \textcolor{keywordtype}{char} buffer[18 + 16 + 16 + 1];
+2038   snprintf(buffer, \textcolor{keyword}{sizeof}(buffer), \textcolor{stringliteral}{"Line %d, Column %d"}, line, column);
+2039   \textcolor{keywordflow}{return} buffer;
+2040 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ac129e94cdc260822b2fd24e2ca35e636_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}\label{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!get\+Next\+Char@{get\+Next\+Char}}
+\index{get\+Next\+Char@{get\+Next\+Char}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{get\+Next\+Char()}{getNextChar()}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Our\+Reader\+::\+Char} Json\+::\+Our\+Reader\+::get\+Next\+Char (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 2005 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2005                                      \{
+2006   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} == \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_})
+2007     \textcolor{keywordflow}{return} 0;
+2008   \textcolor{keywordflow}{return} *\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_}++;
+2009 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a0eb2420a6bef89a3f3256191e6e3de6d}\label{class_json_1_1_our_reader_a0eb2420a6bef89a3f3256191e6e3de6d}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!get\+Structured\+Errors@{get\+Structured\+Errors}}
+\index{get\+Structured\+Errors@{get\+Structured\+Errors}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{get\+Structured\+Errors()}{getStructuredErrors()}}
+{\footnotesize\ttfamily std\+::vector$<$ \hyperlink{struct_json_1_1_our_reader_1_1_structured_error}{Our\+Reader\+::\+Structured\+Error} $>$ Json\+::\+Our\+Reader\+::get\+Structured\+Errors (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+jsoncpp.\+cpp 파일의 2058 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2058                                                                          \{
+2059   std::vector<OurReader::StructuredError> allErrors;
+2060   \textcolor{keywordflow}{for} (Errors::const\_iterator itError = \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.begin();
+2061        itError != \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.end();
+2062        ++itError) \{
+2063     \textcolor{keyword}{const} ErrorInfo& error = *itError;
+2064     \hyperlink{struct_json_1_1_our_reader_1_1_structured_error}{OurReader::StructuredError} structured;
+2065     structured.\hyperlink{struct_json_1_1_our_reader_1_1_structured_error_a102677698afb8177c985e72dafe72b15}{offset\_start} = error.token\_.start\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_};
+2066     structured.\hyperlink{struct_json_1_1_our_reader_1_1_structured_error_a15491a751a39c5153af04e68b1d0abb9}{offset\_limit} = error.token\_.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_};
+2067     structured.\hyperlink{struct_json_1_1_our_reader_1_1_structured_error_a9d0b9986bf765d067dfcf2f971a450d1}{message} = error.message\_;
+2068     allErrors.push\_back(structured);
+2069   \}
+2070   \textcolor{keywordflow}{return} allErrors;
+2071 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a63c7d874fa379397e0a5fa65f0843845}\label{class_json_1_1_our_reader_a63c7d874fa379397e0a5fa65f0843845}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!good@{good}}
+\index{good@{good}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{good()}{good()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::good (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+jsoncpp.\+cpp 파일의 2108 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2108                            \{
+2109   \textcolor{keywordflow}{return} !\hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.size();
+2110 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}\label{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!match@{match}}
+\index{match@{match}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{match()}{match()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::match (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location}}]{pattern,  }\item[{int}]{pattern\+Length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1531 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1531                                                          \{
+1532   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} - \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} < patternLength)
+1533     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1534   \textcolor{keywordtype}{int} index = patternLength;
+1535   \textcolor{keywordflow}{while} (index--)
+1536     \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_}[index] != pattern[index])
+1537       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1538   \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} += patternLength;
+1539   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1540 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_ad418de7c47bd3d0510888e22110b796e}\label{class_json_1_1_our_reader_ad418de7c47bd3d0510888e22110b796e}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!operator=@{operator=}}
+\index{operator=@{operator=}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily void Json\+::\+Our\+Reader\+::operator= (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader}{Our\+Reader} const \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_aba4f8749aab7f02ec17f107e392caf80}\label{class_json_1_1_our_reader_aba4f8749aab7f02ec17f107e392caf80}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!parse@{parse}}
+\index{parse@{parse}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{parse()}{parse()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::parse (\begin{DoxyParamCaption}\item[{const char $\ast$}]{begin\+Doc,  }\item[{const char $\ast$}]{end\+Doc,  }\item[{\hyperlink{class_json_1_1_value}{Value} \&}]{root,  }\item[{bool}]{collect\+Comments = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 1262 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1265                                          \{
+1266   \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_ac71bb7ba7363d3b05ed76602b036ce33}{allowComments\_}) \{
+1267     collectComments = \textcolor{keyword}{false};
+1268   \}
+1269 
+1270   \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_} = beginDoc;
+1271   \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} = endDoc;
+1272   \hyperlink{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}{collectComments\_} = collectComments;
+1273   \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} = \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_};
+1274   \hyperlink{class_json_1_1_our_reader_a101eadc45e01c60628b53f0db3d13482}{lastValueEnd\_} = 0;
+1275   \hyperlink{class_json_1_1_our_reader_a9f994b6a2227c5d96e6ed6cbc74ed251}{lastValue\_} = 0;
+1276   \hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{commentsBefore\_} = \textcolor{stringliteral}{""};
+1277   \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.clear();
+1278   \textcolor{keywordflow}{while} (!\hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.empty())
+1279     \hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.pop();
+1280   \hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.push(&root);
+1281 
+1282   \textcolor{keywordtype}{bool} successful = \hyperlink{class_json_1_1_our_reader_a1765d9670d191c89a57a22ea5591d35f}{readValue}();
+1283   Token token;
+1284   \hyperlink{class_json_1_1_our_reader_a856dea44d92578c276856d7a65a4ebdc}{skipCommentTokens}(token);
+1285   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_ae8ad25b90706c78f1a8fe929191ac61b}{failIfExtra\_}) \{
+1286     \textcolor{keywordflow}{if} ((\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_a2095f66a776c0a4ae6cc931a0c94242e}{strictRoot\_} || token.type\_ != \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}{tokenError}) && token.type\_ 
+      != \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca735d1f76eafc2c0c581ed79c077aaa7e}{tokenEndOfStream}) \{
+1287       \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(\textcolor{stringliteral}{"Extra non-whitespace after JSON value."}, token);
+1288       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1289     \}
+1290   \}
+1291   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}{collectComments\_} && !\hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{commentsBefore\_}.empty())
+1292     root.\hyperlink{class_json_1_1_value_a29f3a30f7e5d3af6f38d57999bf5b480}{setComment}(\hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{commentsBefore\_}, \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351ac5784ca53b12250888ddb642b06aebef}{commentAfter});
+1293   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_a2095f66a776c0a4ae6cc931a0c94242e}{strictRoot\_}) \{
+1294     \textcolor{keywordflow}{if} (!root.\hyperlink{class_json_1_1_value_a1627eb9d6568d6d0252fa8bb711c0a59}{isArray}() && !root.\hyperlink{class_json_1_1_value_a8cf96c0f2a552051fcfc78ffee60e037}{isObject}()) \{
+1295       \textcolor{comment}{// Set error location to start of doc, ideally should be first token found}
+1296       \textcolor{comment}{// in doc}
+1297       token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}{tokenError};
+1298       token.start\_ = beginDoc;
+1299       token.end\_ = endDoc;
+1300       \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(
+1301           \textcolor{stringliteral}{"A valid JSON document must be either an array or an object value."},
+1302           token);
+1303       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1304     \}
+1305   \}
+1306   \textcolor{keywordflow}{return} successful;
+1307 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_aba4f8749aab7f02ec17f107e392caf80_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=345pt]{class_json_1_1_our_reader_aba4f8749aab7f02ec17f107e392caf80_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a700e9d8e0977fa7e0375d26690d7025f}\label{class_json_1_1_our_reader_a700e9d8e0977fa7e0375d26690d7025f}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!push\+Error@{push\+Error}}
+\index{push\+Error@{push\+Error}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{push\+Error()}{pushError()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::push\+Error (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{value,  }\item[{const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&}]{message }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 2073 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2073                                                                            \{
+2074   ptrdiff\_t length = \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_};
+2075   \textcolor{keywordflow}{if}(value.\hyperlink{class_json_1_1_value_afa081dc764000951a1d8d6148155508e}{getOffsetStart}() > length
+2076     || value.\hyperlink{class_json_1_1_value_a2cdfa01935f87fcace90d450cbd2c0a4}{getOffsetLimit}() > length)
+2077     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+2078   Token token;
+2079   token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}{tokenError};
+2080   token.start\_ = begin\_ + value.\hyperlink{class_json_1_1_value_afa081dc764000951a1d8d6148155508e}{getOffsetStart}();
+2081   token.end\_ = \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} + value.\hyperlink{class_json_1_1_value_a2cdfa01935f87fcace90d450cbd2c0a4}{getOffsetLimit}();
+2082   ErrorInfo info;
+2083   info.token\_ = token;
+2084   info.message\_ = message;
+2085   info.extra\_ = 0;
+2086   \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.push\_back(info);
+2087   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+2088 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a700e9d8e0977fa7e0375d26690d7025f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_addccecfca74b79adaad6115ddd614477}\label{class_json_1_1_our_reader_addccecfca74b79adaad6115ddd614477}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!push\+Error@{push\+Error}}
+\index{push\+Error@{push\+Error}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{push\+Error()}{pushError()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::push\+Error (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{value,  }\item[{const \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \&}]{message,  }\item[{const \hyperlink{class_json_1_1_value}{Value} \&}]{extra }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 2090 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2090                                                                                                \{
+2091   ptrdiff\_t length = \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_};
+2092   \textcolor{keywordflow}{if}(value.\hyperlink{class_json_1_1_value_afa081dc764000951a1d8d6148155508e}{getOffsetStart}() > length
+2093     || value.\hyperlink{class_json_1_1_value_a2cdfa01935f87fcace90d450cbd2c0a4}{getOffsetLimit}() > length
+2094     || extra.\hyperlink{class_json_1_1_value_a2cdfa01935f87fcace90d450cbd2c0a4}{getOffsetLimit}() > length)
+2095     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+2096   Token token;
+2097   token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}{tokenError};
+2098   token.start\_ = begin\_ + value.\hyperlink{class_json_1_1_value_afa081dc764000951a1d8d6148155508e}{getOffsetStart}();
+2099   token.end\_ = begin\_ + value.\hyperlink{class_json_1_1_value_a2cdfa01935f87fcace90d450cbd2c0a4}{getOffsetLimit}();
+2100   ErrorInfo info;
+2101   info.token\_ = token;
+2102   info.message\_ = message;
+2103   info.extra\_ = begin\_ + extra.\hyperlink{class_json_1_1_value_afa081dc764000951a1d8d6148155508e}{getOffsetStart}();
+2104   \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.push\_back(info);
+2105   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+2106 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_addccecfca74b79adaad6115ddd614477_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a0b9f58faf4212c6ecb5d8e2a1ac10257}\label{class_json_1_1_our_reader_a0b9f58faf4212c6ecb5d8e2a1ac10257}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+Array@{read\+Array}}
+\index{read\+Array@{read\+Array}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+Array()}{readArray()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+Array (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1715 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1715                                            \{
+1716   \hyperlink{class_json_1_1_value}{Value} init(\hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4}{arrayValue});
+1717   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(init);
+1718   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(tokenStart.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1719   \hyperlink{class_json_1_1_our_reader_a6fbc6d58a4505e5ccadf330b57b17ca5}{skipSpaces}();
+1720   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} != \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} && *\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} == \textcolor{charliteral}{']'}) \textcolor{comment}{// empty array}
+1721   \{
+1722     Token endArray;
+1723     \hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(endArray);
+1724     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1725   \}
+1726   \textcolor{keywordtype}{int} index = 0;
+1727   \textcolor{keywordflow}{for} (;;) \{
+1728     \hyperlink{class_json_1_1_value}{Value}& value = \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}()[index++];
+1729     \hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.push(&value);
+1730     \textcolor{keywordtype}{bool} ok = \hyperlink{class_json_1_1_our_reader_a1765d9670d191c89a57a22ea5591d35f}{readValue}();
+1731     \hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.pop();
+1732     \textcolor{keywordflow}{if} (!ok) \textcolor{comment}{// error already set}
+1733       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c}{recoverFromError}(\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}{tokenArrayEnd});
+1734 
+1735     Token token;
+1736     \textcolor{comment}{// Accept Comment after last item in the array.}
+1737     ok = \hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(token);
+1738     \textcolor{keywordflow}{while} (token.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}{tokenComment} && ok) \{
+1739       ok = \hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(token);
+1740     \}
+1741     \textcolor{keywordtype}{bool} badTokenType =
+1742         (token.type\_ != \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8ca62ab9091b149d52ec55828f8040f4}{tokenArraySeparator} && token.type\_ != 
+      \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}{tokenArrayEnd});
+1743     \textcolor{keywordflow}{if} (!ok || badTokenType) \{
+1744       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb}{addErrorAndRecover}(
+1745           \textcolor{stringliteral}{"Missing ',' or ']' in array declaration"}, token, \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}{tokenArrayEnd});
+1746     \}
+1747     \textcolor{keywordflow}{if} (token.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}{tokenArrayEnd})
+1748       \textcolor{keywordflow}{break};
+1749   \}
+1750   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1751 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a0b9f58faf4212c6ecb5d8e2a1ac10257_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a0b9f58faf4212c6ecb5d8e2a1ac10257_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a90f6bb9e55b2bc3d6c1880809495c222}\label{class_json_1_1_our_reader_a90f6bb9e55b2bc3d6c1880809495c222}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+Comment@{read\+Comment}}
+\index{read\+Comment@{read\+Comment}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+Comment()}{readComment()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+Comment (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1542 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1542                             \{
+1543   \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} commentBegin = \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} - 1;
+1544   \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1545   \textcolor{keywordtype}{bool} successful = \textcolor{keyword}{false};
+1546   \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'*'})
+1547     successful = \hyperlink{class_json_1_1_our_reader_aba784b125baa1b62387e767b791f2f89}{readCStyleComment}();
+1548   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'/'})
+1549     successful = \hyperlink{class_json_1_1_our_reader_ae3de80671f0f997053e1c1c8a47a45c5}{readCppStyleComment}();
+1550   \textcolor{keywordflow}{if} (!successful)
+1551     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1552 
+1553   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}{collectComments\_}) \{
+1554     \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351}{CommentPlacement} placement = \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a52f1733775460517b2ea6bedf4906d52}{commentBefore};
+1555     \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a101eadc45e01c60628b53f0db3d13482}{lastValueEnd\_} && !\hyperlink{namespace_json_a4d6ab0f651348832e5cc49b577a854d2}{containsNewLine}(
+      \hyperlink{class_json_1_1_our_reader_a101eadc45e01c60628b53f0db3d13482}{lastValueEnd\_}, commentBegin)) \{
+1556       \textcolor{keywordflow}{if} (c != \textcolor{charliteral}{'*'} || !\hyperlink{namespace_json_a4d6ab0f651348832e5cc49b577a854d2}{containsNewLine}(commentBegin, \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_}))
+1557         placement = \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a008a230a0586de54f30b76afe70fdcfa}{commentAfterOnSameLine};
+1558     \}
+1559 
+1560     \hyperlink{class_json_1_1_our_reader_ad7318c37469a9106069a236fb4b10e1f}{addComment}(commentBegin, \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_}, placement);
+1561   \}
+1562   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1563 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a90f6bb9e55b2bc3d6c1880809495c222_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a90f6bb9e55b2bc3d6c1880809495c222_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_ae3de80671f0f997053e1c1c8a47a45c5}\label{class_json_1_1_our_reader_ae3de80671f0f997053e1c1c8a47a45c5}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+Cpp\+Style\+Comment@{read\+Cpp\+Style\+Comment}}
+\index{read\+Cpp\+Style\+Comment@{read\+Cpp\+Style\+Comment}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+Cpp\+Style\+Comment()}{readCppStyleComment()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+Cpp\+Style\+Comment (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1586 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1586                                     \{
+1587   \textcolor{keywordflow}{while} (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} != \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_}) \{
+1588     \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1589     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)n'})
+1590       \textcolor{keywordflow}{break};
+1591     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)r'}) \{
+1592       \textcolor{comment}{// Consume DOS EOL. It will be normalized in addComment.}
+1593       \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} != \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} && *\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} == \textcolor{charliteral}{'\(\backslash\)n'})
+1594         \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1595       \textcolor{comment}{// Break on Moc OS 9 EOL.}
+1596       \textcolor{keywordflow}{break};
+1597     \}
+1598   \}
+1599   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1600 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ae3de80671f0f997053e1c1c8a47a45c5_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ae3de80671f0f997053e1c1c8a47a45c5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_aba784b125baa1b62387e767b791f2f89}\label{class_json_1_1_our_reader_aba784b125baa1b62387e767b791f2f89}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+C\+Style\+Comment@{read\+C\+Style\+Comment}}
+\index{read\+C\+Style\+Comment@{read\+C\+Style\+Comment}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+C\+Style\+Comment()}{readCStyleComment()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+C\+Style\+Comment (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1577 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1577                                   \{
+1578   \textcolor{keywordflow}{while} ((\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} + 1) < \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_}) \{
+1579     \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1580     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'*'} && *\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} == \textcolor{charliteral}{'/'})
+1581       \textcolor{keywordflow}{break};
+1582   \}
+1583   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}() == \textcolor{charliteral}{'/'};
+1584 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_aba784b125baa1b62387e767b791f2f89_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_aba784b125baa1b62387e767b791f2f89_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_aefcb9a78cc45870ccac2db2a66c8ec50}\label{class_json_1_1_our_reader_aefcb9a78cc45870ccac2db2a66c8ec50}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+Number@{read\+Number}}
+\index{read\+Number@{read\+Number}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+Number()}{readNumber()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+Number (\begin{DoxyParamCaption}\item[{bool}]{check\+Inf }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1602 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1602                                         \{
+1603   \textcolor{keyword}{const} \textcolor{keywordtype}{char} *p = \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_};
+1604   \textcolor{keywordflow}{if} (checkInf && p != \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} && *p == \textcolor{charliteral}{'I'}) \{
+1605     \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} = ++p;
+1606     \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1607   \}
+1608   \textcolor{keywordtype}{char} c = \textcolor{charliteral}{'0'}; \textcolor{comment}{// stopgap for already consumed character}
+1609   \textcolor{comment}{// integral part}
+1610   \textcolor{keywordflow}{while} (c >= \textcolor{charliteral}{'0'} && c <= \textcolor{charliteral}{'9'})
+1611     c = (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} = p) < \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} ? *p++ : \textcolor{charliteral}{'\(\backslash\)0'};
+1612   \textcolor{comment}{// fractional part}
+1613   \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'.'}) \{
+1614     c = (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} = p) < \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} ? *p++ : \textcolor{charliteral}{'\(\backslash\)0'};
+1615     \textcolor{keywordflow}{while} (c >= \textcolor{charliteral}{'0'} && c <= \textcolor{charliteral}{'9'})
+1616       c = (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} = p) < \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} ? *p++ : \textcolor{charliteral}{'\(\backslash\)0'};
+1617   \}
+1618   \textcolor{comment}{// exponential part}
+1619   \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'e'} || c == \textcolor{charliteral}{'E'}) \{
+1620     c = (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} = p) < \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} ? *p++ : \textcolor{charliteral}{'\(\backslash\)0'};
+1621     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'+'} || c == \textcolor{charliteral}{'-'})
+1622       c = (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} = p) < \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} ? *p++ : \textcolor{charliteral}{'\(\backslash\)0'};
+1623     \textcolor{keywordflow}{while} (c >= \textcolor{charliteral}{'0'} && c <= \textcolor{charliteral}{'9'})
+1624       c = (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} = p) < \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_} ? *p++ : \textcolor{charliteral}{'\(\backslash\)0'};
+1625   \}
+1626   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1627 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_aefcb9a78cc45870ccac2db2a66c8ec50_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_aea198f8101dba55099f4d8121a993530}\label{class_json_1_1_our_reader_aea198f8101dba55099f4d8121a993530}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+Object@{read\+Object}}
+\index{read\+Object@{read\+Object}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+Object()}{readObject()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+Object (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1653 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1653                                             \{
+1654   Token tokenName;
+1655   \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} name;
+1656   \hyperlink{class_json_1_1_value}{Value} init(\hyperlink{namespace_json_a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6}{objectValue});
+1657   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(init);
+1658   \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(tokenStart.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1659   \textcolor{keywordflow}{while} (\hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(tokenName)) \{
+1660     \textcolor{keywordtype}{bool} initialTokenOk = \textcolor{keyword}{true};
+1661     \textcolor{keywordflow}{while} (tokenName.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}{tokenComment} && initialTokenOk)
+1662       initialTokenOk = \hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(tokenName);
+1663     \textcolor{keywordflow}{if} (!initialTokenOk)
+1664       \textcolor{keywordflow}{break};
+1665     \textcolor{keywordflow}{if} (tokenName.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd} && name.empty()) \textcolor{comment}{// empty object}
+1666       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1667     name = \textcolor{stringliteral}{""};
+1668     \textcolor{keywordflow}{if} (tokenName.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccadb37e59e1e52cd5e7417bc418b611ce1}{tokenString}) \{
+1669       \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a34e31d8b8399b7ad493359702b6de6c9}{decodeString}(tokenName, name))
+1670         \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c}{recoverFromError}(\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd});
+1671     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (tokenName.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca766aefde855b1246d89b8552240c70d1}{tokenNumber} && \hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.
+      \hyperlink{class_json_1_1_our_features_af6973fc7e774ce2d634ba99442aeb91a}{allowNumericKeys\_}) \{
+1672       \hyperlink{class_json_1_1_value}{Value} numberName;
+1673       \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a272d271290933a89abfd5096dd69c9e9}{decodeNumber}(tokenName, numberName))
+1674         \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c}{recoverFromError}(\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd});
+1675       name = numberName.\hyperlink{class_json_1_1_value_ae3f9b0d38f820ccdd8888aa92ea6e792}{asString}();
+1676     \} \textcolor{keywordflow}{else} \{
+1677       \textcolor{keywordflow}{break};
+1678     \}
+1679 
+1680     Token colon;
+1681     \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(colon) || colon.type\_ != \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7c95881fb1162316bce42c629bf06214}{tokenMemberSeparator}) \{
+1682       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb}{addErrorAndRecover}(
+1683           \textcolor{stringliteral}{"Missing ':' after object member name"}, colon, \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd});
+1684     \}
+1685     \textcolor{keywordflow}{if} (name.length() >= (1U<<30)) \hyperlink{namespace_json_a0ab7ff7f99788262d92d9ff3d924e065}{throwRuntimeError}(\textcolor{stringliteral}{"keylength >= 2^30"});
+1686     \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_a39b8e0b86b1c24a45e800c023bb715aa}{rejectDupKeys\_} && \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().isMember(name)) \{
+1687       \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING} msg = \textcolor{stringliteral}{"Duplicate key: '"} + name + \textcolor{stringliteral}{"'"};
+1688       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb}{addErrorAndRecover}(
+1689           msg, tokenName, \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd});
+1690     \}
+1691     \hyperlink{class_json_1_1_value}{Value}& value = \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}()[name];
+1692     \hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.push(&value);
+1693     \textcolor{keywordtype}{bool} ok = \hyperlink{class_json_1_1_our_reader_a1765d9670d191c89a57a22ea5591d35f}{readValue}();
+1694     \hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.pop();
+1695     \textcolor{keywordflow}{if} (!ok) \textcolor{comment}{// error already set}
+1696       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c}{recoverFromError}(\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd});
+1697 
+1698     Token comma;
+1699     \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(comma) ||
+1700         (comma.type\_ != \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd} && comma.type\_ != 
+      \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8ca62ab9091b149d52ec55828f8040f4}{tokenArraySeparator} &&
+1701          comma.type\_ != \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}{tokenComment})) \{
+1702       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb}{addErrorAndRecover}(
+1703           \textcolor{stringliteral}{"Missing ',' or '\}' in object declaration"}, comma, \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd});
+1704     \}
+1705     \textcolor{keywordtype}{bool} finalizeTokenOk = \textcolor{keyword}{true};
+1706     \textcolor{keywordflow}{while} (comma.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}{tokenComment} && finalizeTokenOk)
+1707       finalizeTokenOk = \hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(comma);
+1708     \textcolor{keywordflow}{if} (comma.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd})
+1709       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1710   \}
+1711   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_a074cf3d91e9404fe89e03cfc6a43e6fb}{addErrorAndRecover}(
+1712       \textcolor{stringliteral}{"Missing '\}' or object member name"}, tokenName, \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd});
+1713 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_aea198f8101dba55099f4d8121a993530_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_aea198f8101dba55099f4d8121a993530_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a5d39b12671499ec5975f3bbc84b7d438}\label{class_json_1_1_our_reader_a5d39b12671499ec5975f3bbc84b7d438}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+String@{read\+String}}
+\index{read\+String@{read\+String}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+String()}{readString()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1628 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1628                            \{
+1629   \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = 0;
+1630   \textcolor{keywordflow}{while} (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} != \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_}) \{
+1631     c = \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1632     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})
+1633       \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1634     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'"'})
+1635       \textcolor{keywordflow}{break};
+1636   \}
+1637   \textcolor{keywordflow}{return} c == \textcolor{charliteral}{'"'};
+1638 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a5d39b12671499ec5975f3bbc84b7d438_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a5d39b12671499ec5975f3bbc84b7d438_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_ac78592defdc333faf56c6d0908758da3}\label{class_json_1_1_our_reader_ac78592defdc333faf56c6d0908758da3}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+String\+Single\+Quote@{read\+String\+Single\+Quote}}
+\index{read\+String\+Single\+Quote@{read\+String\+Single\+Quote}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+String\+Single\+Quote()}{readStringSingleQuote()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+String\+Single\+Quote (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1641 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1641                                       \{
+1642   \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = 0;
+1643   \textcolor{keywordflow}{while} (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} != \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_}) \{
+1644     c = \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1645     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})
+1646       \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1647     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{'\(\backslash\)''})
+1648       \textcolor{keywordflow}{break};
+1649   \}
+1650   \textcolor{keywordflow}{return} c == \textcolor{charliteral}{'\(\backslash\)''};
+1651 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ac78592defdc333faf56c6d0908758da3_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_ac78592defdc333faf56c6d0908758da3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}\label{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+Token@{read\+Token}}
+\index{read\+Token@{read\+Token}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+Token()}{readToken()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+Token (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1421 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1421                                       \{
+1422   \hyperlink{class_json_1_1_our_reader_a6fbc6d58a4505e5ccadf330b57b17ca5}{skipSpaces}();
+1423   token.start\_ = \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_};
+1424   \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = \hyperlink{class_json_1_1_our_reader_a298285d035fdbc554caae09d9f0a5859}{getNextChar}();
+1425   \textcolor{keywordtype}{bool} ok = \textcolor{keyword}{true};
+1426   \textcolor{keywordflow}{switch} (c) \{
+1427   \textcolor{keywordflow}{case} \textcolor{charliteral}{'\{'}:
+1428     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7495ef5c356d4faa39b702e528cc7e26}{tokenObjectBegin};
+1429     \textcolor{keywordflow}{break};
+1430   \textcolor{keywordflow}{case} \textcolor{charliteral}{'\}'}:
+1431     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd};
+1432     \textcolor{keywordflow}{break};
+1433   \textcolor{keywordflow}{case} \textcolor{charliteral}{'['}:
+1434     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca45d229fce2f5f4b52dc0d6c39c853436}{tokenArrayBegin};
+1435     \textcolor{keywordflow}{break};
+1436   \textcolor{keywordflow}{case} \textcolor{charliteral}{']'}:
+1437     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}{tokenArrayEnd};
+1438     \textcolor{keywordflow}{break};
+1439   \textcolor{keywordflow}{case} \textcolor{charliteral}{'"'}:
+1440     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccadb37e59e1e52cd5e7417bc418b611ce1}{tokenString};
+1441     ok = \hyperlink{class_json_1_1_our_reader_a5d39b12671499ec5975f3bbc84b7d438}{readString}();
+1442     \textcolor{keywordflow}{break};
+1443   \textcolor{keywordflow}{case} \textcolor{charliteral}{'\(\backslash\)''}:
+1444     \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_abbd6c196d7a22e2a360a59887eda4610}{allowSingleQuotes\_}) \{
+1445     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccadb37e59e1e52cd5e7417bc418b611ce1}{tokenString};
+1446     ok = \hyperlink{class_json_1_1_our_reader_ac78592defdc333faf56c6d0908758da3}{readStringSingleQuote}();
+1447     \textcolor{keywordflow}{break};
+1448     \} \textcolor{comment}{// else continue}
+1449   \textcolor{keywordflow}{case} \textcolor{charliteral}{'/'}:
+1450     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}{tokenComment};
+1451     ok = \hyperlink{class_json_1_1_our_reader_a90f6bb9e55b2bc3d6c1880809495c222}{readComment}();
+1452     \textcolor{keywordflow}{break};
+1453   \textcolor{keywordflow}{case} \textcolor{charliteral}{'0'}:
+1454   \textcolor{keywordflow}{case} \textcolor{charliteral}{'1'}:
+1455   \textcolor{keywordflow}{case} \textcolor{charliteral}{'2'}:
+1456   \textcolor{keywordflow}{case} \textcolor{charliteral}{'3'}:
+1457   \textcolor{keywordflow}{case} \textcolor{charliteral}{'4'}:
+1458   \textcolor{keywordflow}{case} \textcolor{charliteral}{'5'}:
+1459   \textcolor{keywordflow}{case} \textcolor{charliteral}{'6'}:
+1460   \textcolor{keywordflow}{case} \textcolor{charliteral}{'7'}:
+1461   \textcolor{keywordflow}{case} \textcolor{charliteral}{'8'}:
+1462   \textcolor{keywordflow}{case} \textcolor{charliteral}{'9'}:
+1463     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca766aefde855b1246d89b8552240c70d1}{tokenNumber};
+1464     \hyperlink{class_json_1_1_our_reader_aefcb9a78cc45870ccac2db2a66c8ec50}{readNumber}(\textcolor{keyword}{false});
+1465     \textcolor{keywordflow}{break};
+1466   \textcolor{keywordflow}{case} \textcolor{charliteral}{'-'}:
+1467     \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_aefcb9a78cc45870ccac2db2a66c8ec50}{readNumber}(\textcolor{keyword}{true})) \{
+1468       token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca766aefde855b1246d89b8552240c70d1}{tokenNumber};
+1469     \} \textcolor{keywordflow}{else} \{
+1470       token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca3cf3c4c72d6b5969f17f043a34b2ad4c}{tokenNegInf};
+1471       ok = \hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_af760f91cc2a7af37e44f78fb466061bb}{allowSpecialFloats\_} && \hyperlink{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}{match}(\textcolor{stringliteral}{"nfinity"}, 7);
+1472     \}
+1473     \textcolor{keywordflow}{break};
+1474   \textcolor{keywordflow}{case} \textcolor{charliteral}{'t'}:
+1475     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccac7d2a552afcea291d47cf49dfefaf619}{tokenTrue};
+1476     ok = \hyperlink{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}{match}(\textcolor{stringliteral}{"rue"}, 3);
+1477     \textcolor{keywordflow}{break};
+1478   \textcolor{keywordflow}{case} \textcolor{charliteral}{'f'}:
+1479     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccaab91e3ef98c1cb1326c3674e518c5126}{tokenFalse};
+1480     ok = \hyperlink{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}{match}(\textcolor{stringliteral}{"alse"}, 4);
+1481     \textcolor{keywordflow}{break};
+1482   \textcolor{keywordflow}{case} \textcolor{charliteral}{'n'}:
+1483     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca4c80b7bb245e3863e38dc8e8586b3c51}{tokenNull};
+1484     ok = \hyperlink{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}{match}(\textcolor{stringliteral}{"ull"}, 3);
+1485     \textcolor{keywordflow}{break};
+1486   \textcolor{keywordflow}{case} \textcolor{charliteral}{'N'}:
+1487     \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_af760f91cc2a7af37e44f78fb466061bb}{allowSpecialFloats\_}) \{
+1488       token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca167898478691f1ac7a240981ccaa1713}{tokenNaN};
+1489       ok = \hyperlink{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}{match}(\textcolor{stringliteral}{"aN"}, 2);
+1490     \} \textcolor{keywordflow}{else} \{
+1491       ok = \textcolor{keyword}{false};
+1492     \}
+1493     \textcolor{keywordflow}{break};
+1494   \textcolor{keywordflow}{case} \textcolor{charliteral}{'I'}:
+1495     \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_af760f91cc2a7af37e44f78fb466061bb}{allowSpecialFloats\_}) \{
+1496       token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca800c7c7e896d569ebf6c2771eecc7060}{tokenPosInf};
+1497       ok = \hyperlink{class_json_1_1_our_reader_a4a03f1b266def9b47c4fef35386557fb}{match}(\textcolor{stringliteral}{"nfinity"}, 7);
+1498     \} \textcolor{keywordflow}{else} \{
+1499       ok = \textcolor{keyword}{false};
+1500     \}
+1501     \textcolor{keywordflow}{break};
+1502   \textcolor{keywordflow}{case} \textcolor{charliteral}{','}:
+1503     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8ca62ab9091b149d52ec55828f8040f4}{tokenArraySeparator};
+1504     \textcolor{keywordflow}{break};
+1505   \textcolor{keywordflow}{case} \textcolor{charliteral}{':'}:
+1506     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7c95881fb1162316bce42c629bf06214}{tokenMemberSeparator};
+1507     \textcolor{keywordflow}{break};
+1508   \textcolor{keywordflow}{case} 0:
+1509     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca735d1f76eafc2c0c581ed79c077aaa7e}{tokenEndOfStream};
+1510     \textcolor{keywordflow}{break};
+1511   \textcolor{keywordflow}{default}:
+1512     ok = \textcolor{keyword}{false};
+1513     \textcolor{keywordflow}{break};
+1514   \}
+1515   \textcolor{keywordflow}{if} (!ok)
+1516     token.type\_ = \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccad39f929b971de8dc55fe84a2d2e3465e}{tokenError};
+1517   token.end\_ = \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_};
+1518   \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+1519 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a1765d9670d191c89a57a22ea5591d35f}\label{class_json_1_1_our_reader_a1765d9670d191c89a57a22ea5591d35f}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!read\+Value@{read\+Value}}
+\index{read\+Value@{read\+Value}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{read\+Value()}{readValue()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::read\+Value (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1309 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1309                           \{
+1310   \textcolor{comment}{//  To preserve the old behaviour we cast size\_t to int.}
+1311   \textcolor{keywordflow}{if} (static\_cast<int>(\hyperlink{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}{nodes\_}.size()) > \hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_a9a786713902d14be6d57a08cc03ccfff}{stackLimit\_}) 
+      \hyperlink{namespace_json_a0ab7ff7f99788262d92d9ff3d924e065}{throwRuntimeError}(\textcolor{stringliteral}{"Exceeded stackLimit in readValue()."});
+1312   Token token;
+1313   \hyperlink{class_json_1_1_our_reader_a856dea44d92578c276856d7a65a4ebdc}{skipCommentTokens}(token);
+1314   \textcolor{keywordtype}{bool} successful = \textcolor{keyword}{true};
+1315 
+1316   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}{collectComments\_} && !\hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{commentsBefore\_}.empty()) \{
+1317     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a29f3a30f7e5d3af6f38d57999bf5b480}{setComment}(\hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{commentsBefore\_}, 
+      \hyperlink{namespace_json_a4fc417c23905b2ae9e2c47d197a45351a52f1733775460517b2ea6bedf4906d52}{commentBefore});
+1318     \hyperlink{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}{commentsBefore\_} = \textcolor{stringliteral}{""};
+1319   \}
+1320 
+1321   \textcolor{keywordflow}{switch} (token.type\_) \{
+1322   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca7495ef5c356d4faa39b702e528cc7e26}{tokenObjectBegin}:
+1323     successful = \hyperlink{class_json_1_1_our_reader_aea198f8101dba55099f4d8121a993530}{readObject}(token);
+1324     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1325     \textcolor{keywordflow}{break};
+1326   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca45d229fce2f5f4b52dc0d6c39c853436}{tokenArrayBegin}:
+1327     successful = \hyperlink{class_json_1_1_our_reader_a0b9f58faf4212c6ecb5d8e2a1ac10257}{readArray}(token);
+1328     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1329     \textcolor{keywordflow}{break};
+1330   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca766aefde855b1246d89b8552240c70d1}{tokenNumber}:
+1331     successful = \hyperlink{class_json_1_1_our_reader_a272d271290933a89abfd5096dd69c9e9}{decodeNumber}(token);
+1332     \textcolor{keywordflow}{break};
+1333   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccadb37e59e1e52cd5e7417bc418b611ce1}{tokenString}:
+1334     successful = \hyperlink{class_json_1_1_our_reader_a34e31d8b8399b7ad493359702b6de6c9}{decodeString}(token);
+1335     \textcolor{keywordflow}{break};
+1336   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccac7d2a552afcea291d47cf49dfefaf619}{tokenTrue}:
+1337     \{
+1338     \hyperlink{class_json_1_1_value}{Value} v(\textcolor{keyword}{true});
+1339     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(v);
+1340     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1341     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1342     \}
+1343     \textcolor{keywordflow}{break};
+1344   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dccaab91e3ef98c1cb1326c3674e518c5126}{tokenFalse}:
+1345     \{
+1346     \hyperlink{class_json_1_1_value}{Value} v(\textcolor{keyword}{false});
+1347     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(v);
+1348     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1349     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1350     \}
+1351     \textcolor{keywordflow}{break};
+1352   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca4c80b7bb245e3863e38dc8e8586b3c51}{tokenNull}:
+1353     \{
+1354     \hyperlink{class_json_1_1_value}{Value} v;
+1355     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(v);
+1356     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1357     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1358     \}
+1359     \textcolor{keywordflow}{break};
+1360   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca167898478691f1ac7a240981ccaa1713}{tokenNaN}:
+1361     \{
+1362     \hyperlink{class_json_1_1_value}{Value} v(std::numeric\_limits<double>::quiet\_NaN());
+1363     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(v);
+1364     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1365     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1366     \}
+1367     \textcolor{keywordflow}{break};
+1368   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca800c7c7e896d569ebf6c2771eecc7060}{tokenPosInf}:
+1369     \{
+1370     \hyperlink{class_json_1_1_value}{Value} v(std::numeric\_limits<double>::infinity());
+1371     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(v);
+1372     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1373     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1374     \}
+1375     \textcolor{keywordflow}{break};
+1376   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca3cf3c4c72d6b5969f17f043a34b2ad4c}{tokenNegInf}:
+1377     \{
+1378     \hyperlink{class_json_1_1_value}{Value} v(-std::numeric\_limits<double>::infinity());
+1379     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(v);
+1380     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1381     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1382     \}
+1383     \textcolor{keywordflow}{break};
+1384   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8ca62ab9091b149d52ec55828f8040f4}{tokenArraySeparator}:
+1385   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca8d7e94be97d76ea1c314130b5aabb014}{tokenObjectEnd}:
+1386   \textcolor{keywordflow}{case} \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca59a4f42b50d9731dce6be41818c3d91b}{tokenArrayEnd}:
+1387     \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_a13963bc44bf948eec1968f7ff8e8f5f1}{allowDroppedNullPlaceholders\_}) \{
+1388       \textcolor{comment}{// "Un-read" the current token and mark the current value as a null}
+1389       \textcolor{comment}{// token.}
+1390       \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_}--;
+1391       \hyperlink{class_json_1_1_value}{Value} v;
+1392       \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5263476047f20e2fc6de470e4de34fe5}{swapPayload}(v);
+1393       \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_} - 1);
+1394       \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1395       \textcolor{keywordflow}{break};
+1396     \} \textcolor{comment}{// else, fall through ...}
+1397   \textcolor{keywordflow}{default}:
+1398     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a92e32ea0f4f8a15853a3cf0beac9feb9}{setOffsetStart}(token.start\_ - 
+      \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1399     \hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}().\hyperlink{class_json_1_1_value_a5e4f5853fec138150c5df6004a8c2bcf}{setOffsetLimit}(token.end\_ - \hyperlink{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}{begin\_});
+1400     \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_our_reader_aa6a920311e6408ff3a45324d49da18a6}{addError}(\textcolor{stringliteral}{"Syntax error: value, object or array expected."}, token);
+1401   \}
+1402 
+1403   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}{collectComments\_}) \{
+1404     \hyperlink{class_json_1_1_our_reader_a101eadc45e01c60628b53f0db3d13482}{lastValueEnd\_} = \hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_};
+1405     \hyperlink{class_json_1_1_our_reader_a9f994b6a2227c5d96e6ed6cbc74ed251}{lastValue\_} = &\hyperlink{class_json_1_1_our_reader_a2acd5b1d53e7d7e17c21ff8e96edc09d}{currentValue}();
+1406   \}
+1407 
+1408   \textcolor{keywordflow}{return} successful;
+1409 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a1765d9670d191c89a57a22ea5591d35f_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a1765d9670d191c89a57a22ea5591d35f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c}\label{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!recover\+From\+Error@{recover\+From\+Error}}
+\index{recover\+From\+Error@{recover\+From\+Error}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{recover\+From\+Error()}{recoverFromError()}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::recover\+From\+Error (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcc}{Token\+Type}}]{skip\+Until\+Token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1983 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1983                                                          \{
+1984   \textcolor{keywordtype}{size\_t} errorCount = \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.size();
+1985   Token skip;
+1986   \textcolor{keywordflow}{for} (;;) \{
+1987     \textcolor{keywordflow}{if} (!\hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(skip))
+1988       \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.resize(errorCount); \textcolor{comment}{// discard errors caused by recovery}
+1989     \textcolor{keywordflow}{if} (skip.type\_ == skipUntilToken || skip.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca735d1f76eafc2c0c581ed79c077aaa7e}{tokenEndOfStream})
+1990       \textcolor{keywordflow}{break};
+1991   \}
+1992   \hyperlink{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}{errors\_}.resize(errorCount);
+1993   \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+1994 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a035651f0700a76a815e5f904c63ebb1c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a856dea44d92578c276856d7a65a4ebdc}\label{class_json_1_1_our_reader_a856dea44d92578c276856d7a65a4ebdc}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!skip\+Comment\+Tokens@{skip\+Comment\+Tokens}}
+\index{skip\+Comment\+Tokens@{skip\+Comment\+Tokens}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{skip\+Comment\+Tokens()}{skipCommentTokens()}}
+{\footnotesize\ttfamily void Json\+::\+Our\+Reader\+::skip\+Comment\+Tokens (\begin{DoxyParamCaption}\item[{\hyperlink{class_json_1_1_our_reader_1_1_token}{Token} \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1411 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1411                                               \{
+1412   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}{features\_}.\hyperlink{class_json_1_1_our_features_ac71bb7ba7363d3b05ed76602b036ce33}{allowComments\_}) \{
+1413     \textcolor{keywordflow}{do} \{
+1414       \hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(token);
+1415     \} \textcolor{keywordflow}{while} (token.type\_ == \hyperlink{class_json_1_1_our_reader_a15116f7276ddf1e7a2cc3cbefa884dcca777fb6589fdbe225bc10a1e49a090da9}{tokenComment});
+1416   \} \textcolor{keywordflow}{else} \{
+1417     \hyperlink{class_json_1_1_our_reader_a0d1e66da47fe2e85f5033c59326dfdc3}{readToken}(token);
+1418   \}
+1419 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a856dea44d92578c276856d7a65a4ebdc_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a856dea44d92578c276856d7a65a4ebdc_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a6fbc6d58a4505e5ccadf330b57b17ca5}\label{class_json_1_1_our_reader_a6fbc6d58a4505e5ccadf330b57b17ca5}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!skip\+Spaces@{skip\+Spaces}}
+\index{skip\+Spaces@{skip\+Spaces}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{skip\+Spaces()}{skipSpaces()}}
+{\footnotesize\ttfamily void Json\+::\+Our\+Reader\+::skip\+Spaces (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1521 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1521                            \{
+1522   \textcolor{keywordflow}{while} (\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_} != \hyperlink{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}{end\_}) \{
+1523     \hyperlink{class_json_1_1_our_reader_a0cd0bab4caa66594ab843ccd5f9dc239}{Char} c = *\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_};
+1524     \textcolor{keywordflow}{if} (c == \textcolor{charliteral}{' '} || c == \textcolor{charliteral}{'\(\backslash\)t'} || c == \textcolor{charliteral}{'\(\backslash\)r'} || c == \textcolor{charliteral}{'\(\backslash\)n'})
+1525       ++\hyperlink{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}{current\_};
+1526     \textcolor{keywordflow}{else}
+1527       \textcolor{keywordflow}{break};
+1528   \}
+1529 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_our_reader_a6fbc6d58a4505e5ccadf330b57b17ca5_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_our_reader_ad48bdaf5b686706f003e792fdbcbf102}\label{class_json_1_1_our_reader_ad48bdaf5b686706f003e792fdbcbf102}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!skip\+Until\+Space@{skip\+Until\+Space}}
+\index{skip\+Until\+Space@{skip\+Until\+Space}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{skip\+Until\+Space()}{skipUntilSpace()}}
+{\footnotesize\ttfamily void Json\+::\+Our\+Reader\+::skip\+Until\+Space (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}\label{class_json_1_1_our_reader_a9bda9d72335d52cd06e65f9eca3f70f5}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!begin\+\_\+@{begin\+\_\+}}
+\index{begin\+\_\+@{begin\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{begin\+\_\+}{begin\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} Json\+::\+Our\+Reader\+::begin\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1243 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}\label{class_json_1_1_our_reader_a259f6ac988da2894bcafc670e42f73ad}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!collect\+Comments\+\_\+@{collect\+Comments\+\_\+}}
+\index{collect\+Comments\+\_\+@{collect\+Comments\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{collect\+Comments\+\_\+}{collectComments\_}}
+{\footnotesize\ttfamily bool Json\+::\+Our\+Reader\+::collect\+Comments\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1251 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}\label{class_json_1_1_our_reader_a9c53e77e290eb9081298210a955fda6a}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!comments\+Before\+\_\+@{comments\+Before\+\_\+}}
+\index{comments\+Before\+\_\+@{comments\+Before\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{comments\+Before\+\_\+}{commentsBefore\_}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Our\+Reader\+::comments\+Before\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1248 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}\label{class_json_1_1_our_reader_a5211fbbba94be80a22dd2317c621efcc}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!current\+\_\+@{current\+\_\+}}
+\index{current\+\_\+@{current\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{current\+\_\+}{current\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} Json\+::\+Our\+Reader\+::current\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1245 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a726230af83d22d25e0c76cec3408ecf1}\label{class_json_1_1_our_reader_a726230af83d22d25e0c76cec3408ecf1}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!document\+\_\+@{document\+\_\+}}
+\index{document\+\_\+@{document\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{document\+\_\+}{document\_}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Our\+Reader\+::document\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1242 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}\label{class_json_1_1_our_reader_ab1f69b0260c27a0d2d65dc56e42c8f9d}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!end\+\_\+@{end\+\_\+}}
+\index{end\+\_\+@{end\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{end\+\_\+}{end\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} Json\+::\+Our\+Reader\+::end\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1244 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}\label{class_json_1_1_our_reader_afb76b68ba1ab68fe09cf2838e3d4898d}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!errors\+\_\+@{errors\+\_\+}}
+\index{errors\+\_\+@{errors\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{errors\+\_\+}{errors\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_reader_a8cc69593ef7303e58e99bb5dbb767562}{Errors} Json\+::\+Our\+Reader\+::errors\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1241 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}\label{class_json_1_1_our_reader_a2714302d5cc54ca2ce4118ea51c0397a}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!features\+\_\+@{features\+\_\+}}
+\index{features\+\_\+@{features\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{features\+\_\+}{features\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_features}{Our\+Features} const Json\+::\+Our\+Reader\+::features\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1250 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a9f994b6a2227c5d96e6ed6cbc74ed251}\label{class_json_1_1_our_reader_a9f994b6a2227c5d96e6ed6cbc74ed251}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!last\+Value\+\_\+@{last\+Value\+\_\+}}
+\index{last\+Value\+\_\+@{last\+Value\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{last\+Value\+\_\+}{lastValue\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_value}{Value}$\ast$ Json\+::\+Our\+Reader\+::last\+Value\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1247 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a101eadc45e01c60628b53f0db3d13482}\label{class_json_1_1_our_reader_a101eadc45e01c60628b53f0db3d13482}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!last\+Value\+End\+\_\+@{last\+Value\+End\+\_\+}}
+\index{last\+Value\+End\+\_\+@{last\+Value\+End\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{last\+Value\+End\+\_\+}{lastValueEnd\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_reader_a1bdc7bbc52ba87cae6b19746f2ee0189}{Location} Json\+::\+Our\+Reader\+::last\+Value\+End\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1246 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}\label{class_json_1_1_our_reader_a19cc4e8c5d17ee6822f752e9a36f4ce3}} 
+\index{Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}!nodes\+\_\+@{nodes\+\_\+}}
+\index{nodes\+\_\+@{nodes\+\_\+}!Json\+::\+Our\+Reader@{Json\+::\+Our\+Reader}}
+\subsubsection{\texorpdfstring{nodes\+\_\+}{nodes\_}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_our_reader_a8480a5ef159cee3a090f96358414d8d3}{Nodes} Json\+::\+Our\+Reader\+::nodes\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+jsoncpp.\+cpp 파일의 1240 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/\hyperlink{jsoncpp_8cpp}{jsoncpp.\+cpp}\end{DoxyCompactItemize}

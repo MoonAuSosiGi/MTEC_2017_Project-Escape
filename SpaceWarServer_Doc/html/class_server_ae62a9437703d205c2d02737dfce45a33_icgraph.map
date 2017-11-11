@@ -1,0 +1,5 @@
+<map id="Server::GetProxy" name="Server::GetProxy">
+<area shape="rect" id="node2" href="$_server_8cpp.html#aa49c05ac1cfbff49b47ca9ff62ae3761" title="서버스레드 :: 메테오, 데스존 관리 &#160;1초마다 호출됨 " alt="" coords="175,5,300,32"/>
+<area shape="rect" id="node3" href="$class_server.html#acb327f7980ef16c40087bdafcef5ad7a" title="게임 서버 시작 " alt="" coords="348,5,473,32"/>
+<area shape="rect" id="node4" href="$_server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="서버 프로그램의 시작 지점 " alt="" coords="521,5,572,32"/>
+</map>

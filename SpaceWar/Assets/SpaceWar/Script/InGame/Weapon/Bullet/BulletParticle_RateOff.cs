@@ -10,15 +10,14 @@ public class BulletParticle_RateOff : MonoBehaviour
     private float m_startValue = 0.0f;
     #endregion
 
-    #region Unity Method
-    void Start()
-    {
-        m_targetParticleSystem = this.GetComponent<ParticleSystem>();
-        m_startValue = m_targetParticleSystem.emission.rateOverTime.constant;
-    }
-    #endregion
+
     public void BulletHitEvent()
     {
+        if(m_targetParticleSystem == null)
+        {
+            m_targetParticleSystem = this.GetComponent<ParticleSystem>();
+            m_startValue = m_targetParticleSystem.emission.rateOverTime.constant;
+        }
         var em = m_targetParticleSystem.emission;
         em.enabled = true;
         em.rateOverTime = 0.0f;
@@ -35,7 +34,7 @@ public class BulletParticle_RateOff : MonoBehaviour
         em.rateOverTime = m_startValue;
 
         //test
-        Debug.Log("Reset " + m_targetParticleSystem.emission.rateOverTime.constant);
+        Debug.Log("Reset " + m_targetParticleSystem.emission.rateOverTime.constant + " enabled " + m_targetParticleSystem.emission.enabled);
 
     }
 }

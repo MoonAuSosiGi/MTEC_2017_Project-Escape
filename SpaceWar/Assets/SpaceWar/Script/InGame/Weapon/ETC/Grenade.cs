@@ -53,6 +53,7 @@ public class Grenade : WeaponItem {
     #region Unity Method
     void Start()
     {
+        Setup();
         m_rigidbody = gameObject.AddComponent<Rigidbody>();
         m_rigidbody.isKinematic = true;
     }

@@ -1,0 +1,19 @@
+<map id="ServerThreadLoop" name="ServerThreadLoop">
+<area shape="rect" id="node2" href="$class_server.html#a4ad8b199648bad8ea03b9e161b1bcb10" title="초기 우주선 잠금값 얻기 " alt="" coords="191,5,398,32"/>
+<area shape="rect" id="node3" href="$class_server.html#a3866f3d6a99358d0068cee3d5bc529d2" title="초기 우주선 잠금값 세팅 " alt="" coords="192,56,397,83"/>
+<area shape="rect" id="node4" href="$class_server.html#ae62a9437703d205c2d02737dfce45a33" title="전송 프록시 얻기 " alt="" coords="234,107,355,133"/>
+<area shape="rect" id="node5" href="$class_server.html#ac6e03fa95f91583bd117f4910257b7be" title="P2P 아이디 얻기 " alt="" coords="233,157,357,184"/>
+<area shape="rect" id="node6" href="$class_server.html#a044bc662d96361b3bda25230533ec63b" title="서버 객체 얻기 " alt="" coords="233,208,356,235"/>
+<area shape="rect" id="node7" href="$_server_8h.html#ade3d882172359ea96a915f1cab5f681b" title="RandomRange" alt="" coords="241,259,348,285"/>
+<area shape="rect" id="node8" href="$class_server.html#a2c9b6a25a8add5d74b5f3bcfeff956ec" title="메테오의 네트워크 아이디 얻기 " alt="" coords="225,309,364,336"/>
+<area shape="rect" id="node9" href="$class_server.html#a582ad4eb2272b1ab92daad71dc700e8d" title="메테오의 네트워크 아이디 세팅 " alt="" coords="225,360,364,387"/>
+<area shape="rect" id="node10" href="$class_server.html#abd194d047570b5959ae56948d4bbc9bd" title="데스존까지 남은 시간 얻기 " alt="" coords="179,411,411,437"/>
+<area shape="rect" id="node11" href="$class_server.html#a0c817a017f9b2cb6f92de01e693b8e35" title="데스존까지 남은 시간 세팅 " alt="" coords="179,461,410,488"/>
+<area shape="rect" id="node12" href="$class_server.html#ad0f632640a71c4d229e17e7b9eb2257d" title="데스존 네트워크 아이디 얻기 " alt="" coords="214,512,375,539"/>
+<area shape="rect" id="node13" href="$class_server.html#a43c5961b9519b2358127956c817a2120" title="Server::GetSpaceShipCount" alt="" coords="203,563,387,589"/>
+<area shape="rect" id="node14" href="$class_server.html#a97583a37e049f390e255a61afbac02a2" title="데스존의 네트워크 아이디 세팅 " alt="" coords="215,613,375,640"/>
+<area shape="rect" id="node15" href="$class_server.html#ab5d6fa91446df16909dfbea64abddf76" title="게임 룸 객체 얻기 " alt="" coords="217,664,373,691"/>
+<area shape="rect" id="node16" href="$class_server.html#a636f3c3d5fe8406197f9ea30409fb725" title="데스존이 진행하고 있는 인덱스 얻기 " alt="" coords="205,715,385,741"/>
+<area shape="rect" id="node17" href="$class_server.html#a78cb51003b1a243780c2845263e75b29" title="데스존을 현재 움직이고 있는 클라이언트 세팅 " alt="" coords="201,765,388,792"/>
+<area shape="rect" id="node18" href="$class_server.html#a2e2dda4eb32e6f0a43ca8aba93d4d9a9" title="데스존을 현재 움직이고 있는 클라이언트 얻기 " alt="" coords="201,816,389,843"/>
+</map>

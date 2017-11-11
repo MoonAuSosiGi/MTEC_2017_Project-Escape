@@ -1,0 +1,1143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TimeForEscape_Server: Json::ValueConstIterator 클래스 참조</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">TimeForEscape_Server
+   &#160;<span id="projectnumber">0.0.1</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','검색');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('class_json_1_1_value_const_iterator.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public 타입</a> &#124;
+<a href="#pub-methods">Public 멤버 함수</a> &#124;
+<a href="#pro-methods">Protected 멤버 함수</a> &#124;
+<a href="#pri-methods">Private 멤버 함수</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="class_json_1_1_value_const_iterator-members.html">모든 멤버 목록</a>  </div>
+  <div class="headertitle">
+<div class="title">Json::ValueConstIterator 클래스 참조</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>const iterator for object and array value.  
+ <a href="class_json_1_1_value_const_iterator.html#details">더 자세히 ...</a></p>
+
+<p><code>#include &lt;<a class="el" href="json_8h_source.html">json.h</a>&gt;</code></p>
+<div class="dynheader">
+Json::ValueConstIterator에 대한 상속 다이어그램 : </div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_const_iterator__inherit__graph.png" border="0" usemap="#_json_1_1_value_const_iterator_inherit__map" alt="Inheritance graph"/></div>
+<map name="_json_1_1_value_const_iterator_inherit__map" id="_json_1_1_value_const_iterator_inherit__map">
+<area shape="rect" id="node2" href="class_json_1_1_value_iterator_base.html" title="base class for Value iterators. " alt="" coords="7,5,167,317"/>
+</map>
+</div>
+<div class="dynheader">
+Json::ValueConstIterator에 대한 협력 다이어그램:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_const_iterator__coll__graph.png" border="0" usemap="#_json_1_1_value_const_iterator_coll__map" alt="Collaboration graph"/></div>
+<map name="_json_1_1_value_const_iterator_coll__map" id="_json_1_1_value_const_iterator_coll__map">
+<area shape="rect" id="node2" href="class_json_1_1_value_iterator_base.html" title="base class for Value iterators. " alt="" coords="7,5,167,317"/>
+</map>
+</div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public 타입</h2></td></tr>
+<tr class="memitem:aa5f1707dcef4bfe73e23ddc14dbe760d"><td class="memItemLeft" align="right" valign="top">typedef const <a class="el" href="class_json_1_1_value.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#aa5f1707dcef4bfe73e23ddc14dbe760d">value_type</a></td></tr>
+<tr class="separator:aa5f1707dcef4bfe73e23ddc14dbe760d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9b05c6a37cd352ea1ee6e13b816f709"><td class="memItemLeft" align="right" valign="top">typedef const <a class="el" href="class_json_1_1_value.html">Value</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#aa9b05c6a37cd352ea1ee6e13b816f709">reference</a></td></tr>
+<tr class="separator:aa9b05c6a37cd352ea1ee6e13b816f709"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a400136bd8bc09e9fddec0785fa2cff14"><td class="memItemLeft" align="right" valign="top">typedef const <a class="el" href="class_json_1_1_value.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#a400136bd8bc09e9fddec0785fa2cff14">pointer</a></td></tr>
+<tr class="separator:a400136bd8bc09e9fddec0785fa2cff14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c2e33e7eb5a80dd8709fb28ece83933"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_json_1_1_value_const_iterator.html">ValueConstIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#a0c2e33e7eb5a80dd8709fb28ece83933">SelfType</a></td></tr>
+<tr class="separator:a0c2e33e7eb5a80dd8709fb28ece83933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02fd11a4fbdc0007da1e8bcf5e6b83c3"><td class="memItemLeft" align="right" valign="top">typedef std::bidirectional_iterator_tag&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a02fd11a4fbdc0007da1e8bcf5e6b83c3">iterator_category</a></td></tr>
+<tr class="separator:a02fd11a4fbdc0007da1e8bcf5e6b83c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d3a3c7ce5cdefe23cb486239cf07bb5"><td class="memItemLeft" align="right" valign="top">typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d3a3c7ce5cdefe23cb486239cf07bb5">size_t</a></td></tr>
+<tr class="separator:a9d3a3c7ce5cdefe23cb486239cf07bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e44bf8cbd17ec8d6e2c185904a15ebd"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a4e44bf8cbd17ec8d6e2c185904a15ebd">difference_type</a></td></tr>
+<tr class="separator:a4e44bf8cbd17ec8d6e2c185904a15ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 멤버 함수</h2></td></tr>
+<tr class="memitem:a1b10a46f1606421b0663492a5f9a2aad"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#a1b10a46f1606421b0663492a5f9a2aad">ValueConstIterator</a> ()</td></tr>
+<tr class="separator:a1b10a46f1606421b0663492a5f9a2aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ef3df204a9ae83a0d8a3cd128e05c70"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#a7ef3df204a9ae83a0d8a3cd128e05c70">ValueConstIterator</a> (<a class="el" href="class_json_1_1_value_iterator.html">ValueIterator</a> const &amp;other)</td></tr>
+<tr class="separator:a7ef3df204a9ae83a0d8a3cd128e05c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1b1c11f8d7fb22d4d3c231915f2b15b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#ad1b1c11f8d7fb22d4d3c231915f2b15b">operator=</a> (const <a class="el" href="class_json_1_1_value_iterator_base.html">ValueIteratorBase</a> &amp;other)</td></tr>
+<tr class="separator:ad1b1c11f8d7fb22d4d3c231915f2b15b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f0c2edbfc8f7d60645f3d597d05e28"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#ab3f0c2edbfc8f7d60645f3d597d05e28">operator++</a> (int)</td></tr>
+<tr class="separator:ab3f0c2edbfc8f7d60645f3d597d05e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94935961e9331c6f7b907b05ec8df75e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#a94935961e9331c6f7b907b05ec8df75e">operator--</a> (int)</td></tr>
+<tr class="separator:a94935961e9331c6f7b907b05ec8df75e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31415e44e44e56fb2bfda7e8bb784646"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#a31415e44e44e56fb2bfda7e8bb784646">operator--</a> ()</td></tr>
+<tr class="separator:a31415e44e44e56fb2bfda7e8bb784646"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cfe2f7a94a688186efdafb1b181c319"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#a2cfe2f7a94a688186efdafb1b181c319">operator++</a> ()</td></tr>
+<tr class="separator:a2cfe2f7a94a688186efdafb1b181c319"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5612dad47a6387eef71d584fb741d0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_const_iterator.html#aa9b05c6a37cd352ea1ee6e13b816f709">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#ae5612dad47a6387eef71d584fb741d0c">operator*</a> () const</td></tr>
+<tr class="separator:ae5612dad47a6387eef71d584fb741d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c608ae53c192ee846eb265bae1cfeec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_const_iterator.html#a400136bd8bc09e9fddec0785fa2cff14">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#a3c608ae53c192ee846eb265bae1cfeec">operator-&gt;</a> () const</td></tr>
+<tr class="separator:a3c608ae53c192ee846eb265bae1cfeec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1248d8016f88b51371a0fcbd355b3cfd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a1248d8016f88b51371a0fcbd355b3cfd">operator==</a> (const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;other) const</td></tr>
+<tr class="separator:a1248d8016f88b51371a0fcbd355b3cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa83bdcc8114b7d040eb8eb42eeed5f4a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#aa83bdcc8114b7d040eb8eb42eeed5f4a">operator!=</a> (const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;other) const</td></tr>
+<tr class="separator:aa83bdcc8114b7d040eb8eb42eeed5f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98e254263fca5f1fc8fcac7bcb0260bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_iterator_base.html#a4e44bf8cbd17ec8d6e2c185904a15ebd">difference_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a98e254263fca5f1fc8fcac7bcb0260bf">operator-</a> (const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;other) const</td></tr>
+<tr class="separator:a98e254263fca5f1fc8fcac7bcb0260bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3838ba39c43c518cf3ed4aa6ce78ccad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a3838ba39c43c518cf3ed4aa6ce78ccad">key</a> () const</td></tr>
+<tr class="separator:a3838ba39c43c518cf3ed4aa6ce78ccad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a549c66a0bd20e9ae772175a5c0d2e88a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_json.html#a800fb90eb6ee8d5d62b600c06f87f7d4">UInt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a549c66a0bd20e9ae772175a5c0d2e88a">index</a> () const</td></tr>
+<tr class="memdesc:a549c66a0bd20e9ae772175a5c0d2e88a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the index of the referenced <a class="el" href="class_json_1_1_value.html" title="Represents a JSON value. ">Value</a>, or -1 if it is not an arrayValue.  <a href="#a549c66a0bd20e9ae772175a5c0d2e88a">더 자세히 ...</a><br /></td></tr>
+<tr class="separator:a549c66a0bd20e9ae772175a5c0d2e88a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a522989403c976fdbb94da846b99418db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#a1e723f95759de062585bc4a8fd3fa4be">JSONCPP_STRING</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a522989403c976fdbb94da846b99418db">name</a> () const</td></tr>
+<tr class="separator:a522989403c976fdbb94da846b99418db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54765da6759fd3f1edcbfbaf308ec263"><td class="memItemLeft" align="right" valign="top">char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a54765da6759fd3f1edcbfbaf308ec263">memberName</a> () const</td></tr>
+<tr class="separator:a54765da6759fd3f1edcbfbaf308ec263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a391c9cbd0edf9a447b37df00e8ce6059"><td class="memItemLeft" align="right" valign="top">char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a391c9cbd0edf9a447b37df00e8ce6059">memberName</a> (char const **end) const</td></tr>
+<tr class="separator:a391c9cbd0edf9a447b37df00e8ce6059"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected 멤버 함수</h2></td></tr>
+<tr class="memitem:aa5b75c9514a30ba2ea3c9a35c165c18e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value.html">Value</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#aa5b75c9514a30ba2ea3c9a35c165c18e">deref</a> () const</td></tr>
+<tr class="separator:aa5b75c9514a30ba2ea3c9a35c165c18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe58f9534e1fd2033419fd9fe244551e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#afe58f9534e1fd2033419fd9fe244551e">increment</a> ()</td></tr>
+<tr class="separator:afe58f9534e1fd2033419fd9fe244551e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affc8cf5ff54a9f432cc693362c153fa6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#affc8cf5ff54a9f432cc693362c153fa6">decrement</a> ()</td></tr>
+<tr class="separator:affc8cf5ff54a9f432cc693362c153fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af11473c9e20d07782e42b52a2f9e4540"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_json_1_1_value_iterator_base.html#a4e44bf8cbd17ec8d6e2c185904a15ebd">difference_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#af11473c9e20d07782e42b52a2f9e4540">computeDistance</a> (const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;other) const</td></tr>
+<tr class="separator:af11473c9e20d07782e42b52a2f9e4540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a010b5ad3f3337ae3732e5d7e16ca5e25"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a010b5ad3f3337ae3732e5d7e16ca5e25">isEqual</a> (const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;other) const</td></tr>
+<tr class="separator:a010b5ad3f3337ae3732e5d7e16ca5e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a496e6aba44808433ec5858c178be5719"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_iterator_base.html#a496e6aba44808433ec5858c178be5719">copy</a> (const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;other)</td></tr>
+<tr class="separator:a496e6aba44808433ec5858c178be5719"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private 멤버 함수</h2></td></tr>
+<tr class="memitem:aa0a87edf5f1097f91dca5f2a389c4abd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#aa0a87edf5f1097f91dca5f2a389c4abd">ValueConstIterator</a> (const Value::ObjectValues::iterator &amp;current)</td></tr>
+<tr class="separator:aa0a87edf5f1097f91dca5f2a389c4abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:aeceedf6e1a7d48a588516ce2b1983d6f"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_json_1_1_value_const_iterator.html#aeceedf6e1a7d48a588516ce2b1983d6f">Value</a></td></tr>
+<tr class="separator:aeceedf6e1a7d48a588516ce2b1983d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">상세한 설명</h2>
+<div class="textblock"><p>const iterator for object and array value. </p>
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01198">1198</a> 번째 라인에서 정의되었습니다.</p>
+</div><h2 class="groupheader">멤버 타입정의 문서화</h2>
+<a id="a4e44bf8cbd17ec8d6e2c185904a15ebd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e44bf8cbd17ec8d6e2c185904a15ebd">&#9670;&nbsp;</a></span>difference_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef int <a class="el" href="class_json_1_1_value_iterator_base.html#a4e44bf8cbd17ec8d6e2c185904a15ebd">Json::ValueIteratorBase::difference_type</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01137">1137</a> 번째 라인에서 정의되었습니다.</p>
+
+</div>
+</div>
+<a id="a02fd11a4fbdc0007da1e8bcf5e6b83c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02fd11a4fbdc0007da1e8bcf5e6b83c3">&#9670;&nbsp;</a></span>iterator_category</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::bidirectional_iterator_tag <a class="el" href="class_json_1_1_value_iterator_base.html#a02fd11a4fbdc0007da1e8bcf5e6b83c3">Json::ValueIteratorBase::iterator_category</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01135">1135</a> 번째 라인에서 정의되었습니다.</p>
+
+</div>
+</div>
+<a id="a400136bd8bc09e9fddec0785fa2cff14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a400136bd8bc09e9fddec0785fa2cff14">&#9670;&nbsp;</a></span>pointer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef const <a class="el" href="class_json_1_1_value.html">Value</a>* <a class="el" href="class_json_1_1_value_const_iterator.html#a400136bd8bc09e9fddec0785fa2cff14">Json::ValueConstIterator::pointer</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01206">1206</a> 번째 라인에서 정의되었습니다.</p>
+
+</div>
+</div>
+<a id="aa9b05c6a37cd352ea1ee6e13b816f709"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9b05c6a37cd352ea1ee6e13b816f709">&#9670;&nbsp;</a></span>reference</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef const <a class="el" href="class_json_1_1_value.html">Value</a>&amp; <a class="el" href="class_json_1_1_value_const_iterator.html#aa9b05c6a37cd352ea1ee6e13b816f709">Json::ValueConstIterator::reference</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01205">1205</a> 번째 라인에서 정의되었습니다.</p>
+
+</div>
+</div>
+<a id="a0c2e33e7eb5a80dd8709fb28ece83933"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c2e33e7eb5a80dd8709fb28ece83933">&#9670;&nbsp;</a></span>SelfType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="class_json_1_1_value_const_iterator.html">ValueConstIterator</a> <a class="el" href="class_json_1_1_value_const_iterator.html#a0c2e33e7eb5a80dd8709fb28ece83933">Json::ValueConstIterator::SelfType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01207">1207</a> 번째 라인에서 정의되었습니다.</p>
+
+</div>
+</div>
+<a id="a9d3a3c7ce5cdefe23cb486239cf07bb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d3a3c7ce5cdefe23cb486239cf07bb5">&#9670;&nbsp;</a></span>size_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef unsigned int <a class="el" href="class_json_1_1_value_iterator_base.html#a9d3a3c7ce5cdefe23cb486239cf07bb5">Json::ValueIteratorBase::size_t</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01136">1136</a> 번째 라인에서 정의되었습니다.</p>
+
+</div>
+</div>
+<a id="aa5f1707dcef4bfe73e23ddc14dbe760d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5f1707dcef4bfe73e23ddc14dbe760d">&#9670;&nbsp;</a></span>value_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef const <a class="el" href="class_json_1_1_value.html">Value</a> <a class="el" href="class_json_1_1_value_const_iterator.html#aa5f1707dcef4bfe73e23ddc14dbe760d">Json::ValueConstIterator::value_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01202">1202</a> 번째 라인에서 정의되었습니다.</p>
+
+</div>
+</div>
+<h2 class="groupheader">생성자 &amp; 소멸자 문서화</h2>
+<a id="a1b10a46f1606421b0663492a5f9a2aad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b10a46f1606421b0663492a5f9a2aad">&#9670;&nbsp;</a></span>ValueConstIterator() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::ValueConstIterator::ValueConstIterator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02393">2393</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02393"></a><span class="lineno"> 2393</span>&#160;{}</div></div><!-- fragment -->
+</div>
+</div>
+<a id="a7ef3df204a9ae83a0d8a3cd128e05c70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ef3df204a9ae83a0d8a3cd128e05c70">&#9670;&nbsp;</a></span>ValueConstIterator() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::ValueConstIterator::ValueConstIterator </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_json_1_1_value_iterator.html">ValueIterator</a> const &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02399">2399</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02400"></a><span class="lineno"> 2400</span>&#160;    : <a class="code" href="class_json_1_1_value_iterator_base.html#af45b028d9ff9cbd2554a87878b42dd75">ValueIteratorBase</a>(other) {}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_af45b028d9ff9cbd2554a87878b42dd75"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#af45b028d9ff9cbd2554a87878b42dd75">Json::ValueIteratorBase::ValueIteratorBase</a></div><div class="ttdeci">ValueIteratorBase()</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02285">jsoncpp.cpp:2285</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_const_iterator_a7ef3df204a9ae83a0d8a3cd128e05c70_cgraph.png" border="0" usemap="#class_json_1_1_value_const_iterator_a7ef3df204a9ae83a0d8a3cd128e05c70_cgraph" alt=""/></div>
+<map name="class_json_1_1_value_const_iterator_a7ef3df204a9ae83a0d8a3cd128e05c70_cgraph" id="class_json_1_1_value_const_iterator_a7ef3df204a9ae83a0d8a3cd128e05c70_cgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_const_iterator.html#ad1b1c11f8d7fb22d4d3c231915f2b15b" title="Json::ValueConstIterator\l::operator=" alt="" coords="217,5,381,47"/>
+<area shape="rect" id="node3" href="class_json_1_1_value_iterator_base.html#a496e6aba44808433ec5858c178be5719" title="Json::ValueIteratorBase\l::copy" alt="" coords="429,5,589,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa0a87edf5f1097f91dca5f2a389c4abd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0a87edf5f1097f91dca5f2a389c4abd">&#9670;&nbsp;</a></span>ValueConstIterator() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Json::ValueConstIterator::ValueConstIterator </td>
+          <td>(</td>
+          <td class="paramtype">const Value::ObjectValues::iterator &amp;&#160;</td>
+          <td class="paramname"><em>current</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02395">2395</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02397"></a><span class="lineno"> 2397</span>&#160;    : <a class="code" href="class_json_1_1_value_iterator_base.html#af45b028d9ff9cbd2554a87878b42dd75">ValueIteratorBase</a>(current) {}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_af45b028d9ff9cbd2554a87878b42dd75"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#af45b028d9ff9cbd2554a87878b42dd75">Json::ValueIteratorBase::ValueIteratorBase</a></div><div class="ttdeci">ValueIteratorBase()</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02285">jsoncpp.cpp:2285</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">멤버 함수 문서화</h2>
+<a id="af11473c9e20d07782e42b52a2f9e4540"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af11473c9e20d07782e42b52a2f9e4540">&#9670;&nbsp;</a></span>computeDistance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_iterator_base.html#a4e44bf8cbd17ec8d6e2c185904a15ebd">ValueIteratorBase::difference_type</a> Json::ValueIteratorBase::computeDistance </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02306">2306</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02306"></a><span class="lineno"> 2306</span>&#160;                                                              {</div><div class="line"><a name="l02307"></a><span class="lineno"> 2307</span>&#160;<span class="preprocessor">#ifdef JSON_USE_CPPTL_SMALLMAP</span></div><div class="line"><a name="l02308"></a><span class="lineno"> 2308</span>&#160;  <span class="keywordflow">return</span> other.current_ - <a class="code" href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">current_</a>;</div><div class="line"><a name="l02309"></a><span class="lineno"> 2309</span>&#160;<span class="preprocessor">#else</span></div><div class="line"><a name="l02310"></a><span class="lineno"> 2310</span>&#160;  <span class="comment">// Iterator for null value are initialized using the default</span></div><div class="line"><a name="l02311"></a><span class="lineno"> 2311</span>&#160;  <span class="comment">// constructor, which initialize current_ to the default</span></div><div class="line"><a name="l02312"></a><span class="lineno"> 2312</span>&#160;  <span class="comment">// std::map::iterator. As begin() and end() are two instance</span></div><div class="line"><a name="l02313"></a><span class="lineno"> 2313</span>&#160;  <span class="comment">// of the default std::map::iterator, they can not be compared.</span></div><div class="line"><a name="l02314"></a><span class="lineno"> 2314</span>&#160;  <span class="comment">// To allow this, we handle this comparison specifically.</span></div><div class="line"><a name="l02315"></a><span class="lineno"> 2315</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="class_json_1_1_value_iterator_base.html#a3e08b114a1aed9bde518c527f94a8c59">isNull_</a> &amp;&amp; other.isNull_) {</div><div class="line"><a name="l02316"></a><span class="lineno"> 2316</span>&#160;    <span class="keywordflow">return</span> 0;</div><div class="line"><a name="l02317"></a><span class="lineno"> 2317</span>&#160;  }</div><div class="line"><a name="l02318"></a><span class="lineno"> 2318</span>&#160;</div><div class="line"><a name="l02319"></a><span class="lineno"> 2319</span>&#160;  <span class="comment">// Usage of std::distance is not portable (does not compile with Sun Studio 12</span></div><div class="line"><a name="l02320"></a><span class="lineno"> 2320</span>&#160;  <span class="comment">// RogueWave STL,</span></div><div class="line"><a name="l02321"></a><span class="lineno"> 2321</span>&#160;  <span class="comment">// which is the one used by default).</span></div><div class="line"><a name="l02322"></a><span class="lineno"> 2322</span>&#160;  <span class="comment">// Using a portable hand-made version for non random iterator instead:</span></div><div class="line"><a name="l02323"></a><span class="lineno"> 2323</span>&#160;  <span class="comment">//   return difference_type( std::distance( current_, other.current_ ) );</span></div><div class="line"><a name="l02324"></a><span class="lineno"> 2324</span>&#160;  <a class="code" href="class_json_1_1_value_iterator_base.html#a4e44bf8cbd17ec8d6e2c185904a15ebd">difference_type</a> myDistance = 0;</div><div class="line"><a name="l02325"></a><span class="lineno"> 2325</span>&#160;  <span class="keywordflow">for</span> (Value::ObjectValues::iterator it = <a class="code" href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">current_</a>; it != other.current_;</div><div class="line"><a name="l02326"></a><span class="lineno"> 2326</span>&#160;       ++it) {</div><div class="line"><a name="l02327"></a><span class="lineno"> 2327</span>&#160;    ++myDistance;</div><div class="line"><a name="l02328"></a><span class="lineno"> 2328</span>&#160;  }</div><div class="line"><a name="l02329"></a><span class="lineno"> 2329</span>&#160;  <span class="keywordflow">return</span> myDistance;</div><div class="line"><a name="l02330"></a><span class="lineno"> 2330</span>&#160;<span class="preprocessor">#endif</span></div><div class="line"><a name="l02331"></a><span class="lineno"> 2331</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_a3e08b114a1aed9bde518c527f94a8c59"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#a3e08b114a1aed9bde518c527f94a8c59">Json::ValueIteratorBase::isNull_</a></div><div class="ttdeci">bool isNull_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01186">json.h:1186</a></div></div>
+<div class="ttc" id="class_json_1_1_value_iterator_base_html_a4e44bf8cbd17ec8d6e2c185904a15ebd"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#a4e44bf8cbd17ec8d6e2c185904a15ebd">Json::ValueIteratorBase::difference_type</a></div><div class="ttdeci">int difference_type</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01137">json.h:1137</a></div></div>
+<div class="ttc" id="class_json_1_1_value_iterator_base_html_ab3138ce8af8301cca3b041ea55cb922a"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">Json::ValueIteratorBase::current_</a></div><div class="ttdeci">Value::ObjectValues::iterator current_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01184">json.h:1184</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+이 함수를 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_iterator_base_af11473c9e20d07782e42b52a2f9e4540_icgraph.png" border="0" usemap="#class_json_1_1_value_iterator_base_af11473c9e20d07782e42b52a2f9e4540_icgraph" alt=""/></div>
+<map name="class_json_1_1_value_iterator_base_af11473c9e20d07782e42b52a2f9e4540_icgraph" id="class_json_1_1_value_iterator_base_af11473c9e20d07782e42b52a2f9e4540_icgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_iterator_base.html#a98e254263fca5f1fc8fcac7bcb0260bf" title="Json::ValueIteratorBase\l::operator&#45;" alt="" coords="213,5,373,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a496e6aba44808433ec5858c178be5719"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a496e6aba44808433ec5858c178be5719">&#9670;&nbsp;</a></span>copy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::ValueIteratorBase::copy </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02340">2340</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02340"></a><span class="lineno"> 2340</span>&#160;                                                  {</div><div class="line"><a name="l02341"></a><span class="lineno"> 2341</span>&#160;  <a class="code" href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">current_</a> = other.current_;</div><div class="line"><a name="l02342"></a><span class="lineno"> 2342</span>&#160;  <a class="code" href="class_json_1_1_value_iterator_base.html#a3e08b114a1aed9bde518c527f94a8c59">isNull_</a> = other.isNull_;</div><div class="line"><a name="l02343"></a><span class="lineno"> 2343</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_a3e08b114a1aed9bde518c527f94a8c59"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#a3e08b114a1aed9bde518c527f94a8c59">Json::ValueIteratorBase::isNull_</a></div><div class="ttdeci">bool isNull_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01186">json.h:1186</a></div></div>
+<div class="ttc" id="class_json_1_1_value_iterator_base_html_ab3138ce8af8301cca3b041ea55cb922a"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">Json::ValueIteratorBase::current_</a></div><div class="ttdeci">Value::ObjectValues::iterator current_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01184">json.h:1184</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+이 함수를 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_iterator_base_a496e6aba44808433ec5858c178be5719_icgraph.png" border="0" usemap="#class_json_1_1_value_iterator_base_a496e6aba44808433ec5858c178be5719_icgraph" alt=""/></div>
+<map name="class_json_1_1_value_iterator_base_a496e6aba44808433ec5858c178be5719_icgraph" id="class_json_1_1_value_iterator_base_a496e6aba44808433ec5858c178be5719_icgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_const_iterator.html#ad1b1c11f8d7fb22d4d3c231915f2b15b" title="Json::ValueConstIterator\l::operator=" alt="" coords="213,5,377,47"/>
+<area shape="rect" id="node4" href="class_json_1_1_value_iterator.html#a8e23312b1db874f7e403fd7e76611bdc" title="Json::ValueIterator\l::operator=" alt="" coords="230,71,361,112"/>
+<area shape="rect" id="node3" href="class_json_1_1_value_const_iterator.html#a7ef3df204a9ae83a0d8a3cd128e05c70" title="Json::ValueConstIterator\l::ValueConstIterator" alt="" coords="425,5,589,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="affc8cf5ff54a9f432cc693362c153fa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affc8cf5ff54a9f432cc693362c153fa6">&#9670;&nbsp;</a></span>decrement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::ValueIteratorBase::decrement </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02301">2301</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02301"></a><span class="lineno"> 2301</span>&#160;                                  {</div><div class="line"><a name="l02302"></a><span class="lineno"> 2302</span>&#160;  --<a class="code" href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">current_</a>;</div><div class="line"><a name="l02303"></a><span class="lineno"> 2303</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_ab3138ce8af8301cca3b041ea55cb922a"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">Json::ValueIteratorBase::current_</a></div><div class="ttdeci">Value::ObjectValues::iterator current_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01184">json.h:1184</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa5b75c9514a30ba2ea3c9a35c165c18e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5b75c9514a30ba2ea3c9a35c165c18e">&#9670;&nbsp;</a></span>deref()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value.html">Value</a> &amp; Json::ValueIteratorBase::deref </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02293">2293</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02293"></a><span class="lineno"> 2293</span>&#160;                                      {</div><div class="line"><a name="l02294"></a><span class="lineno"> 2294</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">current_</a>-&gt;second;</div><div class="line"><a name="l02295"></a><span class="lineno"> 2295</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_ab3138ce8af8301cca3b041ea55cb922a"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">Json::ValueIteratorBase::current_</a></div><div class="ttdeci">Value::ObjectValues::iterator current_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01184">json.h:1184</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afe58f9534e1fd2033419fd9fe244551e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe58f9534e1fd2033419fd9fe244551e">&#9670;&nbsp;</a></span>increment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Json::ValueIteratorBase::increment </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02297">2297</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02297"></a><span class="lineno"> 2297</span>&#160;                                  {</div><div class="line"><a name="l02298"></a><span class="lineno"> 2298</span>&#160;  ++<a class="code" href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">current_</a>;</div><div class="line"><a name="l02299"></a><span class="lineno"> 2299</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_ab3138ce8af8301cca3b041ea55cb922a"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">Json::ValueIteratorBase::current_</a></div><div class="ttdeci">Value::ObjectValues::iterator current_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01184">json.h:1184</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a549c66a0bd20e9ae772175a5c0d2e88a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a549c66a0bd20e9ae772175a5c0d2e88a">&#9670;&nbsp;</a></span>index()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_json.html#a800fb90eb6ee8d5d62b600c06f87f7d4">UInt</a> Json::ValueIteratorBase::index </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the index of the referenced <a class="el" href="class_json_1_1_value.html" title="Represents a JSON value. ">Value</a>, or -1 if it is not an arrayValue. </p>
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02355">2355</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02355"></a><span class="lineno"> 2355</span>&#160;                                    {</div><div class="line"><a name="l02356"></a><span class="lineno"> 2356</span>&#160;  <span class="keyword">const</span> <a class="code" href="class_json_1_1_value_1_1_c_z_string.html">Value::CZString</a> czstring = (*current_).first;</div><div class="line"><a name="l02357"></a><span class="lineno"> 2357</span>&#160;  <span class="keywordflow">if</span> (!czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2">data</a>())</div><div class="line"><a name="l02358"></a><span class="lineno"> 2358</span>&#160;    <span class="keywordflow">return</span> czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#a0f3ba09401525d4f01dafd577122ee32">index</a>();</div><div class="line"><a name="l02359"></a><span class="lineno"> 2359</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="class_json_1_1_value.html#a0933d59b45793ae4aade1757c322a98d">Value::UInt</a>(-1);</div><div class="line"><a name="l02360"></a><span class="lineno"> 2360</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_1_1_c_z_string_html_af6eee54f8dc43a1203d5af6ba0a5c9a2"><div class="ttname"><a href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2">Json::Value::CZString::data</a></div><div class="ttdeci">char const  * data() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02777">jsoncpp.cpp:2777</a></div></div>
+<div class="ttc" id="class_json_1_1_value_1_1_c_z_string_html"><div class="ttname"><a href="class_json_1_1_value_1_1_c_z_string.html">Json::Value::CZString</a></div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l00664">json.h:664</a></div></div>
+<div class="ttc" id="class_json_1_1_value_html_a0933d59b45793ae4aade1757c322a98d"><div class="ttname"><a href="class_json_1_1_value.html#a0933d59b45793ae4aade1757c322a98d">Json::Value::UInt</a></div><div class="ttdeci">Json::UInt UInt</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l00625">json.h:625</a></div></div>
+<div class="ttc" id="class_json_1_1_value_1_1_c_z_string_html_a0f3ba09401525d4f01dafd577122ee32"><div class="ttname"><a href="class_json_1_1_value_1_1_c_z_string.html#a0f3ba09401525d4f01dafd577122ee32">Json::Value::CZString::index</a></div><div class="ttdeci">ArrayIndex index() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02774">jsoncpp.cpp:2774</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_iterator_base_a549c66a0bd20e9ae772175a5c0d2e88a_cgraph.png" border="0" usemap="#class_json_1_1_value_iterator_base_a549c66a0bd20e9ae772175a5c0d2e88a_cgraph" alt=""/></div>
+<map name="class_json_1_1_value_iterator_base_a549c66a0bd20e9ae772175a5c0d2e88a_cgraph" id="class_json_1_1_value_iterator_base_a549c66a0bd20e9ae772175a5c0d2e88a_cgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2" title="Json::Value::CZString\l::data" alt="" coords="213,5,361,47"/>
+<area shape="rect" id="node3" href="class_json_1_1_value_1_1_c_z_string.html#a0f3ba09401525d4f01dafd577122ee32" title="Json::Value::CZString\l::index" alt="" coords="213,71,361,112"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a010b5ad3f3337ae3732e5d7e16ca5e25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a010b5ad3f3337ae3732e5d7e16ca5e25">&#9670;&nbsp;</a></span>isEqual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::ValueIteratorBase::isEqual </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02333">2333</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02333"></a><span class="lineno"> 2333</span>&#160;                                                           {</div><div class="line"><a name="l02334"></a><span class="lineno"> 2334</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="class_json_1_1_value_iterator_base.html#a3e08b114a1aed9bde518c527f94a8c59">isNull_</a>) {</div><div class="line"><a name="l02335"></a><span class="lineno"> 2335</span>&#160;    <span class="keywordflow">return</span> other.isNull_;</div><div class="line"><a name="l02336"></a><span class="lineno"> 2336</span>&#160;  }</div><div class="line"><a name="l02337"></a><span class="lineno"> 2337</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">current_</a> == other.current_;</div><div class="line"><a name="l02338"></a><span class="lineno"> 2338</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_a3e08b114a1aed9bde518c527f94a8c59"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#a3e08b114a1aed9bde518c527f94a8c59">Json::ValueIteratorBase::isNull_</a></div><div class="ttdeci">bool isNull_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01186">json.h:1186</a></div></div>
+<div class="ttc" id="class_json_1_1_value_iterator_base_html_ab3138ce8af8301cca3b041ea55cb922a"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#ab3138ce8af8301cca3b041ea55cb922a">Json::ValueIteratorBase::current_</a></div><div class="ttdeci">Value::ObjectValues::iterator current_</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01184">json.h:1184</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3838ba39c43c518cf3ed4aa6ce78ccad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3838ba39c43c518cf3ed4aa6ce78ccad">&#9670;&nbsp;</a></span>key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value.html">Value</a> Json::ValueIteratorBase::key </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return either the index or the member name of the referenced value as a <a class="el" href="class_json_1_1_value.html" title="Represents a JSON value. ">Value</a>. </p>
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02345">2345</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02345"></a><span class="lineno"> 2345</span>&#160;                                   {</div><div class="line"><a name="l02346"></a><span class="lineno"> 2346</span>&#160;  <span class="keyword">const</span> <a class="code" href="class_json_1_1_value_1_1_c_z_string.html">Value::CZString</a> czstring = (*current_).first;</div><div class="line"><a name="l02347"></a><span class="lineno"> 2347</span>&#160;  <span class="keywordflow">if</span> (czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2">data</a>()) {</div><div class="line"><a name="l02348"></a><span class="lineno"> 2348</span>&#160;    <span class="keywordflow">if</span> (czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#a5991dfa2f6c2ba318373c7429fcd7a57">isStaticString</a>())</div><div class="line"><a name="l02349"></a><span class="lineno"> 2349</span>&#160;      <span class="keywordflow">return</span> <a class="code" href="class_json_1_1_value.html">Value</a>(<a class="code" href="class_json_1_1_static_string.html">StaticString</a>(czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2">data</a>()));</div><div class="line"><a name="l02350"></a><span class="lineno"> 2350</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="class_json_1_1_value.html">Value</a>(czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2">data</a>(), czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2">data</a>() + czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#aa7ee665d162c1f33b3ec818e289d8a5e">length</a>());</div><div class="line"><a name="l02351"></a><span class="lineno"> 2351</span>&#160;  }</div><div class="line"><a name="l02352"></a><span class="lineno"> 2352</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="class_json_1_1_value.html">Value</a>(czstring.<a class="code" href="class_json_1_1_value_1_1_c_z_string.html#a0f3ba09401525d4f01dafd577122ee32">index</a>());</div><div class="line"><a name="l02353"></a><span class="lineno"> 2353</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_1_1_c_z_string_html_aa7ee665d162c1f33b3ec818e289d8a5e"><div class="ttname"><a href="class_json_1_1_value_1_1_c_z_string.html#aa7ee665d162c1f33b3ec818e289d8a5e">Json::Value::CZString::length</a></div><div class="ttdeci">unsigned length() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02778">jsoncpp.cpp:2778</a></div></div>
+<div class="ttc" id="class_json_1_1_static_string_html"><div class="ttname"><a href="class_json_1_1_static_string.html">Json::StaticString</a></div><div class="ttdoc">Lightweight wrapper to tag static string. </div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l00573">json.h:573</a></div></div>
+<div class="ttc" id="class_json_1_1_value_1_1_c_z_string_html_af6eee54f8dc43a1203d5af6ba0a5c9a2"><div class="ttname"><a href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2">Json::Value::CZString::data</a></div><div class="ttdeci">char const  * data() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02777">jsoncpp.cpp:2777</a></div></div>
+<div class="ttc" id="class_json_1_1_value_1_1_c_z_string_html_a5991dfa2f6c2ba318373c7429fcd7a57"><div class="ttname"><a href="class_json_1_1_value_1_1_c_z_string.html#a5991dfa2f6c2ba318373c7429fcd7a57">Json::Value::CZString::isStaticString</a></div><div class="ttdeci">bool isStaticString() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02779">jsoncpp.cpp:2779</a></div></div>
+<div class="ttc" id="class_json_1_1_value_1_1_c_z_string_html"><div class="ttname"><a href="class_json_1_1_value_1_1_c_z_string.html">Json::Value::CZString</a></div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l00664">json.h:664</a></div></div>
+<div class="ttc" id="class_json_1_1_value_html"><div class="ttname"><a href="class_json_1_1_value.html">Json::Value</a></div><div class="ttdoc">Represents a JSON value. </div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l00619">json.h:619</a></div></div>
+<div class="ttc" id="class_json_1_1_value_1_1_c_z_string_html_a0f3ba09401525d4f01dafd577122ee32"><div class="ttname"><a href="class_json_1_1_value_1_1_c_z_string.html#a0f3ba09401525d4f01dafd577122ee32">Json::Value::CZString::index</a></div><div class="ttdeci">ArrayIndex index() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02774">jsoncpp.cpp:2774</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_iterator_base_a3838ba39c43c518cf3ed4aa6ce78ccad_cgraph.png" border="0" usemap="#class_json_1_1_value_iterator_base_a3838ba39c43c518cf3ed4aa6ce78ccad_cgraph" alt=""/></div>
+<map name="class_json_1_1_value_iterator_base_a3838ba39c43c518cf3ed4aa6ce78ccad_cgraph" id="class_json_1_1_value_iterator_base_a3838ba39c43c518cf3ed4aa6ce78ccad_cgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_1_1_c_z_string.html#af6eee54f8dc43a1203d5af6ba0a5c9a2" title="Json::Value::CZString\l::data" alt="" coords="243,5,391,47"/>
+<area shape="rect" id="node3" href="class_json_1_1_value_1_1_c_z_string.html#a5991dfa2f6c2ba318373c7429fcd7a57" title="Json::Value::CZString\l::isStaticString" alt="" coords="243,71,391,112"/>
+<area shape="rect" id="node4" href="class_json_1_1_value_1_1_c_z_string.html#aa7ee665d162c1f33b3ec818e289d8a5e" title="Json::Value::CZString\l::length" alt="" coords="243,136,391,177"/>
+<area shape="rect" id="node5" href="class_json_1_1_value_1_1_c_z_string.html#a0f3ba09401525d4f01dafd577122ee32" title="Json::Value::CZString\l::index" alt="" coords="243,201,391,243"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a54765da6759fd3f1edcbfbaf308ec263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54765da6759fd3f1edcbfbaf308ec263">&#9670;&nbsp;</a></span>memberName() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char const  * Json::ValueIteratorBase::memberName </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the member name of the referenced <a class="el" href="class_json_1_1_value.html" title="Represents a JSON value. ">Value</a>. "" if it is not an objectValue. </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">잘못된 코드:</a></b></dt><dd>This cannot be used for UTF-8 strings, since there can be embedded nulls. </dd></dl>
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02370">2370</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02370"></a><span class="lineno"> 2370</span>&#160;                                                {</div><div class="line"><a name="l02371"></a><span class="lineno"> 2371</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span>* cname = (*current_).first.data();</div><div class="line"><a name="l02372"></a><span class="lineno"> 2372</span>&#160;  <span class="keywordflow">return</span> cname ? cname : <span class="stringliteral">&quot;&quot;</span>;</div><div class="line"><a name="l02373"></a><span class="lineno"> 2373</span>&#160;}</div></div><!-- fragment --><div class="dynheader">
+이 함수를 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263_icgraph.png" border="0" usemap="#class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263_icgraph" alt=""/></div>
+<map name="class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263_icgraph" id="class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263_icgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_iterator_base.html#a522989403c976fdbb94da846b99418db" title="Json::ValueIteratorBase\l::name" alt="" coords="213,5,373,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a391c9cbd0edf9a447b37df00e8ce6059"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a391c9cbd0edf9a447b37df00e8ce6059">&#9670;&nbsp;</a></span>memberName() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char const  * Json::ValueIteratorBase::memberName </td>
+          <td>(</td>
+          <td class="paramtype">char const **&#160;</td>
+          <td class="paramname"><em>end</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the member name of the referenced <a class="el" href="class_json_1_1_value.html" title="Represents a JSON value. ">Value</a>, or NULL if it is not an objectValue. </p><dl class="section note"><dt>주의</dt><dd>Better version than <a class="el" href="class_json_1_1_value_iterator_base.html#a54765da6759fd3f1edcbfbaf308ec263">memberName()</a>. Allows embedded nulls. </dd></dl>
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02375">2375</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02375"></a><span class="lineno"> 2375</span>&#160;                                                                {</div><div class="line"><a name="l02376"></a><span class="lineno"> 2376</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">char</span>* cname = (*current_).first.data();</div><div class="line"><a name="l02377"></a><span class="lineno"> 2377</span>&#160;  <span class="keywordflow">if</span> (!cname) {</div><div class="line"><a name="l02378"></a><span class="lineno"> 2378</span>&#160;    *end = NULL;</div><div class="line"><a name="l02379"></a><span class="lineno"> 2379</span>&#160;    <span class="keywordflow">return</span> NULL;</div><div class="line"><a name="l02380"></a><span class="lineno"> 2380</span>&#160;  }</div><div class="line"><a name="l02381"></a><span class="lineno"> 2381</span>&#160;  *end = cname + (*current_).first.length();</div><div class="line"><a name="l02382"></a><span class="lineno"> 2382</span>&#160;  <span class="keywordflow">return</span> cname;</div><div class="line"><a name="l02383"></a><span class="lineno"> 2383</span>&#160;}</div></div><!-- fragment -->
+</div>
+</div>
+<a id="a522989403c976fdbb94da846b99418db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a522989403c976fdbb94da846b99418db">&#9670;&nbsp;</a></span>name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#a1e723f95759de062585bc4a8fd3fa4be">JSONCPP_STRING</a> Json::ValueIteratorBase::name </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the member name of the referenced <a class="el" href="class_json_1_1_value.html" title="Represents a JSON value. ">Value</a>, or "" if it is not an objectValue. </p><dl class="section note"><dt>주의</dt><dd>Avoid <code>c_str()</code> on result, as embedded zeroes are possible. </dd></dl>
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02362">2362</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02362"></a><span class="lineno"> 2362</span>&#160;                                             {</div><div class="line"><a name="l02363"></a><span class="lineno"> 2363</span>&#160;  <span class="keywordtype">char</span> <span class="keyword">const</span>* keey;</div><div class="line"><a name="l02364"></a><span class="lineno"> 2364</span>&#160;  <span class="keywordtype">char</span> <span class="keyword">const</span>* end;</div><div class="line"><a name="l02365"></a><span class="lineno"> 2365</span>&#160;  keey = <a class="code" href="class_json_1_1_value_iterator_base.html#a54765da6759fd3f1edcbfbaf308ec263">memberName</a>(&amp;end);</div><div class="line"><a name="l02366"></a><span class="lineno"> 2366</span>&#160;  <span class="keywordflow">if</span> (!keey) <span class="keywordflow">return</span> <a class="code" href="json-forwards_8h.html#a1e723f95759de062585bc4a8fd3fa4be">JSONCPP_STRING</a>();</div><div class="line"><a name="l02367"></a><span class="lineno"> 2367</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="json-forwards_8h.html#a1e723f95759de062585bc4a8fd3fa4be">JSONCPP_STRING</a>(keey, end);</div><div class="line"><a name="l02368"></a><span class="lineno"> 2368</span>&#160;}</div><div class="ttc" id="json-forwards_8h_html_a1e723f95759de062585bc4a8fd3fa4be"><div class="ttname"><a href="json-forwards_8h.html#a1e723f95759de062585bc4a8fd3fa4be">JSONCPP_STRING</a></div><div class="ttdeci">#define JSONCPP_STRING</div><div class="ttdef"><b>Definition:</b> <a href="json-forwards_8h_source.html#l00261">json-forwards.h:261</a></div></div>
+<div class="ttc" id="class_json_1_1_value_iterator_base_html_a54765da6759fd3f1edcbfbaf308ec263"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#a54765da6759fd3f1edcbfbaf308ec263">Json::ValueIteratorBase::memberName</a></div><div class="ttdeci">char const  * memberName() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02370">jsoncpp.cpp:2370</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_iterator_base_a522989403c976fdbb94da846b99418db_cgraph.png" border="0" usemap="#class_json_1_1_value_iterator_base_a522989403c976fdbb94da846b99418db_cgraph" alt=""/></div>
+<map name="class_json_1_1_value_iterator_base_a522989403c976fdbb94da846b99418db_cgraph" id="class_json_1_1_value_iterator_base_a522989403c976fdbb94da846b99418db_cgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_iterator_base.html#a54765da6759fd3f1edcbfbaf308ec263" title="Json::ValueIteratorBase\l::memberName" alt="" coords="213,5,373,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aa83bdcc8114b7d040eb8eb42eeed5f4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa83bdcc8114b7d040eb8eb42eeed5f4a">&#9670;&nbsp;</a></span>operator!=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::ValueIteratorBase::operator!= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01142">1142</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01142"></a><span class="lineno"> 1142</span>&#160;{ <span class="keywordflow">return</span> !<a class="code" href="class_json_1_1_value_iterator_base.html#a010b5ad3f3337ae3732e5d7e16ca5e25">isEqual</a>(other); }</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_a010b5ad3f3337ae3732e5d7e16ca5e25"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#a010b5ad3f3337ae3732e5d7e16ca5e25">Json::ValueIteratorBase::isEqual</a></div><div class="ttdeci">bool isEqual(const SelfType &amp;other) const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02333">jsoncpp.cpp:2333</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae5612dad47a6387eef71d584fb741d0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5612dad47a6387eef71d584fb741d0c">&#9670;&nbsp;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_const_iterator.html#aa9b05c6a37cd352ea1ee6e13b816f709">reference</a> Json::ValueConstIterator::operator* </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01241">1241</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01241"></a><span class="lineno"> 1241</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="class_json_1_1_value_iterator_base.html#aa5b75c9514a30ba2ea3c9a35c165c18e">deref</a>(); }</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_aa5b75c9514a30ba2ea3c9a35c165c18e"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#aa5b75c9514a30ba2ea3c9a35c165c18e">Json::ValueIteratorBase::deref</a></div><div class="ttdeci">Value &amp; deref() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02293">jsoncpp.cpp:2293</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab3f0c2edbfc8f7d60645f3d597d05e28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3f0c2edbfc8f7d60645f3d597d05e28">&#9670;&nbsp;</a></span>operator++() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> Json::ValueConstIterator::operator++ </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01219">1219</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01219"></a><span class="lineno"> 1219</span>&#160;                           {</div><div class="line"><a name="l01220"></a><span class="lineno"> 1220</span>&#160;    <a class="code" href="class_json_1_1_value_const_iterator.html#a0c2e33e7eb5a80dd8709fb28ece83933">SelfType</a> temp(*<span class="keyword">this</span>);</div><div class="line"><a name="l01221"></a><span class="lineno"> 1221</span>&#160;    ++*<span class="keyword">this</span>;</div><div class="line"><a name="l01222"></a><span class="lineno"> 1222</span>&#160;    <span class="keywordflow">return</span> temp;</div><div class="line"><a name="l01223"></a><span class="lineno"> 1223</span>&#160;  }</div><div class="ttc" id="class_json_1_1_value_const_iterator_html_a0c2e33e7eb5a80dd8709fb28ece83933"><div class="ttname"><a href="class_json_1_1_value_const_iterator.html#a0c2e33e7eb5a80dd8709fb28ece83933">Json::ValueConstIterator::SelfType</a></div><div class="ttdeci">ValueConstIterator SelfType</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01207">json.h:1207</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2cfe2f7a94a688186efdafb1b181c319"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cfe2f7a94a688186efdafb1b181c319">&#9670;&nbsp;</a></span>operator++() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a>&amp; Json::ValueConstIterator::operator++ </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01236">1236</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01236"></a><span class="lineno"> 1236</span>&#160;                         {</div><div class="line"><a name="l01237"></a><span class="lineno"> 1237</span>&#160;    <a class="code" href="class_json_1_1_value_iterator_base.html#afe58f9534e1fd2033419fd9fe244551e">increment</a>();</div><div class="line"><a name="l01238"></a><span class="lineno"> 1238</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div><div class="line"><a name="l01239"></a><span class="lineno"> 1239</span>&#160;  }</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_afe58f9534e1fd2033419fd9fe244551e"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#afe58f9534e1fd2033419fd9fe244551e">Json::ValueIteratorBase::increment</a></div><div class="ttdeci">void increment()</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02297">jsoncpp.cpp:2297</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a98e254263fca5f1fc8fcac7bcb0260bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98e254263fca5f1fc8fcac7bcb0260bf">&#9670;&nbsp;</a></span>operator-()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_iterator_base.html#a4e44bf8cbd17ec8d6e2c185904a15ebd">difference_type</a> Json::ValueIteratorBase::operator- </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01144">1144</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160;                                                         {</div><div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;    <span class="keywordflow">return</span> other.computeDistance(*<span class="keyword">this</span>);</div><div class="line"><a name="l01146"></a><span class="lineno"> 1146</span>&#160;  }</div></div><!-- fragment --><div class="dynheader">
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_iterator_base_a98e254263fca5f1fc8fcac7bcb0260bf_cgraph.png" border="0" usemap="#class_json_1_1_value_iterator_base_a98e254263fca5f1fc8fcac7bcb0260bf_cgraph" alt=""/></div>
+<map name="class_json_1_1_value_iterator_base_a98e254263fca5f1fc8fcac7bcb0260bf_cgraph" id="class_json_1_1_value_iterator_base_a98e254263fca5f1fc8fcac7bcb0260bf_cgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_iterator_base.html#af11473c9e20d07782e42b52a2f9e4540" title="Json::ValueIteratorBase\l::computeDistance" alt="" coords="213,5,373,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a94935961e9331c6f7b907b05ec8df75e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94935961e9331c6f7b907b05ec8df75e">&#9670;&nbsp;</a></span>operator--() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> Json::ValueConstIterator::operator-- </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01225">1225</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;                           {</div><div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;    <a class="code" href="class_json_1_1_value_const_iterator.html#a0c2e33e7eb5a80dd8709fb28ece83933">SelfType</a> temp(*<span class="keyword">this</span>);</div><div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160;    --*<span class="keyword">this</span>;</div><div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;    <span class="keywordflow">return</span> temp;</div><div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;  }</div><div class="ttc" id="class_json_1_1_value_const_iterator_html_a0c2e33e7eb5a80dd8709fb28ece83933"><div class="ttname"><a href="class_json_1_1_value_const_iterator.html#a0c2e33e7eb5a80dd8709fb28ece83933">Json::ValueConstIterator::SelfType</a></div><div class="ttdeci">ValueConstIterator SelfType</div><div class="ttdef"><b>Definition:</b> <a href="json_8h_source.html#l01207">json.h:1207</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a31415e44e44e56fb2bfda7e8bb784646"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31415e44e44e56fb2bfda7e8bb784646">&#9670;&nbsp;</a></span>operator--() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a>&amp; Json::ValueConstIterator::operator-- </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01231">1231</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160;                         {</div><div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;    <a class="code" href="class_json_1_1_value_iterator_base.html#affc8cf5ff54a9f432cc693362c153fa6">decrement</a>();</div><div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;    <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div><div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160;  }</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_affc8cf5ff54a9f432cc693362c153fa6"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#affc8cf5ff54a9f432cc693362c153fa6">Json::ValueIteratorBase::decrement</a></div><div class="ttdeci">void decrement()</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02301">jsoncpp.cpp:2301</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3c608ae53c192ee846eb265bae1cfeec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c608ae53c192ee846eb265bae1cfeec">&#9670;&nbsp;</a></span>operator->()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_const_iterator.html#a400136bd8bc09e9fddec0785fa2cff14">pointer</a> Json::ValueConstIterator::operator-&gt; </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01243">1243</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01243"></a><span class="lineno"> 1243</span>&#160;{ <span class="keywordflow">return</span> &amp;<a class="code" href="class_json_1_1_value_iterator_base.html#aa5b75c9514a30ba2ea3c9a35c165c18e">deref</a>(); }</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_aa5b75c9514a30ba2ea3c9a35c165c18e"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#aa5b75c9514a30ba2ea3c9a35c165c18e">Json::ValueIteratorBase::deref</a></div><div class="ttdeci">Value &amp; deref() const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02293">jsoncpp.cpp:2293</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad1b1c11f8d7fb22d4d3c231915f2b15b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1b1c11f8d7fb22d4d3c231915f2b15b">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_json_1_1_value_const_iterator.html">ValueConstIterator</a> &amp; Json::ValueConstIterator::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_value_iterator_base.html">ValueIteratorBase</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a> 파일의 <a class="el" href="jsoncpp_8cpp_source.html#l02403">2403</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l02403"></a><span class="lineno"> 2403</span>&#160;                                          {</div><div class="line"><a name="l02404"></a><span class="lineno"> 2404</span>&#160;  <a class="code" href="class_json_1_1_value_iterator_base.html#a496e6aba44808433ec5858c178be5719">copy</a>(other);</div><div class="line"><a name="l02405"></a><span class="lineno"> 2405</span>&#160;  <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div><div class="line"><a name="l02406"></a><span class="lineno"> 2406</span>&#160;}</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_a496e6aba44808433ec5858c178be5719"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#a496e6aba44808433ec5858c178be5719">Json::ValueIteratorBase::copy</a></div><div class="ttdeci">void copy(const SelfType &amp;other)</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02340">jsoncpp.cpp:2340</a></div></div>
+</div><!-- fragment --><div class="dynheader">
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_const_iterator_ad1b1c11f8d7fb22d4d3c231915f2b15b_cgraph.png" border="0" usemap="#class_json_1_1_value_const_iterator_ad1b1c11f8d7fb22d4d3c231915f2b15b_cgraph" alt=""/></div>
+<map name="class_json_1_1_value_const_iterator_ad1b1c11f8d7fb22d4d3c231915f2b15b_cgraph" id="class_json_1_1_value_const_iterator_ad1b1c11f8d7fb22d4d3c231915f2b15b_cgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_iterator_base.html#a496e6aba44808433ec5858c178be5719" title="Json::ValueIteratorBase\l::copy" alt="" coords="217,5,377,47"/>
+</map>
+</div>
+<div class="dynheader">
+이 함수를 호출하는 함수들에 대한 그래프입니다.:</div>
+<div class="dyncontent">
+<div class="center"><img src="class_json_1_1_value_const_iterator_ad1b1c11f8d7fb22d4d3c231915f2b15b_icgraph.png" border="0" usemap="#class_json_1_1_value_const_iterator_ad1b1c11f8d7fb22d4d3c231915f2b15b_icgraph" alt=""/></div>
+<map name="class_json_1_1_value_const_iterator_ad1b1c11f8d7fb22d4d3c231915f2b15b_icgraph" id="class_json_1_1_value_const_iterator_ad1b1c11f8d7fb22d4d3c231915f2b15b_icgraph">
+<area shape="rect" id="node2" href="class_json_1_1_value_const_iterator.html#a7ef3df204a9ae83a0d8a3cd128e05c70" title="Json::ValueConstIterator\l::ValueConstIterator" alt="" coords="217,5,381,47"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a1248d8016f88b51371a0fcbd355b3cfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1248d8016f88b51371a0fcbd355b3cfd">&#9670;&nbsp;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Json::ValueIteratorBase::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_json_1_1_value_iterator_base.html#a9d2a940d03ea06d20d972f41a89149ee">SelfType</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01140">1140</a> 번째 라인에서 정의되었습니다.</p>
+<div class="fragment"><div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160;{ <span class="keywordflow">return</span> <a class="code" href="class_json_1_1_value_iterator_base.html#a010b5ad3f3337ae3732e5d7e16ca5e25">isEqual</a>(other); }</div><div class="ttc" id="class_json_1_1_value_iterator_base_html_a010b5ad3f3337ae3732e5d7e16ca5e25"><div class="ttname"><a href="class_json_1_1_value_iterator_base.html#a010b5ad3f3337ae3732e5d7e16ca5e25">Json::ValueIteratorBase::isEqual</a></div><div class="ttdeci">bool isEqual(const SelfType &amp;other) const</div><div class="ttdef"><b>Definition:</b> <a href="jsoncpp_8cpp_source.html#l02333">jsoncpp.cpp:2333</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Friend, 그리고 관련된 함수 문서화</h2>
+<a id="aeceedf6e1a7d48a588516ce2b1983d6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeceedf6e1a7d48a588516ce2b1983d6f">&#9670;&nbsp;</a></span>Value</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_json_1_1_value.html">Value</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition"><a class="el" href="json_8h_source.html">json.h</a> 파일의 <a class="el" href="json_8h_source.html#l01199">1199</a> 번째 라인에서 정의되었습니다.</p>
+
+</div>
+</div>
+<hr/>이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.:<ul>
+<li>SpaceWarServer/Server/json/<a class="el" href="json_8h_source.html">json.h</a></li>
+<li>SpaceWarServer/Server/<a class="el" href="jsoncpp_8cpp_source.html">jsoncpp.cpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_json.html">Json</a></li><li class="navelem"><a class="el" href="class_json_1_1_value_const_iterator.html">ValueConstIterator</a></li>
+    <li class="footer">다음에 의해 생성됨 : 
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
+</body>
+</html>

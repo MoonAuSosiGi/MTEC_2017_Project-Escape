@@ -217,7 +217,8 @@ public class LobbyUI : MonoBehaviour {
     private void LobbyUI_gameStart()
     {
         EventHandlerAllRemove();
-        SceneManager.LoadScene(2);
+        TimeForEscape.Util.Scene.LoadingScene.LOAD_SCENE_NAME = "Space_1";
+        SceneManager.LoadScene("Space_LoadingScene");
     }
 
     private void LobbyUI_mapChange(string changeMap)

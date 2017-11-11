@@ -6,6 +6,7 @@ using Nettention.Proud;
 using SpaceWar;
 using System;
 using UnityEngine.SceneManagement;
+using TimeForEscape.Object;
 
 public class NetworkManager : Singletone<NetworkManager> {
 
@@ -679,9 +680,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 return true;
             }
             ItemBox box = m_itemBoxList[itemBoxIndex];
-
-            box.ItemBoxClose();
-
+            
             if ((int)m_hostID != sendHostID)
                 box.ItemBoxNetworkOpen();
             else

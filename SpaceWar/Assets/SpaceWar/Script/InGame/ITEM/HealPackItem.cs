@@ -17,6 +17,7 @@ public class HealPackItem : Item {
     #region Heal Pack Method
     public void Setup(string id)
     {
+        Setup();
         this.m_itemID = id;
 
         WeaponTableData data = WeaponManager.Instance().GetWeaponData(id);

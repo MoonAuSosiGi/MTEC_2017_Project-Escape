@@ -1,0 +1,8 @@
+<map id="Server::ServerTableSetup" name="Server::ServerTableSetup">
+<area shape="rect" id="node2" href="$class_server.html#a88d53d3c77d90f211f3ca7cc51735171" title="서버 리셋 정보를 초기화 한다. " alt="" coords="220,56,356,83"/>
+<area shape="rect" id="node3" href="$class_server.html#a1249766dc00efcf1f29a2aaad56f83ef" title="클라이언트가 서버에서 나갔다. " alt="" coords="455,5,605,32"/>
+<area shape="rect" id="node6" href="$_server_8cpp.html#a77fd4f20062a286945ef06f03820a0ce" title="정상 종료 요청 " alt="" coords="404,56,656,83"/>
+<area shape="rect" id="node7" href="$_server_8cpp.html#aaeec5d678581efbad73d93c003387325" title="방장이 나갔다. &#160;다들 타이틀로 튕겨져 나가야 하므로 해당 메시지 브로드캐스트 " alt="" coords="409,107,651,149"/>
+<area shape="rect" id="node4" href="$class_server.html#acb327f7980ef16c40087bdafcef5ad7a" title="게임 서버 시작 " alt="" coords="704,5,829,32"/>
+<area shape="rect" id="node5" href="$_server_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="서버 프로그램의 시작 지점 " alt="" coords="877,5,928,32"/>
+</map>

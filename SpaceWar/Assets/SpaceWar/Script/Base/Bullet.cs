@@ -63,6 +63,13 @@ public class Bullet : MonoBehaviour {
     protected Quaternion m_shotRot;
     public Quaternion SHOT_ROTATION { get { return m_shotRot; } }
 
+    // 총알 파티클 관련
+    BulletParticle_Off m_bulletParticleOff = null;
+    BulletParticle_RateOff m_bulletParticleRateOff = null;
+
+    // 네트워크 이동
+    protected bool m_isNetworkMoving = true;
+
     #region Sound Play ---------------------------------------------------------------------
     [SerializeField] protected AudioClip m_hitMain = null;
     [SerializeField] protected AudioClip m_hitSpaceShip = null;
@@ -120,6 +127,8 @@ public class Bullet : MonoBehaviour {
 
     void NetworkUpdate()
     {
+        if (m_isNetworkMoving == false)
+            return;
         m_positionFollower.FrameMove(Time.deltaTime);
         m_angleFollowerX.FrameMove(Time.deltaTime);
         m_angleFollowerY.FrameMove(Time.deltaTime);
@@ -189,6 +198,12 @@ public class Bullet : MonoBehaviour {
     #region Bullet Method --------------------------------------------------------------------------
     public virtual void BulletSetup()
     {
+        if(m_bulletParticleRateOff == null || m_bulletParticleOff == null)
+        {
+            m_bulletParticleOff = transform.GetComponentInChildren<BulletParticle_Off>();
+            m_bulletParticleRateOff = transform.GetComponentInChildren<BulletParticle_RateOff>();
+        }
+        BulletEffectReset();
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(true);
         
@@ -204,6 +219,7 @@ public class Bullet : MonoBehaviour {
         if (m_shotEffect != null)
             m_shotEffect.SetActive(false);
         m_hitEnemy = false;
+        m_isNetworkMoving = true;
     }
 
     public void BulletDelete()
@@ -244,7 +260,8 @@ public class Bullet : MonoBehaviour {
     {
         if (m_hitEnemy == true)
             return;
-        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
+             && !other.CompareTag("Bullet_Explosion"))
         {
             //Debug.Log("other " + other.name + " tag " + other.tag);
             m_hitEnemy= true;
@@ -323,17 +340,10 @@ public class Bullet : MonoBehaviour {
     {
         var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
         Debug.Log("## DEstroy Time " + destroyTime);
-        for (int i = 0; i < transform.GetChild(0).childCount; i++)
-        {
-            Transform t = transform.GetChild(0).GetChild(i);
+       
 
-            var off = t.GetComponent<BulletParticle_Off>();
-        
-            var rateOff = t.GetComponent<BulletParticle_RateOff>();
-
-            if (off != null)            off.BulletHitEvent();
-            if (rateOff != null)        rateOff.BulletHitEvent();
-        }
+        if (m_bulletParticleOff != null) m_bulletParticleOff.BulletHitEvent();
+        if (m_bulletParticleRateOff != null) m_bulletParticleRateOff.BulletHitEvent();
 
         if (destroyTime != null) destroyTime.BulletHitEvent();
     }
@@ -341,20 +351,9 @@ public class Bullet : MonoBehaviour {
     // 파티클 등의 이펙트 리셋
     void BulletEffectReset()
     {
-        for (int i = 0; i < transform.GetChild(0).childCount; i++)
-        {
-            Transform t = transform.GetChild(0).GetChild(i);
+        if (m_bulletParticleOff != null) m_bulletParticleOff.Reset();
+        if (m_bulletParticleRateOff != null) m_bulletParticleRateOff.Reset();
 
-            var off = t.GetComponent<BulletParticle_Off>();
-            var rateOff = t.GetComponent<BulletParticle_RateOff>();
-
-            if (off != null)
-            {
-                off.gameObject.SetActive(true);
-                off.Reset();
-            }
-            if (rateOff != null)    rateOff.Reset();
-        }
     }
     #endregion
 

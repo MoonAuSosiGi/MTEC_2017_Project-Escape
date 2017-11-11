@@ -14,7 +14,6 @@ public class RocketBullet : Bullet {
     #region Bullet Process
     public override void BulletMove()
     {
-        
         this.transform.RotateAround(
             GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * Vector3.right,
             m_speed  * Time.deltaTime);
@@ -38,10 +37,12 @@ public class RocketBullet : Bullet {
     {
         if (m_hitEnemy == true)
             return;
-        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
+            && !other.CompareTag("Bullet_Explosion"))
         {
             m_hitEnemy = true;
-            // 상관 없는 이펙트 
+
+            m_isNetworkMoving = false;
 
             if(m_hitMain != null)
             {

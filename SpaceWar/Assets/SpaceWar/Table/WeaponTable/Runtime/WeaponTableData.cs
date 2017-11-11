@@ -65,8 +65,8 @@ public class WeaponTableData
   public string Otherhiteffect { get {return otherhiteffect; } set { otherhiteffect = value;} }
   
   [SerializeField]
-  float weight;
-  public float Weight { get {return weight; } set { weight = value;} }
+  int weight;
+  public int Weight { get {return weight; } set { weight = value;} }
   
   [SerializeField]
   int attacktiming;
@@ -211,5 +211,25 @@ public class WeaponTableData
   [SerializeField]
   float healusetime;
   public float Healusetime { get {return healusetime; } set { healusetime = value;} }
+  
+  [SerializeField]
+  string bullet_trail;
+  public string Bullet_trail { get {return bullet_trail; } set { bullet_trail = value;} }
+  
+  [SerializeField]
+  string playerhiteffect;
+  public string Playerhiteffect { get {return playerhiteffect; } set { playerhiteffect = value;} }
+  
+  [SerializeField]
+  float boomeffectcollidercenter_x;
+  public float Boomeffectcollidercenter_x { get {return boomeffectcollidercenter_x; } set { boomeffectcollidercenter_x = value;} }
+  
+  [SerializeField]
+  float boomeffectcollidercenter_y;
+  public float Boomeffectcollidercenter_y { get {return boomeffectcollidercenter_y; } set { boomeffectcollidercenter_y = value;} }
+  
+  [SerializeField]
+  float boomeffectcollidercenter_z;
+  public float Boomeffectcollidercenter_z { get {return boomeffectcollidercenter_z; } set { boomeffectcollidercenter_z = value;} }
   
 }

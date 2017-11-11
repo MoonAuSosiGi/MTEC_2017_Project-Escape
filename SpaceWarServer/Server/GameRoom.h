@@ -24,6 +24,7 @@ public:
 
 	GameRoom();					///< 기본 생성자, 초깃값 세팅
 	unordered_map<HostID, shared_ptr<RoomClient>> GetClientMap(); ///< 클라이언트 맵 얻기
+
 #pragma region Room Setting Method =====================================================================================
 	void SetPlayerLimitCount(int count);	///< 플레이어 수 제한두기
 	int GetPlayerLimitCount();				///< 플레이 가능한 플레이어 수 얻기
@@ -54,12 +55,6 @@ public:
 	shared_ptr<RoomClient> GetClient(HostID hostID); ///< 특정 클라이언트의 정보 얻기
 
 #pragma endregion ======================================================================================================
-
-
-
-
-	
-	
 
 };
 

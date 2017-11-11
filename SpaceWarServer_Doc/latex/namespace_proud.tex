@@ -1,0 +1,70 @@
+\hypertarget{namespace_proud}{}\section{Proud 네임스페이스 참조}
+\label{namespace_proud}\index{Proud@{Proud}}
+\subsection*{함수}
+\begin{DoxyCompactItemize}
+\item 
+C\+Message \& \hyperlink{namespace_proud_aa1fd229f7228be16966e4508ed9c2a2b}{operator$<$$<$} (C\+Message \&a, const Proud\+::\+Vector3 \&b)
+\item 
+C\+Message \& \hyperlink{namespace_proud_a822c4aed58c18f332db22ab629174841}{operator$>$$>$} (C\+Message \&a, Proud\+::\+Vector3 \&b)
+\item 
+void \hyperlink{namespace_proud_a7ff9835da372ae816e45a4e4aa8ad9e3}{Append\+Text\+Out} (String \&a, Proud\+::\+Vector3 \&b)
+\end{DoxyCompactItemize}
+
+
+\subsection{함수 문서화}
+\mbox{\Hypertarget{namespace_proud_a7ff9835da372ae816e45a4e4aa8ad9e3}\label{namespace_proud_a7ff9835da372ae816e45a4e4aa8ad9e3}} 
+\index{Proud@{Proud}!Append\+Text\+Out@{Append\+Text\+Out}}
+\index{Append\+Text\+Out@{Append\+Text\+Out}!Proud@{Proud}}
+\subsubsection{\texorpdfstring{Append\+Text\+Out()}{AppendTextOut()}}
+{\footnotesize\ttfamily void Proud\+::\+Append\+Text\+Out (\begin{DoxyParamCaption}\item[{String \&}]{a,  }\item[{Proud\+::\+Vector3 \&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+S\+P\+\_\+\+Marshaler.\+h 파일의 28 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+29     \{
+30         String f;
+31         f.Format(L\textcolor{stringliteral}{"\{x=%f,y=%f,z=%f\}"}, b.x, b.y, b.z);
+32         a += f;
+33     \}
+\end{DoxyCode}
+\mbox{\Hypertarget{namespace_proud_aa1fd229f7228be16966e4508ed9c2a2b}\label{namespace_proud_aa1fd229f7228be16966e4508ed9c2a2b}} 
+\index{Proud@{Proud}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Proud@{Proud}}
+\subsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}}
+{\footnotesize\ttfamily C\+Message\& Proud\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{C\+Message \&}]{a,  }\item[{const Proud\+::\+Vector3 \&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+S\+P\+\_\+\+Marshaler.\+h 파일의 11 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+12     \{
+13         a << b.x;
+14         a << b.y;
+15         a << b.z;
+16         \textcolor{keywordflow}{return} a;
+17     \}
+\end{DoxyCode}
+\mbox{\Hypertarget{namespace_proud_a822c4aed58c18f332db22ab629174841}\label{namespace_proud_a822c4aed58c18f332db22ab629174841}} 
+\index{Proud@{Proud}!operator$>$$>$@{operator$>$$>$}}
+\index{operator$>$$>$@{operator$>$$>$}!Proud@{Proud}}
+\subsubsection{\texorpdfstring{operator$>$$>$()}{operator>>()}}
+{\footnotesize\ttfamily C\+Message\& Proud\+::operator$>$$>$ (\begin{DoxyParamCaption}\item[{C\+Message \&}]{a,  }\item[{Proud\+::\+Vector3 \&}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+S\+P\+\_\+\+Marshaler.\+h 파일의 20 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+21     \{
+22         a >> b.x;
+23         a >> b.y;
+24         a >> b.z;
+25         \textcolor{keywordflow}{return} a;
+26     \}
+\end{DoxyCode}
