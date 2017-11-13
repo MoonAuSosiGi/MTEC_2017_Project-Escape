@@ -13,6 +13,10 @@
 /SpaceWar/Assets/Resources/Art
 /SpaceWar/Assets/SpaceWar/SOUND
 /SpaceWar/Assets/QuickSheet
+/SpaceWar/Assets/MeshBaker
+/SpaceWar/Assets/OBJExport
+/SpaceWar/Assets/Plugins
+/SpaceWar/Assets/UBER
 
 # Visual Studio 2015 cache directory
 /.vs/
