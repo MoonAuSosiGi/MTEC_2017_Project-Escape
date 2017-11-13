@@ -179,8 +179,18 @@ void Server::ServerFileLoad()
 		getline(infile, line);
 		data += line;
 	}
-	m_serverPropertiesData = data;
+	
 	infile.close();
+	Reader reader;
+	
+	bool parseCheck = reader.parse(data.c_str(), m_serverPropertiesData);
+
+	if (!parseCheck)
+	{
+		cout << "JSON File Parse Failed..." << reader.getFormattedErrorMessages() << endl;
+		return ;
+	}
+
 	cout << "Server Properties Load Success.. " << endl;
 	//
 }
@@ -192,29 +202,15 @@ void Server::ServerFileLoad()
 */
 bool Server::ServerTableSetup()
 {
-	Reader reader;
-	Value val;
-	bool parseCheck = reader.parse(m_serverPropertiesData.c_str(), val);
-
-	if (!parseCheck)
+	if (m_serverPropertiesData.empty())
 	{
-		cout << "JSON File Parse Failed..." << reader.getFormattedErrorMessages() << endl;
+		cout << "json ERROR ! " << endl;
 		return false;
 	}
 
-	SetDeathZoneCommingTime(val["DeathZoneFirstComming"].asInt());
-	SetSpaceShipLockTime(val["SpaceShipLockTime"].asInt());
+	SetDeathZoneCommingTime(m_serverPropertiesData["DeathZoneFirstComming"].asInt());
+	SetSpaceShipLockTime(m_serverPropertiesData["SpaceShipLockTime"].asInt());
 
-	int size = val["Items"].size();
-	Value items = val["Items"];
-	cout << "is Array " << items.isArray() << val.isArray() << endl;
-	for (Value& item : items)
-	{
-		string itemID = item["Id"].asString();
-		cout << "item ID " << itemID << endl;
-	}
-	string itemID = items[RandomRange(0, size)]["Id"].asString();
-	cout << "item ID " << itemID << endl;
 	return true;
 }
 /**
@@ -229,9 +225,9 @@ void Server::ServerRun()
 	// 스레드 돌려라
 	void(*func)(void*);
 	func = &ServerThreadLoop;
-	CTimerThread meteorThread(func, 1000, nullptr);
-	//
-	meteorThread.Start();
+	CTimerThread serverThread(func, 1000, nullptr);
+	// 서버 스레드 시작 
+	serverThread.Start();
 
 	// -- 서버 파라매터 지정 ( 프로토콜 / 포트 지정 ) ---------------------------//
 	CStartServerParameter pl;
@@ -304,7 +300,7 @@ void Server::ServerRun()
 
 	string line;
 	getline(std::cin, line);
-	meteorThread.Stop();
+	serverThread.Stop();
 }
 
 /**
@@ -1094,6 +1090,7 @@ DEFRMI_SpaceWar_RequestUseItemBox(Server)
 		s_deathZoneCommingSec = val["DeathZoneFirstComming"].asInt();
 		s_spaceShipLockTime = val["SpaceShipLockTime"].asInt();
 
+		
 		int size = val["Items"].size();*/
 
 		string itemID = "temp";//val["Items"][RandomRange(0, size)]["Id"].asString();

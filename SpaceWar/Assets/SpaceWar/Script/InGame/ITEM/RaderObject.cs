@@ -55,12 +55,9 @@ public class RaderObject : MonoBehaviour {
 
         for(int i = 0; i < players.Count; i++)
         {
+            SkinnedMeshRenderer renderer = players[i].GetComponentInChildren<SkinnedMeshRenderer>();
+            renderer.gameObject.layer = LayerMask.NameToLayer("RaderCamera");
             players[i].ChangeRaderMode();
-            players[i].gameObject.layer = LayerMask.NameToLayer("RaderCamera");
-            foreach(Transform child in players[i].transform)
-            {
-                child.gameObject.layer = LayerMask.NameToLayer("RaderCamera");
-            }
         }
     }
 
@@ -71,12 +68,9 @@ public class RaderObject : MonoBehaviour {
 
         for (int i = 0; i < players.Count; i++)
         {
+            SkinnedMeshRenderer renderer = players[i].GetComponentInChildren<SkinnedMeshRenderer>();
+            renderer.gameObject.layer = LayerMask.NameToLayer("ShadowLayer");
             players[i].ChangeOriginalMode();
-            players[i].gameObject.layer = LayerMask.NameToLayer("ShadowLayer");
-            foreach (Transform child in players[i].transform)
-            {
-                child.gameObject.layer = LayerMask.NameToLayer("ShadowLayer");
-            }
         }
     }
 }

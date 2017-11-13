@@ -111,7 +111,7 @@ public:
 
 private:
 	HostID m_playerP2PGroup = HostID_None; ///< P2P 그룹의 HostID
-	string m_serverPropertiesData; ///< server.properties json 데이터
+	Value m_serverPropertiesData; ///< server.properties json 데이터
 
 	int m_gameStartTime; ///< 플레이 타임 계산용 변수
 	int m_itemBoxCreateItemIndex; ///< 아이템박스 인덱스

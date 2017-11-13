@@ -15,7 +15,20 @@ namespace TimeForEscape.Object.Weapon.Bullet
     public class Bullet_Plasma : MonoBehaviour
     {
         #region Bullet Plasma --------------------------------------------------
+        [SerializeField]
+        private GameObject m_plasmaHitEffect = null; ///< 플레이어가 맞았을 때
+        private float m_effectCoolTime = 0.0f; ///< 이펙트 띄울 쿨타임
+        #region Bullet Plasma Property -----------------------------------------
 
+        /**
+         * @brief   플라즈마 히트 이펙트 등록을 위한 프로퍼티
+         */
+        public GameObject PLASMA_HIT_EFFECT
+        {
+            get { return m_plasmaHitEffect; }
+            set { m_plasmaHitEffect = value; }
+        }
+        #endregion -------------------------------------------------------------
         #endregion -------------------------------------------------------------
         #region Unity Mehtod ---------------------------------------------------
         /**
@@ -36,7 +49,13 @@ namespace TimeForEscape.Object.Weapon.Bullet
             // 데미지 구간
             if(distance <= 2.58f)
             {
-                // TODO 이펙트 띄우기 
+                m_effectCoolTime -= Time.deltaTime;
+
+                if (m_effectCoolTime < 0.0f)
+                    m_effectCoolTime = 0.0f;
+
+                if (m_effectCoolTime <= 0.0f)
+                    DamageEffectShow(other.transform.position);
                 
             }
             
@@ -44,6 +63,23 @@ namespace TimeForEscape.Object.Weapon.Bullet
         #endregion -------------------------------------------------------------
         #region Bullet Plasma Method -------------------------------------------
 
+        /**
+         * @brief   데미지 이펙트 표시
+         * @param   position 이펙트가 표시될 좌표
+         */
+        void DamageEffectShow(Vector3 position)
+        {
+            if (m_plasmaHitEffect == null)
+                return;
+            Debug.Log("HIT !!");
+            GameObject obj = GameObject.Instantiate(m_plasmaHitEffect);
+            obj.SetActive(true);
+            obj.transform.position = position;
+            var effect = obj.AddComponent<TimeForEscape.Util.Effect.OneHitEffect>();
+            effect.EFFECT_TYPE = Util.Effect.OneHitEffect.EffectDeleteType.TIME_EVENT;
+            effect.EFFECT_DELETE_TIME = 2.0f;
+            m_effectCoolTime = 2.0f;
+        }
         #endregion -------------------------------------------------------------
     }
 }

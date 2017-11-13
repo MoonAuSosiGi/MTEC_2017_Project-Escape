@@ -387,6 +387,7 @@ public class WeaponManager : Singletone<WeaponManager> {
                         r.BULLET_HIT_EFFECT.AddComponent<RocketBulletExplosion>().ROCKET = item;
                         r.BULLET_OTHER_HIT_EFFECT.AddComponent<RocketBulletExplosion>().ROCKET = item;
                     }
+                    
                 }
                 break;
             case WeaponType.SWORD:
