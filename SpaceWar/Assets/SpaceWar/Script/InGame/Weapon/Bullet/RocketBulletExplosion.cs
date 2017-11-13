@@ -6,7 +6,7 @@ public class RocketBulletExplosion : MonoBehaviour {
 
     #region Rocket Bullet Explosion
     [SerializeField] private WeaponItem m_weapon = null;
-
+    public WeaponItem ROCKET { get { return m_weapon; } set { m_weapon = value; } }
 
     public void AnimationEnd()
     {
@@ -22,7 +22,7 @@ public class RocketBulletExplosion : MonoBehaviour {
 
             if(p!= null)
             {
-                NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weapon.ITEM_ID.ToString() , Random.Range(10.0f , 15.0f) , transform.position);
+                NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weapon.ITEM_ID.ToString() ,m_weapon.DAMAGE , transform.position);
             }
 
         }

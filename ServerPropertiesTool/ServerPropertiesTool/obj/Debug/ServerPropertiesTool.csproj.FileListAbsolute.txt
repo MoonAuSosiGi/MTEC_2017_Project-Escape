@@ -1,0 +1,12 @@
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\bin\Debug\ServerPropertiesTool.exe.config
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\bin\Debug\ServerPropertiesTool.exe
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\bin\Debug\ServerPropertiesTool.pdb
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\bin\Debug\Newtonsoft.Json.dll
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\bin\Debug\Newtonsoft.Json.xml
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\obj\Debug\ServerPropertiesTool.csprojResolveAssemblyReference.cache
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\obj\Debug\ServerPropertiesTool.csproj.ResolveComReference.cache
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\obj\Debug\ServerPropertiesTool.Form1.resources
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\obj\Debug\ServerPropertiesTool.Properties.Resources.resources
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\obj\Debug\ServerPropertiesTool.csproj.GenerateResource.Cache
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\obj\Debug\ServerPropertiesTool.exe
+D:\Dev\A_School_Project\SpaceWarProject\ServerPropertiesTool\ServerPropertiesTool\obj\Debug\ServerPropertiesTool.pdb

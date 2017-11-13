@@ -1,0 +1,4 @@
+<map id="Json::Value::CZString::data" name="Json::Value::CZString::data">
+<area shape="rect" id="node2" href="$class_json_1_1_value_iterator_base.html#a3838ba39c43c518cf3ed4aa6ce78ccad" title="Json::ValueIteratorBase::key" alt="" coords="201,5,391,32"/>
+<area shape="rect" id="node3" href="$class_json_1_1_value_iterator_base.html#a549c66a0bd20e9ae772175a5c0d2e88a" title="Return the index of the referenced Value, or &#45;1 if it is not an arrayValue. " alt="" coords="216,57,376,98"/>
+</map>

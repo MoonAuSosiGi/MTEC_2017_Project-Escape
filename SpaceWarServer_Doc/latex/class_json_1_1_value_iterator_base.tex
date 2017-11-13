@@ -1,0 +1,536 @@
+\hypertarget{class_json_1_1_value_iterator_base}{}\section{Json\+:\+:Value\+Iterator\+Base 클래스 참조}
+\label{class_json_1_1_value_iterator_base}\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+
+
+base class for \hyperlink{class_json_1_1_value}{Value} iterators.  
+
+
+
+
+{\ttfamily \#include $<$json.\+h$>$}
+
+
+
+Json\+:\+:Value\+Iterator\+Base에 대한 상속 다이어그램 \+: \nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{class_json_1_1_value_iterator_base__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Json\+:\+:Value\+Iterator\+Base에 대한 협력 다이어그램\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{class_json_1_1_value_iterator_base__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 타입}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::bidirectional\+\_\+iterator\+\_\+tag \hyperlink{class_json_1_1_value_iterator_base_a02fd11a4fbdc0007da1e8bcf5e6b83c3}{iterator\+\_\+category}
+\item 
+typedef unsigned int \hyperlink{class_json_1_1_value_iterator_base_a9d3a3c7ce5cdefe23cb486239cf07bb5}{size\+\_\+t}
+\item 
+typedef int \hyperlink{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}{difference\+\_\+type}
+\item 
+typedef \hyperlink{class_json_1_1_value_iterator_base}{Value\+Iterator\+Base} \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type}
+\end{DoxyCompactItemize}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{class_json_1_1_value_iterator_base_a1248d8016f88b51371a0fcbd355b3cfd}{operator==} (const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&other) const
+\item 
+bool \hyperlink{class_json_1_1_value_iterator_base_aa83bdcc8114b7d040eb8eb42eeed5f4a}{operator!=} (const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&other) const
+\item 
+\hyperlink{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}{difference\+\_\+type} \hyperlink{class_json_1_1_value_iterator_base_a98e254263fca5f1fc8fcac7bcb0260bf}{operator-\/} (const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&other) const
+\item 
+\hyperlink{class_json_1_1_value}{Value} \hyperlink{class_json_1_1_value_iterator_base_a3838ba39c43c518cf3ed4aa6ce78ccad}{key} () const
+\item 
+\hyperlink{namespace_json_a800fb90eb6ee8d5d62b600c06f87f7d4}{U\+Int} \hyperlink{class_json_1_1_value_iterator_base_a549c66a0bd20e9ae772175a5c0d2e88a}{index} () const
+\begin{DoxyCompactList}\small\item\em Return the index of the referenced \hyperlink{class_json_1_1_value}{Value}, or -\/1 if it is not an array\+Value. \end{DoxyCompactList}\item 
+\hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} \hyperlink{class_json_1_1_value_iterator_base_a522989403c976fdbb94da846b99418db}{name} () const
+\item 
+char const  $\ast$ \hyperlink{class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263}{member\+Name} () const
+\item 
+char const  $\ast$ \hyperlink{class_json_1_1_value_iterator_base_a391c9cbd0edf9a447b37df00e8ce6059}{member\+Name} (char const $\ast$$\ast$end) const
+\item 
+\hyperlink{class_json_1_1_value_iterator_base_af45b028d9ff9cbd2554a87878b42dd75}{Value\+Iterator\+Base} ()
+\item 
+\hyperlink{class_json_1_1_value_iterator_base_a640e990e5f03a96fd650122a2906f59d}{Value\+Iterator\+Base} (const Value\+::\+Object\+Values\+::iterator \&current)
+\end{DoxyCompactItemize}
+\subsection*{Protected 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_json_1_1_value}{Value} \& \hyperlink{class_json_1_1_value_iterator_base_aa5b75c9514a30ba2ea3c9a35c165c18e}{deref} () const
+\item 
+void \hyperlink{class_json_1_1_value_iterator_base_afe58f9534e1fd2033419fd9fe244551e}{increment} ()
+\item 
+void \hyperlink{class_json_1_1_value_iterator_base_affc8cf5ff54a9f432cc693362c153fa6}{decrement} ()
+\item 
+\hyperlink{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}{difference\+\_\+type} \hyperlink{class_json_1_1_value_iterator_base_af11473c9e20d07782e42b52a2f9e4540}{compute\+Distance} (const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&other) const
+\item 
+bool \hyperlink{class_json_1_1_value_iterator_base_a010b5ad3f3337ae3732e5d7e16ca5e25}{is\+Equal} (const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&other) const
+\item 
+void \hyperlink{class_json_1_1_value_iterator_base_a496e6aba44808433ec5858c178be5719}{copy} (const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&other)
+\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+Value\+::\+Object\+Values\+::iterator \hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\+\_\+}
+\item 
+bool \hyperlink{class_json_1_1_value_iterator_base_a3e08b114a1aed9bde518c527f94a8c59}{is\+Null\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+base class for \hyperlink{class_json_1_1_value}{Value} iterators. 
+
+
+
+json.\+h 파일의 1133 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{멤버 타입정의 문서화}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}\label{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!difference\+\_\+type@{difference\+\_\+type}}
+\index{difference\+\_\+type@{difference\+\_\+type}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{difference\+\_\+type}{difference\_type}}
+{\footnotesize\ttfamily typedef int \hyperlink{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}{Json\+::\+Value\+Iterator\+Base\+::difference\+\_\+type}}
+
+
+
+json.\+h 파일의 1137 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a02fd11a4fbdc0007da1e8bcf5e6b83c3}\label{class_json_1_1_value_iterator_base_a02fd11a4fbdc0007da1e8bcf5e6b83c3}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!iterator\+\_\+category@{iterator\+\_\+category}}
+\index{iterator\+\_\+category@{iterator\+\_\+category}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{iterator\+\_\+category}{iterator\_category}}
+{\footnotesize\ttfamily typedef std\+::bidirectional\+\_\+iterator\+\_\+tag \hyperlink{class_json_1_1_value_iterator_base_a02fd11a4fbdc0007da1e8bcf5e6b83c3}{Json\+::\+Value\+Iterator\+Base\+::iterator\+\_\+category}}
+
+
+
+json.\+h 파일의 1135 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}\label{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!Self\+Type@{Self\+Type}}
+\index{Self\+Type@{Self\+Type}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{Self\+Type}{SelfType}}
+{\footnotesize\ttfamily typedef \hyperlink{class_json_1_1_value_iterator_base}{Value\+Iterator\+Base} \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Json\+::\+Value\+Iterator\+Base\+::\+Self\+Type}}
+
+
+
+json.\+h 파일의 1138 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a9d3a3c7ce5cdefe23cb486239cf07bb5}\label{class_json_1_1_value_iterator_base_a9d3a3c7ce5cdefe23cb486239cf07bb5}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!size\+\_\+t@{size\+\_\+t}}
+\index{size\+\_\+t@{size\+\_\+t}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{size\+\_\+t}{size\_t}}
+{\footnotesize\ttfamily typedef unsigned int \hyperlink{class_json_1_1_value_iterator_base_a9d3a3c7ce5cdefe23cb486239cf07bb5}{Json\+::\+Value\+Iterator\+Base\+::size\+\_\+t}}
+
+
+
+json.\+h 파일의 1136 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_af45b028d9ff9cbd2554a87878b42dd75}\label{class_json_1_1_value_iterator_base_af45b028d9ff9cbd2554a87878b42dd75}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!Value\+Iterator\+Base@{Value\+Iterator\+Base}}
+\index{Value\+Iterator\+Base@{Value\+Iterator\+Base}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{Value\+Iterator\+Base()}{ValueIteratorBase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Json\+::\+Value\+Iterator\+Base\+::\+Value\+Iterator\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+jsoncpp.\+cpp 파일의 2285 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2286     : \hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_}(), \hyperlink{class_json_1_1_value_iterator_base_a3e08b114a1aed9bde518c527f94a8c59}{isNull\_}(\textcolor{keyword}{true}) \{
+2287 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a640e990e5f03a96fd650122a2906f59d}\label{class_json_1_1_value_iterator_base_a640e990e5f03a96fd650122a2906f59d}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!Value\+Iterator\+Base@{Value\+Iterator\+Base}}
+\index{Value\+Iterator\+Base@{Value\+Iterator\+Base}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{Value\+Iterator\+Base()}{ValueIteratorBase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Json\+::\+Value\+Iterator\+Base\+::\+Value\+Iterator\+Base (\begin{DoxyParamCaption}\item[{const Value\+::\+Object\+Values\+::iterator \&}]{current }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+jsoncpp.\+cpp 파일의 2289 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2291     : \hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_}(current), \hyperlink{class_json_1_1_value_iterator_base_a3e08b114a1aed9bde518c527f94a8c59}{isNull\_}(\textcolor{keyword}{false}) \{\}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_af11473c9e20d07782e42b52a2f9e4540}\label{class_json_1_1_value_iterator_base_af11473c9e20d07782e42b52a2f9e4540}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!compute\+Distance@{compute\+Distance}}
+\index{compute\+Distance@{compute\+Distance}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{compute\+Distance()}{computeDistance()}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}{Value\+Iterator\+Base\+::difference\+\_\+type} Json\+::\+Value\+Iterator\+Base\+::compute\+Distance (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+jsoncpp.\+cpp 파일의 2306 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2306                                                               \{
+2307 \textcolor{preprocessor}{#ifdef JSON\_USE\_CPPTL\_SMALLMAP}
+2308   \textcolor{keywordflow}{return} other.current\_ - \hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_};
+2309 \textcolor{preprocessor}{#else}
+2310   \textcolor{comment}{// Iterator for null value are initialized using the default}
+2311   \textcolor{comment}{// constructor, which initialize current\_ to the default}
+2312   \textcolor{comment}{// std::map::iterator. As begin() and end() are two instance}
+2313   \textcolor{comment}{// of the default std::map::iterator, they can not be compared.}
+2314   \textcolor{comment}{// To allow this, we handle this comparison specifically.}
+2315   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_value_iterator_base_a3e08b114a1aed9bde518c527f94a8c59}{isNull\_} && other.isNull\_) \{
+2316     \textcolor{keywordflow}{return} 0;
+2317   \}
+2318 
+2319   \textcolor{comment}{// Usage of std::distance is not portable (does not compile with Sun Studio 12}
+2320   \textcolor{comment}{// RogueWave STL,}
+2321   \textcolor{comment}{// which is the one used by default).}
+2322   \textcolor{comment}{// Using a portable hand-made version for non random iterator instead:}
+2323   \textcolor{comment}{//   return difference\_type( std::distance( current\_, other.current\_ ) );}
+2324   \hyperlink{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}{difference\_type} myDistance = 0;
+2325   \textcolor{keywordflow}{for} (Value::ObjectValues::iterator it = \hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_}; it != other.current\_;
+2326        ++it) \{
+2327     ++myDistance;
+2328   \}
+2329   \textcolor{keywordflow}{return} myDistance;
+2330 \textcolor{preprocessor}{#endif}
+2331 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_value_iterator_base_af11473c9e20d07782e42b52a2f9e4540_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a496e6aba44808433ec5858c178be5719}\label{class_json_1_1_value_iterator_base_a496e6aba44808433ec5858c178be5719}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!copy@{copy}}
+\index{copy@{copy}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily void Json\+::\+Value\+Iterator\+Base\+::copy (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&}]{other }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+jsoncpp.\+cpp 파일의 2340 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2340                                                   \{
+2341   \hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_} = other.current\_;
+2342   \hyperlink{class_json_1_1_value_iterator_base_a3e08b114a1aed9bde518c527f94a8c59}{isNull\_} = other.isNull\_;
+2343 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_value_iterator_base_a496e6aba44808433ec5858c178be5719_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_affc8cf5ff54a9f432cc693362c153fa6}\label{class_json_1_1_value_iterator_base_affc8cf5ff54a9f432cc693362c153fa6}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!decrement@{decrement}}
+\index{decrement@{decrement}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{decrement()}{decrement()}}
+{\footnotesize\ttfamily void Json\+::\+Value\+Iterator\+Base\+::decrement (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+jsoncpp.\+cpp 파일의 2301 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2301                                   \{
+2302   --\hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_};
+2303 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_aa5b75c9514a30ba2ea3c9a35c165c18e}\label{class_json_1_1_value_iterator_base_aa5b75c9514a30ba2ea3c9a35c165c18e}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!deref@{deref}}
+\index{deref@{deref}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{deref()}{deref()}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_value}{Value} \& Json\+::\+Value\+Iterator\+Base\+::deref (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+jsoncpp.\+cpp 파일의 2293 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2293                                       \{
+2294   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_}->second;
+2295 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_afe58f9534e1fd2033419fd9fe244551e}\label{class_json_1_1_value_iterator_base_afe58f9534e1fd2033419fd9fe244551e}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!increment@{increment}}
+\index{increment@{increment}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{increment()}{increment()}}
+{\footnotesize\ttfamily void Json\+::\+Value\+Iterator\+Base\+::increment (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+jsoncpp.\+cpp 파일의 2297 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2297                                   \{
+2298   ++\hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_};
+2299 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a549c66a0bd20e9ae772175a5c0d2e88a}\label{class_json_1_1_value_iterator_base_a549c66a0bd20e9ae772175a5c0d2e88a}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!index@{index}}
+\index{index@{index}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{index()}{index()}}
+{\footnotesize\ttfamily \hyperlink{namespace_json_a800fb90eb6ee8d5d62b600c06f87f7d4}{U\+Int} Json\+::\+Value\+Iterator\+Base\+::index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Return the index of the referenced \hyperlink{class_json_1_1_value}{Value}, or -\/1 if it is not an array\+Value. 
+
+
+
+jsoncpp.\+cpp 파일의 2355 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2355                                     \{
+2356   \textcolor{keyword}{const} \hyperlink{class_json_1_1_value_1_1_c_z_string}{Value::CZString} czstring = (*current\_).first;
+2357   \textcolor{keywordflow}{if} (!czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_af6eee54f8dc43a1203d5af6ba0a5c9a2}{data}())
+2358     \textcolor{keywordflow}{return} czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_a0f3ba09401525d4f01dafd577122ee32}{index}();
+2359   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_value_a0933d59b45793ae4aade1757c322a98d}{Value::UInt}(-1);
+2360 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=347pt]{class_json_1_1_value_iterator_base_a549c66a0bd20e9ae772175a5c0d2e88a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a010b5ad3f3337ae3732e5d7e16ca5e25}\label{class_json_1_1_value_iterator_base_a010b5ad3f3337ae3732e5d7e16ca5e25}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!is\+Equal@{is\+Equal}}
+\index{is\+Equal@{is\+Equal}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{is\+Equal()}{isEqual()}}
+{\footnotesize\ttfamily bool Json\+::\+Value\+Iterator\+Base\+::is\+Equal (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+jsoncpp.\+cpp 파일의 2333 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2333                                                            \{
+2334   \textcolor{keywordflow}{if} (\hyperlink{class_json_1_1_value_iterator_base_a3e08b114a1aed9bde518c527f94a8c59}{isNull\_}) \{
+2335     \textcolor{keywordflow}{return} other.isNull\_;
+2336   \}
+2337   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}{current\_} == other.current\_;
+2338 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a3838ba39c43c518cf3ed4aa6ce78ccad}\label{class_json_1_1_value_iterator_base_a3838ba39c43c518cf3ed4aa6ce78ccad}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!key@{key}}
+\index{key@{key}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{key()}{key()}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_value}{Value} Json\+::\+Value\+Iterator\+Base\+::key (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Return either the index or the member name of the referenced value as a \hyperlink{class_json_1_1_value}{Value}. 
+
+jsoncpp.\+cpp 파일의 2345 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2345                                    \{
+2346   \textcolor{keyword}{const} \hyperlink{class_json_1_1_value_1_1_c_z_string}{Value::CZString} czstring = (*current\_).first;
+2347   \textcolor{keywordflow}{if} (czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_af6eee54f8dc43a1203d5af6ba0a5c9a2}{data}()) \{
+2348     \textcolor{keywordflow}{if} (czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_a5991dfa2f6c2ba318373c7429fcd7a57}{isStaticString}())
+2349       \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_value}{Value}(\hyperlink{class_json_1_1_static_string}{StaticString}(czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_af6eee54f8dc43a1203d5af6ba0a5c9a2}{data}()));
+2350     \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_value}{Value}(czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_af6eee54f8dc43a1203d5af6ba0a5c9a2}{data}(), czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_af6eee54f8dc43a1203d5af6ba0a5c9a2}{data}() + czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_aa7ee665d162c1f33b3ec818e289d8a5e}{length}());
+2351   \}
+2352   \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_value}{Value}(czstring.\hyperlink{class_json_1_1_value_1_1_c_z_string_a0f3ba09401525d4f01dafd577122ee32}{index}());
+2353 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_value_iterator_base_a3838ba39c43c518cf3ed4aa6ce78ccad_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263}\label{class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!member\+Name@{member\+Name}}
+\index{member\+Name@{member\+Name}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{member\+Name()}{memberName()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily char const  $\ast$ Json\+::\+Value\+Iterator\+Base\+::member\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Return the member name of the referenced \hyperlink{class_json_1_1_value}{Value}. \char`\"{}\char`\"{} if it is not an object\+Value. \begin{DoxyRefDesc}{잘못된 코드}
+\item[\hyperlink{deprecated__deprecated000004}{잘못된 코드}]This cannot be used for U\+T\+F-\/8 strings, since there can be embedded nulls. \end{DoxyRefDesc}
+
+
+jsoncpp.\+cpp 파일의 2370 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2370                                                 \{
+2371   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* cname = (*current\_).first.data();
+2372   \textcolor{keywordflow}{return} cname ? cname : \textcolor{stringliteral}{""};
+2373 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a391c9cbd0edf9a447b37df00e8ce6059}\label{class_json_1_1_value_iterator_base_a391c9cbd0edf9a447b37df00e8ce6059}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!member\+Name@{member\+Name}}
+\index{member\+Name@{member\+Name}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{member\+Name()}{memberName()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily char const  $\ast$ Json\+::\+Value\+Iterator\+Base\+::member\+Name (\begin{DoxyParamCaption}\item[{char const $\ast$$\ast$}]{end }\end{DoxyParamCaption}) const}
+
+Return the member name of the referenced \hyperlink{class_json_1_1_value}{Value}, or N\+U\+LL if it is not an object\+Value. \begin{DoxyNote}{주의}
+Better version than \hyperlink{class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263}{member\+Name()}. Allows embedded nulls. 
+\end{DoxyNote}
+
+
+jsoncpp.\+cpp 파일의 2375 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2375                                                                 \{
+2376   \textcolor{keyword}{const} \textcolor{keywordtype}{char}* cname = (*current\_).first.data();
+2377   \textcolor{keywordflow}{if} (!cname) \{
+2378     *end = NULL;
+2379     \textcolor{keywordflow}{return} NULL;
+2380   \}
+2381   *end = cname + (*current\_).first.length();
+2382   \textcolor{keywordflow}{return} cname;
+2383 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a522989403c976fdbb94da846b99418db}\label{class_json_1_1_value_iterator_base_a522989403c976fdbb94da846b99418db}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!name@{name}}
+\index{name@{name}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{name()}{name()}}
+{\footnotesize\ttfamily \hyperlink{json_8h_a1e723f95759de062585bc4a8fd3fa4be}{J\+S\+O\+N\+C\+P\+P\+\_\+\+S\+T\+R\+I\+NG} Json\+::\+Value\+Iterator\+Base\+::name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Return the member name of the referenced \hyperlink{class_json_1_1_value}{Value}, or \char`\"{}\char`\"{} if it is not an object\+Value. \begin{DoxyNote}{주의}
+Avoid {\ttfamily c\+\_\+str()} on result, as embedded zeroes are possible. 
+\end{DoxyNote}
+
+
+jsoncpp.\+cpp 파일의 2362 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+2362                                              \{
+2363   \textcolor{keywordtype}{char} \textcolor{keyword}{const}* keey;
+2364   \textcolor{keywordtype}{char} \textcolor{keyword}{const}* end;
+2365   keey = \hyperlink{class_json_1_1_value_iterator_base_a54765da6759fd3f1edcbfbaf308ec263}{memberName}(&end);
+2366   \textcolor{keywordflow}{if} (!keey) \textcolor{keywordflow}{return} \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING}();
+2367   \textcolor{keywordflow}{return} \hyperlink{json-forwards_8h_a1e723f95759de062585bc4a8fd3fa4be}{JSONCPP\_STRING}(keey, end);
+2368 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_value_iterator_base_a522989403c976fdbb94da846b99418db_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_aa83bdcc8114b7d040eb8eb42eeed5f4a}\label{class_json_1_1_value_iterator_base_aa83bdcc8114b7d040eb8eb42eeed5f4a}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily bool Json\+::\+Value\+Iterator\+Base\+::operator!= (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+json.\+h 파일의 1142 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1142 \{ \textcolor{keywordflow}{return} !\hyperlink{class_json_1_1_value_iterator_base_a010b5ad3f3337ae3732e5d7e16ca5e25}{isEqual}(other); \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a98e254263fca5f1fc8fcac7bcb0260bf}\label{class_json_1_1_value_iterator_base_a98e254263fca5f1fc8fcac7bcb0260bf}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{operator-\/()}{operator-()}}
+{\footnotesize\ttfamily \hyperlink{class_json_1_1_value_iterator_base_a4e44bf8cbd17ec8d6e2c185904a15ebd}{difference\+\_\+type} Json\+::\+Value\+Iterator\+Base\+::operator-\/ (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+json.\+h 파일의 1144 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1144                                                          \{
+1145     \textcolor{keywordflow}{return} other.computeDistance(*\textcolor{keyword}{this});
+1146   \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_json_1_1_value_iterator_base_a98e254263fca5f1fc8fcac7bcb0260bf_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a1248d8016f88b51371a0fcbd355b3cfd}\label{class_json_1_1_value_iterator_base_a1248d8016f88b51371a0fcbd355b3cfd}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!operator==@{operator==}}
+\index{operator==@{operator==}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Json\+::\+Value\+Iterator\+Base\+::operator== (\begin{DoxyParamCaption}\item[{const \hyperlink{class_json_1_1_value_iterator_base_a9d2a940d03ea06d20d972f41a89149ee}{Self\+Type} \&}]{other }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+json.\+h 파일의 1140 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+1140 \{ \textcolor{keywordflow}{return} \hyperlink{class_json_1_1_value_iterator_base_a010b5ad3f3337ae3732e5d7e16ca5e25}{isEqual}(other); \}
+\end{DoxyCode}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}\label{class_json_1_1_value_iterator_base_ab3138ce8af8301cca3b041ea55cb922a}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!current\+\_\+@{current\+\_\+}}
+\index{current\+\_\+@{current\+\_\+}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{current\+\_\+}{current\_}}
+{\footnotesize\ttfamily Value\+::\+Object\+Values\+::iterator Json\+::\+Value\+Iterator\+Base\+::current\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 1184 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_json_1_1_value_iterator_base_a3e08b114a1aed9bde518c527f94a8c59}\label{class_json_1_1_value_iterator_base_a3e08b114a1aed9bde518c527f94a8c59}} 
+\index{Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}!is\+Null\+\_\+@{is\+Null\+\_\+}}
+\index{is\+Null\+\_\+@{is\+Null\+\_\+}!Json\+::\+Value\+Iterator\+Base@{Json\+::\+Value\+Iterator\+Base}}
+\subsubsection{\texorpdfstring{is\+Null\+\_\+}{isNull\_}}
+{\footnotesize\ttfamily bool Json\+::\+Value\+Iterator\+Base\+::is\+Null\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+json.\+h 파일의 1186 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/json/\hyperlink{json_8h}{json.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{jsoncpp_8cpp}{jsoncpp.\+cpp}\end{DoxyCompactItemize}

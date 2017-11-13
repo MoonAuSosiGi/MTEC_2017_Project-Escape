@@ -5,7 +5,9 @@ using UnityEngine;
 public class RocketBullet : Bullet {
 
     #region RocketBullet_INFO
+    private float m_gravity = 0.0f;
     private float m_gravityPower = 0.0f;
+    public float GRAVITY_POWER { get { return m_gravityPower; } set { m_gravityPower = value; } }
     private Vector3 m_gravityPosition = Vector3.zero;
     #endregion
 
@@ -17,41 +19,49 @@ public class RocketBullet : Bullet {
             m_speed  * Time.deltaTime);
 
         Vector3 dir = (m_gravityPosition - transform.position).normalized;
-        transform.position += dir * m_gravityPower * Time.deltaTime;
-
-        m_gravityPower += 5f * Time.deltaTime;
-        MoveSend();
+        transform.position += dir * m_gravity * Time.deltaTime;
+        Vector3 velo = (m_shotRot * Vector3.right * m_speed * Time.deltaTime); // + (dir * m_gravityPower * Time.deltaTime);
+        m_gravity += m_gravityPower * Time.deltaTime;
+        
+        MoveSend(velo);
     }
 
     public override void BulletSetup()
     {
         base.BulletSetup();
-        m_gravityPower = 0.0f;
+        m_gravity = 0.0f;
         m_gravityPosition = GravityManager.Instance().transform.position;
+        BULLET_TRAIL_EFFECT.transform.GetChild(0).gameObject.SetActive(true);
     }
     protected override void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
+        if (m_hitEnemy == true)
+            return;
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
+            && !other.CompareTag("Bullet_Explosion"))
         {
             m_hitEnemy = true;
-            // 상관 없는 이펙트 
-            if (m_shotEffect != null)
-                m_shotEffect.SetActive(true);
+
+            m_isNetworkMoving = false;
+
             if(m_hitMain != null)
             {
                 m_bulletAudioSource.clip = m_hitMain;
                 m_bulletAudioSource.Play();
             }
-            
 
+            
             if (other.CompareTag("PlayerCharacter"))
             {
                 NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
 
                 if (p != null)
                 {
-
-                    NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f) , m_startPos);
+                    if (IS_REMOTE == true && TARGET_ID == (int)p.HOST_ID)
+                        return;
+                    MainHitEffect();
+                    if (IS_REMOTE == false)
+                        NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage , m_startPos);
                 }
                 else
                 {
@@ -62,21 +72,20 @@ public class RocketBullet : Bullet {
             else if (string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
             {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
-                if (m_shotOtherObjectEffect != null)
-                    m_shotOtherObjectEffect.SetActive(true);
+                MainHitEffect();
+                StoneHitEffect();
+                //   BULLET_TRAIL_EFFECT.SetActive(false);
             }
             else
             {
                 // 기타 오브젝트
-                if (m_shotEffect != null)
-                    m_shotEffect.SetActive(true);
+                MainHitEffect();
+                //    BULLET_TRAIL_EFFECT.SetActive(false);
             }
-
-
-
-            BulletDelete();
-            if (NetworkManager.Instance() != null)
-                NetworkManager.Instance().C2SRequestBulletRemove(m_networkID);
+            
+            this.GetComponent<SphereCollider>().enabled = false;
+            BULLET_TRAIL_EFFECT.transform.GetChild(0).gameObject.SetActive(false);
+            BulletHitEvent();
         }
 
     }

@@ -46,9 +46,14 @@ public class DeathZone : MonoBehaviour {
 
     void Start()
     {
-     
-        if(m_test != null)
-        DeathZoneSetup(m_test.transform.position);
+        m_deathZoneSpeed[0] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED1);
+        m_deathZoneSpeed[1] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED2);
+        m_deathZoneSpeed[2] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED3);
+        m_deathZoneSpeed[3] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED4);
+        m_deathZoneSpeed[4] = GameManager.Instance().GetGameTableValue(GameManager.DZ_SPEED5);
+
+        if (m_test != null)
+            DeathZoneSetup(m_test.transform.position,"");
         for(int i = 0; i < m_planetLevelZoneObject.transform.childCount; i++)
         {
             m_deathZoneLines.Add(m_planetLevelZoneObject.transform.GetChild(i).gameObject);
@@ -65,7 +70,7 @@ public class DeathZone : MonoBehaviour {
     #endregion
 
     #region Death Zone Method
-    public void DeathZoneSetup(Vector3 pos)
+    public void DeathZoneSetup(Vector3 pos,string deathZoneID)
     {
         // 반대 방향으로 생성
         transform.rotation = Quaternion.LookRotation((Vector3.zero - pos).normalized);
@@ -83,7 +88,6 @@ public class DeathZone : MonoBehaviour {
 
         if (m_deathLineIndex >= m_deathZoneLines.Count)
         {
-            Debug.Log("tt" + Vector3.Distance(pos , m_targetPos));
             if (Vector3.Distance(pos , m_targetPos) >= 10.0f)
                 return;
             
@@ -137,12 +141,12 @@ public class DeathZone : MonoBehaviour {
         
         hitEffect.transform.position = hitPlayer.transform.GetChild(4).position;
         hitEffect.SetActive(true);
-        
 
-        if(hitPlayer.GetComponent<NetworkPlayer>() == null && hitPlayer.GetComponent<PlayerController>()  != null && hitPlayer.GetComponent<PlayerController>().enabled == true)
+        if(hitPlayer.GetComponent<NetworkPlayer>() == null && hitPlayer.GetComponent<PlayerController>()  != null &&
+            hitPlayer.GetComponent<PlayerController>().enabled == true)
         {
             if (NetworkManager.Instance() != null)
-                NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , "" , "DeathZone" , 5.0f , Vector3.zero);
+                NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , "" , "DeathZone" , GameManager.Instance().GetGameTableValue(GameManager.DZ_DAMAGE) , Vector3.zero);
         }
     }
 

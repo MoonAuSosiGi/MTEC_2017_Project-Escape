@@ -38,6 +38,7 @@ namespace UnityStandardAssets.ImageEffects
             CheckSupport (false);
 
             m_VignetteMaterial = CheckShaderAndCreateMaterial (vignetteShader, m_VignetteMaterial);
+            
             m_SeparableBlurMaterial = CheckShaderAndCreateMaterial (separableBlurShader, m_SeparableBlurMaterial);
             m_ChromAberrationMaterial = CheckShaderAndCreateMaterial (chromAberrationShader, m_ChromAberrationMaterial);
 
@@ -74,7 +75,7 @@ namespace UnityStandardAssets.ImageEffects
                 if (Mathf.Abs (blur)>0.0f)
                 {
                     color2A = RenderTexture.GetTemporary (rtW / 2, rtH / 2, 0, source.format);
-
+                    
                     Graphics.Blit (source, color2A, m_ChromAberrationMaterial, 0);
 
                     for(int i = 0; i < 2; i++)

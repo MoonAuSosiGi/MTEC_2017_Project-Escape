@@ -1,0 +1,345 @@
+\hypertarget{class_shelter}{}\section{Shelter 클래스 참조}
+\label{class_shelter}\index{Shelter@{Shelter}}
+
+
+{\ttfamily \#include $<$Shelter.\+h$>$}
+
+
+
+Shelter에 대한 협력 다이어그램\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=219pt]{class_shelter__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_shelter_afcd0de261925dbb0d6efe948625708b9}{Shelter} ()
+\begin{DoxyCompactList}\small\item\em 변수 초기화 \end{DoxyCompactList}\item 
+void \hyperlink{class_shelter_a488b5cd851099aeb8e959c1650d9cdeb}{Shelter\+Enter} ()
+\begin{DoxyCompactList}\small\item\em 쉘터에 들어왔다. \end{DoxyCompactList}\item 
+void \hyperlink{class_shelter_acb6d900dbdda90cdfe09aa03005e83ca}{Shelter\+Exit} ()
+\begin{DoxyCompactList}\small\item\em 쉘터에서 나갔다. \end{DoxyCompactList}\item 
+void \hyperlink{class_shelter_af5319d96477a916f5c589f9d3e71d618}{Shelter\+Door\+State\+Change} (bool state)
+\begin{DoxyCompactList}\small\item\em 쉘터 문 상태 체인지 \end{DoxyCompactList}\item 
+void \hyperlink{class_shelter_a34b27753d72d2f4e18ed9132a956e3ac}{Set\+Shelter\+ID} (int shelter\+ID)
+\begin{DoxyCompactList}\small\item\em 쉘터 인덱스 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_shelter_a3c7126b39e09028cccc6af1b058d0108}{Get\+Shelter\+ID} ()
+\begin{DoxyCompactList}\small\item\em 쉘터 인덱스 얻기 \end{DoxyCompactList}\item 
+int \hyperlink{class_shelter_ad25c083e736fa8850a199d78c4ca753e}{Get\+Shelter\+Human} ()
+\begin{DoxyCompactList}\small\item\em 쉘터 안에 있는 사람 수 얻기 \end{DoxyCompactList}\item 
+bool \hyperlink{class_shelter_a3cbedf84b7e783ba45d6a5bedb97916b}{Is\+Door\+Open} ()
+\begin{DoxyCompactList}\small\item\em 쉘터 문이 열려있는지 얻기 \end{DoxyCompactList}\item 
+bool \hyperlink{class_shelter_a67c28ae706ebd1a9494e53cacdb5ea6e}{Is\+Light\+On} ()
+\begin{DoxyCompactList}\small\item\em 쉘터 라이트가 켜져있는지 얻기 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_shelter_a158439448d67e4991a19dd7175a78a0b}{m\+\_\+shelter\+ID}
+\begin{DoxyCompactList}\small\item\em 쉘터 네트워크 인덱스 \end{DoxyCompactList}\item 
+int \hyperlink{class_shelter_a31a7132fc38ce768924bb59302d02d82}{m\+\_\+shelter\+Human\+Counter}
+\begin{DoxyCompactList}\small\item\em 쉘터 안에 들어간 인간의 수 \end{DoxyCompactList}\item 
+bool \hyperlink{class_shelter_a8deab51bd304b5cb728c2e739f5afa15}{m\+\_\+door\+State}
+\begin{DoxyCompactList}\small\item\em 문이 열려있는지 \end{DoxyCompactList}\item 
+bool \hyperlink{class_shelter_ad18359b14559c0f0e77fdb416b39529f}{m\+\_\+light\+State}
+\begin{DoxyCompactList}\small\item\em 불이 켜져있는지 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+
+Shelter.\+h 파일의 12 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_shelter_afcd0de261925dbb0d6efe948625708b9}\label{class_shelter_afcd0de261925dbb0d6efe948625708b9}} 
+\index{Shelter@{Shelter}!Shelter@{Shelter}}
+\index{Shelter@{Shelter}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Shelter()}{Shelter()}}
+{\footnotesize\ttfamily Shelter\+::\+Shelter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+변수 초기화 
+
+쉘터 기본 생성자 / 변수 초기화 
+
+Shelter.\+cpp 파일의 7 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+8 \{
+9     \hyperlink{class_shelter_a8deab51bd304b5cb728c2e739f5afa15}{m\_doorState} = \textcolor{keyword}{false};
+10     \hyperlink{class_shelter_ad18359b14559c0f0e77fdb416b39529f}{m\_lightState} = \textcolor{keyword}{false};
+11     \hyperlink{class_shelter_a31a7132fc38ce768924bb59302d02d82}{m\_shelterHumanCounter} = 0;
+12 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_shelter_ad25c083e736fa8850a199d78c4ca753e}\label{class_shelter_ad25c083e736fa8850a199d78c4ca753e}} 
+\index{Shelter@{Shelter}!Get\+Shelter\+Human@{Get\+Shelter\+Human}}
+\index{Get\+Shelter\+Human@{Get\+Shelter\+Human}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Get\+Shelter\+Human()}{GetShelterHuman()}}
+{\footnotesize\ttfamily int Shelter\+::\+Get\+Shelter\+Human (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+쉘터 안에 있는 사람 수 얻기 
+
+쉘터 안 사람 수 얻기
+
+\begin{DoxyReturn}{반환값}
+쉘터 안에 있는 사람 수 
+\end{DoxyReturn}
+
+
+Shelter.\+cpp 파일의 76 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+77 \{
+78     \textcolor{keywordflow}{return} \hyperlink{class_shelter_a31a7132fc38ce768924bb59302d02d82}{m\_shelterHumanCounter};
+79 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shelter_a3c7126b39e09028cccc6af1b058d0108}\label{class_shelter_a3c7126b39e09028cccc6af1b058d0108}} 
+\index{Shelter@{Shelter}!Get\+Shelter\+ID@{Get\+Shelter\+ID}}
+\index{Get\+Shelter\+ID@{Get\+Shelter\+ID}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Get\+Shelter\+I\+D()}{GetShelterID()}}
+{\footnotesize\ttfamily int Shelter\+::\+Get\+Shelter\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+쉘터 인덱스 얻기 
+
+쉘터 아이디 얻기
+
+\begin{DoxyReturn}{반환값}
+쉘터의 네트워크 아이디 
+\end{DoxyReturn}
+
+
+Shelter.\+cpp 파일의 67 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+68 \{
+69     \textcolor{keywordflow}{return} \hyperlink{class_shelter_a158439448d67e4991a19dd7175a78a0b}{m\_shelterID};
+70 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shelter_a3cbedf84b7e783ba45d6a5bedb97916b}\label{class_shelter_a3cbedf84b7e783ba45d6a5bedb97916b}} 
+\index{Shelter@{Shelter}!Is\+Door\+Open@{Is\+Door\+Open}}
+\index{Is\+Door\+Open@{Is\+Door\+Open}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Is\+Door\+Open()}{IsDoorOpen()}}
+{\footnotesize\ttfamily bool Shelter\+::\+Is\+Door\+Open (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+쉘터 문이 열려있는지 얻기 
+
+쉘터 문이 열려있는지
+
+\begin{DoxyReturn}{반환값}
+true 를 리턴할 경우 열려있음 
+\end{DoxyReturn}
+
+
+Shelter.\+cpp 파일의 85 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+86 \{
+87     \textcolor{keywordflow}{return} \hyperlink{class_shelter_a8deab51bd304b5cb728c2e739f5afa15}{m\_doorState};
+88 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shelter_a67c28ae706ebd1a9494e53cacdb5ea6e}\label{class_shelter_a67c28ae706ebd1a9494e53cacdb5ea6e}} 
+\index{Shelter@{Shelter}!Is\+Light\+On@{Is\+Light\+On}}
+\index{Is\+Light\+On@{Is\+Light\+On}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Is\+Light\+On()}{IsLightOn()}}
+{\footnotesize\ttfamily bool Shelter\+::\+Is\+Light\+On (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+쉘터 라이트가 켜져있는지 얻기 
+
+쉘터 라이트 상태 얻기  true 를 리턴할 경우 켜져있음 
+
+Shelter.\+cpp 파일의 94 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+95 \{
+96     \textcolor{keywordflow}{return} \hyperlink{class_shelter_ad18359b14559c0f0e77fdb416b39529f}{m\_lightState};
+97 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shelter_a34b27753d72d2f4e18ed9132a956e3ac}\label{class_shelter_a34b27753d72d2f4e18ed9132a956e3ac}} 
+\index{Shelter@{Shelter}!Set\+Shelter\+ID@{Set\+Shelter\+ID}}
+\index{Set\+Shelter\+ID@{Set\+Shelter\+ID}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Set\+Shelter\+I\+D()}{SetShelterID()}}
+{\footnotesize\ttfamily void Shelter\+::\+Set\+Shelter\+ID (\begin{DoxyParamCaption}\item[{int}]{shelter\+ID }\end{DoxyParamCaption})}
+
+
+
+쉘터 인덱스 세팅 
+
+쉘터 아이디 세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em shelter\+ID} & 세팅할 쉘터의 인덱스 \\
+\hline
+\end{DoxyParams}
+
+
+Shelter.\+cpp 파일의 58 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+59 \{
+60     \hyperlink{class_shelter_a158439448d67e4991a19dd7175a78a0b}{m\_shelterID} = shelterID;
+61 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shelter_af5319d96477a916f5c589f9d3e71d618}\label{class_shelter_af5319d96477a916f5c589f9d3e71d618}} 
+\index{Shelter@{Shelter}!Shelter\+Door\+State\+Change@{Shelter\+Door\+State\+Change}}
+\index{Shelter\+Door\+State\+Change@{Shelter\+Door\+State\+Change}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Shelter\+Door\+State\+Change()}{ShelterDoorStateChange()}}
+{\footnotesize\ttfamily void Shelter\+::\+Shelter\+Door\+State\+Change (\begin{DoxyParamCaption}\item[{bool}]{state }\end{DoxyParamCaption})}
+
+
+
+쉘터 문 상태 체인지 
+
+쉘터 문 열고 닫고의 처리
+
+
+\begin{DoxyParams}{매개변수}
+{\em state} & true일 경우 열림 / false 일 경우 닫힘 \\
+\hline
+\end{DoxyParams}
+
+
+Shelter.\+cpp 파일의 47 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+48 \{
+49     \hyperlink{class_shelter_a8deab51bd304b5cb728c2e739f5afa15}{m\_doorState} = state;
+50 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shelter_a488b5cd851099aeb8e959c1650d9cdeb}\label{class_shelter_a488b5cd851099aeb8e959c1650d9cdeb}} 
+\index{Shelter@{Shelter}!Shelter\+Enter@{Shelter\+Enter}}
+\index{Shelter\+Enter@{Shelter\+Enter}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Shelter\+Enter()}{ShelterEnter()}}
+{\footnotesize\ttfamily void Shelter\+::\+Shelter\+Enter (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+쉘터에 들어왔다. 
+
+쉘터에 클라이언트가 들어왔을 때 처리  내부 사람 증가 및 라이트 켜짐 처리 $<$ 사람이 들어 왔으니 불을 켠다. 
+
+Shelter.\+cpp 파일의 19 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+20 \{
+21     \hyperlink{class_shelter_a31a7132fc38ce768924bb59302d02d82}{m\_shelterHumanCounter}++;
+22 
+24     \hyperlink{class_shelter_ad18359b14559c0f0e77fdb416b39529f}{m\_lightState} = \textcolor{keyword}{true};
+25 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_shelter_acb6d900dbdda90cdfe09aa03005e83ca}\label{class_shelter_acb6d900dbdda90cdfe09aa03005e83ca}} 
+\index{Shelter@{Shelter}!Shelter\+Exit@{Shelter\+Exit}}
+\index{Shelter\+Exit@{Shelter\+Exit}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{Shelter\+Exit()}{ShelterExit()}}
+{\footnotesize\ttfamily void Shelter\+::\+Shelter\+Exit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+쉘터에서 나갔다. 
+
+쉘터에서 클라이언트가 나갔을 때 처리  내부 사람 감소 및 라이트 꺼짐 처리 
+
+Shelter.\+cpp 파일의 31 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+32 \{
+33     \hyperlink{class_shelter_a31a7132fc38ce768924bb59302d02d82}{m\_shelterHumanCounter}--;
+34 
+35     \textcolor{comment}{// 쉘터가 비었을 때}
+36     \textcolor{keywordflow}{if} (\hyperlink{class_shelter_a31a7132fc38ce768924bb59302d02d82}{m\_shelterHumanCounter} <= 0)
+37     \{
+38         \hyperlink{class_shelter_a31a7132fc38ce768924bb59302d02d82}{m\_shelterHumanCounter} = 0;
+39         \hyperlink{class_shelter_ad18359b14559c0f0e77fdb416b39529f}{m\_lightState} = \textcolor{keyword}{false};
+40     \}
+41 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_shelter_a8deab51bd304b5cb728c2e739f5afa15}\label{class_shelter_a8deab51bd304b5cb728c2e739f5afa15}} 
+\index{Shelter@{Shelter}!m\+\_\+door\+State@{m\+\_\+door\+State}}
+\index{m\+\_\+door\+State@{m\+\_\+door\+State}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{m\+\_\+door\+State}{m\_doorState}}
+{\footnotesize\ttfamily bool Shelter\+::m\+\_\+door\+State\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+문이 열려있는지 
+
+
+
+Shelter.\+h 파일의 17 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_shelter_ad18359b14559c0f0e77fdb416b39529f}\label{class_shelter_ad18359b14559c0f0e77fdb416b39529f}} 
+\index{Shelter@{Shelter}!m\+\_\+light\+State@{m\+\_\+light\+State}}
+\index{m\+\_\+light\+State@{m\+\_\+light\+State}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{m\+\_\+light\+State}{m\_lightState}}
+{\footnotesize\ttfamily bool Shelter\+::m\+\_\+light\+State\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+불이 켜져있는지 
+
+
+
+Shelter.\+h 파일의 18 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_shelter_a31a7132fc38ce768924bb59302d02d82}\label{class_shelter_a31a7132fc38ce768924bb59302d02d82}} 
+\index{Shelter@{Shelter}!m\+\_\+shelter\+Human\+Counter@{m\+\_\+shelter\+Human\+Counter}}
+\index{m\+\_\+shelter\+Human\+Counter@{m\+\_\+shelter\+Human\+Counter}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{m\+\_\+shelter\+Human\+Counter}{m\_shelterHumanCounter}}
+{\footnotesize\ttfamily int Shelter\+::m\+\_\+shelter\+Human\+Counter\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+쉘터 안에 들어간 인간의 수 
+
+
+
+Shelter.\+h 파일의 16 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_shelter_a158439448d67e4991a19dd7175a78a0b}\label{class_shelter_a158439448d67e4991a19dd7175a78a0b}} 
+\index{Shelter@{Shelter}!m\+\_\+shelter\+ID@{m\+\_\+shelter\+ID}}
+\index{m\+\_\+shelter\+ID@{m\+\_\+shelter\+ID}!Shelter@{Shelter}}
+\subsubsection{\texorpdfstring{m\+\_\+shelter\+ID}{m\_shelterID}}
+{\footnotesize\ttfamily int Shelter\+::m\+\_\+shelter\+ID\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+쉘터 네트워크 인덱스 
+
+
+
+Shelter.\+h 파일의 15 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/\hyperlink{_shelter_8h}{Shelter.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{_shelter_8cpp}{Shelter.\+cpp}\end{DoxyCompactItemize}

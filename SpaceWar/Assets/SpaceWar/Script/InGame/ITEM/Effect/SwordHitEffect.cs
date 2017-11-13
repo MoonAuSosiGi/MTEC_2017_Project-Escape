@@ -10,7 +10,7 @@ public class SwordHitEffect : MonoBehaviour {
     public void SwordHitAnimationEnd()
     {
         Debug.Log("Animation End");
-        m_targetWeapon.SwordHitEffectEnd();
+        //m_targetWeapon.SwordHitEffectEnd();
         //gameObject.SetActive(false);
     }
     #endregion

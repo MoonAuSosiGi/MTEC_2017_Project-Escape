@@ -1,0 +1,898 @@
+\hypertarget{class_game_room}{}\section{Game\+Room 클래스 참조}
+\label{class_game_room}\index{Game\+Room@{Game\+Room}}
+
+
+{\ttfamily \#include $<$Game\+Room.\+h$>$}
+
+
+
+Game\+Room에 대한 협력 다이어그램\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{class_game_room__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_game_room_a7b885c42c8215fa1de563f51a35592ed}{Game\+Room} ()
+\begin{DoxyCompactList}\small\item\em 기본 생성자, 초깃값 세팅 \end{DoxyCompactList}\item 
+unordered\+\_\+map$<$ Host\+ID, shared\+\_\+ptr$<$ \hyperlink{class_room_client}{Room\+Client} $>$ $>$ \hyperlink{class_game_room_ae59443257f14fe5ef17c542981e65f3f}{Get\+Client\+Map} ()
+\begin{DoxyCompactList}\small\item\em 클라이언트 맵 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_game_room_add1aa703d428eaeb558499adb8ab5fb0}{Set\+Player\+Limit\+Count} (int count)
+\begin{DoxyCompactList}\small\item\em 플레이어 수 제한두기 \end{DoxyCompactList}\item 
+int \hyperlink{class_game_room_a0bc57f748c9381c9741dbec7954643f9}{Get\+Player\+Limit\+Count} ()
+\begin{DoxyCompactList}\small\item\em 플레이 가능한 플레이어 수 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_game_room_a65b49e5004eca5e730ac9cd7c173a5f9}{Set\+Game\+Mode} (int game\+Mode)
+\begin{DoxyCompactList}\small\item\em 게임 모드 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_game_room_a9c5ecd98749f146054d1797084591c28}{Set\+Team\+Mode} (bool team\+Mode)
+\begin{DoxyCompactList}\small\item\em 팀 모드 세팅 \end{DoxyCompactList}\item 
+bool \hyperlink{class_game_room_aa18f96d11b894fa1c6e0977dc5666b53}{Get\+Team\+Mode} ()
+\begin{DoxyCompactList}\small\item\em 팀 모드 얻기 \end{DoxyCompactList}\item 
+int \hyperlink{class_game_room_a73929e8bd9390ea46513d7f4ed48dec1}{Get\+Game\+Mode} ()
+\begin{DoxyCompactList}\small\item\em 게임 모드 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_game_room_a3dd806c7382efd9ffd353ab152113d69}{Clear\+Room} ()
+\begin{DoxyCompactList}\small\item\em 게임 룸 클리어 \end{DoxyCompactList}\item 
+bool \hyperlink{class_game_room_a498a6614e5ad025ff27f15e5571f2b2d}{New\+Client\+Connect} (Host\+ID host\+ID, string user\+Name, Critical\+Section \&crit\+Section)
+\begin{DoxyCompactList}\small\item\em 새 클라이언트 접속 \end{DoxyCompactList}\item 
+void \hyperlink{class_game_room_a4811bd3795a4f8130718bb7a9a2c4b0f}{Log\+Out\+Client} (Host\+ID host\+ID)
+\begin{DoxyCompactList}\small\item\em 클라이언트가 접속을 끊었다. \end{DoxyCompactList}\item 
+bool \hyperlink{class_game_room_a48687c02109ec932166223aa144c8c1f}{Is\+Room\+Client} (Host\+ID host\+ID)
+\begin{DoxyCompactList}\small\item\em 방에 제대로 접속했는지 체크 \end{DoxyCompactList}\item 
+void \hyperlink{class_game_room_ae1d0122ec800084f45041131fbb41da7}{Set\+Ready} (Host\+ID host\+ID, bool ready)
+\begin{DoxyCompactList}\small\item\em 클라이언트 레디 정보 전송 \end{DoxyCompactList}\item 
+void \hyperlink{class_game_room_a8cb9973b88d0b81c19e5cefac287a79e}{Team\+Change} (Host\+ID host\+ID, bool red)
+\begin{DoxyCompactList}\small\item\em 클라이언트 팀 변경 정보 전송 \end{DoxyCompactList}\item 
+bool \hyperlink{class_game_room_ac260821efc332ce039a4bd82aba5a828}{Game\+Start\+Check} ()
+\begin{DoxyCompactList}\small\item\em 게임 스타트가 가능한지 체크 \end{DoxyCompactList}\item 
+bool \hyperlink{class_game_room_a9ddf75762a180d08b98955405d94a3bb}{Is\+Game\+Scene\+All\+Ready} ()
+\begin{DoxyCompactList}\small\item\em 게임씬에 들어와서 게임 가능한 상태인지 체크 \end{DoxyCompactList}\item 
+bool \hyperlink{class_game_room_adf07d76d35c157f22d677f1570d957dc}{Is\+Game\+Running} ()
+\begin{DoxyCompactList}\small\item\em 현재 게임 중인지를 리턴 \end{DoxyCompactList}\item 
+void \hyperlink{class_game_room_a8e423ee03803dacb43d097cd87cc220b}{Set\+Game\+Running} (bool running)
+\begin{DoxyCompactList}\small\item\em 현재 게임 중인지를 세팅 \end{DoxyCompactList}\item 
+forward\+\_\+list$<$ Host\+ID $>$ \hyperlink{class_game_room_a0aa2b2cb945ade2e34de76684a8d7724}{Get\+Other\+Clients} (Host\+ID host\+ID)
+\begin{DoxyCompactList}\small\item\em 특정 클라이언트 제외한 Host\+ID 리스트 얻기 \end{DoxyCompactList}\item 
+forward\+\_\+list$<$ \hyperlink{class_room_client}{Room\+Client} $>$ \hyperlink{class_game_room_acb8d3aa5a447d62dad96224d6eb4e8e4}{Get\+Other\+Client\+Infos} (Host\+ID host\+ID)
+\begin{DoxyCompactList}\small\item\em 특정 클라이언트 제외한 리스트 얻기 \end{DoxyCompactList}\item 
+forward\+\_\+list$<$ Host\+ID $>$ \hyperlink{class_game_room_a183a24527a56433cc85b1cd1c86012a8}{Get\+All\+Client} ()
+\begin{DoxyCompactList}\small\item\em 접속해있는 모든 클라이언트의 Host\+ID 리스트 얻기 \end{DoxyCompactList}\item 
+shared\+\_\+ptr$<$ \hyperlink{class_room_client}{Room\+Client} $>$ \hyperlink{class_game_room_af9eed2640f6fe818e1528d997895f8d6}{Get\+Client} (Host\+ID host\+ID)
+\begin{DoxyCompactList}\small\item\em 특정 클라이언트의 정보 얻기 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{class_game_room_ae03c39da189ee9097af8ee4cde8ba373}{m\+\_\+limit\+Player\+Count}
+\begin{DoxyCompactList}\small\item\em 플레이어 수 제한 (기본값 10) \end{DoxyCompactList}\item 
+int \hyperlink{class_game_room_a36763ea909947d8d02dd2a00ee835e10}{m\+\_\+current\+Player\+Count}
+\begin{DoxyCompactList}\small\item\em 현재 접속한 플레이어 수 \end{DoxyCompactList}\item 
+int \hyperlink{class_game_room_a47c8f21ede7fd6fa526ebfcb069dcf45}{m\+\_\+game\+Mode}
+\begin{DoxyCompactList}\small\item\em 현재 게임 모드 \end{DoxyCompactList}\item 
+bool \hyperlink{class_game_room_aef7875998ee1bf83eb23e249b5659bc7}{m\+\_\+team\+Mode}
+\begin{DoxyCompactList}\small\item\em 현재 게임이 팀전인지 개인전인지 \end{DoxyCompactList}\item 
+bool \hyperlink{class_game_room_afd3dbeca203aed6a441449ce8a640d15}{m\+\_\+is\+Game\+Running}
+\begin{DoxyCompactList}\small\item\em 현재 게임중인지 \end{DoxyCompactList}\item 
+unordered\+\_\+map$<$ Host\+ID, shared\+\_\+ptr$<$ \hyperlink{class_room_client}{Room\+Client} $>$ $>$ \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\+\_\+client\+Map}
+\begin{DoxyCompactList}\small\item\em 접속한 클라이언트 맵 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+
+Game\+Room.\+h 파일의 13 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_game_room_a7b885c42c8215fa1de563f51a35592ed}\label{class_game_room_a7b885c42c8215fa1de563f51a35592ed}} 
+\index{Game\+Room@{Game\+Room}!Game\+Room@{Game\+Room}}
+\index{Game\+Room@{Game\+Room}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Game\+Room()}{GameRoom()}}
+{\footnotesize\ttfamily Game\+Room\+::\+Game\+Room (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+기본 생성자, 초깃값 세팅 
+
+기본 생성자 (초기화) 
+
+Game\+Room.\+cpp 파일의 7 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+8 \{
+9     \hyperlink{class_game_room_ae03c39da189ee9097af8ee4cde8ba373}{m\_limitPlayerCount} = 10;
+10     \hyperlink{class_game_room_a47c8f21ede7fd6fa526ebfcb069dcf45}{m\_gameMode} = \hyperlink{stdafx_8h_aaf5ef5a17b53e9997c837b07015589dea1497504d1bce0665a103b5cca3e89ea7}{DEATH\_MATCH};
+11     \hyperlink{class_game_room_aef7875998ee1bf83eb23e249b5659bc7}{m\_teamMode} = \textcolor{keyword}{false};
+12 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_game_room_a3dd806c7382efd9ffd353ab152113d69}\label{class_game_room_a3dd806c7382efd9ffd353ab152113d69}} 
+\index{Game\+Room@{Game\+Room}!Clear\+Room@{Clear\+Room}}
+\index{Clear\+Room@{Clear\+Room}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Clear\+Room()}{ClearRoom()}}
+{\footnotesize\ttfamily void Game\+Room\+::\+Clear\+Room (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+게임 룸 클리어 
+
+게임 룸 클리어  게임이 종료되거나 / 유저가 다 나갔거나 할 경우 세팅을 초기화한다. 
+
+Game\+Room.\+cpp 파일의 82 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+83 \{
+84     \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.clear();
+85     \hyperlink{class_game_room_ae03c39da189ee9097af8ee4cde8ba373}{m\_limitPlayerCount} = 10;
+86     \hyperlink{class_game_room_a47c8f21ede7fd6fa526ebfcb069dcf45}{m\_gameMode} = \hyperlink{stdafx_8h_aaf5ef5a17b53e9997c837b07015589dea556cddc3def0c450a439f11c260bd140}{SURVIVAL};
+87     \hyperlink{class_game_room_aef7875998ee1bf83eb23e249b5659bc7}{m\_teamMode} = \textcolor{keyword}{false};
+88 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_game_room_a3dd806c7382efd9ffd353ab152113d69_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_game_room_ac260821efc332ce039a4bd82aba5a828}\label{class_game_room_ac260821efc332ce039a4bd82aba5a828}} 
+\index{Game\+Room@{Game\+Room}!Game\+Start\+Check@{Game\+Start\+Check}}
+\index{Game\+Start\+Check@{Game\+Start\+Check}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Game\+Start\+Check()}{GameStartCheck()}}
+{\footnotesize\ttfamily bool Game\+Room\+::\+Game\+Start\+Check (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+게임 스타트가 가능한지 체크 
+
+게임 스타트 가능 유무  게임 스타트 가능 유무 \+: 레디가 다 눌려있는지 / 팀전일 경우 밸런스가 맞는지
+
+\begin{DoxyReturn}{반환값}
+true 리턴시 게임 시작 가능 / false 리턴시 게임 시작 불가 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 182 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+183 \{
+184     \textcolor{comment}{// 게임 시작 유무 리턴용}
+185     \textcolor{keywordtype}{bool} gameStart = \textcolor{keyword}{true};
+186 
+187     \textcolor{comment}{// 적팀 청팀 카운트용}
+188     \textcolor{keywordtype}{int} redTeam,  blueTeam;
+189     redTeam = blueTeam = 0;
+190 
+191     \textcolor{keyword}{auto} iter = \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.begin();
+192     \textcolor{keywordflow}{while} (iter != \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.end())
+193     \{
+194         \textcolor{comment}{// 호스트는 방장이므로, 호스트가 아닐 때만 레디 체크}
+195         \textcolor{keywordflow}{if} (!iter->second->IsHost())
+196         \{
+197             gameStart = iter->second->IsReady();
+198 
+199             \textcolor{comment}{// 한명이라도 레디를 하지 않았으면 더 체크할 필요가 없음}
+200             \textcolor{keywordflow}{if} (gameStart == \textcolor{keyword}{false})
+201                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+202         \}
+203 
+204         \textcolor{comment}{// 팀별로 카운트하기}
+205         \textcolor{keywordflow}{if} (iter->second->IsRedTeam())
+206             redTeam++;
+207         \textcolor{keywordflow}{else}
+208             blueTeam++;
+209 
+210 
+211         iter++;
+212     \}
+213 
+214 
+215     \textcolor{comment}{// 팀 모드일 경우 밸런스 맞는지 체크}
+216     \textcolor{keywordflow}{if} (\hyperlink{class_game_room_aef7875998ee1bf83eb23e249b5659bc7}{m\_teamMode})
+217         gameStart = (redTeam == blueTeam);
+218 
+219     \textcolor{keywordflow}{return} gameStart;
+220 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a183a24527a56433cc85b1cd1c86012a8}\label{class_game_room_a183a24527a56433cc85b1cd1c86012a8}} 
+\index{Game\+Room@{Game\+Room}!Get\+All\+Client@{Get\+All\+Client}}
+\index{Get\+All\+Client@{Get\+All\+Client}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Get\+All\+Client()}{GetAllClient()}}
+{\footnotesize\ttfamily forward\+\_\+list$<$ Host\+ID $>$ Game\+Room\+::\+Get\+All\+Client (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+접속해있는 모든 클라이언트의 Host\+ID 리스트 얻기 
+
+접속해있는 모든 클라이언트의 Host\+ID 얻기  모든 클라이언트의 Host\+ID 만 필요할 때 사용
+
+\begin{DoxyReturn}{반환값}
+모든 클라이언트의 Host\+ID 리스트 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 308 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+309 \{
+310     forward\_list<HostID> list;
+311 
+312     \textcolor{keyword}{auto} iter = \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.begin();
+313     \textcolor{keywordflow}{while} (iter != \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.end())
+314     \{
+315         list.push\_front(iter->second->GetHostID());
+316         iter++;
+317     \}
+318     \textcolor{keywordflow}{return} list;
+319 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_af9eed2640f6fe818e1528d997895f8d6}\label{class_game_room_af9eed2640f6fe818e1528d997895f8d6}} 
+\index{Game\+Room@{Game\+Room}!Get\+Client@{Get\+Client}}
+\index{Get\+Client@{Get\+Client}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Get\+Client()}{GetClient()}}
+{\footnotesize\ttfamily shared\+\_\+ptr$<$ \hyperlink{class_room_client}{Room\+Client} $>$ Game\+Room\+::\+Get\+Client (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID }\end{DoxyParamCaption})}
+
+
+
+특정 클라이언트의 정보 얻기 
+
+특정 클라이언트의 정보를 얻어온다.  특정 클라이언트 하나만 \hyperlink{class_room_client}{Room\+Client} 정보를 얻는다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 정보를 얻어올 클라이언트의 Host\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{반환값}
+특정 클라이언트의 정보를 \hyperlink{class_room_client}{Room\+Client} 형태로 받아온다. nullptr 일 수 있다. 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 327 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+328 \{ 
+329     \textcolor{comment}{// 맵에 정상 등록된 hostID 인지 체크 후 리턴}
+330     \textcolor{keywordflow}{if} (\hyperlink{class_game_room_a48687c02109ec932166223aa144c8c1f}{IsRoomClient}(hostID))
+331         \textcolor{keywordflow}{return} \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}[hostID];
+332     \textcolor{keywordflow}{else}
+333         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};
+334 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_game_room_af9eed2640f6fe818e1528d997895f8d6_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_game_room_ae59443257f14fe5ef17c542981e65f3f}\label{class_game_room_ae59443257f14fe5ef17c542981e65f3f}} 
+\index{Game\+Room@{Game\+Room}!Get\+Client\+Map@{Get\+Client\+Map}}
+\index{Get\+Client\+Map@{Get\+Client\+Map}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Get\+Client\+Map()}{GetClientMap()}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$ Host\+ID, shared\+\_\+ptr$<$ \hyperlink{class_room_client}{Room\+Client} $>$ $>$ Game\+Room\+::\+Get\+Client\+Map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+클라이언트 맵 얻기 
+
+\begin{DoxyReturn}{반환값}
+클라이언트 맵을 리턴 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 18 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+19 \{
+20     \textcolor{keywordflow}{return} \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap};
+21 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a73929e8bd9390ea46513d7f4ed48dec1}\label{class_game_room_a73929e8bd9390ea46513d7f4ed48dec1}} 
+\index{Game\+Room@{Game\+Room}!Get\+Game\+Mode@{Get\+Game\+Mode}}
+\index{Get\+Game\+Mode@{Get\+Game\+Mode}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Get\+Game\+Mode()}{GetGameMode()}}
+{\footnotesize\ttfamily int Game\+Room\+::\+Get\+Game\+Mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+게임 모드 얻기 
+
+\begin{DoxyReturn}{반환값}
+게임 모드인지를 얻어올 수 있다. 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 73 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+74 \{ 
+75     \textcolor{keywordflow}{return} \hyperlink{class_game_room_a47c8f21ede7fd6fa526ebfcb069dcf45}{m\_gameMode}; 
+76 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_acb8d3aa5a447d62dad96224d6eb4e8e4}\label{class_game_room_acb8d3aa5a447d62dad96224d6eb4e8e4}} 
+\index{Game\+Room@{Game\+Room}!Get\+Other\+Client\+Infos@{Get\+Other\+Client\+Infos}}
+\index{Get\+Other\+Client\+Infos@{Get\+Other\+Client\+Infos}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Get\+Other\+Client\+Infos()}{GetOtherClientInfos()}}
+{\footnotesize\ttfamily forward\+\_\+list$<$ \hyperlink{class_room_client}{Room\+Client} $>$ Game\+Room\+::\+Get\+Other\+Client\+Infos (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID }\end{DoxyParamCaption})}
+
+
+
+특정 클라이언트 제외한 리스트 얻기 
+
+특정 클라 제외한 리스트 얻기  \hyperlink{class_game_room_a0aa2b2cb945ade2e34de76684a8d7724}{Get\+Other\+Clients(\+Host\+I\+D)} 와는 다르게 \hyperlink{class_room_client}{Room\+Client} 전체 정보를 얻어올 수 있다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 제외할 클라이언트의 Host\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{반환값}
+해당 클라이언트를 제외한 리스트를 리턴 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 288 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+289 \{
+290     forward\_list<RoomClient> list;
+291 
+292     \textcolor{keyword}{auto} iter = \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.begin();
+293     \textcolor{keywordflow}{while} (iter != \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.end())
+294     \{
+295         \textcolor{keywordflow}{if} (iter->second->GetHostID() != hostID)
+296             list.push\_front(*iter->second);
+297         iter++;
+298     \}
+299 
+300     \textcolor{keywordflow}{return} list;
+301 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a0aa2b2cb945ade2e34de76684a8d7724}\label{class_game_room_a0aa2b2cb945ade2e34de76684a8d7724}} 
+\index{Game\+Room@{Game\+Room}!Get\+Other\+Clients@{Get\+Other\+Clients}}
+\index{Get\+Other\+Clients@{Get\+Other\+Clients}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Get\+Other\+Clients()}{GetOtherClients()}}
+{\footnotesize\ttfamily forward\+\_\+list$<$ Host\+ID $>$ Game\+Room\+::\+Get\+Other\+Clients (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID }\end{DoxyParamCaption})}
+
+
+
+특정 클라이언트 제외한 Host\+ID 리스트 얻기 
+
+특정 클라 제외한 Host\+ID 리스트 얻기
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 제외할 클라이언트의 Host\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{반환값}
+해당 클라이언트를 제외한 Host\+ID 리스트를 리턴 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 267 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+268 \{
+269     forward\_list<HostID> list;
+270 
+271     \textcolor{keyword}{auto} iter = \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.begin();
+272     \textcolor{keywordflow}{while} (iter != \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.end())
+273     \{
+274         \textcolor{keywordflow}{if} (iter->second->GetHostID() != hostID)
+275             list.push\_front(iter->second->GetHostID());
+276         iter++;
+277     \}
+278 
+279     \textcolor{keywordflow}{return} list;
+280 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a0bc57f748c9381c9741dbec7954643f9}\label{class_game_room_a0bc57f748c9381c9741dbec7954643f9}} 
+\index{Game\+Room@{Game\+Room}!Get\+Player\+Limit\+Count@{Get\+Player\+Limit\+Count}}
+\index{Get\+Player\+Limit\+Count@{Get\+Player\+Limit\+Count}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Get\+Player\+Limit\+Count()}{GetPlayerLimitCount()}}
+{\footnotesize\ttfamily int Game\+Room\+::\+Get\+Player\+Limit\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+플레이 가능한 플레이어 수 얻기 
+
+현재 플레이어 제한 수 가져오기
+
+\begin{DoxyReturn}{반환값}
+게임 가능한 플레이어의 수를 리턴한다. 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 37 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+38 \{
+39     \textcolor{keywordflow}{return} \hyperlink{class_game_room_ae03c39da189ee9097af8ee4cde8ba373}{m\_limitPlayerCount};
+40 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_aa18f96d11b894fa1c6e0977dc5666b53}\label{class_game_room_aa18f96d11b894fa1c6e0977dc5666b53}} 
+\index{Game\+Room@{Game\+Room}!Get\+Team\+Mode@{Get\+Team\+Mode}}
+\index{Get\+Team\+Mode@{Get\+Team\+Mode}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Get\+Team\+Mode()}{GetTeamMode()}}
+{\footnotesize\ttfamily bool Game\+Room\+::\+Get\+Team\+Mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+팀 모드 얻기 
+
+\begin{DoxyReturn}{반환값}
+팀 모드인지를 알아올 수 있다. 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 64 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+65 \{ 
+66     \textcolor{keywordflow}{return} \hyperlink{class_game_room_aef7875998ee1bf83eb23e249b5659bc7}{m\_teamMode}; 
+67 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_adf07d76d35c157f22d677f1570d957dc}\label{class_game_room_adf07d76d35c157f22d677f1570d957dc}} 
+\index{Game\+Room@{Game\+Room}!Is\+Game\+Running@{Is\+Game\+Running}}
+\index{Is\+Game\+Running@{Is\+Game\+Running}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Is\+Game\+Running()}{IsGameRunning()}}
+{\footnotesize\ttfamily bool Game\+Room\+::\+Is\+Game\+Running (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+현재 게임 중인지를 리턴 
+
+현재 게임중인지를 얻어온다.
+
+\begin{DoxyReturn}{반환값}
+현재 게임중일 경우 true 를 리턴 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 248 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+249 \{
+250     \textcolor{keywordflow}{return} \hyperlink{class_game_room_afd3dbeca203aed6a441449ce8a640d15}{m\_isGameRunning};
+251 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a9ddf75762a180d08b98955405d94a3bb}\label{class_game_room_a9ddf75762a180d08b98955405d94a3bb}} 
+\index{Game\+Room@{Game\+Room}!Is\+Game\+Scene\+All\+Ready@{Is\+Game\+Scene\+All\+Ready}}
+\index{Is\+Game\+Scene\+All\+Ready@{Is\+Game\+Scene\+All\+Ready}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Is\+Game\+Scene\+All\+Ready()}{IsGameSceneAllReady()}}
+{\footnotesize\ttfamily bool Game\+Room\+::\+Is\+Game\+Scene\+All\+Ready (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+게임씬에 들어와서 게임 가능한 상태인지 체크 
+
+모두 게임씬에 왔는지 체크  모두 게임씬에 왔는지 체크 후 , 먼저 접속한 사람 / 아이템에 대한 정보 등을 전송한다. 
+
+Game\+Room.\+cpp 파일의 226 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+227 \{
+228     \textcolor{keyword}{auto} iter = \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.begin();
+229 
+230     \textcolor{keywordflow}{while} (iter != \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.end())
+231     \{
+232         \textcolor{keywordtype}{bool} ready = iter->second->IsGameScene();
+233 
+234         \textcolor{comment}{// 하나라도 불만족시 준비가 안되어있음}
+235         \textcolor{keywordflow}{if} (!ready)
+236             \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+237 
+238         iter++;
+239     \}
+240 
+241     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+242 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a48687c02109ec932166223aa144c8c1f}\label{class_game_room_a48687c02109ec932166223aa144c8c1f}} 
+\index{Game\+Room@{Game\+Room}!Is\+Room\+Client@{Is\+Room\+Client}}
+\index{Is\+Room\+Client@{Is\+Room\+Client}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Is\+Room\+Client()}{IsRoomClient()}}
+{\footnotesize\ttfamily bool Game\+Room\+::\+Is\+Room\+Client (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID }\end{DoxyParamCaption})}
+
+
+
+방에 제대로 접속했는지 체크 
+
+클라이언트가 방에 접속해있는지
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 검사할 클라이언트의 Host\+ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{반환값}
+방 접속 유무 리턴 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 148 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+149 \{
+150     \textcolor{keyword}{auto} iter = \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.find(hostID);
+151 
+152     \textcolor{keywordflow}{return}  iter != \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.end();
+153 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_game_room_a48687c02109ec932166223aa144c8c1f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_game_room_a4811bd3795a4f8130718bb7a9a2c4b0f}\label{class_game_room_a4811bd3795a4f8130718bb7a9a2c4b0f}} 
+\index{Game\+Room@{Game\+Room}!Log\+Out\+Client@{Log\+Out\+Client}}
+\index{Log\+Out\+Client@{Log\+Out\+Client}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Log\+Out\+Client()}{LogOutClient()}}
+{\footnotesize\ttfamily void Game\+Room\+::\+Log\+Out\+Client (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID }\end{DoxyParamCaption})}
+
+
+
+클라이언트가 접속을 끊었다. 
+
+클라이언트가 접속을 끊었다.  클라이언트가 접속을 끊어 해당 클라이언트 객체를 제거하는 로직
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 접속을 끊은 클라이언트의 Host\+ID \\
+\hline
+\end{DoxyParams}
+
+
+Game\+Room.\+cpp 파일의 124 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+125 \{
+126     \textcolor{comment}{// 나간 클라이언트가 클라이언트 맵에 있는지 체크}
+127     \textcolor{keyword}{auto} iter = \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.find(hostID);
+128 
+129     \textcolor{keywordflow}{if} (iter != \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.end())
+130     \{
+131         \textcolor{comment}{// 해당 클라이언트가 있다면 정상적으로 삭제}
+132         \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.erase(iter);
+133     \}
+134     
+135     \textcolor{comment}{// 다 나갔을 경우 클리어}
+136     \textcolor{keywordflow}{if} (\hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.size() <= 0)
+137     \{
+138         cout << \textcolor{stringliteral}{"Server :: 접속한 클라이언트의 수가 0이 되었습니다. "} << endl;
+139         this->\hyperlink{class_game_room_a3dd806c7382efd9ffd353ab152113d69}{ClearRoom}();
+140     \}
+141 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_game_room_a4811bd3795a4f8130718bb7a9a2c4b0f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_game_room_a498a6614e5ad025ff27f15e5571f2b2d}\label{class_game_room_a498a6614e5ad025ff27f15e5571f2b2d}} 
+\index{Game\+Room@{Game\+Room}!New\+Client\+Connect@{New\+Client\+Connect}}
+\index{New\+Client\+Connect@{New\+Client\+Connect}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{New\+Client\+Connect()}{NewClientConnect()}}
+{\footnotesize\ttfamily bool Game\+Room\+::\+New\+Client\+Connect (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID,  }\item[{string}]{user\+Name,  }\item[{Critical\+Section \&}]{crit\+Section }\end{DoxyParamCaption})}
+
+
+
+새 클라이언트 접속 
+
+새로운 클라이언트가 접속했다.  새로운 클라이언트가 들어올 때 맵에 추가하는 로직
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 접속한 클라이언트의 Host\+ID \\
+\hline
+{\em user\+Name} & 접속한 클라이언트의 유저 이름 \\
+\hline
+{\em crit\+Section} & 크리티컬 섹션 / 추가 로직시 잠금하는 로직 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{반환값}
+정상적으로 접속이 수행되었는지에 대한 유무를 리턴. true 면 정상 추가, false 면 접속 불가 
+\end{DoxyReturn}
+
+
+Game\+Room.\+cpp 파일의 101 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+102 \{
+103     \textcolor{comment}{// 현재 접속인원이 접속 제한 수를 초과했는지}
+104     \textcolor{keywordflow}{if} (\hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}.size() >= \hyperlink{class_game_room_ae03c39da189ee9097af8ee4cde8ba373}{m\_limitPlayerCount})
+105         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+106 
+107     \{
+108         \textcolor{comment}{// 클라이언트를 map 에 추가하기 위해 크리티컬 섹션을 잠금}
+109         CriticalSectionLock lock(critSection, \textcolor{keyword}{true});
+110         \textcolor{comment}{// 클라이언트 생성 후 맵에 추가}
+111         \textcolor{keyword}{auto} newClient = make\_shared<RoomClient>(hostID, userName);
+112         \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}[hostID] = newClient;
+113         \textcolor{comment}{// 현재 플레이어 수를 증가시킴}
+114         \hyperlink{class_game_room_a36763ea909947d8d02dd2a00ee835e10}{m\_currentPlayerCount}++;
+115     \}
+116     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+117 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a65b49e5004eca5e730ac9cd7c173a5f9}\label{class_game_room_a65b49e5004eca5e730ac9cd7c173a5f9}} 
+\index{Game\+Room@{Game\+Room}!Set\+Game\+Mode@{Set\+Game\+Mode}}
+\index{Set\+Game\+Mode@{Set\+Game\+Mode}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Set\+Game\+Mode()}{SetGameMode()}}
+{\footnotesize\ttfamily void Game\+Room\+::\+Set\+Game\+Mode (\begin{DoxyParamCaption}\item[{int}]{game\+Mode }\end{DoxyParamCaption})}
+
+
+
+게임 모드 세팅 
+
+
+\begin{DoxyParams}{매개변수}
+{\em game\+Mode} & 변경할 게임 모드 \\
+\hline
+\end{DoxyParams}
+
+
+Game\+Room.\+cpp 파일의 46 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+47 \{
+48     \hyperlink{class_game_room_a47c8f21ede7fd6fa526ebfcb069dcf45}{m\_gameMode} = gameMode;
+49 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a8e423ee03803dacb43d097cd87cc220b}\label{class_game_room_a8e423ee03803dacb43d097cd87cc220b}} 
+\index{Game\+Room@{Game\+Room}!Set\+Game\+Running@{Set\+Game\+Running}}
+\index{Set\+Game\+Running@{Set\+Game\+Running}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Set\+Game\+Running()}{SetGameRunning()}}
+{\footnotesize\ttfamily void Game\+Room\+::\+Set\+Game\+Running (\begin{DoxyParamCaption}\item[{bool}]{running }\end{DoxyParamCaption})}
+
+
+
+현재 게임 중인지를 세팅 
+
+현재 게임 중인지를 세팅한다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em running} & 게임 중인지에 대한 정보 \\
+\hline
+\end{DoxyParams}
+
+
+Game\+Room.\+cpp 파일의 257 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+258 \{
+259     \hyperlink{class_game_room_afd3dbeca203aed6a441449ce8a640d15}{m\_isGameRunning} = running;
+260 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_add1aa703d428eaeb558499adb8ab5fb0}\label{class_game_room_add1aa703d428eaeb558499adb8ab5fb0}} 
+\index{Game\+Room@{Game\+Room}!Set\+Player\+Limit\+Count@{Set\+Player\+Limit\+Count}}
+\index{Set\+Player\+Limit\+Count@{Set\+Player\+Limit\+Count}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Set\+Player\+Limit\+Count()}{SetPlayerLimitCount()}}
+{\footnotesize\ttfamily void Game\+Room\+::\+Set\+Player\+Limit\+Count (\begin{DoxyParamCaption}\item[{int}]{count }\end{DoxyParamCaption})}
+
+
+
+플레이어 수 제한두기 
+
+플레이어의 수 제한을 두는 메서드
+
+
+\begin{DoxyParams}{매개변수}
+{\em count} & 제한을 둘 수 \\
+\hline
+\end{DoxyParams}
+
+
+Game\+Room.\+cpp 파일의 28 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+29 \{
+30     \hyperlink{class_game_room_ae03c39da189ee9097af8ee4cde8ba373}{m\_limitPlayerCount} = count;
+31 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_ae1d0122ec800084f45041131fbb41da7}\label{class_game_room_ae1d0122ec800084f45041131fbb41da7}} 
+\index{Game\+Room@{Game\+Room}!Set\+Ready@{Set\+Ready}}
+\index{Set\+Ready@{Set\+Ready}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Set\+Ready()}{SetReady()}}
+{\footnotesize\ttfamily void Game\+Room\+::\+Set\+Ready (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID,  }\item[{bool}]{ready }\end{DoxyParamCaption})}
+
+
+
+클라이언트 레디 정보 전송 
+
+클라이언트의 레디 정보 세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 레디 정보를 세팅할 Host\+ID \\
+\hline
+{\em ready} & 세팅될 레디 정보 \\
+\hline
+\end{DoxyParams}
+
+
+Game\+Room.\+cpp 파일의 160 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+161 \{
+162     \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}[hostID]->SetReady(ready);
+163 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a9c5ecd98749f146054d1797084591c28}\label{class_game_room_a9c5ecd98749f146054d1797084591c28}} 
+\index{Game\+Room@{Game\+Room}!Set\+Team\+Mode@{Set\+Team\+Mode}}
+\index{Set\+Team\+Mode@{Set\+Team\+Mode}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Set\+Team\+Mode()}{SetTeamMode()}}
+{\footnotesize\ttfamily void Game\+Room\+::\+Set\+Team\+Mode (\begin{DoxyParamCaption}\item[{bool}]{team\+Mode }\end{DoxyParamCaption})}
+
+
+
+팀 모드 세팅 
+
+
+\begin{DoxyParams}{매개변수}
+{\em team\+Mode} & true 팀 모드, false 개인전 모드 \\
+\hline
+\end{DoxyParams}
+
+
+Game\+Room.\+cpp 파일의 55 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+56 \{
+57     \hyperlink{class_game_room_aef7875998ee1bf83eb23e249b5659bc7}{m\_teamMode} = teamMode;
+58 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_game_room_a8cb9973b88d0b81c19e5cefac287a79e}\label{class_game_room_a8cb9973b88d0b81c19e5cefac287a79e}} 
+\index{Game\+Room@{Game\+Room}!Team\+Change@{Team\+Change}}
+\index{Team\+Change@{Team\+Change}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{Team\+Change()}{TeamChange()}}
+{\footnotesize\ttfamily void Game\+Room\+::\+Team\+Change (\begin{DoxyParamCaption}\item[{Host\+ID}]{host\+ID,  }\item[{bool}]{red }\end{DoxyParamCaption})}
+
+
+
+클라이언트 팀 변경 정보 전송 
+
+팀 변경 정보
+
+
+\begin{DoxyParams}{매개변수}
+{\em host\+ID} & 팀 변경을 할 클라이언트의 Host\+ID \\
+\hline
+{\em red} & 팀이 적/청 밖에 없으므로 적색인지? \\
+\hline
+\end{DoxyParams}
+
+
+Game\+Room.\+cpp 파일의 170 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+171 \{
+172     \hyperlink{class_game_room_afc202a511605453216f7dd870ff96c5c}{m\_clientMap}[hostID]->SetTeamColor(red);
+173 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_game_room_afc202a511605453216f7dd870ff96c5c}\label{class_game_room_afc202a511605453216f7dd870ff96c5c}} 
+\index{Game\+Room@{Game\+Room}!m\+\_\+client\+Map@{m\+\_\+client\+Map}}
+\index{m\+\_\+client\+Map@{m\+\_\+client\+Map}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{m\+\_\+client\+Map}{m\_clientMap}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$Host\+ID,shared\+\_\+ptr$<$\hyperlink{class_room_client}{Room\+Client}$>$ $>$ Game\+Room\+::m\+\_\+client\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+접속한 클라이언트 맵 
+
+
+
+Game\+Room.\+h 파일의 22 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_game_room_a36763ea909947d8d02dd2a00ee835e10}\label{class_game_room_a36763ea909947d8d02dd2a00ee835e10}} 
+\index{Game\+Room@{Game\+Room}!m\+\_\+current\+Player\+Count@{m\+\_\+current\+Player\+Count}}
+\index{m\+\_\+current\+Player\+Count@{m\+\_\+current\+Player\+Count}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{m\+\_\+current\+Player\+Count}{m\_currentPlayerCount}}
+{\footnotesize\ttfamily int Game\+Room\+::m\+\_\+current\+Player\+Count\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+현재 접속한 플레이어 수 
+
+
+
+Game\+Room.\+h 파일의 18 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_game_room_a47c8f21ede7fd6fa526ebfcb069dcf45}\label{class_game_room_a47c8f21ede7fd6fa526ebfcb069dcf45}} 
+\index{Game\+Room@{Game\+Room}!m\+\_\+game\+Mode@{m\+\_\+game\+Mode}}
+\index{m\+\_\+game\+Mode@{m\+\_\+game\+Mode}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{m\+\_\+game\+Mode}{m\_gameMode}}
+{\footnotesize\ttfamily int Game\+Room\+::m\+\_\+game\+Mode\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+현재 게임 모드 
+
+
+
+Game\+Room.\+h 파일의 19 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_game_room_afd3dbeca203aed6a441449ce8a640d15}\label{class_game_room_afd3dbeca203aed6a441449ce8a640d15}} 
+\index{Game\+Room@{Game\+Room}!m\+\_\+is\+Game\+Running@{m\+\_\+is\+Game\+Running}}
+\index{m\+\_\+is\+Game\+Running@{m\+\_\+is\+Game\+Running}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{m\+\_\+is\+Game\+Running}{m\_isGameRunning}}
+{\footnotesize\ttfamily bool Game\+Room\+::m\+\_\+is\+Game\+Running\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+현재 게임중인지 
+
+
+
+Game\+Room.\+h 파일의 21 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_game_room_ae03c39da189ee9097af8ee4cde8ba373}\label{class_game_room_ae03c39da189ee9097af8ee4cde8ba373}} 
+\index{Game\+Room@{Game\+Room}!m\+\_\+limit\+Player\+Count@{m\+\_\+limit\+Player\+Count}}
+\index{m\+\_\+limit\+Player\+Count@{m\+\_\+limit\+Player\+Count}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{m\+\_\+limit\+Player\+Count}{m\_limitPlayerCount}}
+{\footnotesize\ttfamily int Game\+Room\+::m\+\_\+limit\+Player\+Count\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+플레이어 수 제한 (기본값 10) 
+
+
+
+Game\+Room.\+h 파일의 17 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_game_room_aef7875998ee1bf83eb23e249b5659bc7}\label{class_game_room_aef7875998ee1bf83eb23e249b5659bc7}} 
+\index{Game\+Room@{Game\+Room}!m\+\_\+team\+Mode@{m\+\_\+team\+Mode}}
+\index{m\+\_\+team\+Mode@{m\+\_\+team\+Mode}!Game\+Room@{Game\+Room}}
+\subsubsection{\texorpdfstring{m\+\_\+team\+Mode}{m\_teamMode}}
+{\footnotesize\ttfamily bool Game\+Room\+::m\+\_\+team\+Mode\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+현재 게임이 팀전인지 개인전인지 
+
+
+
+Game\+Room.\+h 파일의 20 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/\hyperlink{_game_room_8h}{Game\+Room.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{_game_room_8cpp}{Game\+Room.\+cpp}\end{DoxyCompactItemize}

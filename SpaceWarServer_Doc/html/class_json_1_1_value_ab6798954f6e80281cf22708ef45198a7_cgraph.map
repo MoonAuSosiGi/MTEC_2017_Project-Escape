@@ -1,0 +1,7 @@
+<map id="Json::Value::isIntegral" name="Json::Value::isIntegral">
+<area shape="rect" id="node2" href="$class_json_1_1_value.html#a4a81fb3c3acdbb68b2e2f30836a4f53e" title="Json::Value::isInt64" alt="" coords="209,5,345,32"/>
+<area shape="rect" id="node4" href="$class_json_1_1_value.html#a883576e35cb03a785258edb56777a2de" title="Json::Value::isUInt64" alt="" coords="204,56,349,83"/>
+<area shape="rect" id="node5" href="$class_json_1_1_value.html#aff51d8b52979ca06cf9d909accd5f695" title="Json::Value::isInt" alt="" coords="215,107,338,133"/>
+<area shape="rect" id="node6" href="$class_json_1_1_value.html#abdda463d3269015f883587349726cfbc" title="Json::Value::isUInt" alt="" coords="211,157,342,184"/>
+<area shape="rect" id="node3" href="$namespace_json.html#a1a04cc9d31e64b5912dade003c9b99b5" title="Json::IsIntegral" alt="" coords="397,81,507,108"/>
+</map>

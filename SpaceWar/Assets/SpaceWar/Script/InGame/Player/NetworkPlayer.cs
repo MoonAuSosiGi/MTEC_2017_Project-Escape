@@ -6,12 +6,57 @@ using Nettention.Proud;
 public class NetworkPlayer : MonoBehaviour {
 
     #region NetworkPlayer_INFO
+
+    private PlayerController m_playerController = null;
     // -- Network Player -----------------------------------------------------------//
     public Animator PlayerAnim;
     public HostID m_hostID;
-    public string m_userName = "";
     public WeaponItem m_weapon = null;
+    public Item[] m_weapons = new Item[4];
+    public HealPackItem m_curHealPack = null;
     public GameObject m_weaponAnchor;
+    public string m_userName = null;
+    private int m_index = -1;
+    [SerializeField] private TextMesh m_userNameUI = null;
+
+    private bool m_isDeath = false;
+    public bool IS_DEATH { get { return m_isDeath; }
+        set {
+            m_isDeath = value;
+            ShowPlayerName(m_isDeath) ;
+        }
+    }
+
+    public void HPUpdate(float cur,float max)
+    {
+        if (iTween.Count(gameObject) > 0)
+            iTween.Stop(gameObject);
+        m_hpUI.gameObject.SetActive(true);
+
+        m_hpUI.transform.position =  GameManager.Instance().m_inGameUI.GetUIPos(
+            GetComponent<PlayerController>().HEAD_ANCHOR.transform.position);
+
+        iTween.ValueTo(gameObject , iTween.Hash(
+            "from" , m_hpUI.value ,
+            "to" , cur / max ,
+            "onupdatetarget" , gameObject ,
+            "onupdate" , "HpUpdate",
+            "time",0.2f,
+            "oncompletetarget",gameObject,
+            "oncomplete","HpHide"));
+    }
+
+    void HpUpdate(float value)
+    {
+        m_hpUI.transform.position = GameManager.Instance().m_inGameUI.GetUIPos(
+            GetComponent<PlayerController>().HEAD_ANCHOR.transform.position);
+        m_hpUI.value = value;
+    }
+
+    void HpHide()
+    {
+        m_hpUI.gameObject.SetActive(false);
+    }
 
     public WeaponItem HAS_WEAPON
     {
@@ -21,7 +66,6 @@ public class NetworkPlayer : MonoBehaviour {
 
             if(m_weapon == null)
             {
-                Debug.Log("설마");
                 // 수류탄이었으므로 애니메이션 변경
                 PlayerController p = this.GetComponent<PlayerController>();
                 PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
@@ -29,6 +73,11 @@ public class NetworkPlayer : MonoBehaviour {
         }
     }
 
+    [SerializeField] private UISlider m_hpUI = null;
+
+
+
+    #region Network Player Proud Net
     PositionFollower m_positionFollower = new PositionFollower();
     AngleFollower m_playerCamSeeX = new AngleFollower();
     AngleFollower m_playerCamSeeY = new AngleFollower();
@@ -40,14 +89,50 @@ public class NetworkPlayer : MonoBehaviour {
 
     public HostID HOST_ID { get { return m_hostID; } }
     #endregion
+    #endregion
+
+    void Start()
+    {
+        m_playerController = this.GetComponent<PlayerController>();
+    }
+
+    public void ChangeRaderMode()
+    {
+        m_playerController.RENDERER.material = WeaponManager.Instance().ITEM_OUTLINE_MAT;
+    }
+
+    public void ChangeOriginalMode()
+    {
+        m_playerController.RENDERER.material = m_playerController.ORIGIN_MATERIAL;
+    }
+
 
     public void NetworkPlayerSetup(HostID hostID,string userName)
     {
         m_hostID = hostID;
+        m_userNameUI = transform.GetComponent<PlayerController>().USERNAME_UI;
+        m_userNameUI.text = userName;
         m_userName = userName;
+        ShowPlayerName(false);
+
+        //ui
+        m_hpUI = GameManager.Instance().m_inGameUI.SetupNetworkHPUI().GetComponent<UISlider>();
+        m_hpUI.gameObject.SetActive(false);
+        GameObject.Destroy(this.GetComponent<AudioListener>());
     }
 
-    public void RecvNetworkMove(UnityEngine.Vector3 pos,UnityEngine.Vector3 velocity, UnityEngine.Vector3 charrot, UnityEngine.Vector3 rot)
+    //임시 개인전
+    public void NetworkPlayerColorSetup(int index)
+    {
+        Vector4[] vecs = { new Vector4(3.68276f , 0.0f , 6.0f) ,
+            new Vector4(0.0f , 6.0f , 0.7862077f) , new Vector4(0.0f , 3.517242f , 6.0f) };
+        transform.GetChild(0).GetChild(0).GetChild(3)
+                .GetComponent<SkinnedMeshRenderer>().materials[0].SetColor("_EmissionColor" , vecs[index]);
+    }
+
+    public void RecvNetworkMove(UnityEngine.Vector3 pos,
+        UnityEngine.Vector3 velocity, UnityEngine.Vector3 charrot, 
+        UnityEngine.Vector3 rot)
     {
         var npos = new Nettention.Proud.Vector3();
         npos.x = pos.x;
@@ -73,31 +158,97 @@ public class NetworkPlayer : MonoBehaviour {
 
     public void RecvNetworkAnimation(string animationName,int aniValue)
     {
+        PlayerController p = this.GetComponent<PlayerController>();
         //test code
-        if (aniValue == 1234)
+        if (animationName.Equals("CW"))
         {
+            if(m_weapon != null)
+            {
+                m_weapon.gameObject.SetActive(true);
+                switch (m_weapon.ITEM_TYPE)
+                {
+                    case Item.ItemType.GUN: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
+                    case Item.ItemType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
+                    case Item.ItemType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
+                    case Item.ItemType.ROCKETLAUNCHER: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ROCKETLAUNCHER); break;
+                    case Item.ItemType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                    case Item.ItemType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                }
+            }
+            else if(m_curHealPack != null)
+            {
+                PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); 
+            }
+            else
+            {
+                PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
+            }
+
+        }
+        else if (aniValue == 1234)
+        {
+            if(animationName.Equals("Damage"))
+            {
+                GetComponent<PlayerController>().DamageEffect(false,false);
+            }
+            Debug.Log("DD " + animationName);
             PlayerAnim.Play(animationName);
         }
         else
         {
+            if (animationName.Equals("INTERACTION") && aniValue != 0)
+            {
+                if (m_weapon != null && m_weapon.ITEM_TYPE != Item.ItemType.ETC_GRENADE && m_weapon.ITEM_TYPE != Item.ItemType.ETC_RECOVERY)
+                    m_weapon.gameObject.SetActive(false);
+
+                PlayerAnim.runtimeAnimatorController = this.GetComponent<PlayerController>().GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC);
+            }
+            else if (m_weapon != null && m_weapon.gameObject.activeSelf == false)
+                m_weapon.gameObject.SetActive(true);
+
             PlayerAnim.SetInteger(animationName , aniValue);
+
+            if(animationName.Equals("WALK") && aniValue == 3)
+            {
+                this.GetComponent<PlayerController>().DASH_EFFECT.SetActive(true);
+            }
+            else
+            {
+                this.GetComponent<PlayerController>().DASH_EFFECT.SetActive(false);
+            }
 
             if (m_weapon == null)
                 return;
-
-       //     if (m_weapon.ATTACK_TIMING == WeaponItem.AttackTiming.SCRIPT_ONLY)
-                m_weapon.SoundPlay();
+            
+            if(animationName.Equals("ATTACK") && aniValue == 1)
+              m_weapon.SoundPlay();
 
             // 근거리 무기용
-            if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
+            if(animationName.Equals("ATTACK") && aniValue == 1 && m_weapon.ITEM_TYPE == Item.ItemType.MELEE)
             {
-                m_weapon.Attack(transform);
+                m_weapon.PLAYER = transform;
+                m_weapon.AttackSword();
             }
-            else if (animationName.Equals("ATTACK") && aniValue == 0 && m_weapon.WEAPON_TYPE == WeaponItem.WeaponType.MELEE)
+            else if (animationName.Equals("ATTACK") && aniValue == 0 && m_weapon.ITEM_TYPE == Item.ItemType.MELEE)
             {
-                m_weapon.AnimationEventAttackEnd();
+                m_weapon.AttackSwordEnd();
+            }
+            // 원거리
+            else if (animationName.Equals("ATTACK") && aniValue == 0 && 
+                ( m_weapon.ITEM_TYPE == Item.ItemType.GUN  || m_weapon.ITEM_TYPE == Item.ItemType.RIFLE ||
+                m_weapon.ITEM_TYPE == Item.ItemType.ROCKETLAUNCHER))
+            {
+                //m_weapon.SHOT_EFFECT.transform.position = m_weapon.FIRE_POS.position;
+                //m_weapon.SHOT_EFFECT.SetActive(true);
+                //Invoke("ShotEffectEnd" , m_weapon.COOL_TIME - 0.1f);
             }
         }
+    }
+
+    void ShotEffectEnd()
+    {
+        if(m_weapon != null)
+            m_weapon.SHOT_EFFECT.SetActive(false);
     }
 
     void NetworkMoveUpdate()
@@ -145,50 +296,120 @@ public class NetworkPlayer : MonoBehaviour {
     void FixedUpdate()
     {
         NetworkMoveUpdate();
+
+        if(m_userNameUI.gameObject.activeSelf)
+        {
+            RotatePlayerName();
+        }
       
     }
 
+    // 이름 처리
+
+    void RotatePlayerName()
+    {
+        m_userNameUI.transform.rotation = GameManager.Instance().PLAYER.m_player.transform.rotation;
+    }
+
+    void ShowPlayerName(bool isShow)
+    {
+        m_userNameUI.gameObject.SetActive(isShow);
+    }
+
+
     public void EquipWeapon(GameObject weapon)
     {
-        if(weapon != null)
+        PlayerController p = this.GetComponent<PlayerController>();
+        if (weapon != null)
         {
-            m_weapon = weapon.GetComponent<WeaponItem>() ;
-            Debug.Log("Weapon " + m_weapon.ITEM_NETWORK_ID + " type " + m_weapon.WEAPON_TYPE + " name " + m_weapon.name);
+            int newIndex = p.GetEquipItemIndex(weapon.GetComponent<Item>().ITEM_TYPE);
+            if (m_index != -1 && m_weapons[m_index] != null)
+            {
+                m_weapons[m_index].gameObject.SetActive(false);
+               
+                if ( m_weapons[newIndex] != null && m_weapons[newIndex].ITEM_ID != weapon.GetComponent<Item>().ITEM_ID)
+                {
+                    m_weapons[newIndex].gameObject.SetActive(false);
+                }
+               
+            }
+
+            m_weapons[newIndex] = weapon.GetComponent<Item>();
+            m_index = newIndex;
+
+            if (m_weapons[m_index].GetComponent<HealPackItem>() != null)
+            {
+                // 힐팩은 여기서 처리
+                m_curHealPack = weapon.GetComponent<HealPackItem>();
+                m_curHealPack.transform.parent = m_weaponAnchor.transform;
+                m_curHealPack.transform.localPosition = m_curHealPack.LOCAL_SET_POS;
+                m_curHealPack.transform.localRotation = Quaternion.Euler(m_weapon.LOCAL_SET_ROT);
+                m_curHealPack.transform.localScale = m_curHealPack.LOCAL_SET_SCALE;
+                m_curHealPack.GetComponent<SphereCollider>().enabled = false;
+                Debug.Log("m_curHealPack " + m_curHealPack.ITEM_NETWORK_ID + " type " + m_curHealPack.ITEM_TYPE + " name " + m_curHealPack.name);
+                PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC);
+                return;
+            }
+            m_weapon = m_weapons[m_index].GetComponent<WeaponItem>() ;
+            Debug.Log("Weapon " + m_weapon.ITEM_NETWORK_ID + " type " + m_weapon.ITEM_TYPE + " name " + m_weapon.name);
             m_weapon.transform.parent = m_weaponAnchor.transform;
             m_weapon.transform.localPosition = m_weapon.LOCAL_SET_POS;
             m_weapon.transform.localRotation = Quaternion.Euler(m_weapon.LOCAL_SET_ROT);
             m_weapon.transform.localScale = m_weapon.LOCAL_SET_SCALE;
             m_weapon.GetComponent<SphereCollider>().enabled = false;
 
-            PlayerController p = this.GetComponent<PlayerController>();
             
-            Debug.Log("prev " + PlayerAnim.runtimeAnimatorController.name);
-            switch (m_weapon.WEAPON_TYPE)
+            switch (m_weapon.ITEM_TYPE)
             {
-                case WeaponItem.WeaponType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
-                case WeaponItem.WeaponType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
-                case WeaponItem.WeaponType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
-                case WeaponItem.WeaponType.ROCKETLAUNCHER: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ROCKETLAUNCHER); break;
-                case WeaponItem.WeaponType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
-                case WeaponItem.WeaponType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                case Item.ItemType.GUN:   PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN01); break;
+                case Item.ItemType.RIFLE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_GUN02); break;
+                case Item.ItemType.MELEE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_MELEE); break;
+                case Item.ItemType.ROCKETLAUNCHER: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ROCKETLAUNCHER); break;
+                case Item.ItemType.ETC_GRENADE: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
+                case Item.ItemType.ETC_RECOVERY: PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_ETC); break;
             }
-            Debug.Log("result " + PlayerAnim.runtimeAnimatorController.name);
+
+            if(m_weapon.ITEM_TYPE == Item.ItemType.ETC_GRENADE)
+            {
+                Grenade g = (m_weapon as Grenade);
+                g.IS_NETWORK = true;
+             //   g.NetworkGrenadeEnable();
+            }
         }
     }
 
     public void UnEquipWeapon(UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
     {
-        if(m_weapon != null)
+        Debug.Log("UnEquip 상대방이 버렸는데 " + (m_curHealPack == null));
+
+        PlayerController p = this.GetComponent<PlayerController>();
+        int newIndex = p.GetEquipItemIndex(m_weapons[m_index].ITEM_TYPE);
+
+        m_weapons[newIndex] = null;
+
+        if (m_weapon != null)
         {
             // 버리는 로직
             m_weapon.transform.parent = null;
             m_weapon.transform.position = pos;
             m_weapon.transform.eulerAngles = rot;
             m_weapon.GetComponent<SphereCollider>().enabled = true;
+            m_weapon.SHOT_EFFECT.SetActive(false);
 
-            PlayerController p = this.GetComponent<PlayerController>();
+            m_weapon = null;
+           
+            PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
+        }
+        else if(m_curHealPack != null)
+        {
+            m_curHealPack.transform.parent = null;
+            m_curHealPack.transform.position = pos;
+            m_curHealPack.transform.eulerAngles = rot;
+            m_curHealPack.GetComponent<SphereCollider>().enabled = true;
 
-            Debug.Log("UnEquip ");
+            m_curHealPack = null;
+
+
             PlayerAnim.runtimeAnimatorController = p.GetCurrentAnimator(PlayerController.AnimationType.ANI_BAREHAND);
         }
     }

@@ -6,6 +6,7 @@ using Nettention.Proud;
 using SpaceWar;
 using System;
 using UnityEngine.SceneManagement;
+using TimeForEscape.Object;
 
 public class NetworkManager : Singletone<NetworkManager> {
 
@@ -20,6 +21,8 @@ public class NetworkManager : Singletone<NetworkManager> {
     private bool m_isDraw = false;
     public bool IS_DRAW {  get { return m_isDraw; } }
     #endregion
+
+   
 
     // 서버 guid 
     System.Guid m_protocolVersion = new System.Guid("{0xa1152276,0xe4a,0x416c,{0x97,0xba,0xa1,0x1a,0x3e,0xd0,0xea,0x55}}");
@@ -84,36 +87,15 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     #region Network 에서 동기화 되어야 하는 오브젝트들
     #region Network Item 행성 랜덤 배치 , 아이템 박스 열어서 획득 등
-    public Dictionary<int , GameObject> m_networkItemList = new Dictionary<int , GameObject>();
 
-    public GameObject GetNetworkItem(int itemID)
-    {
-        if (m_networkItemList.ContainsKey(itemID))
-            return m_networkItemList[itemID];
-        else
-            return null;
-    }
     #endregion
 
-    #region 총알 / 수류탄 오브젝트
-    // 총알
-    public Dictionary<string , Bullet> m_bulletList = new Dictionary<string , Bullet>();
-    public Bullet GetNetworkBullet(string bulletID)
-    {
-        if (m_bulletList.ContainsKey(bulletID))
-            return m_bulletList[bulletID];
-        else
-            return null;
-    }
+    #region 모든 행성에 떨어져있는 아이템들
+    private Dictionary<string, Item> m_itemDict = new Dictionary<string , Item>();
+    public Dictionary<string , Item> ITEM_DICT { get { return m_itemDict; } }
 
-    public Dictionary<string , Grenade> m_grenadeList = new Dictionary<string , Grenade>();
-    public Grenade GetNetworkGrenade(string grenadeID)
-    {
-        if (m_grenadeList.ContainsKey(grenadeID))
-            return m_grenadeList[grenadeID];
-        else
-            return null;
-    }
+
+
 
     #endregion
     #endregion
@@ -180,6 +162,11 @@ public class NetworkManager : Singletone<NetworkManager> {
     public GameObject m_itemParent = null; // 아이템 아직 미적용
     public GameObject m_bulletParent = null; // 총알 아직 미적용
     public GameObject m_grenadeParent = null; // 수류탄 
+    #endregion
+
+    #region SpaceShip
+    private bool m_spaceShipEnabled = false;
+    public bool SPACE_SHIP_ENABLE { get { return m_spaceShipEnabled; } }
     #endregion
 
     #region Death Zone 
@@ -359,18 +346,26 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 아이템 생성 로직
         m_s2cStub.NotifyCreateItem = (HostID remote , RmiContext rmiContext , int sendHostID ,
-            int itemCID , int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
+            string itemID,string networkID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
-            NetworkLog("NotifyCreateItem .." + itemCID);
+            NetworkLog("NotifyCreateItem .." + itemID);
 
             // 아이템 등록 
-            m_networkItemList.Add(itemID , GameManager.Instance().CommandItemCreate(itemCID , itemID , pos , rot));
+            m_itemDict.Add(networkID, GameManager.Instance().CommandItemCreate(itemID,networkID , pos , rot).GetComponent<Item>());
             return true;
         };
 
         // 아이템 삭제 로직
-        m_s2cStub.NotifyDeleteItem = (HostID remote , RmiContext rmiContext , int itemID) =>
+        m_s2cStub.NotifyDeleteItem = (HostID remote , RmiContext rmiContext ,string networkID) =>
         {
+            Debug.Log("Server 측에서 Item 삭제 요청 " + networkID + " d "+ m_itemDict.ContainsKey(networkID));
+            // 추후 코루틴으로 삭제하도록 하자
+            if(m_itemDict.ContainsKey(networkID))
+            {
+                GameObject obj = m_itemDict[networkID].gameObject;
+                m_itemDict.Remove(networkID);
+                GameObject.Destroy(obj);
+            }
             return true;
         };
 
@@ -428,11 +423,12 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 아이템을 장비했다 ( 다른 플레이어 )
         m_s2cStub.NotifyPlayerEquipItem = (HostID remote , RmiContext rmiContext , int hostID ,
-            int itemCID , int itemID) =>
+            string itemID , string networkID) =>
         {
+            Debug.Log("Equip Check " + m_itemDict.ContainsKey(networkID));
 
-            GameObject item = GetNetworkItem(itemID);
-            NetworkLog("NotifyPlayerEquipItem " + itemID + " null ? " + (item == null));
+            GameObject item = m_itemDict[networkID].gameObject;
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("NotifyPlayerEquipItem " + itemID + " null ? " + (item == null));
 
             if (item != null)
             {
@@ -449,16 +445,18 @@ public class NetworkManager : Singletone<NetworkManager> {
             return true;
         };
         // 아이템을 해제했다 ( 다른 플레이어 )
-        m_s2cStub.NotifyPlayerUnEquipItem = (HostID remote , RmiContext rmiContext , int hostID , int itemCID ,
-            int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
+        m_s2cStub.NotifyPlayerUnEquipItem = (HostID remote , RmiContext rmiContext , int hostID,
+            string itemID,string networkID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
-            GameObject item = GetNetworkItem(itemID);
+            GameObject item = m_itemDict[networkID].gameObject;
 
             if (item != null) 
             {
+                Debug.Log(" 버렸다  다른놈이 " + networkID);
                 foreach (var p in m_players)
                 {
-                    p.UnEquipWeapon(pos , rot);
+                    if((int)p.HOST_ID == hostID)
+                        p.UnEquipWeapon(pos , rot);
                     break;
                 }
             }
@@ -467,54 +465,23 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         #endregion
 
-       #region Network 총알 / 수류탄 
+        #region Network 총알 / 수류탄 
 
         // 총알 생성해라
         m_s2cStub.NotifyPlayerBulletCreate = (HostID remote , RmiContext rmiContext ,
-            int sendHostID , int bulletCode , string bulletID ,
+            int sendHostID ,string bulletID, string weaponID ,
             UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
             NetworkLog("Bullet Create " + sendHostID + " t " + (int)m_hostID);
 
-            Bullet b = GetNetworkBullet(bulletID);
-            
-            if (b != null && b.ITEM_CODE == bulletCode)
-            {
-                // 이미 생성되어 있는 것
-                // 재활용ㅋ
-                b.NetworkReset(new Nettention.Proud.Vector3(pos.x,pos.y,pos.z));
-                b.transform.position = pos;
-                b.transform.eulerAngles = rot;
-                b.NETWORK_ID = bulletID;
-                b.IS_REMOTE = true;
-                
-            }
-            else
-            {
-                GameObject bullet = null;
-                string path = "";
-                // 타입 검사 후 생성하는 로직 -현재 임시로직
-                switch (bulletCode)
-                {
-                    case 1: path = "Bullet/Gun01/Gun01_01"; break;
-                    case 2: path = "Bullet/Gun02/Gun02_02"; break;
-                    case 5: path = "Bullet/RocketLauncher/Rocket_Bazooka"; break;
-                }
+            // 추후 여기서 타입 변경
 
-               bullet = GameObject.Instantiate(Resources.Load(path)) as GameObject;
-                bullet.transform.parent = transform;
-                bullet.transform.position = pos;
-                bullet.transform.localEulerAngles = rot;
-                b = bullet.GetComponent<Bullet>();
-                b.ITEM_CODE = bulletCode;
-                b.NETWORK_ID = bulletID;
-                b.IS_REMOTE = true;
-                b.enabled = true;
-                b.NetworkBulletEnable();
-                bullet.SetActive(true);
-                m_bulletList.Add(bulletID , b);
-            }
-
+            WeaponManager.Instance().NetworkBulletCreateRequest(
+                (int)remote,
+                bulletID , 
+                weaponID,  
+                new UnityEngine.Vector3(pos.x,pos.y,pos.z), 
+                new UnityEngine.Vector3(rot.x,rot.y,rot.z));
 
             return true;
         };
@@ -523,62 +490,28 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyPlayerBulletMove = (HostID remote , RmiContext rmiContext ,
             int sendHostID , string bulletID , UnityEngine.Vector3 pos , UnityEngine.Vector3 velocity , UnityEngine.Vector3 rot) =>
         {
-            Bullet b = GetNetworkBullet(bulletID);
-
-            if (b == null)
-                NetworkLog("ERROR bulletID 미등록 " + bulletID);
-            else
-            {
-                b.NetworkMoveRecv(pos , velocity , rot);
-            }
+            WeaponManager.Instance().NetworkBulletMoveRecv(bulletID , pos , velocity , rot);
             return true;
         };
 
         // 총알 부딪혀서 삭제해라
         m_s2cStub.NotifyPlayerBulletDelete = (HostID remote , RmiContext rmiContext , int sendHostID , string bulletID) =>
         {
-            Bullet b = GetNetworkBullet(bulletID);
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("삭제 요청보ㄴ냄 "+bulletID);
+            WeaponManager.Instance().NetworkBulletRemoveRequest(bulletID);
 
-            if (b == null)
-                NetworkLog("ERROR bulletID 미등록");
-            else
-                b.NetworkRemoveEvent();
             return true;
         };
 
         // 수류탄 생성 요청
         m_s2cStub.NotifyGrenadeCreate = (HostID remote , RmiContext rmiContext , int sendHostID , string networkID , UnityEngine.Vector3 pos) =>
         {
-            Debug.Log("수류탄 생성 !!! " + sendHostID);
-            Grenade grenade = GetNetworkGrenade(networkID);
-
-            if (grenade != null)
-                return true;
-            // 해당 플레이어에게서 가져온다.
-            for (int i = 0; i < m_players.Count; i++)
-            {
-                NetworkPlayer p = m_players[i];
-                if ((int)p.HOST_ID == sendHostID)
-                {
-                    if (p.HAS_WEAPON != null)
-                    {
-                        p.HAS_WEAPON.transform.parent = transform;
-                        grenade = p.HAS_WEAPON.GetComponent<Grenade>();
-                        p.HAS_WEAPON = null;
-                        grenade.IS_NETWORK = true;
-                        grenade.NETWORK_ID = networkID;
-                        m_grenadeList.Add(networkID , grenade);
-                    }
-                    break;
-                }
-            }
-            grenade.transform.position = pos;
-
-            grenade.IS_NETWORK = true;
-            grenade.NETWORK_ID = networkID;
-            grenade.NetworkGrenadeEnable();
-
-            m_grenadeList.Add(networkID , grenade);
+            Debug.Log("수류탄 생성 !!! " + sendHostID + " pos " + pos);
+            Grenade g = (m_itemDict[networkID] as Grenade);
+            g.IS_NETWORK = true;
+            g.transform.parent = null;
+            g.transform.position = pos;
+            g.NetworkGrenadeEnable();
             return true;
         };
 
@@ -586,64 +519,23 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyGrenadeMove = (HostID remote , RmiContext rmiContext , int sendHostID , string networkID ,
             UnityEngine.Vector3 pos ,UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot) =>
         {
-            Grenade grenade = GetNetworkGrenade(networkID);
-
-            if(grenade == null)
-            {
-                // 해당 플레이어에게서 가져온다.
-                for(int i = 0; i < m_players.Count; i++)
-                {
-                    NetworkPlayer p = m_players[i];
-                    if((int)p.HOST_ID == sendHostID)
-                    {
-                        if(p.HAS_WEAPON != null)
-                        {
-                            p.HAS_WEAPON.transform.parent = transform;
-                            
-                            grenade = p.HAS_WEAPON.GetComponent<Grenade>();
-                            p.HAS_WEAPON = null;
-                            grenade.IS_NETWORK = true;
-                            grenade.NETWORK_ID = networkID;
-                            m_grenadeList.Add(networkID , grenade);
-                        }
-                        break;
-                    }
-                }
-            }
-
-            if (grenade == null)
-            {
-                NetworkLog("잘못된 수류탄 아이디 " + networkID);
-                return true;
-            }
-            else
-                grenade.NetworkMoveRecv(pos , velocity , rot);
-
+       
+            Grenade g = (m_itemDict[networkID] as Grenade);
+            Debug.Log("Move " + pos + " g null "+(g == null));
+            g.NetworkMoveRecv(pos , velocity , rot);
             return true;
         };
 
         //수류탄 폭발 
         m_s2cStub.NotifyGrenadeBoom = (HostID remote , RmiContext rmiContext , int sendHostID , string networkID, bool isStone) =>
         {
-            Grenade grenade = GetNetworkGrenade(networkID);
-
-            if (grenade != null)
-                grenade.NetworkGrenadeBoom(isStone);
-
+           
             return true;
         };
         // 수류탄 삭제하기
         m_s2cStub.NotifyGrenadeRemove = (HostID remote , RmiContext rmiContext , string networkID) =>
         {
-            Grenade grenade = GetNetworkGrenade(networkID);
-
-            if (grenade == null)
-                return true;
-            else
-            {
-                m_grenadeList.Remove(networkID);
-                GameObject.Destroy(grenade.gameObject);
-            }
+            // 여기로 오지않음 
             return true;
         };
  
@@ -654,25 +546,52 @@ public class NetworkManager : Singletone<NetworkManager> {
           m_s2cStub.NotifyPlayerChangeHP = (HostID remote , RmiContext rmiContext ,
             int targetHostID , string name , float hp , float prevhp , float maxhp,UnityEngine.Vector3 dir) =>
         {
-            NetworkLog("damage host " + (int)m_hostID + " target " + targetHostID);
-            if ((int)m_hostID == targetHostID)
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("damage host " + (int)m_hostID + " target " + targetHostID);
+            if ((int)m_hostID == targetHostID && GameManager.Instance().WINNER == false)
             {
                 if (hp <= 0.0f)
+                {
                     m_isLose = true;
+                }
 
                 // 10% 체크
                 if(hp <= maxhp * 0.1f)
                 {
+                    // 산소 부족이 띄워져있을 경우 숨김
+                    CameraManager.Instance().HideNotEnoughOxyEffect();
+                    CameraManager.Instance().ShowNotEnoughHPEffect();
                     GameManager.Instance().PLAYER.m_player.NotEnoughHp();
                 }
                 else if(prevhp <= maxhp * 0.1f && hp > maxhp * 0.1f)
                 {
+                    // 막 회복되었을때
                     GameManager.Instance().PLAYER.m_player.HealHPAndOxy();
+                    CameraManager.Instance().HideNotEnoughHpEffect();
                 }
 
+                if(GameManager.Instance().WINNER == false)
+                {
+                    CameraManager.Instance().HideNotEnoughHpEffect();
+                    CameraManager.Instance().HideNotEnoughOxyEffect();
+                }
                 GameManager.Instance().ChangeHP(hp , prevhp , maxhp, (string.IsNullOrEmpty(name)) ? null : name);
                 if(prevhp > hp)
                     GameManager.Instance().PLAYER.m_player.Damage(dir,(string.IsNullOrEmpty(name)) ? null : name);
+            }
+            else
+            {
+                for(int i = 0; i < m_players.Count; i++)
+                {
+                    if(m_players[i].HOST_ID == (HostID)targetHostID)
+                    {
+                        if(hp <= 0.0f)
+                        {
+                            m_players[i].IS_DEATH = true;
+                        }
+                        m_players[i].HPUpdate(hp , maxhp);
+                        return true;
+                    }
+                }
             }
             return true;
         };
@@ -681,21 +600,37 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyPlayerChangeOxygen = (HostID remote , RmiContext rmiContext ,
             int targetHostID , string name , float oxygen , float prevoxy , float maxoxy) =>
         {
-            if ((int)m_hostID == targetHostID)
+            if ((int)m_hostID == targetHostID && GameManager.Instance().WINNER == false)
             {
                 // 10% 체크
                 if (oxygen <= maxoxy * 0.1f)
                 {
                     GameManager.Instance().PLAYER.m_player.NotEnoughOxy();
+                    CameraManager.Instance().ShowHitEffect(false);
                 }
                 else if (prevoxy <= maxoxy * 0.1f && oxygen > maxoxy * 0.1f)
                 {
                     GameManager.Instance().PLAYER.m_player.HealHPAndOxy();
                 }
 
+                // 산소 오링났을 때 
                 if (oxygen <= 0)
                 {
-                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" , 5.0f,UnityEngine.Vector3.zero);
+                    CameraManager.Instance().ShowNotEnoughOxyEffect();
+
+                    C2SRequestPlayerDamage((int)m_hostID , "" , "oxy" ,
+                        GameManager.Instance().GetGameTableValue(GameManager.OXY_DAMAGE),
+                        UnityEngine.Vector3.zero);
+                }
+                else
+                {
+                    // 산소가 조금이라도 있다면 not enough effect 는 끔
+                    CameraManager.Instance().HideNotEnoughOxyEffect();
+                }
+                if (GameManager.Instance().WINNER == false)
+                {
+                    CameraManager.Instance().HideNotEnoughHpEffect();
+                    CameraManager.Instance().HideNotEnoughOxyEffect();
                 }
                 GameManager.Instance().ChangeOxy(oxygen , prevoxy , maxoxy);
             }
@@ -713,9 +648,31 @@ public class NetworkManager : Singletone<NetworkManager> {
             return true;
         };
 
+        #region OxyCharger 
+        // 산소 충전기 사용 가능
+        m_s2cStub.NotifyUseSuccessedOxyCharger = (HostID remote , RmiContext rmiContext , 
+            int targetHostID , int oxyChargerIndex) =>
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 가능 상태");
+            GameManager.Instance().PLAYER.m_player.OxyChargerEnableSetup();
+            m_oxyChargerList[oxyChargerIndex].OXY_CHARGER_ENABLE = true;
+            return true;
+        };
+
+        // 산소 충전기 사용 거부
+        m_s2cStub.NotifyUseFailedOxyCharger = (HostID remote , RmiContext rmiContext , int targetHostID , int oxyChargerIndex) =>
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 거부 상태 "+targetHostID + " 가 먼저 점유하였음 ");
+            m_oxyChargerList[oxyChargerIndex].OXY_CHARGER_ENABLE = false;
+            return true;
+        };
+
+        #endregion
+
+        #region ItemBox
         // itemBox 조작 이벤트 ( 아이템 박스 사용 결과와 생성할 아이템 코드가 날아옴 )
         m_s2cStub.NotifyUseItemBox = (HostID remote , RmiContext rmiContext ,
-            int sendHostID , int itemBoxIndex , int itemID) =>
+            int sendHostID , int itemBoxIndex , string itemID,string networkID) =>
         {
             if (itemBoxIndex < 0 || m_itemBoxList.Count <= itemBoxIndex)
             {
@@ -723,22 +680,23 @@ public class NetworkManager : Singletone<NetworkManager> {
                 return true;
             }
             ItemBox box = m_itemBoxList[itemBoxIndex];
-
-            box.ItemBoxClose();
-
+            
             if ((int)m_hostID != sendHostID)
                 box.ItemBoxNetworkOpen();
             else
             {
                 // 같을 경우 
                 Debug.Log("얻었다 ! " + itemID + "를!");
+
+                string id = (itemID.Equals("temp")) ? WeaponManager.Instance().GetRandomWeaponID() : itemID;
+                Debug.Log("dd " + id);
                 //임의
-                GameManager.Instance().RecvItem(itemID-1 , box.transform.GetChild(3).gameObject);
+                GameManager.Instance().RecvItem(id ,networkID, box.transform.GetChild(3).gameObject);
             }
 
             return true;
         };
-
+        #endregion
         // 쉘터 문 정보가 왔을 때 
         m_s2cStub.NotifyShelterInfo = (HostID remote ,
             RmiContext rmiContext ,
@@ -746,7 +704,7 @@ public class NetworkManager : Singletone<NetworkManager> {
             bool lightState) =>
         {
             Debug.Log("shelterinfo " + lightState + " id " + shelterID);
-
+            m_shelterList[shelterID].DOOR_STATE = doorState;
 
             if (lightState)
                 m_shelterList[shelterID].LightOn();
@@ -763,13 +721,41 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         };
 
+        #region SpaceShip
+        // 우주선 잠금 시간
+        m_s2cStub.NotifySpaceShipLockTime = (HostID remote , RmiContext rmiContext , int sec) =>
+        {
+            if (sec <= 0)
+            {
+                m_spaceShipEnabled = true;
+                GameManager.Instance().ALERT.AlertHide("SpaceShipLock");
+            }
+            else
+                GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.ENGINE_READY , "SpaceShipLock" , sec , "우주선 잠금");
+            return true;
+        };
+
+        // 우주선 조작 중 실패
+        m_s2cStub.NotifySpaceShipEngineChargeFailed = (HostID remote , RmiContext rmiContext , int spaceShipID) =>
+        {
+            GameManager.Instance().ALERT.AlertHide("SpaceStart_" + spaceShipID);
+            return true;
+        };
+
         // 우주선 조작 정보가 넘어옴
         m_s2cStub.NotifySpaceShipEngineCharge = (HostID remote , RmiContext rmiContext ,
             int spaceShipID , float fuel) =>
         {
-            Debug.Log("넘어옴 정보 " + spaceShipID);
             var spaceShip = m_spaceShipList[spaceShipID];
 
+            if(fuel >= 1.0f)
+            {
+                GameManager.Instance().ALERT.AlertHide("SpaceStart_" + spaceShipID);
+            }else
+            {
+                GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.ENGINE_STARTING ,
+                    "SpaceStart_" + spaceShipID , Mathf.RoundToInt(10.0f - (fuel * 10.0f)) , "우주선 조작");
+            }
             spaceShip.SpaceShipEngineCharge(fuel , false);
             if(fuel >= 1.0f)
             {
@@ -785,6 +771,26 @@ public class NetworkManager : Singletone<NetworkManager> {
             }
             return true;
         };
+
+        // 우주선 사용 가능 상태
+        m_s2cStub.NotifyUseSpaceShipSuccess = (HostID remote , RmiContext rmiContext , int spaceShipID) =>
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("SpaceShip 사용 가능 " + spaceShipID);
+            m_spaceShipList[spaceShipID].IS_SPACESHIP_ENABLED = true;
+            GameManager.Instance().PLAYER.m_player.SpaceShipEnable();
+            return true;
+        };
+
+        // 우주선 사용 불가 상태
+        m_s2cStub.NotifyUseSpaceShipFailed = (HostID remote , RmiContext rmiContext , int spaceShipID , int targetHostID) =>
+        {
+            GameManager.Instance().m_inGameUI.ShowDebugLabel("SpaceShip 사용 불가 " + spaceShipID);
+            m_spaceShipList[spaceShipID].IS_SPACESHIP_ENABLED = false;
+            GameManager.Instance().PLAYER.m_player.SPACESHIP_REQUEST = false;
+            return true;
+        };
+
+        #endregion
         #endregion
 
         #region Meteor , Death Zone
@@ -807,11 +813,11 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 메테오 생성해라
         m_s2cStub.NotifyMeteorCreate = (HostID remote , RmiContext rmiContext ,
-            float anglex , float anglez) =>
+            float anglex , float anglez,string meteorID) =>
         {
             if (m_isGameRunning == false)
                 return true;
-            GameManager.Instance().CreateMeteor(anglex , anglez);
+            GameManager.Instance().CreateMeteor(anglex , anglez , meteorID);
             return true;
         };
 
@@ -870,8 +876,20 @@ public class NetworkManager : Singletone<NetworkManager> {
 
         // 데스존
         #region Death Zone 
+        // 데스존 생성까지..
+        m_s2cStub.NotifyDeathZoneCommingTime = (HostID remote , RmiContext rmiContext , 
+            int tick , string deathzoneID) =>
+        {
+            GameManager.Instance().ALERT.AlertShow(AlertUI.AlertType.DEATH_ZONE , deathzoneID , 
+                tick , "Death Zone");
+
+            if(tick <= 0)
+                GameManager.Instance().ALERT.AlertHide(deathzoneID);
+            return true;
+        };
+
         // 데스존 생성 명령
-        m_s2cStub.NotifyDeathZoneCreate = (HostID remote , RmiContext rmiContext , int spaceShipIndex) =>
+        m_s2cStub.NotifyDeathZoneCreate = (HostID remote , RmiContext rmiContext , int spaceShipIndex, string deathZoneID) =>
         {
             if (SceneManager.GetActiveScene().buildIndex != 2)
                 return true;
@@ -884,7 +902,7 @@ public class NetworkManager : Singletone<NetworkManager> {
                 deathZone.DEATH_LINE_INDEX = spaceShipIndex;
 
                 // 실제 회전 
-                deathZone.DeathZoneSetup(m_spaceShipList[spaceShipIndex].transform.position);
+                deathZone.DeathZoneSetup(m_spaceShipList[spaceShipIndex].transform.position,deathZoneID);
             }
             return true;
         };
@@ -1000,6 +1018,11 @@ public class NetworkManager : Singletone<NetworkManager> {
         {
             m_itemBoxList.Add(m_itemBoxParent.transform.GetChild(i).GetComponent<ItemBox>());
             m_itemBoxList[i].ITEMBOX_ID = i;
+
+            if(IS_HOST)
+            {
+                m_c2sProxy.RequestOxyChargerStartSetup(HostID.HostID_Server , RmiContext.ReliableSend , i);
+            }
         }
     }
 
@@ -1128,7 +1151,7 @@ public class NetworkManager : Singletone<NetworkManager> {
     public event GameStartFailed gameStartFailed = null;
 
 
-    // 게임이 끝났다 시발
+    // 게임이 끝났다 
     public void RequestGameExit()
     {
         if (m_isHost)
@@ -1255,42 +1278,51 @@ public class NetworkManager : Singletone<NetworkManager> {
     }
 
     // item Equip Send
-    public void C2SRequestEquipItem(int itemCID , int itemID)
+    public void C2SRequestEquipItem(string itemID , string networkID)
     {
+        Debug.Log("Equip !");
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
         sendOption.enableLoopback = false;
-        m_c2sProxy.NotifyPlayerEquipItem(m_p2pID , sendOption , (int)m_hostID , itemCID , itemID);
+        m_c2sProxy.NotifyPlayerEquipItem(m_p2pID , sendOption , (int)m_hostID , itemID , networkID);
     }
 
     //item UnEquip Send
-    public void C2SRequestUnEquipItem(int itemCID , int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot)
+    public void C2SRequestUnEquipItem(string itemID , string networkID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot)
     {
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
         sendOption.enableLoopback = false;
-        m_c2sProxy.NotifyPlayerUnEquipItem(m_p2pID , sendOption , (int)m_hostID , itemCID , itemID , pos , rot);
+        m_c2sProxy.NotifyPlayerUnEquipItem(m_p2pID , sendOption , (int)m_hostID , itemID ,networkID, pos , rot);
     }
 
     // item Create Command
-    public void C2SRequestItemCreate(int itemCID , int itemID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot)
+    public void C2SRequestItemCreate(string itemID,string networkID , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot)
     {
         NetworkLog("ItemCreate " + pos + " rot " + rot);
         m_c2sProxy.RequestWorldCreateItem(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID ,
-            itemCID , itemID , pos , rot);
+            itemID,networkID , pos , rot);
+    }
+
+    // item Delete Command
+    public void C2SRequestItemDelete(string networkID)
+    {
+        NetworkLog("ItemDelete " + networkID);
+        m_c2sProxy.RequestItemDelete(m_p2pID , RmiContext.ReliableSend , networkID);
     }
     #endregion
 
     #region Bullet / Grenade Create Move Remove
     
     //bullet Create Send
-    public void C2SRequestBulletCreate(string bulletID,UnityEngine.Vector3 pos,UnityEngine.Vector3 rot,int bulletCode)
+    public void C2SRequestBulletCreate(string bulletID,string weaponID,UnityEngine.Vector3 pos,UnityEngine.Vector3 rot)
     {
         var sendOption = new RmiContext(); // (2)
         sendOption.reliability = MessageReliability.MessageReliability_Reliable;
         //sendOption.maxDirectP2PMulticastCount = 30;
         sendOption.enableLoopback = false;
-        m_c2sProxy.NotifyPlayerBulletCreate(m_p2pID , sendOption , (int)m_hostID , bulletCode , bulletID , pos , rot);
+        //TODO
+        m_c2sProxy.NotifyPlayerBulletCreate(m_p2pID , sendOption , (int)m_hostID ,bulletID, weaponID, pos , rot);
     }
 
     // bullet move
@@ -1396,13 +1428,30 @@ public class NetworkManager : Singletone<NetworkManager> {
     #endregion
 
     #region Network Object 
-    // user OxyCharger
+
+    #region OxyCharger Request ----------------------------------------------------------------
+    // use request OxyCharger
+    public void C2SRequestUseOxyChargerStart(OxyCharger charger)
+    {
+        m_c2sProxy.RequestUseOxyChargerStart(HostID.HostID_Server , RmiContext.ReliableSend , charger.OXY_CHARGER_ID);
+    }
+
+    // use OxyCharger
     public void C2SRequestPlayerUseOxyCharger(OxyCharger charger,float UseOxy)
     {
         m_c2sProxy.RequestUseOxyCharger(HostID.HostID_Server , RmiContext.ReliableSend ,
             (int)m_hostID , GetOxyChargerIndex(charger) , UseOxy);
     }
 
+    // use end OxyCharger
+    public void C2SRequestPlayerUseEndOxyCharger(OxyCharger charger)
+    {
+        GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 끝");
+        m_c2sProxy.RequestUseOxyChargerEnd(HostID.HostID_Server , RmiContext.ReliableSend , charger.OXY_CHARGER_ID);
+    }
+    #endregion
+
+    #region ItemBox Request -------------------------------------------------------------------
     // use itemBox
     public void C2SRequestPlayerUseItemBox(ItemBox box)
     {
@@ -1410,6 +1459,9 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_c2sProxy.RequestUseItemBox(HostID.HostID_Server , RmiContext.ReliableSend ,
             (int)m_hostID , GetItemBoxIndex(box));   
     }
+    #endregion
+
+    #region Shelter Request --------------------------------------------------------------------
 
     // 쉘터 등록
     public void C2SRequestShelterStartSetup(int shelterID)
@@ -1423,16 +1475,37 @@ public class NetworkManager : Singletone<NetworkManager> {
     {
         Debug.Log("Shelter Door Control");
 
-        m_c2sProxy.RequestShelterDoorControl(HostID.HostID_Server, 
-            RmiContext.ReliableSend,(int)m_hostID , shelterID , doorState);
+        m_c2sProxy.NotifyShelterInfo(m_p2pID , RmiContext.ReliableSend , (int)m_hostID , shelterID , doorState , 
+            m_shelterList[shelterID].LIGHT_STATE);
+
+        m_c2sProxy.RequestShelterDoorControl(HostID.HostID_Server ,
+            RmiContext.ReliableSend , (int)m_hostID , shelterID , doorState);
     }
 
     // 쉘터 입장
     public void C2SRequestShelterEnter(int shelterID,bool enter)
     {
         Debug.Log("Shelter Enter " +enter);
-        m_c2sProxy.RequestShelterEnter(HostID.HostID_Server , 
-            RmiContext.ReliableSend , (int)m_hostID,shelterID , enter);
+
+        m_c2sProxy.NotifyShelterInfo(m_p2pID , RmiContext.ReliableSend , (int)m_hostID , shelterID , 
+            m_shelterList[shelterID].DOOR_STATE,enter);
+
+        m_c2sProxy.RequestShelterEnter(HostID.HostID_Server ,
+            RmiContext.ReliableSend , (int)m_hostID , shelterID , enter);
+    }
+    #endregion
+
+    #region SpaceShip Request ------------------------------------------------------------------
+
+    // 우주선 조작 요청
+    public void C2SRequestUseSpaceShip(int spaceShipID)
+    {
+        m_c2sProxy.RequestUseSpaceShip(HostID.HostID_Server , RmiContext.ReliableSend , spaceShipID);
+    }
+    // 우주선 조작 중도 취소
+    public void C2SRequestUseSpaceShipCancel(int spaceShipID)
+    {
+        m_c2sProxy.RequestUseSpaceShipCancel(HostID.HostID_Server , RmiContext.ReliableSend , spaceShipID);
     }
 
     // 우주선 조작
@@ -1445,12 +1518,22 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_c2sProxy.NotifySpaceShipEngineCharge(m_p2pID , sendOption , spaceShipID , fuel);
     }
 
+    // 우주선 조작 실패
+    public void C2SNotifySpaceShipEngineFailed(int spaceShipID)
+    {
+        var sendOption = new RmiContext(); // (2)
+        sendOption.reliability = MessageReliability.MessageReliability_Reliable;
+        sendOption.enableLoopback = false;
+        m_c2sProxy.NotifySpaceShipEngineChargeFailed(m_p2pID , sendOption , spaceShipID);
+    }
+
     // 우주선을 탔음을 알림
     public void C2SRequestSpaceShip()
     {
         NetworkLog("RequestSpaceShip");
         m_c2sProxy.RequestSpaceShip(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID);
     }
+    #endregion
     #endregion
 
     // 게임이 끝났음을 알림
@@ -1471,6 +1554,6 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     void NetworkLog(object o)
     {
-        Debug.Log("NetworkManager : "+o);
+        //Debug.Log("NetworkManager : "+o);
     }
 }

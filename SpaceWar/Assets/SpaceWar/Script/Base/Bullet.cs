@@ -7,6 +7,17 @@ public class Bullet : MonoBehaviour {
 
     #region Bullet_INFO
 
+    #region Bullet Setting
+    protected string m_weaponID = null;
+    public string WEAPON_ID { get { return m_weaponID; } set { m_weaponID = value; } }
+
+    protected float m_damage = 0.0f;
+    public float DAMAGE { get { return m_damage; } set { m_damage = value; } }
+
+    private bool m_alive = false;
+    public bool IS_ALIVE { get { return m_alive; } set { m_alive = value; } }
+    #endregion
+
     #region Network
     // 네트워크의 접속을 받는 놈인가
     protected bool m_isRemote = false;
@@ -27,39 +38,64 @@ public class Bullet : MonoBehaviour {
 
     // 기본 정보들
     [SerializeField] protected float m_speed = 0.0f;
+    public float SPEED { get { return m_speed; } set { m_speed = value; } }
 
-    private UnityEngine.Vector3 m_prevPos = UnityEngine.Vector3.zero;
+    protected int m_targetID = -1;
+    public int TARGET_ID
+    {
+        get { return m_targetID; }
+        set { m_targetID = value; }
+    }
 
     //네트워크 총알 아닐 때 체크용
     protected UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero;
     private float m_tick = 0.0f;
 
-    [SerializeField] private GameObject[] m_effects;
     [SerializeField] protected GameObject m_bulletTrailEffect = null;
     [SerializeField] protected GameObject m_shotEffect = null;
     [SerializeField] protected GameObject m_shotOtherObjectEffect = null;
+
+    public GameObject BULLET_TRAIL_EFFECT {  get { return m_bulletTrailEffect; }  set { m_bulletTrailEffect = value; } }
+    public GameObject BULLET_HIT_EFFECT { get { return m_shotEffect; } set { m_shotEffect = value; } }
+    public GameObject BULLET_OTHER_HIT_EFFECT { get { return m_shotOtherObjectEffect; } set { m_shotOtherObjectEffect = value; } }
 
     protected bool m_hitEnemy = false;
     protected Quaternion m_shotRot;
     public Quaternion SHOT_ROTATION { get { return m_shotRot; } }
 
+    // 총알 파티클 관련
+    BulletParticle_Off m_bulletParticleOff = null;
+    BulletParticle_RateOff m_bulletParticleRateOff = null;
+
+    // 네트워크 이동
+    protected bool m_isNetworkMoving = true;
+
     #region Sound Play ---------------------------------------------------------------------
     [SerializeField] protected AudioClip m_hitMain = null;
-    [SerializeField] protected AudioClip m_hitOther = null;
+    [SerializeField] protected AudioClip m_hitSpaceShip = null;
+    [SerializeField] protected AudioClip m_hitShelter = null;
+    [SerializeField] protected AudioClip m_hitland = null;
+
+    public AudioClip HIT_MAIN { get { return m_hitMain; } set { m_hitMain = value; } }
+    public AudioClip HIT_SPACESHIP { get { return m_hitSpaceShip; } set { m_hitSpaceShip = value; } }
+    public AudioClip HIT_SHELTER{ get { return m_hitShelter; } set { m_hitShelter = value; } }
+    public AudioClip HIT_LAND { get { return m_hitland; } set { m_hitland = value; } }
+
     protected AudioSource m_bulletAudioSource = null;
+    public AudioSource AUDIO_SOURCE { get { return m_bulletAudioSource; } set { m_bulletAudioSource = value; } }
     #endregion
     #endregion
 
     #region Network Method -----------------------------------------------------------------
     public void NetworkBulletEnable()
     {
-
+        m_targetID = -1;
         m_positionFollower = new PositionFollower();
         m_angleFollowerX = new AngleFollower();
         m_angleFollowerY = new AngleFollower();
         m_angleFollowerZ = new AngleFollower();
         
-        this.GetComponent<SphereCollider>().enabled = false;
+        //this.GetComponent<SphereCollider>().enabled = false;
 
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(true);
@@ -91,6 +127,8 @@ public class Bullet : MonoBehaviour {
 
     void NetworkUpdate()
     {
+        if (m_isNetworkMoving == false)
+            return;
         m_positionFollower.FrameMove(Time.deltaTime);
         m_angleFollowerX.FrameMove(Time.deltaTime);
         m_angleFollowerY.FrameMove(Time.deltaTime);
@@ -119,10 +157,17 @@ public class Bullet : MonoBehaviour {
 
     public void NetworkReset(Nettention.Proud.Vector3 pos)
     {
+        m_positionFollower = new PositionFollower();
+        m_angleFollowerX = new AngleFollower();
+        m_angleFollowerY = new AngleFollower();
+        m_angleFollowerZ = new AngleFollower();
+        m_targetID = -1;
+
         m_positionFollower.SetTarget(pos , new Nettention.Proud.Vector3(0.0f , 0.0f , 0.0f));
         m_angleFollowerX.TargetAngle = 0.0f;
         m_angleFollowerY.TargetAngle = 0.0f;
         m_angleFollowerZ.TargetAngle = 0.0f;
+        transform.position = new UnityEngine.Vector3((float)pos.x , (float)pos.y , (float)pos.z);
         BulletSetup();
     }
     #endregion
@@ -136,7 +181,6 @@ public class Bullet : MonoBehaviour {
       // Update is called once per frame
     void Update()
     {
-        m_prevPos = transform.position;
         if (m_isRemote)
         {
             NetworkUpdate();
@@ -154,12 +198,19 @@ public class Bullet : MonoBehaviour {
     #region Bullet Method --------------------------------------------------------------------------
     public virtual void BulletSetup()
     {
+        if(m_bulletParticleRateOff == null || m_bulletParticleOff == null)
+        {
+            m_bulletParticleOff = transform.GetComponentInChildren<BulletParticle_Off>();
+            m_bulletParticleRateOff = transform.GetComponentInChildren<BulletParticle_RateOff>();
+        }
+        BulletEffectReset();
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(true);
-        if(!m_isRemote)
-            this.GetComponent<SphereCollider>().enabled = true;
-        else
-            this.GetComponent<SphereCollider>().enabled = false;
+        
+        this.GetComponent<SphereCollider>().enabled = true;
+        var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
+        if (destroyTime != null)
+            destroyTime.CancelInvoke("HideBullet");
 
         m_shotRot = GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation;
         m_startPos = GravityManager.Instance().GRAVITY_TARGET.transform.position;
@@ -168,32 +219,36 @@ public class Bullet : MonoBehaviour {
         if (m_shotEffect != null)
             m_shotEffect.SetActive(false);
         m_hitEnemy = false;
+        m_isNetworkMoving = true;
     }
 
     public void BulletDelete()
     {
+        Debug.Log("## 완전삭제 @@");
+        BulletEffectReset();
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(false);
-        if (!m_isRemote)
-            this.GetComponent<SphereCollider>().enabled = false;
         
+        this.GetComponent<SphereCollider>().enabled = false;
+        gameObject.SetActive(false);
+        if (IS_REMOTE == false)
+            WeaponManager.Instance().RequestBulletRemove(this);
     }
     
     public virtual void BulletMove()
     {
-        //this.transform.Translate(Vector3.forward * Speed);
-        //this.transform.rotation = AnchorPlanet.PlayerCharacter.rotation;
-
+        UnityEngine.Vector3 velo = m_shotRot * UnityEngine.Vector3.right * m_speed * Time.deltaTime;
+        
         this.transform.RotateAround(
             GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * UnityEngine.Vector3.right , 
             m_speed * Time.deltaTime);
 
-        MoveSend();
+        if(!m_isRemote)
+            MoveSend(velo);
     }
 
-    protected void MoveSend()
+    protected void MoveSend(UnityEngine.Vector3 velo)
     {
-        UnityEngine.Vector3 velo = GetComponent<Rigidbody>().velocity;//(transform.position - m_prevPos) / Time.deltaTime;
         
         if(NetworkManager.Instance() != null)
         NetworkManager.Instance().C2SRequestBulletMove(m_networkID ,
@@ -203,27 +258,27 @@ public class Bullet : MonoBehaviour {
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
+        if (m_hitEnemy == true)
+            return;
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
+             && !other.CompareTag("Bullet_Explosion"))
         {
+            //Debug.Log("other " + other.name + " tag " + other.tag);
             m_hitEnemy= true;
-            
             
             if (other.CompareTag("PlayerCharacter"))
             {
                 NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
-
+                
                 if (p != null)
                 {
-                    if (m_shotEffect != null)
-                        m_shotEffect.SetActive(true);
+                    if (IS_REMOTE == true && TARGET_ID == (int)p.HOST_ID)
+                        return;
 
-                    if(m_hitMain != null)
-                    {
-                        m_bulletAudioSource.clip = m_hitMain;
-                        m_bulletAudioSource.Play();
-                    }
-                    
-                    NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , "test" , Random.Range(10.0f , 15.0f),m_startPos);
+                    MainHitEffect();
+                    SoundPlay(m_hitMain);
+                    if (IS_REMOTE == false)
+                        NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage ,m_startPos);
                 }
                 else
                 {
@@ -234,29 +289,70 @@ public class Bullet : MonoBehaviour {
             else if(string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
             {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
-                if (m_shotOtherObjectEffect != null)
-                    m_shotOtherObjectEffect.SetActive(true);
-
-                if(m_hitOther != null)
-                {
-                    m_bulletAudioSource.clip = m_hitOther;
-                    m_bulletAudioSource.Play();
-                }
-                
+                MainHitEffect();
+                StoneHitEffect();
+                SoundPlay(m_hitland);
             }
             else
             {
                 // 기타 오브젝트
-                if (m_shotEffect != null)
-                    m_shotEffect.SetActive(true);
+                MainHitEffect();
+                //        BULLET_TRAIL_EFFECT.SetActive(false);
+
+                if (other.CompareTag("SpaceShipControlPanel"))
+                    SoundPlay(m_hitSpaceShip);
+                else if (other.CompareTag("Shelter"))
+                    SoundPlay(m_hitShelter);
             }
 
-            
 
-            BulletDelete();
-            if(NetworkManager.Instance() != null)
-                NetworkManager.Instance().C2SRequestBulletRemove(m_networkID);
+            this.GetComponent<SphereCollider>().enabled = false;
+            BulletHitEvent();
         }
+
+    }
+
+    // 메인 폭발 이펙트 
+    protected void MainHitEffect()
+    {
+        if (m_shotEffect != null)
+            m_shotEffect.SetActive(true);
+    }
+
+    // 돌 폭발
+    protected void StoneHitEffect()
+    {
+        if (m_shotOtherObjectEffect != null)
+            m_shotOtherObjectEffect.SetActive(true);
+    }
+
+    void SoundPlay(AudioClip clip)
+    {
+        if(clip != null)
+        {
+            m_bulletAudioSource.clip = clip;
+            m_bulletAudioSource.Play();
+        }
+    }
+
+    // 파티클 등의 이펙트 처리용
+    protected void BulletHitEvent()
+    {
+        var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
+        Debug.Log("## DEstroy Time " + destroyTime);
+       
+
+        if (m_bulletParticleOff != null) m_bulletParticleOff.BulletHitEvent();
+        if (m_bulletParticleRateOff != null) m_bulletParticleRateOff.BulletHitEvent();
+
+        if (destroyTime != null) destroyTime.BulletHitEvent();
+    }
+
+    // 파티클 등의 이펙트 리셋
+    void BulletEffectReset()
+    {
+        if (m_bulletParticleOff != null) m_bulletParticleOff.Reset();
+        if (m_bulletParticleRateOff != null) m_bulletParticleRateOff.Reset();
 
     }
     #endregion

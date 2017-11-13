@@ -8,15 +8,15 @@ namespace SpaceWar
 {
 	::Proud::RmiID g_RmiIDList[] = {
                
-		Rmi_RequestGameExit,
-               
 		Rmi_RequestServerConnect,
-               
-		Rmi_RequestLobbyConnect,
                
 		Rmi_RequestNetworkGameTeamSelect,
                
+		Rmi_RequestGameExit,
+               
 		Rmi_RequestNetworkGameReady,
+               
+		Rmi_RequestLobbyConnect,
                
 		Rmi_RequestNetworkChangeMap,
                
@@ -29,6 +29,10 @@ namespace SpaceWar
 		Rmi_RequestNetworkHostOut,
                
 		Rmi_RequestGameSceneJoin,
+               
+		Rmi_NotifyLoginSuccess,
+               
+		Rmi_NotifyLoginFailed,
                
 		Rmi_NotifyNetworkUserSetup,
                
@@ -50,43 +54,21 @@ namespace SpaceWar
                
 		Rmi_NotifyNetworkGameHostOut,
                
-		Rmi_RequestClientJoin,
+		Rmi_NotifyOtherClientJoin,
                
-		Rmi_RequestWorldCreateItem,
+		Rmi_NotifyPlayerLost,
+               
+		Rmi_RequestHpUpdate,
+               
+		Rmi_NotifyPlayerChangeHP,
+               
+		Rmi_NotifyPlayerChangeOxygen,
                
 		Rmi_RequestPlayerDamage,
                
 		Rmi_RequestPlayerUseOxy,
                
-		Rmi_RequestUseOxyCharger,
-               
-		Rmi_RequestUseItemBox,
-               
-		Rmi_RequestShelterStartSetup,
-               
-		Rmi_RequestShelterDoorControl,
-               
-		Rmi_RequestShelterEnter,
-               
-		Rmi_RequestItemDelete,
-               
-		Rmi_NotifyLoginSuccess,
-               
-		Rmi_NotifyLoginFailed,
-               
-		Rmi_NotifyOtherClientJoin,
-               
-		Rmi_NotifyPlayerLost,
-               
 		Rmi_NotifyPlayerMove,
-               
-		Rmi_NotifyDeleteItem,
-               
-		Rmi_NotifyCreateItem,
-               
-		Rmi_NotifyStartOxyChargerState,
-               
-		Rmi_NotifyStartItemBoxState,
                
 		Rmi_NotifyPlayerEquipItem,
                
@@ -100,22 +82,6 @@ namespace SpaceWar
                
 		Rmi_NotifyPlayerAnimation,
                
-		Rmi_NotifyPlayerChangeHP,
-               
-		Rmi_NotifyPlayerChangeOxygen,
-               
-		Rmi_NotifyUseOxyCharger,
-               
-		Rmi_NotifyUseItemBox,
-               
-		Rmi_NotifyShelterInfo,
-               
-		Rmi_NotifyMeteorCreateTime,
-               
-		Rmi_NotifyMeteorCreate,
-               
-		Rmi_NotifySpaceShipEngineCharge,
-               
 		Rmi_NotifyGrenadeCreate,
                
 		Rmi_NotifyGrenadeMove,
@@ -124,13 +90,77 @@ namespace SpaceWar
                
 		Rmi_NotifyGrenadeRemove,
                
-		Rmi_RequestHpUpdate,
+		Rmi_RequestOxyChargerStartSetup,
+               
+		Rmi_RequestUseOxyChargerStart,
+               
+		Rmi_RequestUseOxyCharger,
+               
+		Rmi_RequestUseOxyChargerEnd,
+               
+		Rmi_NotifyUseOxyCharger,
+               
+		Rmi_NotifyUseSuccessedOxyCharger,
+               
+		Rmi_NotifyUseFailedOxyCharger,
+               
+		Rmi_RequestUseItemBox,
+               
+		Rmi_NotifyStartItemBoxState,
+               
+		Rmi_NotifyUseItemBox,
+               
+		Rmi_RequestShelterStartSetup,
+               
+		Rmi_RequestShelterDoorControl,
+               
+		Rmi_RequestShelterEnter,
+               
+		Rmi_NotifyShelterInfo,
+               
+		Rmi_RequestWorldCreateItem,
+               
+		Rmi_NotifyCreateItem,
+               
+		Rmi_RequestItemDelete,
+               
+		Rmi_NotifyDeleteItem,
+               
+		Rmi_NotifyMeteorCreateTime,
+               
+		Rmi_NotifyMeteorCreate,
+               
+		Rmi_RequestSpaceShipSetup,
+               
+		Rmi_RequestSpaceShip,
+               
+		Rmi_RequestUseSpaceShip,
+               
+		Rmi_RequestUseSpaceShipCancel,
+               
+		Rmi_NotifyUseSpaceShipSuccess,
+               
+		Rmi_NotifyUseSpaceShipFailed,
+               
+		Rmi_NotifySpaceShipLockTime,
+               
+		Rmi_NotifySpaceShipEngineChargeFailed,
+               
+		Rmi_NotifySpaceShipEngineCharge,
+               
+		Rmi_NotifyDeathZoneCommingTime,
+               
+		Rmi_NotifyDeathZoneCreate,
+               
+		Rmi_RequestDeathZoneMoveIndex,
+               
+		Rmi_NotifyDeathZoneMoveHostAndIndexSetup,
+               
+		Rmi_NotifyDeathZoneMove,
                
 		Rmi_NotifyDrawGame,
                
 		Rmi_RequestDrawGameResult,
-               
-		Rmi_RequestSpaceShip,
                
 		Rmi_RequestGameEnd,
                
@@ -141,17 +171,7 @@ namespace SpaceWar
 		Rmi_NotifyGameResultInfoOther,
                
 		Rmi_NotifyGameResultShow,
-               
-		Rmi_RequestSpaceShipSetup,
-               
-		Rmi_NotifyDeathZoneCreate,
-               
-		Rmi_RequestDeathZoneMoveIndex,
-               
-		Rmi_NotifyDeathZoneMoveHostAndIndexSetup,
-               
-		Rmi_NotifyDeathZoneMove,
 	};
 
-	int g_RmiIDListCount = 72;
+	int g_RmiIDListCount = 82;
 }

@@ -1,0 +1,120 @@
+\hypertarget{_server_8h}{}\section{Space\+War\+Server/\+Server/\+Server.h 파일 참조}
+\label{_server_8h}\index{Space\+War\+Server/\+Server/\+Server.\+h@{Space\+War\+Server/\+Server/\+Server.\+h}}
+
+
+\hyperlink{class_server}{Server} \+:\+: 게임 서버 클래스  
+
+
+{\ttfamily \#include \char`\"{}Item.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Shelter.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Game\+Room.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Oxy\+Charger.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Space\+Ship.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}S\+P\+\_\+\+Marshaler.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Common/\+Space\+War\+\_\+stub.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Common/\+Space\+War\+\_\+proxy.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Common/\+Common.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Common/\+Common.\+cpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Common/\+Space\+War\+\_\+stub.\+cpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Common/\+Space\+War\+\_\+proxy.\+cpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../\+Common/\+Space\+War\+\_\+common.\+cpp\char`\"{}}\newline
+Server.\+h에 대한 include 의존 그래프\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8h__incl}
+\end{center}
+\end{figure}
+이 그래프는 이 파일을 직/간접적으로 include 하는 파일들을 보여줍니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=199pt]{_server_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{클래스}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_server}{Server}
+\end{DoxyCompactItemize}
+\subsection*{함수}
+\begin{DoxyCompactItemize}
+\item 
+float \hyperlink{_server_8h_ade3d882172359ea96a915f1cab5f681b}{Random\+Range} (float min, float max)
+\item 
+int \hyperlink{_server_8h_aa41b8512b10550a2e21feec991f752b4}{Random\+Range} (int min, int max)
+\end{DoxyCompactItemize}
+\subsection*{변수}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}{s\+\_\+meteor\+Comming\+Time} \mbox{[}10\mbox{]} = \{ 30 ,50,70,90,110,130,150,170,190,210 \}
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+\hyperlink{class_server}{Server} \+:\+: 게임 서버 클래스 
+
+프라우드넷을 통한 모든 게임 서버 로직이 구현되어 있는 클래스 \begin{DoxyAuthor}{작성자}
+이훈 (\href{mailto:MoonAuSosiGi@gmail.com}{\tt Moon\+Au\+Sosi\+Gi@gmail.\+com}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{날짜}
+2017-\/11-\/04
+\end{DoxyDate}
+\begin{DoxyVersion}{버전}
+0.\+0.\+1 
+\end{DoxyVersion}
+
+
+\subsection{함수 문서화}
+\mbox{\Hypertarget{_server_8h_ade3d882172359ea96a915f1cab5f681b}\label{_server_8h_ade3d882172359ea96a915f1cab5f681b}} 
+\index{Server.\+h@{Server.\+h}!Random\+Range@{Random\+Range}}
+\index{Random\+Range@{Random\+Range}!Server.\+h@{Server.\+h}}
+\subsubsection{\texorpdfstring{Random\+Range()}{RandomRange()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily float Random\+Range (\begin{DoxyParamCaption}\item[{float}]{min,  }\item[{float}]{max }\end{DoxyParamCaption})}
+
+
+
+Server.\+h 파일의 179 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+180 \{
+181     \textcolor{keywordflow}{return} ((\textcolor{keywordtype}{float}(rand()) / \textcolor{keywordtype}{float}(RAND\_MAX)) * (max - min)) + min;
+182 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_server_8h_ade3d882172359ea96a915f1cab5f681b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{_server_8h_aa41b8512b10550a2e21feec991f752b4}\label{_server_8h_aa41b8512b10550a2e21feec991f752b4}} 
+\index{Server.\+h@{Server.\+h}!Random\+Range@{Random\+Range}}
+\index{Random\+Range@{Random\+Range}!Server.\+h@{Server.\+h}}
+\subsubsection{\texorpdfstring{Random\+Range()}{RandomRange()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int Random\+Range (\begin{DoxyParamCaption}\item[{int}]{min,  }\item[{int}]{max }\end{DoxyParamCaption})}
+
+
+
+Server.\+h 파일의 184 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+185 \{
+186     \textcolor{keywordflow}{return} ((\textcolor{keywordtype}{int}(rand()) / \textcolor{keywordtype}{int}(RAND\_MAX)) * (max - min)) + min;
+187 \}
+\end{DoxyCode}
+
+
+\subsection{변수 문서화}
+\mbox{\Hypertarget{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}\label{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}} 
+\index{Server.\+h@{Server.\+h}!s\+\_\+meteor\+Comming\+Time@{s\+\_\+meteor\+Comming\+Time}}
+\index{s\+\_\+meteor\+Comming\+Time@{s\+\_\+meteor\+Comming\+Time}!Server.\+h@{Server.\+h}}
+\subsubsection{\texorpdfstring{s\+\_\+meteor\+Comming\+Time}{s\_meteorCommingTime}}
+{\footnotesize\ttfamily int s\+\_\+meteor\+Comming\+Time\mbox{[}10\mbox{]} = \{ 30 ,50,70,90,110,130,150,170,190,210 \}}
+
+
+
+Server.\+h 파일의 20 번째 라인에서 정의되었습니다.
+

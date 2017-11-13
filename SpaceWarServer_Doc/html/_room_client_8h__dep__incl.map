@@ -1,0 +1,7 @@
+<map id="SpaceWarServer/Server/RoomClient.h" name="SpaceWarServer/Server/RoomClient.h">
+<area shape="rect" id="node2" href="$_game_room_8h.html" title="GameRoom :: 게임이 수행되는 방 관리 " alt="" coords="96,95,255,136"/>
+<area shape="rect" id="node6" href="$_room_client_8cpp.html" title="SpaceWarServer/Server\l/RoomClient.cpp" alt="" coords="279,95,437,136"/>
+<area shape="rect" id="node3" href="$_game_room_8cpp.html" title="SpaceWarServer/Server\l/GameRoom.cpp" alt="" coords="5,184,164,225"/>
+<area shape="rect" id="node4" href="$_server_8h.html" title="Server :: 게임 서버 클래스 " alt="" coords="188,184,347,225"/>
+<area shape="rect" id="node5" href="$_server_8cpp.html" title="SpaceWarServer/Server\l/Server.cpp" alt="" coords="188,273,347,315"/>
+</map>

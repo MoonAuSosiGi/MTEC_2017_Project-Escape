@@ -25,15 +25,7 @@ public class RecoverykitItem : Item {
         // 힐팩 사라짐
     }
     
-    public void EquipRecoveryKit()
-    {
-        this.GetComponent<SphereCollider>().enabled = false;
-    }
 
-    public void UnEquipRecoveryKit()
-    {
-        this.GetComponent<SphereCollider>().enabled = true;
-    }
     #endregion
 
 }

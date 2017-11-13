@@ -1,0 +1,5 @@
+<map id="Json::OurReader::getLocationLineAndColumn" name="Json::OurReader::getLocationLineAndColumn">
+<area shape="rect" id="node2" href="$class_json_1_1_our_reader.html#ac129e94cdc260822b2fd24e2ca35e636" title="Json::OurReader::getLocation\lLineAndColumn" alt="" coords="253,5,447,47"/>
+<area shape="rect" id="node3" href="$class_json_1_1_our_reader.html#a7971de51d73bb4aee5b0c4742c4aaaac" title="Json::OurReader::getFormatted\lErrorMessages" alt="" coords="248,71,452,112"/>
+<area shape="rect" id="node4" href="$class_json_1_1_our_char_reader.html#a547f08ec5a9951ca69e8bb2e90296c83" title="Read a Value from a JSON document. The document must be a UTF&#45;8 encoded string containing the documen..." alt="" coords="500,71,647,112"/>
+</map>

@@ -1,0 +1,1877 @@
+\hypertarget{class_server}{}\section{Server 클래스 참조}
+\label{class_server}\index{Server@{Server}}
+
+
+{\ttfamily \#include $<$Server.\+h$>$}
+
+
+
+Server에 대한 상속 다이어그램 \+: 
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_server__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Server에 대한 협력 다이어그램\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{class_server__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_server_ad5ec9462b520e59f7ea831e157ee5e59}{Server} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_server}{Server} 기본 생성자  \hyperlink{class_game_room}{Game\+Room} 생성 등의 기본 초기화 과정 수행 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_abfc09109c7050e40d8fc1e3daea76edf}{Server\+File\+Load} ()
+\begin{DoxyCompactList}\small\item\em 서버의 정보파일 로드 \end{DoxyCompactList}\item 
+bool \hyperlink{class_server_a2ea82221dd5edd72b97a465a9753a68e}{Server\+Table\+Setup} ()
+\begin{DoxyCompactList}\small\item\em 서버 기본 정보 테이블 세팅 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_acb327f7980ef16c40087bdafcef5ad7a}{Server\+Run} ()
+\begin{DoxyCompactList}\small\item\em 게임 서버 시작 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_af0a8684eda8d55b06a48a100320a2f3c}{On\+Client\+Join} (C\+Net\+Client\+Info $\ast$client\+Info)
+\begin{DoxyCompactList}\small\item\em 클라이언트가 접속 요청 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a1249766dc00efcf1f29a2aaad56f83ef}{On\+Client\+Leave} (C\+Net\+Client\+Info $\ast$client\+Info, Error\+Info $\ast$error\+Info, const Byte\+Array \&comment)
+\begin{DoxyCompactList}\small\item\em 클라이언트가 서버에서 나갔다. \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a88d53d3c77d90f211f3ca7cc51735171}{Server\+Reset} ()
+\begin{DoxyCompactList}\small\item\em 서버 리셋 정보를 초기화 한다. \end{DoxyCompactList}\item 
+shared\+\_\+ptr$<$ C\+Net\+Server $>$ \hyperlink{class_server_a044bc662d96361b3bda25230533ec63b}{Get\+Server} ()
+\begin{DoxyCompactList}\small\item\em 서버 객체 얻기 \end{DoxyCompactList}\item 
+Space\+War\+::\+Proxy $\ast$ \hyperlink{class_server_ae62a9437703d205c2d02737dfce45a33}{Get\+Proxy} ()
+\begin{DoxyCompactList}\small\item\em 전송 프록시 얻기 \end{DoxyCompactList}\item 
+Host\+ID \hyperlink{class_server_ac6e03fa95f91583bd117f4910257b7be}{Get\+P2\+P\+ID} ()
+\begin{DoxyCompactList}\small\item\em P2P 아이디 얻기 \end{DoxyCompactList}\item 
+shared\+\_\+ptr$<$ \hyperlink{class_game_room}{Game\+Room} $>$ \hyperlink{class_server_ab5d6fa91446df16909dfbea64abddf76}{Get\+Game\+Room} ()
+\begin{DoxyCompactList}\small\item\em 게임 룸 객체 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a3866f3d6a99358d0068cee3d5bc529d2}{Set\+Space\+Ship\+Lock\+Time} (int lock\+Time)
+\begin{DoxyCompactList}\small\item\em 초기 우주선 잠금값 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a4ad8b199648bad8ea03b9e161b1bcb10}{Get\+Space\+Ship\+Lock\+Time} ()
+\begin{DoxyCompactList}\small\item\em 초기 우주선 잠금값 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a0c817a017f9b2cb6f92de01e693b8e35}{Set\+Death\+Zone\+Comming\+Time} (int sec)
+\begin{DoxyCompactList}\small\item\em 데스존까지 남은 시간 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_abd194d047570b5959ae56948d4bbc9bd}{Get\+Death\+Zone\+Comming\+Time} ()
+\begin{DoxyCompactList}\small\item\em 데스존까지 남은 시간 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a9b58e281b966a1a804c89a30298285d1}{Set\+Death\+Zone\+Index} (int cur\+Index)
+\begin{DoxyCompactList}\small\item\em 데스존이 진행하고 있는 인덱스 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a636f3c3d5fe8406197f9ea30409fb725}{Get\+Death\+Zone\+Index} ()
+\begin{DoxyCompactList}\small\item\em 데스존이 진행하고 있는 인덱스 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a78cb51003b1a243780c2845263e75b29}{Set\+Death\+Zone\+Host\+ID} (int host\+ID)
+\begin{DoxyCompactList}\small\item\em 데스존을 현재 움직이고 있는 클라이언트 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a2e2dda4eb32e6f0a43ca8aba93d4d9a9}{Get\+Death\+Zone\+Host\+ID} ()
+\begin{DoxyCompactList}\small\item\em 데스존을 현재 움직이고 있는 클라이언트 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a97583a37e049f390e255a61afbac02a2}{Set\+Death\+Zone\+ID} (int id)
+\begin{DoxyCompactList}\small\item\em 데스존의 네트워크 아이디 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_ad0f632640a71c4d229e17e7b9eb2257d}{Get\+Death\+Zone\+ID} ()
+\begin{DoxyCompactList}\small\item\em 데스존 네트워크 아이디 얻기 \end{DoxyCompactList}\item 
+void \hyperlink{class_server_a582ad4eb2272b1ab92daad71dc700e8d}{Set\+Meteor\+ID} (int id)
+\begin{DoxyCompactList}\small\item\em 메테오의 네트워크 아이디 세팅 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a2c9b6a25a8add5d74b5f3bcfeff956ec}{Get\+Meteor\+ID} ()
+\begin{DoxyCompactList}\small\item\em 메테오의 네트워크 아이디 얻기 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a43c5961b9519b2358127956c817a2120}{Get\+Space\+Ship\+Count} ()
+\end{DoxyCompactItemize}
+\subsection*{Public 속성}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_server_a1e3feb269047d6abddb2b4f2cdb39361}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect}
+\begin{DoxyCompactList}\small\item\em Connect 초기 접속 요청 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a53a1274639fcb9927ba998969888db24}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select}
+\begin{DoxyCompactList}\small\item\em 팀 선택 요청 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a5dfeab0635abd704466b740526c6e91d}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit}
+\begin{DoxyCompactList}\small\item\em 정상적인 종료 루틴 // 게임 끝났음을 알림 ( 호스트가 보낸다 )) \end{DoxyCompactList}\item 
+\hyperlink{class_server_a883090b493ac52f208e1eba65aa3743b}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready}
+\begin{DoxyCompactList}\small\item\em 레디 정보가 날아온다. \end{DoxyCompactList}\item 
+\hyperlink{class_server_ac30d0c86b248c0d9589dc0c7d492893f}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect}
+\begin{DoxyCompactList}\small\item\em 서버 로비 로직 // 로비 화면에 들어왔다. \end{DoxyCompactList}\item 
+\hyperlink{class_server_a22fe25d46287ae41722c82dd28dab9d3}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join}
+\begin{DoxyCompactList}\small\item\em 게임이 시작되고 게임 씬으로 넘어왔을 때 다들 요청한다. \end{DoxyCompactList}\item 
+\hyperlink{class_server_affeebba3a07d0879b8e277d4bc69de8c}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map}
+\begin{DoxyCompactList}\small\item\em 방장이 맵을 바꿈 \end{DoxyCompactList}\item 
+\hyperlink{class_server_aec90b69791b068bf3eef6cb62ff24b68}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count}
+\begin{DoxyCompactList}\small\item\em 방장이 플레이어 수를 바꿈 \end{DoxyCompactList}\item 
+\hyperlink{class_server_aed5edbf6ff4184fa0cfcc73c5a7d18b9}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change}
+\begin{DoxyCompactList}\small\item\em 방장이 게임 모드를 바꿈 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a19bb025a2834bd960f2ecb60683febfd}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start}
+\begin{DoxyCompactList}\small\item\em 방장이 게임 시작을 누름 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a5026f52152e0de66fe5559bdb20a67bc}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out}
+\begin{DoxyCompactList}\small\item\em 방장이 로비를 나갔다. \end{DoxyCompactList}\item 
+\hyperlink{class_server_a49668e2393bb446bf02ebadbd75ef1b5}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update}
+\begin{DoxyCompactList}\small\item\em 체력 회복 메시지 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a6741c7a348e641daa0375aa2f483a1ab}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage}
+\begin{DoxyCompactList}\small\item\em 플레이어가 맞았다. \end{DoxyCompactList}\item 
+\hyperlink{class_server_ab6e38c5e64aecc2a60ef4301d4dd3376}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy}
+\begin{DoxyCompactList}\small\item\em 플레이어가 숨을 쉬었다. \end{DoxyCompactList}\item 
+\hyperlink{class_server_a513d5189f9ce57d2e4e35c3128677ce4}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move}
+\begin{DoxyCompactList}\small\item\em 플레이어 움직임 처리 \end{DoxyCompactList}\item 
+\hyperlink{class_server_afc97eded17d998b195ab89607b02a675}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item}
+\begin{DoxyCompactList}\small\item\em 아이템 장비 // 추후 지울 수 있음 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a1a23e711fabff6f68f93c98ce1cd7f32}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup}
+\begin{DoxyCompactList}\small\item\em 처음에 산소 충전기를 등록한다 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a38fce11d4a2b2338b70c9a6f502e31d0}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start}
+\begin{DoxyCompactList}\small\item\em 산소 충전기 조작 요청 \end{DoxyCompactList}\item 
+\hyperlink{class_server_ae1707d842a43e962f771f41c216e0ed3}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger}
+\begin{DoxyCompactList}\small\item\em 산소 충전기 조작중 \end{DoxyCompactList}\item 
+\hyperlink{class_server_abe9b3c44dc9dd233a6cf54147771eb14}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End}
+\begin{DoxyCompactList}\small\item\em 산소 충전기 조작 끝 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a5c521067e551d3c452f0d959456efa5f}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box}
+\item 
+\hyperlink{class_server_aea7095f7b70d3fd64e5bb5886e307607}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup}
+\begin{DoxyCompactList}\small\item\em 쉘터 등록 \end{DoxyCompactList}\item 
+\hyperlink{class_server_aa5851fbe42b72979d7bac55fac9b5526}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control}
+\begin{DoxyCompactList}\small\item\em 쉘터 문 조작 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a65fb1ba37047d92906443c8abe0915d1}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter}
+\begin{DoxyCompactList}\small\item\em 쉘터 입장 퇴장 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a8f4ad398d197ceff3c01f0bc52e783e3}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item}
+\begin{DoxyCompactList}\small\item\em 월드에 아이템 생성 요청 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a03e6416b5a045e91aaef9ad4e3d66e10}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete}
+\begin{DoxyCompactList}\small\item\em 아이템 삭제 요청 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a08505a5d3bef878c63f07bd5597c6782}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item}
+\begin{DoxyCompactList}\small\item\em 월드 아이템 삭제 알림 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a66382b19e6be476d0fe49a522a374417}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup}
+\begin{DoxyCompactList}\small\item\em 우주선 몇개 있는지 세팅 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a34537516b59c805045c37d7b2b506c7d}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship}
+\begin{DoxyCompactList}\small\item\em 우주선 탔음 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a45bae018963433523b8c5a3843706297}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship}
+\begin{DoxyCompactList}\small\item\em 우주선 사용 요청 \end{DoxyCompactList}\item 
+\hyperlink{class_server_ae212b680809a0791c9085ece9937ad3e}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel}
+\begin{DoxyCompactList}\small\item\em 우주선 사용 취소 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a127995f5512990fad6cc1f560c5357bc}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index}
+\begin{DoxyCompactList}\small\item\em 데스존이 이동하고 있는 단계를 통보해줘라 \end{DoxyCompactList}\item 
+\hyperlink{class_server_ac7dacd8ba98cf0990b1f4a5c87560ae0}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result}
+\begin{DoxyCompactList}\small\item\em 드로우 게임시 정보 요청 \end{DoxyCompactList}\item 
+\hyperlink{class_server_a9ab43800fb0165b193d60b89760a2d40}{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End}
+\begin{DoxyCompactList}\small\item\em 결과를 받아오는 것 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private 속성}
+\begin{DoxyCompactItemize}
+\item 
+Host\+ID \hyperlink{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}{m\+\_\+player\+P2\+P\+Group} = Host\+I\+D\+\_\+\+None
+\begin{DoxyCompactList}\small\item\em P2P 그룹의 Host\+ID \end{DoxyCompactList}\item 
+string \hyperlink{class_server_ae4a69c37027fd029b43099469ae00ad8}{m\+\_\+server\+Properties\+Data}
+\begin{DoxyCompactList}\small\item\em server.\+properties json 데이터 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a8506d244bc66607aaae1e0374f57bf99}{m\+\_\+game\+Start\+Time}
+\begin{DoxyCompactList}\small\item\em 플레이 타임 계산용 변수 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a172443f3be6f379fea950b0418799812}{m\+\_\+item\+Box\+Create\+Item\+Index}
+\begin{DoxyCompactList}\small\item\em 아이템박스 인덱스 \end{DoxyCompactList}\item 
+Space\+War\+::\+Proxy \hyperlink{class_server_adbe7ca5dd78f70ef2771eb1724b397de}{m\+\_\+proxy}
+\begin{DoxyCompactList}\small\item\em 전송 프록시 \end{DoxyCompactList}\item 
+shared\+\_\+ptr$<$ C\+Net\+Server $>$ \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\+\_\+net\+Server}
+\begin{DoxyCompactList}\small\item\em 서버 객체 \end{DoxyCompactList}\item 
+Critical\+Section \hyperlink{class_server_a44d7a150eabe67176df40466848d2021}{m\+\_\+crit\+Sec}
+\begin{DoxyCompactList}\small\item\em 스레드 lock 을 위함 \end{DoxyCompactList}\item 
+unordered\+\_\+map$<$ int, int $>$ \hyperlink{class_server_a4212564accb77fd496f08ff3ec292657}{m\+\_\+item\+Box\+Map}
+\begin{DoxyCompactList}\small\item\em 아이템 박스 맵 \end{DoxyCompactList}\item 
+unordered\+\_\+map$<$ int, shared\+\_\+ptr$<$ \hyperlink{class_shelter}{Shelter} $>$ $>$ \hyperlink{class_server_a75eda393f27b20a83e6effb5405e902a}{m\+\_\+shelter\+Map}
+\begin{DoxyCompactList}\small\item\em 쉘터 맵 \end{DoxyCompactList}\item 
+unordered\+\_\+map$<$ int, shared\+\_\+ptr$<$ \hyperlink{class_oxy_charger}{Oxy\+Charger} $>$ $>$ \hyperlink{class_server_ae2e40fd2b3d85dd1c92ab7bc6e6b7d65}{m\+\_\+oxy\+Charger\+Map}
+\begin{DoxyCompactList}\small\item\em 산소 충전기 맵 \end{DoxyCompactList}\item 
+unordered\+\_\+map$<$ int, shared\+\_\+ptr$<$ \hyperlink{class_space_ship}{Space\+Ship} $>$ $>$ \hyperlink{class_server_aa20a2aa16045180559ef43a7087e7e95}{m\+\_\+space\+Ship\+Map}
+\begin{DoxyCompactList}\small\item\em 우주선 맵 \end{DoxyCompactList}\item 
+unordered\+\_\+map$<$ string, shared\+\_\+ptr$<$ \hyperlink{class_item}{Item} $>$ $>$ \hyperlink{class_server_a892047fc49e676067b880f31d0d22c36}{m\+\_\+item\+Map}
+\begin{DoxyCompactList}\small\item\em 행성에 뿌려져있는 아이템 \end{DoxyCompactList}\item 
+shared\+\_\+ptr$<$ \hyperlink{class_game_room}{Game\+Room} $>$ \hyperlink{class_server_a77f414d5bb41dd5de8626d8cd621113c}{m\+\_\+game\+Room}
+\begin{DoxyCompactList}\small\item\em 게임룸 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a21ee3e9152293a6e6d47fd569ee3f37a}{m\+\_\+space\+Ship\+Lock\+Time}
+\begin{DoxyCompactList}\small\item\em 우주선 초기 잠금 시간 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_ac613fa786c19b3604dac2fd1619293c3}{m\+\_\+death\+Zone\+Comming\+Sec}
+\begin{DoxyCompactList}\small\item\em 데스존 까지 남은 시간 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a279c9f26f808acc351f9167ece2d39fb}{m\+\_\+death\+Zone\+Index} = 0
+\begin{DoxyCompactList}\small\item\em 데스존이 진행하고 있는 인덱스 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_af34b71075ab32b4b7a4da757c87ded13}{m\+\_\+death\+Zone\+Host\+ID} = -\/1
+\begin{DoxyCompactList}\small\item\em 데스존을 움직이는 주체 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_a65e72b65d1be2dc79fddb0433402cd81}{m\+\_\+death\+Zone\+ID} = 0
+\begin{DoxyCompactList}\small\item\em Death Zone 의 네트워크 아이디 \end{DoxyCompactList}\item 
+int \hyperlink{class_server_ab4f0de3a4d653f8b8631caf922643414}{m\+\_\+meteor\+ID} = 0
+\begin{DoxyCompactList}\small\item\em Meteor의 네트워크 아이디 \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+
+Server.\+h 파일의 30 번째 라인에서 정의되었습니다.
+
+
+
+\subsection{생성자 \& 소멸자 문서화}
+\mbox{\Hypertarget{class_server_ad5ec9462b520e59f7ea831e157ee5e59}\label{class_server_ad5ec9462b520e59f7ea831e157ee5e59}} 
+\index{Server@{Server}!Server@{Server}}
+\index{Server@{Server}!Server@{Server}}
+\subsubsection{\texorpdfstring{Server()}{Server()}}
+{\footnotesize\ttfamily Server\+::\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\hyperlink{class_server}{Server} 기본 생성자  \hyperlink{class_game_room}{Game\+Room} 생성 등의 기본 초기화 과정 수행 
+
+
+
+Server.\+cpp 파일의 23 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+24 \{
+25     \hyperlink{class_server_a77f414d5bb41dd5de8626d8cd621113c}{m\_gameRoom} = make\_shared <GameRoom>();
+26 \}
+\end{DoxyCode}
+
+
+\subsection{멤버 함수 문서화}
+\mbox{\Hypertarget{class_server_abd194d047570b5959ae56948d4bbc9bd}\label{class_server_abd194d047570b5959ae56948d4bbc9bd}} 
+\index{Server@{Server}!Get\+Death\+Zone\+Comming\+Time@{Get\+Death\+Zone\+Comming\+Time}}
+\index{Get\+Death\+Zone\+Comming\+Time@{Get\+Death\+Zone\+Comming\+Time}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Death\+Zone\+Comming\+Time()}{GetDeathZoneCommingTime()}}
+{\footnotesize\ttfamily int Server\+::\+Get\+Death\+Zone\+Comming\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+데스존까지 남은 시간 얻기 
+
+데스존까지 남은 시간을 얻어온다.
+
+\begin{DoxyReturn}{반환값}
+데스존까지 남은 시간을 리턴 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 451 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+452 \{
+453     \textcolor{keywordflow}{return} \hyperlink{class_server_ac613fa786c19b3604dac2fd1619293c3}{m\_deathZoneCommingSec};
+454 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_abd194d047570b5959ae56948d4bbc9bd_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a2e2dda4eb32e6f0a43ca8aba93d4d9a9}\label{class_server_a2e2dda4eb32e6f0a43ca8aba93d4d9a9}} 
+\index{Server@{Server}!Get\+Death\+Zone\+Host\+ID@{Get\+Death\+Zone\+Host\+ID}}
+\index{Get\+Death\+Zone\+Host\+ID@{Get\+Death\+Zone\+Host\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Death\+Zone\+Host\+I\+D()}{GetDeathZoneHostID()}}
+{\footnotesize\ttfamily int Server\+::\+Get\+Death\+Zone\+Host\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+데스존을 현재 움직이고 있는 클라이언트 얻기 
+
+Death\+Zone을 진행시키고 있는 클라이언트의 Host\+I\+D를 얻는다.
+
+\begin{DoxyReturn}{반환값}
+Death\+Zone을 진행시키고 있는 클라이언트의 Host\+ID. 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 487 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+488 \{
+489     \textcolor{keywordflow}{return} \hyperlink{class_server_af34b71075ab32b4b7a4da757c87ded13}{m\_deathZoneHostID};
+490 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a2e2dda4eb32e6f0a43ca8aba93d4d9a9_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_ad0f632640a71c4d229e17e7b9eb2257d}\label{class_server_ad0f632640a71c4d229e17e7b9eb2257d}} 
+\index{Server@{Server}!Get\+Death\+Zone\+ID@{Get\+Death\+Zone\+ID}}
+\index{Get\+Death\+Zone\+ID@{Get\+Death\+Zone\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Death\+Zone\+I\+D()}{GetDeathZoneID()}}
+{\footnotesize\ttfamily int Server\+::\+Get\+Death\+Zone\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+데스존 네트워크 아이디 얻기 
+
+Death\+Zone 의 식별 아이디를 얻는다.
+
+\begin{DoxyReturn}{반환값}
+Death\+Zone의 식별 아이디를 리턴 -\/1일 경우 미설정 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 505 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+506 \{
+507     \textcolor{keywordflow}{return} \hyperlink{class_server_a65e72b65d1be2dc79fddb0433402cd81}{m\_deathZoneID};
+508 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_ad0f632640a71c4d229e17e7b9eb2257d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a636f3c3d5fe8406197f9ea30409fb725}\label{class_server_a636f3c3d5fe8406197f9ea30409fb725}} 
+\index{Server@{Server}!Get\+Death\+Zone\+Index@{Get\+Death\+Zone\+Index}}
+\index{Get\+Death\+Zone\+Index@{Get\+Death\+Zone\+Index}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Death\+Zone\+Index()}{GetDeathZoneIndex()}}
+{\footnotesize\ttfamily int Server\+::\+Get\+Death\+Zone\+Index (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+데스존이 진행하고 있는 인덱스 얻기 
+
+현재 진행중인 Death\+Zone 인덱스 얻기
+
+\begin{DoxyReturn}{반환값}
+현재 진행중인 Death\+Zone 인덱스 반환 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 469 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+470 \{
+471     \textcolor{keywordflow}{return} \hyperlink{class_server_a279c9f26f808acc351f9167ece2d39fb}{m\_deathZoneIndex};
+472 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a636f3c3d5fe8406197f9ea30409fb725_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_ab5d6fa91446df16909dfbea64abddf76}\label{class_server_ab5d6fa91446df16909dfbea64abddf76}} 
+\index{Server@{Server}!Get\+Game\+Room@{Get\+Game\+Room}}
+\index{Get\+Game\+Room@{Get\+Game\+Room}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Game\+Room()}{GetGameRoom()}}
+{\footnotesize\ttfamily shared\+\_\+ptr$<$ \hyperlink{class_game_room}{Game\+Room} $>$ Server\+::\+Get\+Game\+Room (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+게임 룸 객체 얻기 
+
+\hyperlink{class_game_room}{Game\+Room} 얻기
+
+\begin{DoxyReturn}{반환값}
+\hyperlink{class_game_room}{Game\+Room} 을 리턴한다. 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 415 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+416 \{
+417     \textcolor{keywordflow}{return} \hyperlink{class_server_a77f414d5bb41dd5de8626d8cd621113c}{m\_gameRoom};
+418 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_ab5d6fa91446df16909dfbea64abddf76_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a2c9b6a25a8add5d74b5f3bcfeff956ec}\label{class_server_a2c9b6a25a8add5d74b5f3bcfeff956ec}} 
+\index{Server@{Server}!Get\+Meteor\+ID@{Get\+Meteor\+ID}}
+\index{Get\+Meteor\+ID@{Get\+Meteor\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Meteor\+I\+D()}{GetMeteorID()}}
+{\footnotesize\ttfamily int Server\+::\+Get\+Meteor\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+메테오의 네트워크 아이디 얻기 
+
+Meteor 의 식별 아이디를 얻는다.
+
+\begin{DoxyReturn}{반환값}
+Meteor의 식별 아이디를 리턴 -\/1일 경우 미설정 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 523 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+524 \{
+525     \textcolor{keywordflow}{return} \hyperlink{class_server_ab4f0de3a4d653f8b8631caf922643414}{m\_meteorID};
+526 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a2c9b6a25a8add5d74b5f3bcfeff956ec_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_ac6e03fa95f91583bd117f4910257b7be}\label{class_server_ac6e03fa95f91583bd117f4910257b7be}} 
+\index{Server@{Server}!Get\+P2\+P\+ID@{Get\+P2\+P\+ID}}
+\index{Get\+P2\+P\+ID@{Get\+P2\+P\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+P2\+P\+I\+D()}{GetP2PID()}}
+{\footnotesize\ttfamily Host\+ID Server\+::\+Get\+P2\+P\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+P2P 아이디 얻기 
+
+P2\+P그룹의 Host\+ID 를 얻는다.
+
+\begin{DoxyReturn}{반환값}
+P2\+P그룹의 Host\+ID 를 리턴 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 406 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+407 \{
+408     \textcolor{keywordflow}{return} \hyperlink{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}{m\_playerP2PGroup};
+409 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_ac6e03fa95f91583bd117f4910257b7be_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_ae62a9437703d205c2d02737dfce45a33}\label{class_server_ae62a9437703d205c2d02737dfce45a33}} 
+\index{Server@{Server}!Get\+Proxy@{Get\+Proxy}}
+\index{Get\+Proxy@{Get\+Proxy}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Proxy()}{GetProxy()}}
+{\footnotesize\ttfamily Space\+War\+::\+Proxy $\ast$ Server\+::\+Get\+Proxy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+전송 프록시 얻기 
+
+Proxy 객체를 얻어온다. 
+
+Server.\+cpp 파일의 397 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+398 \{
+399     \textcolor{keywordflow}{return} &\hyperlink{class_server_adbe7ca5dd78f70ef2771eb1724b397de}{m\_proxy};
+400 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_ae62a9437703d205c2d02737dfce45a33_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a044bc662d96361b3bda25230533ec63b}\label{class_server_a044bc662d96361b3bda25230533ec63b}} 
+\index{Server@{Server}!Get\+Server@{Get\+Server}}
+\index{Get\+Server@{Get\+Server}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Server()}{GetServer()}}
+{\footnotesize\ttfamily shared\+\_\+ptr$<$ C\+Net\+Server $>$ Server\+::\+Get\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+서버 객체 얻기 
+
+서버 객체를 얻는다.
+
+\begin{DoxyReturn}{반환값}
+서버 객체 리턴 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 390 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+391 \{
+392     \textcolor{keywordflow}{return} \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer};
+393 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a044bc662d96361b3bda25230533ec63b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a43c5961b9519b2358127956c817a2120}\label{class_server_a43c5961b9519b2358127956c817a2120}} 
+\index{Server@{Server}!Get\+Space\+Ship\+Count@{Get\+Space\+Ship\+Count}}
+\index{Get\+Space\+Ship\+Count@{Get\+Space\+Ship\+Count}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Space\+Ship\+Count()}{GetSpaceShipCount()}}
+{\footnotesize\ttfamily int Server\+::\+Get\+Space\+Ship\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Server.\+h 파일의 172 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+173     \{
+174         \textcolor{keywordflow}{return} \hyperlink{class_server_aa20a2aa16045180559ef43a7087e7e95}{m\_spaceShipMap}.size();
+175     \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a43c5961b9519b2358127956c817a2120_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a4ad8b199648bad8ea03b9e161b1bcb10}\label{class_server_a4ad8b199648bad8ea03b9e161b1bcb10}} 
+\index{Server@{Server}!Get\+Space\+Ship\+Lock\+Time@{Get\+Space\+Ship\+Lock\+Time}}
+\index{Get\+Space\+Ship\+Lock\+Time@{Get\+Space\+Ship\+Lock\+Time}!Server@{Server}}
+\subsubsection{\texorpdfstring{Get\+Space\+Ship\+Lock\+Time()}{GetSpaceShipLockTime()}}
+{\footnotesize\ttfamily int Server\+::\+Get\+Space\+Ship\+Lock\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+초기 우주선 잠금값 얻기 
+
+우주선 초기 잠금 시간값을 얻어온다.
+
+\begin{DoxyReturn}{반환값}
+우주선 초기 잠금 시간값을 리턴 
+\end{DoxyReturn}
+
+
+Server.\+cpp 파일의 433 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+434 \{
+435     \textcolor{keywordflow}{return} \hyperlink{class_server_a21ee3e9152293a6e6d47fd569ee3f37a}{m\_spaceShipLockTime};
+436 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a4ad8b199648bad8ea03b9e161b1bcb10_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_af0a8684eda8d55b06a48a100320a2f3c}\label{class_server_af0a8684eda8d55b06a48a100320a2f3c}} 
+\index{Server@{Server}!On\+Client\+Join@{On\+Client\+Join}}
+\index{On\+Client\+Join@{On\+Client\+Join}!Server@{Server}}
+\subsubsection{\texorpdfstring{On\+Client\+Join()}{OnClientJoin()}}
+{\footnotesize\ttfamily void Server\+::\+On\+Client\+Join (\begin{DoxyParamCaption}\item[{C\+Net\+Client\+Info $\ast$}]{client\+Info }\end{DoxyParamCaption})}
+
+
+
+클라이언트가 접속 요청 
+
+클라이언트가 접속했을 때  p2p 그룹에 넣어준다. 
+
+Server.\+cpp 파일의 314 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+315 \{
+316     cout << \textcolor{stringliteral}{"OnClientJoin "} << clientInfo->m\_HostID << endl;
+317     
+318     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->JoinP2PGroup(clientInfo->m\_HostID, \hyperlink{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}{m\_playerP2PGroup});
+319 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_af0a8684eda8d55b06a48a100320a2f3c_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a1249766dc00efcf1f29a2aaad56f83ef}\label{class_server_a1249766dc00efcf1f29a2aaad56f83ef}} 
+\index{Server@{Server}!On\+Client\+Leave@{On\+Client\+Leave}}
+\index{On\+Client\+Leave@{On\+Client\+Leave}!Server@{Server}}
+\subsubsection{\texorpdfstring{On\+Client\+Leave()}{OnClientLeave()}}
+{\footnotesize\ttfamily void Server\+::\+On\+Client\+Leave (\begin{DoxyParamCaption}\item[{C\+Net\+Client\+Info $\ast$}]{client\+Info,  }\item[{Error\+Info $\ast$}]{error\+Info,  }\item[{const Byte\+Array \&}]{comment }\end{DoxyParamCaption})}
+
+
+
+클라이언트가 서버에서 나갔다. 
+
+클라이언트가 나갔을 때  따로 호출할 필요가 없이 프라우드 엔진이 호출해준다. 
+
+Server.\+cpp 파일의 325 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+326 \{
+327     cout << \textcolor{stringliteral}{"OnClientLeave "} << clientInfo->m\_HostID << endl;
+328 
+329     \textcolor{keyword}{auto} clientMap = \hyperlink{class_server_ab5d6fa91446df16909dfbea64abddf76}{GetGameRoom}()->GetClientMap();
+330     \textcolor{keyword}{auto} iter = clientMap.find((clientInfo->m\_HostID));
+331     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->LeaveP2PGroup(clientInfo->m\_HostID, \hyperlink{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}{m\_playerP2PGroup});
+332 
+333     \textcolor{keywordflow}{if} (iter == clientMap.end())
+334     \{
+335         cout << \textcolor{stringliteral}{"로그인하지 않은 클라이언트가 나갔습니다. "} << clientInfo->m\_HostID << endl;
+336 
+337         \textcolor{keywordflow}{return};
+338     \}
+339     \textcolor{keyword}{auto} oxyIter = \hyperlink{class_server_ae2e40fd2b3d85dd1c92ab7bc6e6b7d65}{m\_oxyChargerMap}.begin();
+340     \textcolor{keywordflow}{while} (oxyIter != \hyperlink{class_server_ae2e40fd2b3d85dd1c92ab7bc6e6b7d65}{m\_oxyChargerMap}.end())
+341     \{
+342         \textcolor{keywordflow}{if} (oxyIter->second->GetUseHostID() == (int)clientInfo->m\_HostID)
+343         \{
+344             \hyperlink{class_server_ae2e40fd2b3d85dd1c92ab7bc6e6b7d65}{m\_oxyChargerMap}.erase(oxyIter);
+345             \textcolor{keywordflow}{break};
+346         \}
+347         oxyIter++;
+348     \}
+349 
+350 
+351 
+352     \hyperlink{class_server_adbe7ca5dd78f70ef2771eb1724b397de}{m\_proxy}.NotifyPlayerLost(\hyperlink{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}{m\_playerP2PGroup}, RmiContext::ReliableSend, clientInfo
+      ->m\_HostID);
+353     \hyperlink{class_server_a77f414d5bb41dd5de8626d8cd621113c}{m\_gameRoom}->LogOutClient(iter->second->GetHostID());
+354 
+355     clientMap.erase(iter);
+356 
+357     \textcolor{keywordflow}{if} (clientMap.size() <= 0)
+358         \hyperlink{class_server_a88d53d3c77d90f211f3ca7cc51735171}{ServerReset}();
+359 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a1249766dc00efcf1f29a2aaad56f83ef_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a1249766dc00efcf1f29a2aaad56f83ef_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_abfc09109c7050e40d8fc1e3daea76edf}\label{class_server_abfc09109c7050e40d8fc1e3daea76edf}} 
+\index{Server@{Server}!Server\+File\+Load@{Server\+File\+Load}}
+\index{Server\+File\+Load@{Server\+File\+Load}!Server@{Server}}
+\subsubsection{\texorpdfstring{Server\+File\+Load()}{ServerFileLoad()}}
+{\footnotesize\ttfamily void Server\+::\+Server\+File\+Load (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+서버의 정보파일 로드 
+
+Sever 기본 설정 파일 로드  server.\+properties 를 로드해 테이블 설정 등을 한다. 
+
+Server.\+cpp 파일의 163 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+164 \{
+165     \textcolor{comment}{// 파일 읽기}
+166     ifstream infile(\textcolor{stringliteral}{"server.properties"});
+167 
+168     \textcolor{keywordflow}{if} (infile.is\_open() == \textcolor{keyword}{false})
+169     \{
+170         cout << \textcolor{stringliteral}{"Server.properties is nothing :: "} << endl;
+171         \textcolor{keywordflow}{return};
+172     \}
+173 
+174     \textcolor{keywordtype}{string} data = \textcolor{stringliteral}{""};
+175     \textcolor{keywordtype}{string} line = \textcolor{stringliteral}{""};
+176 
+177     \textcolor{keywordflow}{while} (!infile.eof())
+178     \{
+179         getline(infile, line);
+180         data += line;
+181     \}
+182     \hyperlink{class_server_ae4a69c37027fd029b43099469ae00ad8}{m\_serverPropertiesData} = data;
+183     infile.close();
+184     cout << \textcolor{stringliteral}{"Server Properties Load Success.. "} << endl;
+185     \textcolor{comment}{//ServerTableSetup();}
+186 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=267pt]{class_server_abfc09109c7050e40d8fc1e3daea76edf_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a88d53d3c77d90f211f3ca7cc51735171}\label{class_server_a88d53d3c77d90f211f3ca7cc51735171}} 
+\index{Server@{Server}!Server\+Reset@{Server\+Reset}}
+\index{Server\+Reset@{Server\+Reset}!Server@{Server}}
+\subsubsection{\texorpdfstring{Server\+Reset()}{ServerReset()}}
+{\footnotesize\ttfamily void Server\+::\+Server\+Reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+서버 리셋 정보를 초기화 한다. 
+
+서버 리셋  게임을 진행할 필요가 없을 경우 호출 
+
+Server.\+cpp 파일의 365 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+366 \{
+367     cout << \textcolor{stringliteral}{" Server Reset "} << endl;
+368     \hyperlink{class_server_a77f414d5bb41dd5de8626d8cd621113c}{m\_gameRoom}->ClearRoom();
+369     \hyperlink{_server_8cpp_a0e468d42ed25075707dd9738b1b67621}{s\_GameRunning} = \textcolor{keyword}{false};
+370     \hyperlink{class_server_a892047fc49e676067b880f31d0d22c36}{m\_itemMap}.clear();
+371     \hyperlink{class_server_a4212564accb77fd496f08ff3ec292657}{m\_itemBoxMap}.clear();
+372     \hyperlink{class_server_ae2e40fd2b3d85dd1c92ab7bc6e6b7d65}{m\_oxyChargerMap}.clear();
+373     \hyperlink{class_server_aa20a2aa16045180559ef43a7087e7e95}{m\_spaceShipMap}.clear();
+374 
+375     \textcolor{keywordflow}{if} (\hyperlink{class_server_a2ea82221dd5edd72b97a465a9753a68e}{ServerTableSetup}() == \textcolor{keyword}{false})
+376     \{
+377         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a0c817a017f9b2cb6f92de01e693b8e35}{SetDeathZoneCommingTime}(180);
+378         \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a3866f3d6a99358d0068cee3d5bc529d2}{SetSpaceShipLockTime}(10);
+379     \}
+380 
+381     \textcolor{comment}{// 파일입출력 전}
+382     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < 10; i++)
+383         \hyperlink{_server_8h_a406278daaf52b57f6349fc4941ecbc1e}{s\_meteorCommingTime}[i] = 30 + (i * 20);
+384 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a88d53d3c77d90f211f3ca7cc51735171_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a88d53d3c77d90f211f3ca7cc51735171_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_acb327f7980ef16c40087bdafcef5ad7a}\label{class_server_acb327f7980ef16c40087bdafcef5ad7a}} 
+\index{Server@{Server}!Server\+Run@{Server\+Run}}
+\index{Server\+Run@{Server\+Run}!Server@{Server}}
+\subsubsection{\texorpdfstring{Server\+Run()}{ServerRun()}}
+{\footnotesize\ttfamily void Server\+::\+Server\+Run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+게임 서버 시작 
+
+게임 서버 시작  서버 로직이 메인으로 돌아가는 곳. 
+
+Server.\+cpp 파일의 225 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+226 \{
+227     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer} = shared\_ptr<CNetServer>(CNetServer::Create());
+228 
+229     \textcolor{comment}{// 스레드 돌려라}
+230     void(*func)(\textcolor{keywordtype}{void}*);
+231     func = &\hyperlink{_server_8cpp_aa49c05ac1cfbff49b47ca9ff62ae3761}{ServerThreadLoop};
+232     CTimerThread meteorThread(func, 1000, \textcolor{keyword}{nullptr});
+233     \textcolor{comment}{//}
+234     meteorThread.Start();
+235 
+236     \textcolor{comment}{// -- 서버 파라매터 지정 ( 프로토콜 / 포트 지정 ) ---------------------------//}
+237     CStartServerParameter pl;
+238     pl.m\_allowServerAsP2PGroupMember = \textcolor{keyword}{true};
+239     pl.m\_protocolVersion = g\_protocolVersion;
+240     pl.m\_tcpPorts.Add(g\_serverPort);
+241 
+242     \textcolor{comment}{// -- Stub , Proxy Attach 이제 보내고 받을 수 있다 --------------------------//}
+243     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->AttachStub(\textcolor{keyword}{this});
+244     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->AttachProxy(&\hyperlink{class_server_adbe7ca5dd78f70ef2771eb1724b397de}{m\_proxy});
+245 
+246     \textcolor{comment}{// -- 서버 람다식 -----------------------------------------------------------//}
+247 
+248     \textcolor{comment}{//-- 서버 시작 --------------------------------------------------------------//}
+249     \textcolor{keywordflow}{try}
+250     \{
+251         \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->Start(pl);
+252         \hyperlink{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}{m\_playerP2PGroup} = \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->CreateP2PGroup();
+253         \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->JoinP2PGroup(HostID\_Server, \hyperlink{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}{m\_playerP2PGroup});
+254 
+255     \}
+256     \textcolor{keywordflow}{catch} (Proud::Exception &e)
+257     \{
+258         cout << \textcolor{stringliteral}{"Server Start Failed : "} << e.what() << endl;
+259         \textcolor{keywordflow}{return};
+260     \}
+261 
+262     cout << \textcolor{stringliteral}{"Time For Escape :: Server 20171022 Build -------------------------"} << endl;
+263     
+264     \textcolor{comment}{// 클라이언트가 들어왔다 }
+265     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->OnClientJoin = [\textcolor{keyword}{this}](CNetClientInfo *clientInfo) \{ 
+      \hyperlink{class_server_af0a8684eda8d55b06a48a100320a2f3c}{OnClientJoin}(clientInfo); \};
+266 
+267     \textcolor{comment}{// 클라이언트가 나갔다}
+268     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->OnClientLeave = [\textcolor{keyword}{this}](CNetClientInfo *clientInfo, ErrorInfo* errinfo, \textcolor{keyword}{const} 
+      ByteArray& comment) \{
+269         \hyperlink{class_server_a1249766dc00efcf1f29a2aaad56f83ef}{OnClientLeave}(clientInfo, errinfo, comment);
+270     \};
+271 
+272     \textcolor{comment}{// 서버 에러}
+273     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->OnError = [](ErrorInfo *errorInfo) \{
+274         cout << \textcolor{stringliteral}{"type : "} << errorInfo->m\_errorType << endl;
+275         printf(\textcolor{stringliteral}{"OnError : %s\(\backslash\)n"}, StringT2A(errorInfo->ToString()).GetString());
+276     \};
+277 
+278     \textcolor{comment}{// 서버 경고}
+279     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->OnWarning = [](ErrorInfo *errorInfo) \{
+280         printf(\textcolor{stringliteral}{"OnWarning : %s\(\backslash\)n"}, StringT2A(errorInfo->ToString()).GetString());
+281     \};
+282 
+283     \textcolor{comment}{//}
+284     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->OnInformation = [](ErrorInfo *errorInfo) \{
+285         cout << \textcolor{stringliteral}{"type : "} << errorInfo->m\_errorType << endl;
+286         printf(\textcolor{stringliteral}{"OnInformation : %s\(\backslash\)n"}, StringT2A(errorInfo->ToString()).GetString());
+287     \};
+288     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->OnException = [](\textcolor{keyword}{const} Proud::Exception &e) \{
+289         printf(\textcolor{stringliteral}{"OnInformation : %s\(\backslash\)n"}, e.what());
+290     \};
+291 
+292     \hyperlink{class_server_acc5f0ab874532daace973f25df16888e}{m\_netServer}->OnP2PGroupJoinMemberAckComplete = [](HostID groupHostID, HostID memberHostID, 
+      ErrorType result)
+293     \{
+294         \textcolor{keywordflow}{if} (result == ErrorType\_Ok)
+295         \{
+296             \textcolor{comment}{// 성공적으로 추가되었음}
+297             cout << \textcolor{stringliteral}{"Server : P2P Member JoinAckComplete "} << memberHostID << endl;
+298         \}
+299         \textcolor{keywordflow}{else}
+300         \{
+301             cout << \textcolor{stringliteral}{"Server : P2P Member JoinAckComplete failed "} << endl;
+302         \}
+303     \};
+304 
+305     \textcolor{keywordtype}{string} line;
+306     getline(std::cin, line);
+307     meteorThread.Stop();
+308 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_acb327f7980ef16c40087bdafcef5ad7a_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{class_server_acb327f7980ef16c40087bdafcef5ad7a_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a2ea82221dd5edd72b97a465a9753a68e}\label{class_server_a2ea82221dd5edd72b97a465a9753a68e}} 
+\index{Server@{Server}!Server\+Table\+Setup@{Server\+Table\+Setup}}
+\index{Server\+Table\+Setup@{Server\+Table\+Setup}!Server@{Server}}
+\subsubsection{\texorpdfstring{Server\+Table\+Setup()}{ServerTableSetup()}}
+{\footnotesize\ttfamily bool Server\+::\+Server\+Table\+Setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+서버 기본 정보 테이블 세팅 
+
+\hyperlink{class_server}{Server} 설정 파일을 토대로 테이블 값을 로드한다.  기본값을 로드해 세팅한다. 
+
+Server.\+cpp 파일의 192 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+193 \{
+194     \hyperlink{class_json_1_1_reader}{Reader} reader;
+195     \hyperlink{class_json_1_1_value}{Value} val;
+196     \textcolor{keywordtype}{bool} parseCheck = reader.\hyperlink{class_json_1_1_reader_af1da6c976ad1e96c742804c3853eef94}{parse}(\hyperlink{class_server_ae4a69c37027fd029b43099469ae00ad8}{m\_serverPropertiesData}.c\_str(), val);
+197 
+198     \textcolor{keywordflow}{if} (!parseCheck)
+199     \{
+200         cout << \textcolor{stringliteral}{"JSON File Parse Failed..."} << reader.\hyperlink{class_json_1_1_reader_ae638a7b1f36f7ccf99ba89fa36ccf222}{getFormattedErrorMessages}() 
+      << endl;
+201         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+202     \}
+203 
+204 
+205     \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a0c817a017f9b2cb6f92de01e693b8e35}{SetDeathZoneCommingTime}(val[\textcolor{stringliteral}{"DeathZoneFirstComming"}].asInt());
+206     \hyperlink{_server_8cpp_afd1a82c786509e03b540bae82af2c137}{server}.\hyperlink{class_server_a3866f3d6a99358d0068cee3d5bc529d2}{SetSpaceShipLockTime}(val[\textcolor{stringliteral}{"SpaceShipLockTime"}].asInt());
+207 
+208     \textcolor{keywordtype}{int} size = val[\textcolor{stringliteral}{"Items"}].\hyperlink{class_json_1_1_value_a0ec2808e1d7efa4e9fad938d6667be44}{size}();
+209 
+210     cout << \textcolor{stringliteral}{" arr "} << val[\textcolor{stringliteral}{"Items"}].\hyperlink{class_json_1_1_value_a1627eb9d6568d6d0252fa8bb711c0a59}{isArray}() << endl;
+211     \hyperlink{class_json_1_1_value}{Value} items = val[\textcolor{stringliteral}{"Items"}];
+212     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < items.\hyperlink{class_json_1_1_value_a0ec2808e1d7efa4e9fad938d6667be44}{size}(); i++)
+213     \{
+214         cout << val[\textcolor{stringliteral}{"Items"}][i] << endl;
+215     \}
+216 
+217     \textcolor{keywordtype}{string} itemID = val[\textcolor{stringliteral}{"Items"}][\hyperlink{_server_8h_ade3d882172359ea96a915f1cab5f681b}{RandomRange}(0, size)][\textcolor{stringliteral}{"Id"}].\hyperlink{class_json_1_1_value_ae3f9b0d38f820ccdd8888aa92ea6e792}{asString}();
+218     cout << \textcolor{stringliteral}{"item ID "} << itemID << endl;
+219     \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+220 \}
+\end{DoxyCode}
+이 함수 내부에서 호출하는 함수들에 대한 그래프입니다.\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a2ea82221dd5edd72b97a465a9753a68e_cgraph}
+\end{center}
+\end{figure}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a2ea82221dd5edd72b97a465a9753a68e_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a0c817a017f9b2cb6f92de01e693b8e35}\label{class_server_a0c817a017f9b2cb6f92de01e693b8e35}} 
+\index{Server@{Server}!Set\+Death\+Zone\+Comming\+Time@{Set\+Death\+Zone\+Comming\+Time}}
+\index{Set\+Death\+Zone\+Comming\+Time@{Set\+Death\+Zone\+Comming\+Time}!Server@{Server}}
+\subsubsection{\texorpdfstring{Set\+Death\+Zone\+Comming\+Time()}{SetDeathZoneCommingTime()}}
+{\footnotesize\ttfamily void Server\+::\+Set\+Death\+Zone\+Comming\+Time (\begin{DoxyParamCaption}\item[{int}]{sec }\end{DoxyParamCaption})}
+
+
+
+데스존까지 남은 시간 세팅 
+
+데스존까지 남은 시간을 세팅한다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em sec} & 데스존 까지 남은 시간 \\
+\hline
+\end{DoxyParams}
+
+
+Server.\+cpp 파일의 442 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+443 \{
+444     \hyperlink{class_server_ac613fa786c19b3604dac2fd1619293c3}{m\_deathZoneCommingSec} = sec;
+445 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a0c817a017f9b2cb6f92de01e693b8e35_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a78cb51003b1a243780c2845263e75b29}\label{class_server_a78cb51003b1a243780c2845263e75b29}} 
+\index{Server@{Server}!Set\+Death\+Zone\+Host\+ID@{Set\+Death\+Zone\+Host\+ID}}
+\index{Set\+Death\+Zone\+Host\+ID@{Set\+Death\+Zone\+Host\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{Set\+Death\+Zone\+Host\+I\+D()}{SetDeathZoneHostID()}}
+{\footnotesize\ttfamily void Server\+::\+Set\+Death\+Zone\+Host\+ID (\begin{DoxyParamCaption}\item[{int}]{host\+ID }\end{DoxyParamCaption})}
+
+
+
+데스존을 현재 움직이고 있는 클라이언트 세팅 
+
+Death\+Zone을 진행시키고 있는 클라이언트
+
+
+\begin{DoxyParams}{매개변수}
+{\em Death\+Zone을} & 진행시키고 있는 클라이언트의 Host\+ID \\
+\hline
+\end{DoxyParams}
+
+
+Server.\+cpp 파일의 478 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+479 \{
+480     \hyperlink{class_server_af34b71075ab32b4b7a4da757c87ded13}{m\_deathZoneHostID} = hostID;
+481 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a78cb51003b1a243780c2845263e75b29_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a97583a37e049f390e255a61afbac02a2}\label{class_server_a97583a37e049f390e255a61afbac02a2}} 
+\index{Server@{Server}!Set\+Death\+Zone\+ID@{Set\+Death\+Zone\+ID}}
+\index{Set\+Death\+Zone\+ID@{Set\+Death\+Zone\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{Set\+Death\+Zone\+I\+D()}{SetDeathZoneID()}}
+{\footnotesize\ttfamily void Server\+::\+Set\+Death\+Zone\+ID (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+데스존의 네트워크 아이디 세팅 
+
+Death\+Zone의 네트워크 식별 아이디를 설정
+
+
+\begin{DoxyParams}{매개변수}
+{\em 식별} & 아이디 \\
+\hline
+\end{DoxyParams}
+
+
+Server.\+cpp 파일의 496 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+497 \{
+498     \hyperlink{class_server_a65e72b65d1be2dc79fddb0433402cd81}{m\_deathZoneID} = id;
+499 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a97583a37e049f390e255a61afbac02a2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a9b58e281b966a1a804c89a30298285d1}\label{class_server_a9b58e281b966a1a804c89a30298285d1}} 
+\index{Server@{Server}!Set\+Death\+Zone\+Index@{Set\+Death\+Zone\+Index}}
+\index{Set\+Death\+Zone\+Index@{Set\+Death\+Zone\+Index}!Server@{Server}}
+\subsubsection{\texorpdfstring{Set\+Death\+Zone\+Index()}{SetDeathZoneIndex()}}
+{\footnotesize\ttfamily void Server\+::\+Set\+Death\+Zone\+Index (\begin{DoxyParamCaption}\item[{int}]{cur\+Index }\end{DoxyParamCaption})}
+
+
+
+데스존이 진행하고 있는 인덱스 세팅 
+
+Death\+Zone 현재 진행중인 인덱스 세팅
+
+
+\begin{DoxyParams}{매개변수}
+{\em cur\+Index} & 현재 진행중인 데스존 인덱스 \\
+\hline
+\end{DoxyParams}
+
+
+Server.\+cpp 파일의 460 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+461 \{
+462     \hyperlink{class_server_a279c9f26f808acc351f9167ece2d39fb}{m\_deathZoneIndex} = curIndex;
+463 \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_server_a582ad4eb2272b1ab92daad71dc700e8d}\label{class_server_a582ad4eb2272b1ab92daad71dc700e8d}} 
+\index{Server@{Server}!Set\+Meteor\+ID@{Set\+Meteor\+ID}}
+\index{Set\+Meteor\+ID@{Set\+Meteor\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{Set\+Meteor\+I\+D()}{SetMeteorID()}}
+{\footnotesize\ttfamily void Server\+::\+Set\+Meteor\+ID (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+메테오의 네트워크 아이디 세팅 
+
+Meteor의 네트워크 식별 아이디를 설정
+
+
+\begin{DoxyParams}{매개변수}
+{\em 식별} & 아이디 \\
+\hline
+\end{DoxyParams}
+
+
+Server.\+cpp 파일의 514 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+515 \{
+516     \hyperlink{class_server_ab4f0de3a4d653f8b8631caf922643414}{m\_meteorID} = id;
+517 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a582ad4eb2272b1ab92daad71dc700e8d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_server_a3866f3d6a99358d0068cee3d5bc529d2}\label{class_server_a3866f3d6a99358d0068cee3d5bc529d2}} 
+\index{Server@{Server}!Set\+Space\+Ship\+Lock\+Time@{Set\+Space\+Ship\+Lock\+Time}}
+\index{Set\+Space\+Ship\+Lock\+Time@{Set\+Space\+Ship\+Lock\+Time}!Server@{Server}}
+\subsubsection{\texorpdfstring{Set\+Space\+Ship\+Lock\+Time()}{SetSpaceShipLockTime()}}
+{\footnotesize\ttfamily void Server\+::\+Set\+Space\+Ship\+Lock\+Time (\begin{DoxyParamCaption}\item[{int}]{lock\+Time }\end{DoxyParamCaption})}
+
+
+
+초기 우주선 잠금값 세팅 
+
+우주선의 초기 잠금 시간값을 세팅한다.
+
+
+\begin{DoxyParams}{매개변수}
+{\em lock\+Time} & 잠금 시간의 값 \\
+\hline
+\end{DoxyParams}
+
+
+Server.\+cpp 파일의 424 번째 라인에서 정의되었습니다.
+
+
+\begin{DoxyCode}
+425 \{
+426     \hyperlink{class_server_a21ee3e9152293a6e6d47fd569ee3f37a}{m\_spaceShipLockTime} = lockTime;
+427 \}
+\end{DoxyCode}
+이 함수를 호출하는 함수들에 대한 그래프입니다.\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_server_a3866f3d6a99358d0068cee3d5bc529d2_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{멤버 데이터 문서화}
+\mbox{\Hypertarget{class_server_a08505a5d3bef878c63f07bd5597c6782}\label{class_server_a08505a5d3bef878c63f07bd5597c6782}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item}{DECRMI\_SpaceWar\_NotifyDeleteItem}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Delete\+Item}
+
+
+
+월드 아이템 삭제 알림 
+
+
+
+Server.\+h 파일의 91 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_afc97eded17d998b195ab89607b02a675}\label{class_server_afc97eded17d998b195ab89607b02a675}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item}{DECRMI\_SpaceWar\_NotifyPlayerEquipItem}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Equip\+Item}
+
+
+
+아이템 장비 // 추후 지울 수 있음 
+
+
+
+Server.\+h 파일의 66 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a513d5189f9ce57d2e4e35c3128677ce4}\label{class_server_a513d5189f9ce57d2e4e35c3128677ce4}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move}{DECRMI\_SpaceWar\_NotifyPlayerMove}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Notify\+Player\+Move}
+
+
+
+플레이어 움직임 처리 
+
+
+
+Server.\+h 파일의 65 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a127995f5512990fad6cc1f560c5357bc}\label{class_server_a127995f5512990fad6cc1f560c5357bc}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index}{DECRMI\_SpaceWar\_RequestDeathZoneMoveIndex}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Death\+Zone\+Move\+Index}
+
+
+
+데스존이 이동하고 있는 단계를 통보해줘라 
+
+
+
+Server.\+h 파일의 102 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ac7dacd8ba98cf0990b1f4a5c87560ae0}\label{class_server_ac7dacd8ba98cf0990b1f4a5c87560ae0}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result}{DECRMI\_SpaceWar\_RequestDrawGameResult}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Draw\+Game\+Result}
+
+
+
+드로우 게임시 정보 요청 
+
+
+
+Server.\+h 파일의 107 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a9ab43800fb0165b193d60b89760a2d40}\label{class_server_a9ab43800fb0165b193d60b89760a2d40}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End}{DECRMI\_SpaceWar\_RequestGameEnd}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+End}
+
+
+
+결과를 받아오는 것 
+
+
+
+Server.\+h 파일의 108 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a5dfeab0635abd704466b740526c6e91d}\label{class_server_a5dfeab0635abd704466b740526c6e91d}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit}{DECRMI\_SpaceWar\_RequestGameExit}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Exit}
+
+
+
+정상적인 종료 루틴 // 게임 끝났음을 알림 ( 호스트가 보낸다 )) 
+
+
+
+Server.\+h 파일의 40 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a22fe25d46287ae41722c82dd28dab9d3}\label{class_server_a22fe25d46287ae41722c82dd28dab9d3}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join}{DECRMI\_SpaceWar\_RequestGameSceneJoin}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Game\+Scene\+Join}
+
+
+
+게임이 시작되고 게임 씬으로 넘어왔을 때 다들 요청한다. 
+
+
+
+Server.\+h 파일의 46 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a49668e2393bb446bf02ebadbd75ef1b5}\label{class_server_a49668e2393bb446bf02ebadbd75ef1b5}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update}{DECRMI\_SpaceWar\_RequestHpUpdate}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Hp\+Update}
+
+
+
+체력 회복 메시지 
+
+
+
+Server.\+h 파일의 62 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a03e6416b5a045e91aaef9ad4e3d66e10}\label{class_server_a03e6416b5a045e91aaef9ad4e3d66e10}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete}{DECRMI\_SpaceWar\_RequestItemDelete}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Item\+Delete}
+
+
+
+아이템 삭제 요청 
+
+
+
+Server.\+h 파일의 90 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ac30d0c86b248c0d9589dc0c7d492893f}\label{class_server_ac30d0c86b248c0d9589dc0c7d492893f}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect}{DECRMI\_SpaceWar\_RequestLobbyConnect}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Lobby\+Connect}
+
+
+
+서버 로비 로직 // 로비 화면에 들어왔다. 
+
+
+
+Server.\+h 파일의 45 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_affeebba3a07d0879b8e277d4bc69de8c}\label{class_server_affeebba3a07d0879b8e277d4bc69de8c}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map}{DECRMI\_SpaceWar\_RequestNetworkChangeMap}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Change\+Map}
+
+
+
+방장이 맵을 바꿈 
+
+
+
+Server.\+h 파일의 50 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_aed5edbf6ff4184fa0cfcc73c5a7d18b9}\label{class_server_aed5edbf6ff4184fa0cfcc73c5a7d18b9}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change}{DECRMI\_SpaceWar\_RequestNetworkGameModeChange}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Mode\+Change}
+
+
+
+방장이 게임 모드를 바꿈 
+
+
+
+Server.\+h 파일의 52 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a883090b493ac52f208e1eba65aa3743b}\label{class_server_a883090b493ac52f208e1eba65aa3743b}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready}{DECRMI\_SpaceWar\_RequestNetworkGameReady}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Ready}
+
+
+
+레디 정보가 날아온다. 
+
+
+
+Server.\+h 파일의 44 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a19bb025a2834bd960f2ecb60683febfd}\label{class_server_a19bb025a2834bd960f2ecb60683febfd}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start}{DECRMI\_SpaceWar\_RequestNetworkGameStart}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Start}
+
+
+
+방장이 게임 시작을 누름 
+
+
+
+Server.\+h 파일의 53 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a53a1274639fcb9927ba998969888db24}\label{class_server_a53a1274639fcb9927ba998969888db24}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select}{DECRMI\_SpaceWar\_RequestNetworkGameTeamSelect}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Game\+Team\+Select}
+
+
+
+팀 선택 요청 
+
+
+
+Server.\+h 파일의 39 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a5026f52152e0de66fe5559bdb20a67bc}\label{class_server_a5026f52152e0de66fe5559bdb20a67bc}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out}{DECRMI\_SpaceWar\_RequestNetworkHostOut}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Host\+Out}
+
+
+
+방장이 로비를 나갔다. 
+
+
+
+Server.\+h 파일의 54 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_aec90b69791b068bf3eef6cb62ff24b68}\label{class_server_aec90b69791b068bf3eef6cb62ff24b68}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count}{DECRMI\_SpaceWar\_RequestNetworkPlayerCount}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Network\+Player\+Count}
+
+
+
+방장이 플레이어 수를 바꿈 
+
+
+
+Server.\+h 파일의 51 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a1a23e711fabff6f68f93c98ce1cd7f32}\label{class_server_a1a23e711fabff6f68f93c98ce1cd7f32}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup}{DECRMI\_SpaceWar\_RequestOxyChargerStartSetup}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Oxy\+Charger\+Start\+Setup}
+
+
+
+처음에 산소 충전기를 등록한다 
+
+
+
+Server.\+h 파일의 71 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a6741c7a348e641daa0375aa2f483a1ab}\label{class_server_a6741c7a348e641daa0375aa2f483a1ab}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage}{DECRMI\_SpaceWar\_RequestPlayerDamage}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Damage}
+
+
+
+플레이어가 맞았다. 
+
+
+
+Server.\+h 파일의 63 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ab6e38c5e64aecc2a60ef4301d4dd3376}\label{class_server_ab6e38c5e64aecc2a60ef4301d4dd3376}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy}{DECRMI\_SpaceWar\_RequestPlayerUseOxy}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Player\+Use\+Oxy}
+
+
+
+플레이어가 숨을 쉬었다. 
+
+
+
+Server.\+h 파일의 64 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a1e3feb269047d6abddb2b4f2cdb39361}\label{class_server_a1e3feb269047d6abddb2b4f2cdb39361}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect}{DECRMI\_SpaceWar\_RequestServerConnect}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Server\+Connect}
+
+
+
+Connect 초기 접속 요청 
+
+
+
+Server.\+h 파일의 38 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_aa5851fbe42b72979d7bac55fac9b5526}\label{class_server_aa5851fbe42b72979d7bac55fac9b5526}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control}{DECRMI\_SpaceWar\_RequestShelterDoorControl}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Door\+Control}
+
+
+
+쉘터 문 조작 
+
+
+
+Server.\+h 파일의 84 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a65fb1ba37047d92906443c8abe0915d1}\label{class_server_a65fb1ba37047d92906443c8abe0915d1}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter}{DECRMI\_SpaceWar\_RequestShelterEnter}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Enter}
+
+
+
+쉘터 입장 퇴장 
+
+
+
+Server.\+h 파일의 85 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_aea7095f7b70d3fd64e5bb5886e307607}\label{class_server_aea7095f7b70d3fd64e5bb5886e307607}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup}{DECRMI\_SpaceWar\_RequestShelterStartSetup}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Shelter\+Start\+Setup}
+
+
+
+쉘터 등록 
+
+
+
+Server.\+h 파일의 83 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a34537516b59c805045c37d7b2b506c7d}\label{class_server_a34537516b59c805045c37d7b2b506c7d}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship}{DECRMI\_SpaceWar\_RequestSpaceShip}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship}
+
+
+
+우주선 탔음 
+
+
+
+Server.\+h 파일의 96 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a66382b19e6be476d0fe49a522a374417}\label{class_server_a66382b19e6be476d0fe49a522a374417}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup}{DECRMI\_SpaceWar\_RequestSpaceShipSetup}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Space\+Ship\+Setup}
+
+
+
+우주선 몇개 있는지 세팅 
+
+
+
+Server.\+h 파일의 95 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a5c521067e551d3c452f0d959456efa5f}\label{class_server_a5c521067e551d3c452f0d959456efa5f}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box}{DECRMI\_SpaceWar\_RequestUseItemBox}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Item\+Box}
+
+
+
+Server.\+h 파일의 79 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ae1707d842a43e962f771f41c216e0ed3}\label{class_server_ae1707d842a43e962f771f41c216e0ed3}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger}{DECRMI\_SpaceWar\_RequestUseOxyCharger}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger}
+
+
+
+산소 충전기 조작중 
+
+
+
+Server.\+h 파일의 73 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_abe9b3c44dc9dd233a6cf54147771eb14}\label{class_server_abe9b3c44dc9dd233a6cf54147771eb14}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End}{DECRMI\_SpaceWar\_RequestUseOxyChargerEnd}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+End}
+
+
+
+산소 충전기 조작 끝 
+
+
+
+Server.\+h 파일의 74 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a38fce11d4a2b2338b70c9a6f502e31d0}\label{class_server_a38fce11d4a2b2338b70c9a6f502e31d0}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start}{DECRMI\_SpaceWar\_RequestUseOxyChargerStart}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Oxy\+Charger\+Start}
+
+
+
+산소 충전기 조작 요청 
+
+
+
+Server.\+h 파일의 72 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a45bae018963433523b8c5a3843706297}\label{class_server_a45bae018963433523b8c5a3843706297}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship}{DECRMI\_SpaceWar\_RequestUseSpaceShip}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship}
+
+
+
+우주선 사용 요청 
+
+
+
+Server.\+h 파일의 97 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ae212b680809a0791c9085ece9937ad3e}\label{class_server_ae212b680809a0791c9085ece9937ad3e}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel}{DECRMI\_SpaceWar\_RequestUseSpaceShipCancel}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+Use\+Space\+Ship\+Cancel}
+
+
+
+우주선 사용 취소 
+
+
+
+Server.\+h 파일의 98 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a8f4ad398d197ceff3c01f0bc52e783e3}\label{class_server_a8f4ad398d197ceff3c01f0bc52e783e3}} 
+\index{Server@{Server}!D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item}}
+\index{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item@{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item}!Server@{Server}}
+\subsubsection{\texorpdfstring{D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item}{DECRMI\_SpaceWar\_RequestWorldCreateItem}}
+{\footnotesize\ttfamily Server\+::\+D\+E\+C\+R\+M\+I\+\_\+\+Space\+War\+\_\+\+Request\+World\+Create\+Item}
+
+
+
+월드에 아이템 생성 요청 
+
+
+
+Server.\+h 파일의 89 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a44d7a150eabe67176df40466848d2021}\label{class_server_a44d7a150eabe67176df40466848d2021}} 
+\index{Server@{Server}!m\+\_\+crit\+Sec@{m\+\_\+crit\+Sec}}
+\index{m\+\_\+crit\+Sec@{m\+\_\+crit\+Sec}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+crit\+Sec}{m\_critSec}}
+{\footnotesize\ttfamily Critical\+Section Server\+::m\+\_\+crit\+Sec\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+스레드 lock 을 위함 
+
+
+
+Server.\+h 파일의 121 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ac613fa786c19b3604dac2fd1619293c3}\label{class_server_ac613fa786c19b3604dac2fd1619293c3}} 
+\index{Server@{Server}!m\+\_\+death\+Zone\+Comming\+Sec@{m\+\_\+death\+Zone\+Comming\+Sec}}
+\index{m\+\_\+death\+Zone\+Comming\+Sec@{m\+\_\+death\+Zone\+Comming\+Sec}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+death\+Zone\+Comming\+Sec}{m\_deathZoneCommingSec}}
+{\footnotesize\ttfamily int Server\+::m\+\_\+death\+Zone\+Comming\+Sec\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+데스존 까지 남은 시간 
+
+
+
+Server.\+h 파일의 133 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_af34b71075ab32b4b7a4da757c87ded13}\label{class_server_af34b71075ab32b4b7a4da757c87ded13}} 
+\index{Server@{Server}!m\+\_\+death\+Zone\+Host\+ID@{m\+\_\+death\+Zone\+Host\+ID}}
+\index{m\+\_\+death\+Zone\+Host\+ID@{m\+\_\+death\+Zone\+Host\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+death\+Zone\+Host\+ID}{m\_deathZoneHostID}}
+{\footnotesize\ttfamily int Server\+::m\+\_\+death\+Zone\+Host\+ID = -\/1\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+데스존을 움직이는 주체 
+
+
+
+Server.\+h 파일의 135 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a65e72b65d1be2dc79fddb0433402cd81}\label{class_server_a65e72b65d1be2dc79fddb0433402cd81}} 
+\index{Server@{Server}!m\+\_\+death\+Zone\+ID@{m\+\_\+death\+Zone\+ID}}
+\index{m\+\_\+death\+Zone\+ID@{m\+\_\+death\+Zone\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+death\+Zone\+ID}{m\_deathZoneID}}
+{\footnotesize\ttfamily int Server\+::m\+\_\+death\+Zone\+ID = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Death Zone 의 네트워크 아이디 
+
+
+
+Server.\+h 파일의 136 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a279c9f26f808acc351f9167ece2d39fb}\label{class_server_a279c9f26f808acc351f9167ece2d39fb}} 
+\index{Server@{Server}!m\+\_\+death\+Zone\+Index@{m\+\_\+death\+Zone\+Index}}
+\index{m\+\_\+death\+Zone\+Index@{m\+\_\+death\+Zone\+Index}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+death\+Zone\+Index}{m\_deathZoneIndex}}
+{\footnotesize\ttfamily int Server\+::m\+\_\+death\+Zone\+Index = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+데스존이 진행하고 있는 인덱스 
+
+
+
+Server.\+h 파일의 134 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a77f414d5bb41dd5de8626d8cd621113c}\label{class_server_a77f414d5bb41dd5de8626d8cd621113c}} 
+\index{Server@{Server}!m\+\_\+game\+Room@{m\+\_\+game\+Room}}
+\index{m\+\_\+game\+Room@{m\+\_\+game\+Room}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+game\+Room}{m\_gameRoom}}
+{\footnotesize\ttfamily shared\+\_\+ptr$<$\hyperlink{class_game_room}{Game\+Room}$>$ Server\+::m\+\_\+game\+Room\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+게임룸 
+
+
+
+Server.\+h 파일의 129 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a8506d244bc66607aaae1e0374f57bf99}\label{class_server_a8506d244bc66607aaae1e0374f57bf99}} 
+\index{Server@{Server}!m\+\_\+game\+Start\+Time@{m\+\_\+game\+Start\+Time}}
+\index{m\+\_\+game\+Start\+Time@{m\+\_\+game\+Start\+Time}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+game\+Start\+Time}{m\_gameStartTime}}
+{\footnotesize\ttfamily int Server\+::m\+\_\+game\+Start\+Time\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+플레이 타임 계산용 변수 
+
+
+
+Server.\+h 파일의 116 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a172443f3be6f379fea950b0418799812}\label{class_server_a172443f3be6f379fea950b0418799812}} 
+\index{Server@{Server}!m\+\_\+item\+Box\+Create\+Item\+Index@{m\+\_\+item\+Box\+Create\+Item\+Index}}
+\index{m\+\_\+item\+Box\+Create\+Item\+Index@{m\+\_\+item\+Box\+Create\+Item\+Index}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+item\+Box\+Create\+Item\+Index}{m\_itemBoxCreateItemIndex}}
+{\footnotesize\ttfamily int Server\+::m\+\_\+item\+Box\+Create\+Item\+Index\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+아이템박스 인덱스 
+
+
+
+Server.\+h 파일의 117 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a4212564accb77fd496f08ff3ec292657}\label{class_server_a4212564accb77fd496f08ff3ec292657}} 
+\index{Server@{Server}!m\+\_\+item\+Box\+Map@{m\+\_\+item\+Box\+Map}}
+\index{m\+\_\+item\+Box\+Map@{m\+\_\+item\+Box\+Map}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+item\+Box\+Map}{m\_itemBoxMap}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$int, int$>$ Server\+::m\+\_\+item\+Box\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+아이템 박스 맵 
+
+
+
+Server.\+h 파일의 123 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a892047fc49e676067b880f31d0d22c36}\label{class_server_a892047fc49e676067b880f31d0d22c36}} 
+\index{Server@{Server}!m\+\_\+item\+Map@{m\+\_\+item\+Map}}
+\index{m\+\_\+item\+Map@{m\+\_\+item\+Map}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+item\+Map}{m\_itemMap}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$string, shared\+\_\+ptr$<$\hyperlink{class_item}{Item}$>$ $>$ Server\+::m\+\_\+item\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+행성에 뿌려져있는 아이템 
+
+
+
+Server.\+h 파일의 128 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ab4f0de3a4d653f8b8631caf922643414}\label{class_server_ab4f0de3a4d653f8b8631caf922643414}} 
+\index{Server@{Server}!m\+\_\+meteor\+ID@{m\+\_\+meteor\+ID}}
+\index{m\+\_\+meteor\+ID@{m\+\_\+meteor\+ID}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+meteor\+ID}{m\_meteorID}}
+{\footnotesize\ttfamily int Server\+::m\+\_\+meteor\+ID = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Meteor의 네트워크 아이디 
+
+
+
+Server.\+h 파일의 137 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_acc5f0ab874532daace973f25df16888e}\label{class_server_acc5f0ab874532daace973f25df16888e}} 
+\index{Server@{Server}!m\+\_\+net\+Server@{m\+\_\+net\+Server}}
+\index{m\+\_\+net\+Server@{m\+\_\+net\+Server}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+net\+Server}{m\_netServer}}
+{\footnotesize\ttfamily shared\+\_\+ptr$<$C\+Net\+Server$>$ Server\+::m\+\_\+net\+Server\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+서버 객체 
+
+
+
+Server.\+h 파일의 120 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ae2e40fd2b3d85dd1c92ab7bc6e6b7d65}\label{class_server_ae2e40fd2b3d85dd1c92ab7bc6e6b7d65}} 
+\index{Server@{Server}!m\+\_\+oxy\+Charger\+Map@{m\+\_\+oxy\+Charger\+Map}}
+\index{m\+\_\+oxy\+Charger\+Map@{m\+\_\+oxy\+Charger\+Map}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+oxy\+Charger\+Map}{m\_oxyChargerMap}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$int, shared\+\_\+ptr$<$\hyperlink{class_oxy_charger}{Oxy\+Charger}$>$ $>$ Server\+::m\+\_\+oxy\+Charger\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+산소 충전기 맵 
+
+
+
+Server.\+h 파일의 125 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}\label{class_server_a8f7f03253584e9db740a5f9f97ff1fc5}} 
+\index{Server@{Server}!m\+\_\+player\+P2\+P\+Group@{m\+\_\+player\+P2\+P\+Group}}
+\index{m\+\_\+player\+P2\+P\+Group@{m\+\_\+player\+P2\+P\+Group}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+player\+P2\+P\+Group}{m\_playerP2PGroup}}
+{\footnotesize\ttfamily Host\+ID Server\+::m\+\_\+player\+P2\+P\+Group = Host\+I\+D\+\_\+\+None\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+P2P 그룹의 Host\+ID 
+
+
+
+Server.\+h 파일의 113 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_adbe7ca5dd78f70ef2771eb1724b397de}\label{class_server_adbe7ca5dd78f70ef2771eb1724b397de}} 
+\index{Server@{Server}!m\+\_\+proxy@{m\+\_\+proxy}}
+\index{m\+\_\+proxy@{m\+\_\+proxy}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+proxy}{m\_proxy}}
+{\footnotesize\ttfamily Space\+War\+::\+Proxy Server\+::m\+\_\+proxy\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+전송 프록시 
+
+
+
+Server.\+h 파일의 119 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_ae4a69c37027fd029b43099469ae00ad8}\label{class_server_ae4a69c37027fd029b43099469ae00ad8}} 
+\index{Server@{Server}!m\+\_\+server\+Properties\+Data@{m\+\_\+server\+Properties\+Data}}
+\index{m\+\_\+server\+Properties\+Data@{m\+\_\+server\+Properties\+Data}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+server\+Properties\+Data}{m\_serverPropertiesData}}
+{\footnotesize\ttfamily string Server\+::m\+\_\+server\+Properties\+Data\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+server.\+properties json 데이터 
+
+
+
+Server.\+h 파일의 114 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a75eda393f27b20a83e6effb5405e902a}\label{class_server_a75eda393f27b20a83e6effb5405e902a}} 
+\index{Server@{Server}!m\+\_\+shelter\+Map@{m\+\_\+shelter\+Map}}
+\index{m\+\_\+shelter\+Map@{m\+\_\+shelter\+Map}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+shelter\+Map}{m\_shelterMap}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$int, shared\+\_\+ptr$<$\hyperlink{class_shelter}{Shelter}$>$ $>$ Server\+::m\+\_\+shelter\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+쉘터 맵 
+
+
+
+Server.\+h 파일의 124 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_a21ee3e9152293a6e6d47fd569ee3f37a}\label{class_server_a21ee3e9152293a6e6d47fd569ee3f37a}} 
+\index{Server@{Server}!m\+\_\+space\+Ship\+Lock\+Time@{m\+\_\+space\+Ship\+Lock\+Time}}
+\index{m\+\_\+space\+Ship\+Lock\+Time@{m\+\_\+space\+Ship\+Lock\+Time}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+space\+Ship\+Lock\+Time}{m\_spaceShipLockTime}}
+{\footnotesize\ttfamily int Server\+::m\+\_\+space\+Ship\+Lock\+Time\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+우주선 초기 잠금 시간 
+
+
+
+Server.\+h 파일의 132 번째 라인에서 정의되었습니다.
+
+\mbox{\Hypertarget{class_server_aa20a2aa16045180559ef43a7087e7e95}\label{class_server_aa20a2aa16045180559ef43a7087e7e95}} 
+\index{Server@{Server}!m\+\_\+space\+Ship\+Map@{m\+\_\+space\+Ship\+Map}}
+\index{m\+\_\+space\+Ship\+Map@{m\+\_\+space\+Ship\+Map}!Server@{Server}}
+\subsubsection{\texorpdfstring{m\+\_\+space\+Ship\+Map}{m\_spaceShipMap}}
+{\footnotesize\ttfamily unordered\+\_\+map$<$int, shared\+\_\+ptr$<$\hyperlink{class_space_ship}{Space\+Ship}$>$ $>$ Server\+::m\+\_\+space\+Ship\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+우주선 맵 
+
+
+
+Server.\+h 파일의 126 번째 라인에서 정의되었습니다.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일들로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Space\+War\+Server/\+Server/\hyperlink{_server_8h}{Server.\+h}\item 
+Space\+War\+Server/\+Server/\hyperlink{_server_8cpp}{Server.\+cpp}\end{DoxyCompactItemize}
