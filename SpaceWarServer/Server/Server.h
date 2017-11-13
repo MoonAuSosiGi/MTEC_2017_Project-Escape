@@ -129,8 +129,8 @@ private:
 	shared_ptr<GameRoom> m_gameRoom; ///< 게임룸
 
 #pragma region SpaceShip Lock / Meteor / DeathZone ====================================================================================
-	int m_spaceShipLockTime; ///< 우주선 초기 잠금 시간
-	int m_deathZoneCommingSec; ///< 데스존 까지 남은 시간
+	int m_spaceShipLockTime = 0; ///< 우주선 초기 잠금 시간
+	int m_deathZoneCommingSec = 0; ///< 데스존 까지 남은 시간
 	int m_deathZoneIndex = 0; ///< 데스존이 진행하고 있는 인덱스
 	int m_deathZoneHostID = -1; ///< 데스존을 움직이는 주체
 	int m_deathZoneID = 0; ///< Death Zone 의 네트워크 아이디

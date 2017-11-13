@@ -56,10 +56,13 @@ public class SwordCollider : MonoBehaviour {
 
     }
 
+    /**
+     * @brief   칼질 이펙트 생성
+     */
     void CreateEffect(string path ,Transform target)
     {
         GameObject effect = GameObject.Instantiate(Resources.Load("Art/Resource/Effect/"+path)) as GameObject;
-        effect.AddComponent<OneHitEffect>();
+        effect.AddComponent<TimeForEscape.Util.Effect.OneHitEffect>();
         effect.transform.parent = null;
         effect.transform.position = target.position;
     }

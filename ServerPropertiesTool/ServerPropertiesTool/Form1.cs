@@ -72,7 +72,7 @@ namespace ServerPropertiesTool
                 #region Item Json Convert
 
                 jsonData += "\"Items\":[";
-
+                excelData = itemTable.UsedRange.Value;
                 for (int i = 2; i < excelData.GetLength(0); i++)
                 {
                     // id 가져오기

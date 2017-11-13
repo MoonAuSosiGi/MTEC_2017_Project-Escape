@@ -182,7 +182,7 @@ void Server::ServerFileLoad()
 	m_serverPropertiesData = data;
 	infile.close();
 	cout << "Server Properties Load Success.. " << endl;
-	//ServerTableSetup();
+	//
 }
 
 /**
@@ -202,20 +202,18 @@ bool Server::ServerTableSetup()
 		return false;
 	}
 
-
-	server.SetDeathZoneCommingTime(val["DeathZoneFirstComming"].asInt());
-	server.SetSpaceShipLockTime(val["SpaceShipLockTime"].asInt());
+	SetDeathZoneCommingTime(val["DeathZoneFirstComming"].asInt());
+	SetSpaceShipLockTime(val["SpaceShipLockTime"].asInt());
 
 	int size = val["Items"].size();
-
-	cout << " arr " << val["Items"].isArray() << endl;
 	Value items = val["Items"];
-	for (unsigned int i = 0; i < items.size(); i++)
+	cout << "is Array " << items.isArray() << val.isArray() << endl;
+	for (Value& item : items)
 	{
-		cout << val["Items"][i] << endl;
+		string itemID = item["Id"].asString();
+		cout << "item ID " << itemID << endl;
 	}
-
-	string itemID = val["Items"][RandomRange(0, size)]["Id"].asString();
+	string itemID = items[RandomRange(0, size)]["Id"].asString();
 	cout << "item ID " << itemID << endl;
 	return true;
 }
@@ -226,7 +224,8 @@ bool Server::ServerTableSetup()
 void Server::ServerRun()
 {
 	m_netServer = shared_ptr<CNetServer>(CNetServer::Create());
-
+	// 서버 파일 로드
+	ServerTableSetup();
 	// 스레드 돌려라
 	void(*func)(void*);
 	func = &ServerThreadLoop;
@@ -375,8 +374,8 @@ void Server::ServerReset()
 
 	if (ServerTableSetup() == false)
 	{
-		server.SetDeathZoneCommingTime(180);
-		server.SetSpaceShipLockTime(10);
+		SetDeathZoneCommingTime(180);
+		SetSpaceShipLockTime(10);
 	}
 
 	// 파일입출력 전
