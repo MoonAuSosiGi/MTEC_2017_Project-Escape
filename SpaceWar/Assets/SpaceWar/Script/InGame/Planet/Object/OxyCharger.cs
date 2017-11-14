@@ -42,7 +42,12 @@ namespace TimeForEscape.Object
          * @details  서버상에서 체크해서 값을 넣어줌
          */
         public bool OXY_CHARGER_ENABLE
-        { get { return m_oxyChargerEnable; } set { m_oxyChargerEnable = value; } }
+        {
+            get { return m_oxyChargerEnable; }
+            set {
+                m_oxyChargerEnable = value;
+                Debug.Log("ENABLE ?! " + value + " " + m_oxyChargerEnable);
+            } }
         #endregion ------------------------------------------------------------------------------
         #endregion ------------------------------------------------------------------------------
 

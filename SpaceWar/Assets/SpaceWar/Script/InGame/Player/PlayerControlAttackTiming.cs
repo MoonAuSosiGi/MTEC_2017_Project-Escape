@@ -14,10 +14,7 @@ public class PlayerControlAttackTiming : MonoBehaviour {
 
     public void ItsAttackTime()
     {
-        Debug.Log("Its Attack Time");
         m_player.AttackAnimationEvent();
-        //if (m_player.CURRENT_WEAPON != null)
-        //    m_player.CURRENT_WEAPON.SoundPlay();
     }
 
     public void AttackEnd()

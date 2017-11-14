@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TimeForEscape.Util.Scene;
 
 public class LoginUI : MonoBehaviour {
 
@@ -20,12 +21,8 @@ public class LoginUI : MonoBehaviour {
                 NetworkManager.Instance().SERVER_IP = m_inputLabel.text;
                 gameObject.SetActive(false);
 
-                // 로비
-                SceneManager.LoadScene(1);
-                // 다음씬 
-                //GameManager.Instance().OnJoinedRoom(GameManager.Instance().PLAYER.m_name , true ,
-                //   new UnityEngine.Vector3(0.0f , 80.0f , 0.0f));
-                //GameManager.Instance().m_inGameUI.gameObject.SetActive(true);
+                LoadingScene.LOAD_SCENE_NAME = "Space_GameLobby";
+                SceneManager.LoadScene("Space_LoadingScene");
             }
             else
             {

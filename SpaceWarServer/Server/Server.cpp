@@ -1006,6 +1006,11 @@ DEFRMI_SpaceWar_RequestOxyChargerStartSetup(Server)
 */
 DEFRMI_SpaceWar_RequestUseOxyChargerStart(Server)
 {
+	if (oxyChargerIndex < 0)
+	{
+		cout << "ERROR OxyCharger ID is -1 " << endl;
+		return true;
+	}
 	// 잠겨있다면 거부
 	if (m_oxyChargerMap[oxyChargerIndex]->IsLocked())
 	{

@@ -156,7 +156,6 @@ public class InGameUI : MonoBehaviour
 
     public void UpdateWeapon(int curCount,int maxCount)
     {
-        Debug.Log("Update W "+maxCount);
         m_curAmmo.text = curCount.ToString();
     }
 

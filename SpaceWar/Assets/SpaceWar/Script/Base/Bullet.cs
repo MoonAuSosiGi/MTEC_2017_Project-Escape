@@ -265,7 +265,7 @@ public class Bullet : MonoBehaviour {
         {
             //Debug.Log("other " + other.name + " tag " + other.tag);
             m_hitEnemy= true;
-            
+            MainHitEffect();
             if (other.CompareTag("PlayerCharacter"))
             {
                 NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
@@ -275,7 +275,7 @@ public class Bullet : MonoBehaviour {
                     if (IS_REMOTE == true && TARGET_ID == (int)p.HOST_ID)
                         return;
 
-                    MainHitEffect();
+                    
                     SoundPlay(m_hitMain);
                     if (IS_REMOTE == false)
                         NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage ,m_startPos);
@@ -289,14 +289,12 @@ public class Bullet : MonoBehaviour {
             else if(string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
             {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
-                MainHitEffect();
                 StoneHitEffect();
                 SoundPlay(m_hitland);
             }
             else
             {
                 // 기타 오브젝트
-                MainHitEffect();
                 //        BULLET_TRAIL_EFFECT.SetActive(false);
 
                 if (other.CompareTag("SpaceShipControlPanel"))
@@ -339,8 +337,6 @@ public class Bullet : MonoBehaviour {
     protected void BulletHitEvent()
     {
         var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
-        Debug.Log("## DEstroy Time " + destroyTime);
-       
 
         if (m_bulletParticleOff != null) m_bulletParticleOff.BulletHitEvent();
         if (m_bulletParticleRateOff != null) m_bulletParticleRateOff.BulletHitEvent();

@@ -142,7 +142,7 @@ public class GameManager : Singletone<GameManager> {
     #endregion
 
     #region UnityMethod
-    private void Awake()
+    private void Start()
     {
         // DontDestroyOnLoad(this.gameObject);
 
@@ -453,9 +453,17 @@ public class GameManager : Singletone<GameManager> {
             GameObject weapon = WeaponManager.Instance().CreateWeapon(id);
             weapon.transform.position = SponeHitInfo.point; //new Vector3(SponeHitInfo.normal.x + 45.0f , SponeHitInfo.normal.y + 45.0f , SponeHitInfo.normal.z + 90.0f); //ItemCreaterAnchor.GetChild(0).position;
             Item item = weapon.GetComponent<Item>();
-            item.ITEM_NETWORK_ID = NetworkManager.Instance().m_hostID + "_" + i + "_" + id;
-            NetworkManager.Instance().ITEM_DICT.Add(
-                item.ITEM_NETWORK_ID , item);
+            try
+            {
+                item.ITEM_NETWORK_ID = NetworkManager.Instance().m_hostID + "_" + i + "_" + id;
+                NetworkManager.Instance().ITEM_DICT.Add(
+                    item.ITEM_NETWORK_ID , item);
+            }
+            catch (System.Exception e)
+            {
+                Debug.Log(e);
+                Debug.Log("item ID " + item.ITEM_NETWORK_ID);
+            }
             weapon.layer = 2;
 
             // CreateWeaponList[i].layer = 2;
