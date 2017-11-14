@@ -41,6 +41,15 @@ namespace TimeForEscape.Util.Effect
             get { return m_type; }
             set { m_type = value; }
         }
+
+        /**
+         * @brief   이펙트 삭제 시간에 대한 프로퍼티
+         */
+        public float EFFECT_DELETE_TIME
+        {
+            get { return m_deleteTime; }
+            set { m_deleteTime = value; }
+        }
         #endregion -------------------------------------------------------------------------
         #endregion -------------------------------------------------------------------------
 

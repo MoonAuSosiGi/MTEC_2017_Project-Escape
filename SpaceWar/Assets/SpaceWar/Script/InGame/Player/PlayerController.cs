@@ -1440,20 +1440,20 @@ public class PlayerController : MonoBehaviour {
         //최초 사용 요청
         if (m_oxyChargeRequest == false && Input.GetKeyDown(m_Get) && m_nearOxyCharger != null)
         {
+            Debug.Log("OxyCharger 최초 사용 요청");
             m_oxyChargeRequest = true;
             m_isMoveAble = false;
             NetworkManager.Instance().C2SRequestUseOxyChargerStart(m_nearOxyCharger);
         }
 
         // 사용 가능할때
-        if (m_oxyChargeRequest == true && Input.GetKey(m_Get))
+        if (m_nearOxyCharger != null && m_oxyChargeRequest == true && Input.GetKey(m_Get))
         {
-            if (m_nearOxyCharger != null && m_nearOxyCharger.OXY_CHARGER_ENABLE == true)
+            Debug.Log("OxyCharger 사용 가능 " + m_nearOxyCharger.OXY_CHARGER_ID + " " + m_nearOxyCharger.OXY_CHARGER_ENABLE);
+            if (m_nearOxyCharger.OXY_CHARGER_ENABLE == true)
             {
                 ControlOxyChargerProcess();
             }
-            else
-                OxyChargerControlCancle();
 
         }
 
@@ -1487,7 +1487,7 @@ public class PlayerController : MonoBehaviour {
         if (m_nearOxyCharger == null)
             return;
 
-        if (Input.GetKey(m_Get))
+     //   if (Input.GetKey(m_Get))
         {
             float oxy = m_chargeOxy * Time.deltaTime;
             m_plusOxy += oxy;
@@ -1654,7 +1654,6 @@ public class PlayerController : MonoBehaviour {
     // PlayerControlAttackTiming 에서 Attack 시점을 알려주었다,
     public void AttackAnimationEvent()
     {
-        Debug.Log("총알이 나가는 시점!");
         // 애니메이션 상에서 어택 시점을 조절해야 할 경우 여기로 들어옴
         if(m_equipItems[m_curEquipItem] != null)
         {

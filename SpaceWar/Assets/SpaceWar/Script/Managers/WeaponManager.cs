@@ -371,7 +371,7 @@ public class WeaponManager : Singletone<WeaponManager> {
 
                     //if(isME)
                     {
-                        // 폭발 콜라이더 넣기
+                        // 폭발 콜라이더 넣기 // 자기 자신도 휘말림(임시)
                         col = r.BULLET_HIT_EFFECT.AddComponent<SphereCollider>();
                         col.isTrigger = true;
                         col.radius = data.Boomeffectcolliderradius;
@@ -387,6 +387,7 @@ public class WeaponManager : Singletone<WeaponManager> {
                         r.BULLET_HIT_EFFECT.AddComponent<RocketBulletExplosion>().ROCKET = item;
                         r.BULLET_OTHER_HIT_EFFECT.AddComponent<RocketBulletExplosion>().ROCKET = item;
                     }
+                    
                 }
                 break;
             case WeaponType.SWORD:

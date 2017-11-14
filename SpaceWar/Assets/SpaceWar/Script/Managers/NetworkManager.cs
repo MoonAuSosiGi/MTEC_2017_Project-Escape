@@ -15,6 +15,15 @@ public class NetworkManager : Singletone<NetworkManager> {
     public HostID m_hostID;
     public HostID m_p2pID;
 
+    /**
+     * @brief   HostID 에 관한 프로퍼티
+     */
+    public HostID HOST_ID
+    {
+        get { return m_hostID; }
+        set { m_hostID = value; }
+    }
+
     #region 임시 패배 , 드로우
     private bool m_isLose = false;
     public bool IS_LOSE { get { return m_isLose; } }
@@ -653,6 +662,7 @@ public class NetworkManager : Singletone<NetworkManager> {
         m_s2cStub.NotifyUseSuccessedOxyCharger = (HostID remote , RmiContext rmiContext , 
             int targetHostID , int oxyChargerIndex) =>
         {
+            Debug.Log("산소 충전기 사용가능상태 " + oxyChargerIndex + m_oxyChargerList[oxyChargerIndex].OXY_CHARGER_ID);
             GameManager.Instance().m_inGameUI.ShowDebugLabel("산소 충전기 사용 가능 상태");
             GameManager.Instance().PLAYER.m_player.OxyChargerEnableSetup();
             m_oxyChargerList[oxyChargerIndex].OXY_CHARGER_ENABLE = true;
@@ -988,6 +998,7 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     public void NetworkObjectSetup()
     {
+        Debug.Log("?!");
         NetworkLog("Network Object Setup -- 사용 가능한 상태로 만들기 --");
         NetworkSetupItemBox();
         NetworkSetupOxyCharger();
@@ -1029,11 +1040,12 @@ public class NetworkManager : Singletone<NetworkManager> {
     // 산소 충전기
     void NetworkSetupOxyCharger()
     {
-        NetworkLog("OxyCharger--");
+        NetworkLog("OxyCharger--" + m_oxyChargerParent.transform.childCount + " " + m_oxyChargerList.Count);
         for (int i = 0; i < m_oxyChargerParent.transform.childCount; i++)
         {
-            m_oxyChargerList.Add(m_oxyChargerParent.transform.GetChild(i).GetComponent<OxyCharger>());
-            m_oxyChargerList[i].OXY_CHARGER_ID = i;
+            var oxyCharger = m_oxyChargerParent.transform.GetChild(i).GetComponent<OxyCharger>();
+            oxyCharger.OXY_CHARGER_ID = i;
+            m_oxyChargerList.Add(oxyCharger);
         }
     }
 
@@ -1554,6 +1566,6 @@ public class NetworkManager : Singletone<NetworkManager> {
 
     void NetworkLog(object o)
     {
-        //Debug.Log("NetworkManager : "+o);
+        Debug.Log("NetworkManager : "+o);
     }
 }

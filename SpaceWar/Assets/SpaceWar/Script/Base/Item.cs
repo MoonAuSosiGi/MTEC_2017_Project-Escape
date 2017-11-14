@@ -5,20 +5,15 @@ using UnityEngine;
 public class Item : MonoBehaviour {
 
     #region ITEM_INFO
-    // -1 일 경우 미등록 아이템
     [SerializeField] protected string m_itemID = "";
     protected string m_itemNetworkID = null;
     private float m_itemWeight = 0.0f;
     private string m_itemName = "test";
 
     #region  InGame INFO
-    [SerializeField]
     protected Vector3 m_localSetPos = Vector3.zero;
-    [SerializeField]
     protected Vector3 m_localSetRot = Vector3.zero;
-    [SerializeField]
     protected Vector3 m_localSetScale = Vector3.zero;
-    [SerializeField]
     protected Vector3 m_sponeRotation = Vector3.zero;
 
     public Vector3 LOCAL_SET_POS { get { return m_localSetPos; } set { m_localSetPos = value; } }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TimeForEscape.Util.Scene;
 
 public class MainLobbyUI : MonoBehaviour {
 
@@ -49,7 +50,10 @@ public class MainLobbyUI : MonoBehaviour {
         if (NetworkManager.Instance().LOGIN_STATE == false)
             m_loginUI.SetActive(!m_loginUI.activeSelf);
         else
-            SceneManager.LoadScene(1);
+        {
+            LoadingScene.LOAD_SCENE_NAME = "Space_GameLobby";
+            SceneManager.LoadScene("Space_LoadingScene");
+        }
     }
 
     public void PressButton(UISprite bt)
