@@ -26,10 +26,12 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private Material m_hitMaterial = null;
     [SerializeField] private Material m_originMaterial = null;
+    [SerializeField] private Material m_raderMaterial = null;
 
     public SkinnedMeshRenderer RENDERER { get { return m_renderer; } }
     public Material HIT_MATERIAL { get { return m_hitMaterial; } }
     public Material ORIGIN_MATERIAL { get { return m_originMaterial; } }
+    public Material RADER_MATERIAL {  get { return m_raderMaterial; } }
     #endregion -------------------------------------------------------------------------------------------
 
     #region Equip Inven System ----------------------------------------------------------------------------
@@ -585,7 +587,7 @@ public class PlayerController : MonoBehaviour {
     #region Player Rader ------------------------------------------------------------------------------------
     void RaderProcess()
     {
-        if(Input.GetKeyDown(m_Rader))
+        if(Input.GetKey(m_Rader))
         {
             if (CameraManager.Instance().RADER.IS_SHOW == false)
                 CameraManager.Instance().RADER.ShowRader();

@@ -98,7 +98,7 @@ public class NetworkPlayer : MonoBehaviour {
 
     public void ChangeRaderMode()
     {
-        m_playerController.RENDERER.material = WeaponManager.Instance().ITEM_OUTLINE_MAT;
+        m_playerController.RENDERER.material = m_playerController.RADER_MATERIAL;
     }
 
     public void ChangeOriginalMode()
