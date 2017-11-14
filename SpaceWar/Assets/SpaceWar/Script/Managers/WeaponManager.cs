@@ -254,6 +254,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         bullet.transform.parent = m_myAliveBulletParent;
         bullet.NETWORK_ID = bulletID;
         bullet.IS_REMOTE = false;
+        bullet.IS_ALIVE = true;
         m_myAlivebulletList.Add(bullet);
         
         // 위치 변경
