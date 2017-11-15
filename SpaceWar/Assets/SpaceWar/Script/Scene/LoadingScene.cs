@@ -17,11 +17,11 @@ namespace TimeForEscape.Util.Scene
     {
         #region Loading Scene INFO --------------------------------------------------------------------------------
         [SerializeField]
-        private UISlider m_loadingBar = null; ///< 로딩 진행률을 나타낼 UI
+        private TextAsset m_infoTextAsset = null; ///< info 데이터가 들어갈 json
         [SerializeField]
-        private UILabel m_percentLabel = null; ///< 로딩 진행률을 알려줄 라벨
+        private TextMesh m_percentLabel = null; ///< 로딩 진행률을 알려줄 라벨
         [SerializeField]
-        private UILabel m_infoLabel = null; ///< Info 를 띄울 라벨
+        private TextMesh m_infoLabel = null; ///< Info 를 띄울 라벨
         private static string m_loadSceneName = null; ///< 로딩할 씬 이름
         private AsyncOperation m_asyncOperation = null; ///< Progress를 알아올 객체
         #region Loading Scene Property ----------------------------------------------------------------------------
@@ -40,17 +40,13 @@ namespace TimeForEscape.Util.Scene
          */
         void Start()
         {
-            int rand = Random.Range(0 , 5);
-            string info = "";
-            switch(rand)
-            {
-                case 0: info = "이건 로딩씬이다."; break;
-                case 1: info = "수류탄은 한방이다."; break;
-                case 2: info = "백업은 일상이 되어야 한다."; break;
-                case 3: info = "클라이언트 소스코드는 최적화 중입니다."; break;
-                case 4: info = "서버는 프라우드넷 엔진을 사용한 C++ 서버."; break;
-            }
-            m_infoLabel.text = info;
+            JSONObject json = new JSONObject(m_infoTextAsset.text);
+            var info = json["LoadingInfo"];
+            
+            int rand = Random.Range(0 , info.Count);
+
+            m_infoLabel.text = info[rand].str;
+
             // 로드할 씬 이름이 잘못되었다면 에러 출력
             if (string.IsNullOrEmpty(m_loadSceneName))
             {
@@ -74,8 +70,7 @@ namespace TimeForEscape.Util.Scene
 
             while (m_asyncOperation.isDone == false)
             {
-                m_loadingBar.value = m_asyncOperation.progress;
-                m_percentLabel.text = (m_asyncOperation.progress * 100.0f).ToString("F1") + "%";
+                m_percentLabel.text = Mathf.Round(m_asyncOperation.progress * 100.0f).ToString() + "%";
                 yield return null;
             }
         }
@@ -91,7 +86,6 @@ namespace TimeForEscape.Util.Scene
             // 로드가 다 되었다면 씬 체인지
             if (m_asyncOperation.progress >= 0.9f)
             {
-                m_loadingBar.value = 1.0f;
                 m_percentLabel.text = "100%";
 
                 Invoke("LoadScene" , 1.0f);
