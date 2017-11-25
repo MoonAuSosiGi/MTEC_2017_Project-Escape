@@ -25,6 +25,7 @@ private:
 	Vector3 m_pos;		///< 현재 위치
 	float m_hp;			///< 현재 클라이언트의 체력		
 	float m_oxy;		///< 현재 클라이언트의 산소량
+	int m_damageCoolTime; ///< 데미지 쿨타임
 
 	int m_state;		///< 살아있는지 죽어있는지 우주선인지 등에 대한 PlayerState
 	int m_deathCount;	///< 죽은 횟수 
@@ -65,6 +66,9 @@ public:
 	void SetHp(float newHp); ///< Hp 값 세팅
 	void HpUpdate(float val); ///< 더해질 hp
 	float GetHp(); ///< hp 리턴
+
+	void SetDamageCooltime(int value); ///< 데미지 쿨타임 세팅
+	int GetDamageCooltime(); ///< 데미지 쿨타임 리턴
 
 	void SetOxy(float newOxy); ///< Oxy 값 세팅
 	void OxyUpdate(float val); ///< 더해질 oxy

@@ -122,51 +122,57 @@ namespace SpaceWar
                
     static const ::Proud::RmiID Rmi_NotifyDeleteItem = (::Proud::RmiID)(3141+59);
                
-    static const ::Proud::RmiID Rmi_NotifyMeteorCreateTime = (::Proud::RmiID)(3141+60);
+    static const ::Proud::RmiID Rmi_NotifyNetworkObjectCreate = (::Proud::RmiID)(3141+60);
                
-    static const ::Proud::RmiID Rmi_NotifyMeteorCreate = (::Proud::RmiID)(3141+61);
+    static const ::Proud::RmiID Rmi_NotifyNetworkObjectMove = (::Proud::RmiID)(3141+61);
                
-    static const ::Proud::RmiID Rmi_RequestSpaceShipSetup = (::Proud::RmiID)(3141+62);
+    static const ::Proud::RmiID Rmi_NotifyNetworkObjectDelete = (::Proud::RmiID)(3141+62);
                
-    static const ::Proud::RmiID Rmi_RequestSpaceShip = (::Proud::RmiID)(3141+63);
+    static const ::Proud::RmiID Rmi_NotifyMeteorCreateTime = (::Proud::RmiID)(3141+63);
                
-    static const ::Proud::RmiID Rmi_RequestUseSpaceShip = (::Proud::RmiID)(3141+64);
+    static const ::Proud::RmiID Rmi_NotifyMeteorCreate = (::Proud::RmiID)(3141+64);
                
-    static const ::Proud::RmiID Rmi_RequestUseSpaceShipCancel = (::Proud::RmiID)(3141+65);
+    static const ::Proud::RmiID Rmi_RequestSpaceShipSetup = (::Proud::RmiID)(3141+65);
                
-    static const ::Proud::RmiID Rmi_NotifyUseSpaceShipSuccess = (::Proud::RmiID)(3141+66);
+    static const ::Proud::RmiID Rmi_RequestSpaceShip = (::Proud::RmiID)(3141+66);
                
-    static const ::Proud::RmiID Rmi_NotifyUseSpaceShipFailed = (::Proud::RmiID)(3141+67);
+    static const ::Proud::RmiID Rmi_RequestUseSpaceShip = (::Proud::RmiID)(3141+67);
                
-    static const ::Proud::RmiID Rmi_NotifySpaceShipLockTime = (::Proud::RmiID)(3141+68);
+    static const ::Proud::RmiID Rmi_RequestUseSpaceShipCancel = (::Proud::RmiID)(3141+68);
                
-    static const ::Proud::RmiID Rmi_NotifySpaceShipEngineChargeFailed = (::Proud::RmiID)(3141+69);
+    static const ::Proud::RmiID Rmi_NotifyUseSpaceShipSuccess = (::Proud::RmiID)(3141+69);
                
-    static const ::Proud::RmiID Rmi_NotifySpaceShipEngineCharge = (::Proud::RmiID)(3141+70);
+    static const ::Proud::RmiID Rmi_NotifyUseSpaceShipFailed = (::Proud::RmiID)(3141+70);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneCommingTime = (::Proud::RmiID)(3141+71);
+    static const ::Proud::RmiID Rmi_NotifySpaceShipLockTime = (::Proud::RmiID)(3141+71);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneCreate = (::Proud::RmiID)(3141+72);
+    static const ::Proud::RmiID Rmi_NotifySpaceShipEngineChargeFailed = (::Proud::RmiID)(3141+72);
                
-    static const ::Proud::RmiID Rmi_RequestDeathZoneMoveIndex = (::Proud::RmiID)(3141+73);
+    static const ::Proud::RmiID Rmi_NotifySpaceShipEngineCharge = (::Proud::RmiID)(3141+73);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneMoveHostAndIndexSetup = (::Proud::RmiID)(3141+74);
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneCommingTime = (::Proud::RmiID)(3141+74);
                
-    static const ::Proud::RmiID Rmi_NotifyDeathZoneMove = (::Proud::RmiID)(3141+75);
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneCreate = (::Proud::RmiID)(3141+75);
                
-    static const ::Proud::RmiID Rmi_NotifyDrawGame = (::Proud::RmiID)(3141+76);
+    static const ::Proud::RmiID Rmi_RequestDeathZoneMoveIndex = (::Proud::RmiID)(3141+76);
                
-    static const ::Proud::RmiID Rmi_RequestDrawGameResult = (::Proud::RmiID)(3141+77);
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneMoveHostAndIndexSetup = (::Proud::RmiID)(3141+77);
                
-    static const ::Proud::RmiID Rmi_RequestGameEnd = (::Proud::RmiID)(3141+78);
+    static const ::Proud::RmiID Rmi_NotifyDeathZoneMove = (::Proud::RmiID)(3141+78);
                
-    static const ::Proud::RmiID Rmi_NotifyKillInfo = (::Proud::RmiID)(3141+79);
+    static const ::Proud::RmiID Rmi_NotifyDrawGame = (::Proud::RmiID)(3141+79);
                
-    static const ::Proud::RmiID Rmi_NotifyGameResultInfoMe = (::Proud::RmiID)(3141+80);
+    static const ::Proud::RmiID Rmi_RequestDrawGameResult = (::Proud::RmiID)(3141+80);
                
-    static const ::Proud::RmiID Rmi_NotifyGameResultInfoOther = (::Proud::RmiID)(3141+81);
+    static const ::Proud::RmiID Rmi_RequestGameEnd = (::Proud::RmiID)(3141+81);
                
-    static const ::Proud::RmiID Rmi_NotifyGameResultShow = (::Proud::RmiID)(3141+82);
+    static const ::Proud::RmiID Rmi_NotifyKillInfo = (::Proud::RmiID)(3141+82);
+               
+    static const ::Proud::RmiID Rmi_NotifyGameResultInfoMe = (::Proud::RmiID)(3141+83);
+               
+    static const ::Proud::RmiID Rmi_NotifyGameResultInfoOther = (::Proud::RmiID)(3141+84);
+               
+    static const ::Proud::RmiID Rmi_NotifyGameResultShow = (::Proud::RmiID)(3141+85);
 
 	// List that has RMI ID.
 	extern ::Proud::RmiID g_RmiIDList[];

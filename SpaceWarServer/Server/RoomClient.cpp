@@ -18,6 +18,10 @@ RoomClient::RoomClient(HostID hostID, string userName, bool host)
 	m_state = ALIVE;
 	m_hp = MAX_HP;
 	m_oxy = MAX_OXY;
+	m_damageCoolTime = 0;
+	m_killCount = 0;
+	m_assistCount = 0;
+	m_deathCount = 0;
 }
 
 #pragma region Get / Set Method Waiting Room =========================================================================
@@ -229,6 +233,24 @@ void RoomClient::HpUpdate(float val)
 float RoomClient::GetHp()
 {
 	return m_hp;
+}
+
+/**
+ * @brief	데미지 쿨타임 세팅
+ * @param	value 세팅할 쿨타임
+*/
+void RoomClient::SetDamageCooltime(int value)
+{
+	m_damageCoolTime = value;
+}
+
+/**
+ * @brief	데미지 쿨타임 얻기
+ * @return	데미지 쿨타임 리턴
+*/
+int RoomClient::GetDamageCooltime()
+{
+	return m_damageCoolTime;
 }
 
 /**

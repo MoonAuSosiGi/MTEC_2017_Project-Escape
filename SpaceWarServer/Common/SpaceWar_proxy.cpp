@@ -1850,6 +1850,102 @@ __msg << networkID;
 			RmiName_NotifyDeleteItem, (::Proud::RmiID)Rmi_NotifyDeleteItem);
 	}
         
+	bool Proxy::NotifyNetworkObjectCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const int & type,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkObjectCreate;
+__msg.Write(__msgid); 
+	
+__msg << networkID;
+__msg << type;
+__msg << pos;
+__msg << rot;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkObjectCreate, (::Proud::RmiID)Rmi_NotifyNetworkObjectCreate);
+	}
+
+	bool Proxy::NotifyNetworkObjectCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & networkID,  const int & type,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkObjectCreate;
+__msg.Write(__msgid); 
+	
+__msg << networkID;
+__msg << type;
+__msg << pos;
+__msg << rot;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkObjectCreate, (::Proud::RmiID)Rmi_NotifyNetworkObjectCreate);
+	}
+        
+	bool Proxy::NotifyNetworkObjectMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkObjectMove;
+__msg.Write(__msgid); 
+	
+__msg << networkID;
+__msg << pos;
+__msg << velocity;
+__msg << rot;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkObjectMove, (::Proud::RmiID)Rmi_NotifyNetworkObjectMove);
+	}
+
+	bool Proxy::NotifyNetworkObjectMove ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkObjectMove;
+__msg.Write(__msgid); 
+	
+__msg << networkID;
+__msg << pos;
+__msg << velocity;
+__msg << rot;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkObjectMove, (::Proud::RmiID)Rmi_NotifyNetworkObjectMove);
+	}
+        
+	bool Proxy::NotifyNetworkObjectDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkObjectDelete;
+__msg.Write(__msgid); 
+	
+__msg << networkID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyNetworkObjectDelete, (::Proud::RmiID)Rmi_NotifyNetworkObjectDelete);
+	}
+
+	bool Proxy::NotifyNetworkObjectDelete ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & networkID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyNetworkObjectDelete;
+__msg.Write(__msgid); 
+	
+__msg << networkID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyNetworkObjectDelete, (::Proud::RmiID)Rmi_NotifyNetworkObjectDelete);
+	}
+        
 	bool Proxy::NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -2815,6 +2911,21 @@ const PNTCHAR* Proxy::RmiName_RequestItemDelete =_PNT("");
 const PNTCHAR* Proxy::RmiName_NotifyDeleteItem =_PNT("NotifyDeleteItem");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyDeleteItem =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectCreate =_PNT("NotifyNetworkObjectCreate");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectCreate =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectMove =_PNT("NotifyNetworkObjectMove");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectMove =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectDelete =_PNT("NotifyNetworkObjectDelete");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectDelete =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyMeteorCreateTime =_PNT("NotifyMeteorCreateTime");

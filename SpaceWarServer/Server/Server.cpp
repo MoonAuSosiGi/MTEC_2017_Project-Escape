@@ -868,6 +868,21 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 	if (clientMap[(HostID)targetHostID]->GetState() == DEATH)
 		return true;
 
+	// ÄðÅ¸ÀÓ Ã¼Å©
+	int timeCheck = m_netServer->GetTimeMs() - clientMap[(HostID)targetHostID]->GetDamageCooltime();
+
+	if (timeCheck < 500)
+	{
+		cout << "ÄðÅ¸ÀÓÁß " << endl;
+		return true;
+	}
+	else
+	{
+		// ÄðÅ¸ÀÓ ¼¼ÆÃ
+		clientMap[(HostID)targetHostID]->SetDamageCooltime(m_netServer->GetTimeMs());
+		cout << "ÄðÅ¸ÀÓ ¼¼ÆÃ " << endl;
+	}
+
 	float prevHp = clientMap[(HostID)targetHostID]->GetHp();
 	clientMap[(HostID)targetHostID]->SetHp(prevHp - damage);
 

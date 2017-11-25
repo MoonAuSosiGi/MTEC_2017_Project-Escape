@@ -126,6 +126,12 @@ namespace SpaceWar
                
 		Rmi_NotifyDeleteItem,
                
+		Rmi_NotifyNetworkObjectCreate,
+               
+		Rmi_NotifyNetworkObjectMove,
+               
+		Rmi_NotifyNetworkObjectDelete,
+               
 		Rmi_NotifyMeteorCreateTime,
                
 		Rmi_NotifyMeteorCreate,
@@ -173,5 +179,5 @@ namespace SpaceWar
 		Rmi_NotifyGameResultShow,
 	};
 
-	int g_RmiIDListCount = 82;
+	int g_RmiIDListCount = 85;
 }
