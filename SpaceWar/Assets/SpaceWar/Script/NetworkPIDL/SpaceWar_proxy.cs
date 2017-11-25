@@ -1735,6 +1735,96 @@ SP_Marshaler.Write(__msg, networkID);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyDeleteItem, Common.NotifyDeleteItem);
 }
+public bool NotifyNetworkObjectCreate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID, int type, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.NotifyNetworkObjectCreate;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, networkID);
+		SP_Marshaler.Write(__msg, type);
+		SP_Marshaler.Write(__msg, pos);
+		SP_Marshaler.Write(__msg, rot);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_NotifyNetworkObjectCreate, Common.NotifyNetworkObjectCreate);
+}
+
+public bool NotifyNetworkObjectCreate(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, string networkID, int type, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.NotifyNetworkObjectCreate;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, networkID);
+SP_Marshaler.Write(__msg, type);
+SP_Marshaler.Write(__msg, pos);
+SP_Marshaler.Write(__msg, rot);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_NotifyNetworkObjectCreate, Common.NotifyNetworkObjectCreate);
+}
+public bool NotifyNetworkObjectMove(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.NotifyNetworkObjectMove;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, networkID);
+		SP_Marshaler.Write(__msg, pos);
+		SP_Marshaler.Write(__msg, velocity);
+		SP_Marshaler.Write(__msg, rot);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_NotifyNetworkObjectMove, Common.NotifyNetworkObjectMove);
+}
+
+public bool NotifyNetworkObjectMove(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.NotifyNetworkObjectMove;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, networkID);
+SP_Marshaler.Write(__msg, pos);
+SP_Marshaler.Write(__msg, velocity);
+SP_Marshaler.Write(__msg, rot);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_NotifyNetworkObjectMove, Common.NotifyNetworkObjectMove);
+}
+public bool NotifyNetworkObjectDelete(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.NotifyNetworkObjectDelete;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, networkID);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_NotifyNetworkObjectDelete, Common.NotifyNetworkObjectDelete);
+}
+
+public bool NotifyNetworkObjectDelete(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, string networkID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.NotifyNetworkObjectDelete;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, networkID);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_NotifyNetworkObjectDelete, Common.NotifyNetworkObjectDelete);
+}
 public bool NotifyMeteorCreateTime(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int time)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
@@ -2423,6 +2513,9 @@ const string RmiName_RequestWorldCreateItem="RequestWorldCreateItem";
 const string RmiName_NotifyCreateItem="NotifyCreateItem";
 const string RmiName_RequestItemDelete="RequestItemDelete";
 const string RmiName_NotifyDeleteItem="NotifyDeleteItem";
+const string RmiName_NotifyNetworkObjectCreate="NotifyNetworkObjectCreate";
+const string RmiName_NotifyNetworkObjectMove="NotifyNetworkObjectMove";
+const string RmiName_NotifyNetworkObjectDelete="NotifyNetworkObjectDelete";
 const string RmiName_NotifyMeteorCreateTime="NotifyMeteorCreateTime";
 const string RmiName_NotifyMeteorCreate="NotifyMeteorCreate";
 const string RmiName_RequestSpaceShipSetup="RequestSpaceShipSetup";
@@ -2510,6 +2603,9 @@ const string RmiName_RequestWorldCreateItem="";
 const string RmiName_NotifyCreateItem="";
 const string RmiName_RequestItemDelete="";
 const string RmiName_NotifyDeleteItem="";
+const string RmiName_NotifyNetworkObjectCreate="";
+const string RmiName_NotifyNetworkObjectMove="";
+const string RmiName_NotifyNetworkObjectDelete="";
 const string RmiName_NotifyMeteorCreateTime="";
 const string RmiName_NotifyMeteorCreate="";
 const string RmiName_RequestSpaceShipSetup="";

@@ -313,6 +313,21 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
+		public delegate bool NotifyNetworkObjectCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID, int type, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot);  
+		public NotifyNetworkObjectCreateDelegate NotifyNetworkObjectCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID, int type, UnityEngine.Vector3 pos, UnityEngine.Vector3 rot)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyNetworkObjectMoveDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot);  
+		public NotifyNetworkObjectMoveDelegate NotifyNetworkObjectMove = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID, UnityEngine.Vector3 pos, UnityEngine.Vector3 velocity, UnityEngine.Vector3 rot)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyNetworkObjectDeleteDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID);  
+		public NotifyNetworkObjectDeleteDelegate NotifyNetworkObjectDelete = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, string networkID)
+		{ 
+			return false;
+		};
 		public delegate bool NotifyMeteorCreateTimeDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int time);  
 		public NotifyMeteorCreateTimeDelegate NotifyMeteorCreateTime = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int time)
 		{ 
@@ -3639,6 +3654,171 @@ core.PostCheckReadMessage(__msg, RmiName_NotifyDeleteItem);
 		}
 	}
 	break;
+case Common.NotifyNetworkObjectCreate:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		string networkID; SP_Marshaler.Read(__msg,out networkID);	
+int type; SP_Marshaler.Read(__msg,out type);	
+UnityEngine.Vector3 pos; SP_Marshaler.Read(__msg,out pos);	
+UnityEngine.Vector3 rot; SP_Marshaler.Read(__msg,out rot);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyNetworkObjectCreate);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=networkID.ToString()+",";
+parameterString+=type.ToString()+",";
+parameterString+=pos.ToString()+",";
+parameterString+=rot.ToString()+",";
+			NotifyCallFromStub(Common.NotifyNetworkObjectCreate, RmiName_NotifyNetworkObjectCreate,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyNetworkObjectCreate;
+			summary.rmiName = RmiName_NotifyNetworkObjectCreate;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyNetworkObjectCreate (remote,ctx , networkID, type, pos, rot );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyNetworkObjectCreate);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyNetworkObjectCreate;
+			summary.rmiName = RmiName_NotifyNetworkObjectCreate;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyNetworkObjectMove:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		string networkID; SP_Marshaler.Read(__msg,out networkID);	
+UnityEngine.Vector3 pos; SP_Marshaler.Read(__msg,out pos);	
+UnityEngine.Vector3 velocity; SP_Marshaler.Read(__msg,out velocity);	
+UnityEngine.Vector3 rot; SP_Marshaler.Read(__msg,out rot);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyNetworkObjectMove);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=networkID.ToString()+",";
+parameterString+=pos.ToString()+",";
+parameterString+=velocity.ToString()+",";
+parameterString+=rot.ToString()+",";
+			NotifyCallFromStub(Common.NotifyNetworkObjectMove, RmiName_NotifyNetworkObjectMove,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyNetworkObjectMove;
+			summary.rmiName = RmiName_NotifyNetworkObjectMove;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyNetworkObjectMove (remote,ctx , networkID, pos, velocity, rot );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyNetworkObjectMove);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyNetworkObjectMove;
+			summary.rmiName = RmiName_NotifyNetworkObjectMove;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyNetworkObjectDelete:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		string networkID; SP_Marshaler.Read(__msg,out networkID);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyNetworkObjectDelete);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=networkID.ToString()+",";
+			NotifyCallFromStub(Common.NotifyNetworkObjectDelete, RmiName_NotifyNetworkObjectDelete,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyNetworkObjectDelete;
+			summary.rmiName = RmiName_NotifyNetworkObjectDelete;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyNetworkObjectDelete (remote,ctx , networkID );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyNetworkObjectDelete);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyNetworkObjectDelete;
+			summary.rmiName = RmiName_NotifyNetworkObjectDelete;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
 case Common.NotifyMeteorCreateTime:
 	{
 		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
@@ -4912,6 +5092,9 @@ const string RmiName_RequestWorldCreateItem="RequestWorldCreateItem";
 const string RmiName_NotifyCreateItem="NotifyCreateItem";
 const string RmiName_RequestItemDelete="RequestItemDelete";
 const string RmiName_NotifyDeleteItem="NotifyDeleteItem";
+const string RmiName_NotifyNetworkObjectCreate="NotifyNetworkObjectCreate";
+const string RmiName_NotifyNetworkObjectMove="NotifyNetworkObjectMove";
+const string RmiName_NotifyNetworkObjectDelete="NotifyNetworkObjectDelete";
 const string RmiName_NotifyMeteorCreateTime="NotifyMeteorCreateTime";
 const string RmiName_NotifyMeteorCreate="NotifyMeteorCreate";
 const string RmiName_RequestSpaceShipSetup="RequestSpaceShipSetup";
@@ -4999,6 +5182,9 @@ const string RmiName_RequestWorldCreateItem="";
 const string RmiName_NotifyCreateItem="";
 const string RmiName_RequestItemDelete="";
 const string RmiName_NotifyDeleteItem="";
+const string RmiName_NotifyNetworkObjectCreate="";
+const string RmiName_NotifyNetworkObjectMove="";
+const string RmiName_NotifyNetworkObjectDelete="";
 const string RmiName_NotifyMeteorCreateTime="";
 const string RmiName_NotifyMeteorCreate="";
 const string RmiName_RequestSpaceShipSetup="";

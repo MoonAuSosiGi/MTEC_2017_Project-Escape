@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TimeForEscape.Object.Weapon.Bullet
+namespace TimeForEscape.Object.Weapon
 {
     /**
     * @brief		Bullet_Plasma :: 플라즈마탄

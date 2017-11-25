@@ -40,6 +40,7 @@ public class RocketBullet : Bullet {
         if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
             && !other.CompareTag("Bullet_Explosion"))
         {
+            Debug.Log("로케케에에에엣 " + other.name);
             m_hitEnemy = true;
 
             m_isNetworkMoving = false;

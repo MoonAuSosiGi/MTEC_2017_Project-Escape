@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Nettention.Proud;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour
+{
 
     #region Bullet_INFO
 
@@ -37,7 +38,8 @@ public class Bullet : MonoBehaviour {
     #endregion
 
     // 기본 정보들
-    [SerializeField] protected float m_speed = 0.0f;
+    [SerializeField]
+    protected float m_speed = 0.0f;
     public float SPEED { get { return m_speed; } set { m_speed = value; } }
 
     protected int m_targetID = -1;
@@ -51,11 +53,14 @@ public class Bullet : MonoBehaviour {
     protected UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero;
     private float m_tick = 0.0f;
 
-    [SerializeField] protected GameObject m_bulletTrailEffect = null;
-    [SerializeField] protected GameObject m_shotEffect = null;
-    [SerializeField] protected GameObject m_shotOtherObjectEffect = null;
+    [SerializeField]
+    protected GameObject m_bulletTrailEffect = null;
+    [SerializeField]
+    protected GameObject m_shotEffect = null;
+    [SerializeField]
+    protected GameObject m_shotOtherObjectEffect = null;
 
-    public GameObject BULLET_TRAIL_EFFECT {  get { return m_bulletTrailEffect; }  set { m_bulletTrailEffect = value; } }
+    public GameObject BULLET_TRAIL_EFFECT { get { return m_bulletTrailEffect; } set { m_bulletTrailEffect = value; } }
     public GameObject BULLET_HIT_EFFECT { get { return m_shotEffect; } set { m_shotEffect = value; } }
     public GameObject BULLET_OTHER_HIT_EFFECT { get { return m_shotOtherObjectEffect; } set { m_shotOtherObjectEffect = value; } }
 
@@ -71,14 +76,18 @@ public class Bullet : MonoBehaviour {
     protected bool m_isNetworkMoving = true;
 
     #region Sound Play ---------------------------------------------------------------------
-    [SerializeField] protected AudioClip m_hitMain = null;
-    [SerializeField] protected AudioClip m_hitSpaceShip = null;
-    [SerializeField] protected AudioClip m_hitShelter = null;
-    [SerializeField] protected AudioClip m_hitland = null;
+    [SerializeField]
+    protected AudioClip m_hitMain = null;
+    [SerializeField]
+    protected AudioClip m_hitSpaceShip = null;
+    [SerializeField]
+    protected AudioClip m_hitShelter = null;
+    [SerializeField]
+    protected AudioClip m_hitland = null;
 
     public AudioClip HIT_MAIN { get { return m_hitMain; } set { m_hitMain = value; } }
     public AudioClip HIT_SPACESHIP { get { return m_hitSpaceShip; } set { m_hitSpaceShip = value; } }
-    public AudioClip HIT_SHELTER{ get { return m_hitShelter; } set { m_hitShelter = value; } }
+    public AudioClip HIT_SHELTER { get { return m_hitShelter; } set { m_hitShelter = value; } }
     public AudioClip HIT_LAND { get { return m_hitland; } set { m_hitland = value; } }
 
     protected AudioSource m_bulletAudioSource = null;
@@ -94,7 +103,7 @@ public class Bullet : MonoBehaviour {
         m_angleFollowerX = new AngleFollower();
         m_angleFollowerY = new AngleFollower();
         m_angleFollowerZ = new AngleFollower();
-        
+
         //this.GetComponent<SphereCollider>().enabled = false;
 
         if (m_bulletTrailEffect != null)
@@ -178,7 +187,7 @@ public class Bullet : MonoBehaviour {
     {
         m_bulletAudioSource = this.GetComponent<AudioSource>();
     }
-      // Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
         if (m_isRemote)
@@ -198,7 +207,7 @@ public class Bullet : MonoBehaviour {
     #region Bullet Method --------------------------------------------------------------------------
     public virtual void BulletSetup()
     {
-        if(m_bulletParticleRateOff == null || m_bulletParticleOff == null)
+        if (m_bulletParticleRateOff == null || m_bulletParticleOff == null)
         {
             m_bulletParticleOff = transform.GetComponentInChildren<BulletParticle_Off>();
             m_bulletParticleRateOff = transform.GetComponentInChildren<BulletParticle_RateOff>();
@@ -206,7 +215,7 @@ public class Bullet : MonoBehaviour {
         BulletEffectReset();
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(true);
-        
+
         this.GetComponent<SphereCollider>().enabled = true;
         var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
         if (destroyTime != null)
@@ -228,31 +237,31 @@ public class Bullet : MonoBehaviour {
         BulletEffectReset();
         if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(false);
-        
+
         this.GetComponent<SphereCollider>().enabled = false;
         gameObject.SetActive(false);
         if (IS_REMOTE == false)
             WeaponManager.Instance().RequestBulletRemove(this);
     }
-    
+
     public virtual void BulletMove()
     {
         UnityEngine.Vector3 velo = m_shotRot * UnityEngine.Vector3.right * m_speed * Time.deltaTime;
-        
-        this.transform.RotateAround(
-            GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * UnityEngine.Vector3.right , 
+
+        this.transform.RotateAround( 
+            GravityManager.Instance().CurrentPlanet.transform.position , m_shotRot * UnityEngine.Vector3.right ,
             m_speed * Time.deltaTime);
 
-        if(!m_isRemote)
+        if (!m_isRemote)
             MoveSend(velo);
     }
 
     protected void MoveSend(UnityEngine.Vector3 velo)
     {
-        
-        if(NetworkManager.Instance() != null)
-        NetworkManager.Instance().C2SRequestBulletMove(m_networkID ,
-            transform.position , velo , transform.localEulerAngles);
+
+        if (NetworkManager.Instance() != null)
+            NetworkManager.Instance().C2SRequestBulletMove(m_networkID ,
+                transform.position , velo , transform.localEulerAngles);
     }
 
 
@@ -264,21 +273,21 @@ public class Bullet : MonoBehaviour {
              && !other.CompareTag("Bullet_Explosion"))
         {
             //Debug.Log("other " + other.name + " tag " + other.tag);
-            m_hitEnemy= true;
+            m_hitEnemy = true;
             MainHitEffect();
             if (other.CompareTag("PlayerCharacter"))
             {
                 NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
-                
+
                 if (p != null)
                 {
                     if (IS_REMOTE == true && TARGET_ID == (int)p.HOST_ID)
                         return;
 
-                    
+
                     SoundPlay(m_hitMain);
                     if (IS_REMOTE == false)
-                        NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage ,m_startPos);
+                        NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage , m_startPos);
                 }
                 else
                 {
@@ -286,7 +295,7 @@ public class Bullet : MonoBehaviour {
                     return;
                 }
             }
-            else if(string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
+            else if (string.IsNullOrEmpty(other.tag) || other.CompareTag("NonSpone"))
             {
                 // 여기에 부딪치면 다른 이펙트를 보여준다.
                 StoneHitEffect();
@@ -326,7 +335,7 @@ public class Bullet : MonoBehaviour {
 
     void SoundPlay(AudioClip clip)
     {
-        if(clip != null)
+        if (clip != null)
         {
             m_bulletAudioSource.clip = clip;
             m_bulletAudioSource.Play();

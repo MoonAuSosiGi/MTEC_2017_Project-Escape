@@ -22,6 +22,14 @@ public class PlayerControlAttackTiming : MonoBehaviour {
         m_player.AttackAnimationEnd();
     }
 
+    public void DeadAnimationEnd()
+    {
+        if(m_player.enabled == true)
+        {
+            m_player.DeadAnimationEnd();
+        }
+    }
+
     public void FootSoundPlay()
     {
         AudioClip clip = null;

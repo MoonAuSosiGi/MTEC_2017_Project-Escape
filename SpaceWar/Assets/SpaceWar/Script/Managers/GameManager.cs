@@ -224,16 +224,15 @@ public class GameManager : Singletone<GameManager> {
             player.TableSetup();
             player.SetUserName(NetworkManager.Instance().USER_NAME);
 
-            //Plant.GetComponent<Gravity>().TargetObject = MP.GetComponent<Rigidbody>();
-
-            //AnchorPlanet.PlayerCharacter = MP.transform;
             GameManager.Instance().PLAYER.m_player = player;
-
-            //NetworkManager.Instance().C2SRequestClientJoin(
-            //    GameManager.Instance().PLAYER.m_name , MP.transform.position);
 
             NetworkManager.Instance().RequestGameSceneJoin(startPos);
 
+            // --- 옵저버용 카메라 세팅 ----
+            var observer = Camera.main.GetComponent<TimeForEscape.Object.NetworkObject>();
+            WeaponManager.Instance().AddObserverCamera(
+                (int)NetworkManager.Instance().HOST_ID , observer);
+            // -----------------------------
             m_inGameUI.gameObject.SetActive(true);
         }
         else
@@ -321,6 +320,7 @@ public class GameManager : Singletone<GameManager> {
             m_playerInfo.m_player.IS_MOVE_ABLE = false;
             m_playerInfo.m_player.AnimationPlay("Dead");
             m_playerInfo.m_player.Dead();
+            CameraManager.Instance().ShowDeadCameraEffect();
 
         }
        

@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour {
     //싱글 모드일때 처리 -- 171029 기준으로 아직 미동작 따로 처리 해야함
     [SerializeField]  private bool m_signleMode = false;
 
+    // 현재 보고 있는 옵저버 인덱스
+    private int m_observerIndex = -1;
+
     // 중력 처리를 받기 위한 리지드바디
     private Rigidbody m_rigidBody = null;
 
@@ -535,8 +538,24 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate()
     {
         if (GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f)
+        {
+            if(Input.GetKey(KeyCode.Space) && CameraManager.Instance().DEAD_EFFECT_SHOW)
+            {
+                // 임시 옵저버 조작
+                var list = NetworkManager.Instance().NETWORK_PLAYERS;
+                m_observerIndex++;
+                if (m_observerIndex == -1 || m_observerIndex >= list.Count)
+                    m_observerIndex = 0;
+                Camera.main.transform.parent = list[m_observerIndex].GetComponent<PlayerController>().m_camAnchor3;
+                Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
+                Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
+                CameraManager.Instance().HideDeadCameraEffect();
+            }
+            
+            
+           
             return;
-
+        }
 
         if (IS_MOVE_ABLE)
         {
@@ -1393,6 +1412,13 @@ public class PlayerController : MonoBehaviour {
     public void Dead()
     {
         AudioPlay(m_deadSound);
+    }
+
+    // 사망 애니메이션 끝
+    public void DeadAnimationEnd()
+    {
+        Debug.Log("Dead Animation End");
+        NetworkManager.Instance().IS_LOSE = true;
     }
 
     #endregion -----------------------------------------------------------------------------------------------
