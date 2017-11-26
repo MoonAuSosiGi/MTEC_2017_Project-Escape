@@ -258,10 +258,10 @@ public class GameManager : Singletone<GameManager> {
     // 메테오 생성
     public void CreateMeteor(float anglex,float anglez,string meteorID)
     {
-        float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 12.3f;
+        float offset = 12.3f;
+        Vector3 pos =  GravityManager.Instance().GetPlanetPosition(offset , anglex , anglez);
 
-        Vector3 pos =  GravityManager.Instance().GetPlanetPosition(planetScale , anglex , anglez);
- 
+        Debug.Log("METEOR " + pos + " ax " + anglex + " az " + anglez);
 
         m_meteorList.Add(meteorID , 30.0f);
         
@@ -271,7 +271,7 @@ public class GameManager : Singletone<GameManager> {
         Vector3 r = obj.transform.eulerAngles;
         obj.transform.eulerAngles =new Vector3( r.x + 90.0f,r.y,r.z);
 
-        obj.transform.parent = m_meteorParent.transform;
+        //obj.transform.SetParent(m_meteorParent.transform,false);
 
         m_alertUI.AlertShow(AlertUI.AlertType.METEOR_ATTACK , meteorID , m_meteorTime , "Meteor Attack");
         //m_inGameUI.RecvMeteorInfo(m_meteorTime);
