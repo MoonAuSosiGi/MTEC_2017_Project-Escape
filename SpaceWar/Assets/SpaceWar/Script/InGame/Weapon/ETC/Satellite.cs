@@ -22,7 +22,7 @@ namespace TimeForEscape.Object.Weapon
         GameObject m_hitCenter = null; ///< 센터에 닿는 부분
         private float m_damage = 0.0f; ///< 데미지
         private float m_distance = 0.0f; ///< 위성 포 거리 조절용 변수
-        private float m_startPos = 0.0f; ///< 처음 y 좌표
+        private UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero; ///< 처음  좌표
         #region Satellite Property -------------------------------------------------------------------------
         /**
          * @brief   데미지에 대한 프로퍼티
@@ -36,19 +36,25 @@ namespace TimeForEscape.Object.Weapon
         #endregion -----------------------------------------------------------------------------------------
         #region Satellite Method ---------------------------------------------------------------------------
 
+        void Awake()
+        {
+
+        }
+
         /**
          * @brief   시작시 종료 시점 세팅
          */
         void Start()
         {
             m_speed = 2.0f;
-            m_distance = transform.GetChild(0).position.y - m_hitCenter.transform.parent.position.y;
-            m_startPos = m_hitCenter.transform.parent.position.y;
             m_damage = WeaponManager.Instance().GetWeaponData("G_Satellite").Damage;
             var pup = (transform.position - GravityManager.Instance().CurrentPlanet.transform.position).normalized;
 
             Quaternion rot = Quaternion.FromToRotation(transform.up , pup) * transform.rotation;
             transform.rotation = rot;
+
+            m_distance = UnityEngine.Vector3.Distance(transform.GetChild(0).position, m_hitCenter.transform.parent.position);
+            m_startPos = m_hitCenter.transform.parent.position;
             // temp
             Invoke("SatelliteEnd" , 10.0f);
         }
@@ -63,29 +69,17 @@ namespace TimeForEscape.Object.Weapon
             Ray ray = new Ray(transform.GetChild(0).position , dir);
             RaycastHit[] hit = Physics.RaycastAll(ray);
 
-
             for (int i = 0; i < hit.Length; i++)
             {
                 if (hit[i].transform.CompareTag("Satellite"))
                     continue;
-                // Debug.Log(hit.transform.name);
                 var up = transform.up;
                 up.Normalize();
-                m_hitCenter.transform.parent.position = hit[i].point + up * 0.025f;
-                float dis = m_hitCenter.transform.parent.position.y - m_startPos;
-                float value = (m_distance - dis) / m_distance;
-                value += 0.025f;
+                m_hitCenter.transform.parent.position = hit[i].point + up;// * 0.025f;
+                float dis = UnityEngine.Vector3.Distance(m_hitCenter.transform.parent.position, transform.GetChild(0).position);
+                float value = dis / m_distance;
                 
-                if(value < 0.0f)
-                {
-                    value *= -1.0f;
-                }
-
-               // Debug.Log("distance " + m_distance + " dis " + dis + " / " + value);
-                m_hitCenter.transform.localScale =
-                    new UnityEngine.Vector3(1.0f ,
-                    value,
-                    1.0f);
+                m_hitCenter.transform.localScale = new UnityEngine.Vector3(1.0f , value , 1.0f);
                 break;
             }
             Debug.DrawRay(transform.GetChild(0).position , dir , Color.yellow);
@@ -122,16 +116,18 @@ namespace TimeForEscape.Object.Weapon
         {
             if (col.CompareTag("PlayerCharacter") == false)
                 return;
-            
+
             {
                 var p = col.GetComponent<PlayerController>();
                 var np = col.GetComponent<NetworkPlayer>();
 
-                // 다른놈만 데미지
-                if(p != null && p.enabled == false && np != null && m_isNetwork == false)
+                // 네트워크 상의 총알에서만 판단
+                if (p != null && p.IS_SHELTER == false && np == null && m_isNetwork == true)
                 {
-                    NetworkManager.Instance().C2SRequestPlayerDamage((int)np.HOST_ID ,
-                        np.m_userName , "SATELLITE" , m_damage , transform.position);
+                    NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().HOST_ID ,
+                        NetworkManager.Instance().USER_NAME , "SATELLITE" , m_damage , transform.position);
+                    //NetworkManager.Instance().C2SRequestPlayerDamage((int)np.HOST_ID ,
+                    //    np.m_userName , "SATELLITE" , m_damage , transform.position);
                 }
             }
         }

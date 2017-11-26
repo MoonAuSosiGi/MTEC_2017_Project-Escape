@@ -17,7 +17,6 @@ public class WeaponItem : Item {
     [SerializeField] private AttackTiming m_attackTiming = AttackTiming.SCRIPT_ONLY;
 
     public AttackTiming ATTACK_TIMING { get { return m_attackTiming; } set { m_attackTiming = value; } }
-    
 
     // 데미지 지정
     protected float m_damage = 0.0f;
