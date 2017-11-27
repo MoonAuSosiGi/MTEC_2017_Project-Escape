@@ -173,6 +173,12 @@ namespace SpaceWar
     static const ::Proud::RmiID Rmi_NotifyGameResultInfoOther = (::Proud::RmiID)(3141+84);
                
     static const ::Proud::RmiID Rmi_NotifyGameResultShow = (::Proud::RmiID)(3141+85);
+               
+    static const ::Proud::RmiID Rmi_NotifyUtilPlayerRebirth = (::Proud::RmiID)(3141+86);
+               
+    static const ::Proud::RmiID Rmi_NotifyUtilPlayerDead = (::Proud::RmiID)(3141+87);
+               
+    static const ::Proud::RmiID Rmi_RequestUtilMeteorCreate = (::Proud::RmiID)(3141+88);
 
 	// List that has RMI ID.
 	extern ::Proud::RmiID g_RmiIDList[];

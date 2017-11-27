@@ -177,7 +177,13 @@ namespace SpaceWar
 		Rmi_NotifyGameResultInfoOther,
                
 		Rmi_NotifyGameResultShow,
+               
+		Rmi_NotifyUtilPlayerRebirth,
+               
+		Rmi_NotifyUtilPlayerDead,
+               
+		Rmi_RequestUtilMeteorCreate,
 	};
 
-	int g_RmiIDListCount = 85;
+	int g_RmiIDListCount = 88;
 }

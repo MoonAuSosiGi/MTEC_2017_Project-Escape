@@ -186,6 +186,12 @@ namespace SpaceWar
 	virtual bool NotifyGameResultInfoOther ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const string & name,  const int & state)   PN_SEALED;  
 	virtual bool NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ) PN_SEALED; 
 	virtual bool NotifyGameResultShow ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext)   PN_SEALED;  
+	virtual bool NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition) PN_SEALED; 
+	virtual bool NotifyUtilPlayerRebirth ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & targetHostID,  const bool & otherPosition)   PN_SEALED;  
+	virtual bool NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) PN_SEALED; 
+	virtual bool NotifyUtilPlayerDead ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & targetHostID)   PN_SEALED;  
+	virtual bool RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) PN_SEALED; 
+	virtual bool RequestUtilMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & targetHostID)   PN_SEALED;  
 static const PNTCHAR* RmiName_RequestServerConnect;
 static const PNTCHAR* RmiName_RequestNetworkGameTeamSelect;
 static const PNTCHAR* RmiName_RequestGameExit;
@@ -271,6 +277,9 @@ static const PNTCHAR* RmiName_NotifyKillInfo;
 static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
 static const PNTCHAR* RmiName_NotifyGameResultInfoOther;
 static const PNTCHAR* RmiName_NotifyGameResultShow;
+static const PNTCHAR* RmiName_NotifyUtilPlayerRebirth;
+static const PNTCHAR* RmiName_NotifyUtilPlayerDead;
+static const PNTCHAR* RmiName_RequestUtilMeteorCreate;
 static const PNTCHAR* RmiName_First;
 		Proxy()
 		{

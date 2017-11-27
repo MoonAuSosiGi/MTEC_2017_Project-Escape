@@ -1472,43 +1472,24 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 }
 #pragma endregion
 
-//// TODO 서버 구조 변경으로 삭제 대상
-//DEFRMI_SpaceWar_RequestClientJoin(Server)
-//{
-//	cout << "Server : RequestClientJoin "<<name << endl;
-//	
-//	auto iter = m_clientMap.find((HostID)hostID);
-//	if (iter == m_clientMap.end())
-//	{
-//		cout << "잘못된 클라이언트 " << endl;
-//		return true;
-//	}
-//	// 모두에게 나타나게 해야함 
-//	for each (auto c in m_clientMap)
-//	{
-//		if (c.first != iter->first)
-//		{
-//			auto otherClient = c.second;
-//			m_proxy.NotifyOtherClientJoin(c.first, 
-//				RmiContext::ReliableSend,
-//				iter->second->m_hostID,
-//				iter->second->m_userName,
-//				iter->second->x,
-//				iter->second->y,
-//				iter->second->z);
-//
-//			m_proxy.NotifyOtherClientJoin(iter->first,
-//				RmiContext::ReliableSend,
-//				c.second->m_hostID,
-//				c.second->m_userName,
-//				c.second->x,
-//				c.second->y,
-//				c.second->z);
-//		}
-//	}
-//
-//
-//	return true;
-//}
+#pragma region 게임 모드 :: 유틸 :: 치트 ===========================================================================
 
+/**
+ * @brief	플레이어 부활 요청
+ * @param	targetHostID 부활시킬 플레이어의 HostID
+ * @param	randomPosition 포지션을 변경할 것인지
+*/
+DEFRMI_SpaceWar_NotifyUtilPlayerRebirth(Server)
+{
+	auto clientMap = GetGameRoom()->GetClientMap();
+	
+	if (clientMap[(HostID)targetHostID] != nullptr)
+	{
+		clientMap[(HostID)targetHostID]->SetHp(m_serverPropertiesData["FullHP"].asFloat());
+		clientMap[(HostID)targetHostID]->SetOxy(m_serverPropertiesData["FullOXY"].asFloat());
+		clientMap[(HostID)targetHostID]->SetState(ALIVE);
+	}
+	return true;
+}
+#pragma endregion
 #pragma endregion

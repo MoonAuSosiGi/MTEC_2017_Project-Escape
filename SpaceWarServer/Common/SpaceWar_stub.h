@@ -869,6 +869,36 @@ namespace SpaceWar
 #define DEFRMI_SpaceWar_NotifyGameResultShow(DerivedClass) bool DerivedClass::NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
 #define CALL_SpaceWar_NotifyGameResultShow NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
 #define PARAM_SpaceWar_NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
+		virtual bool NotifyUtilPlayerRebirth ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyUtilPlayerRebirth bool NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyUtilPlayerRebirth(DerivedClass) bool DerivedClass::NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition)
+#define CALL_SpaceWar_NotifyUtilPlayerRebirth NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition)
+#define PARAM_SpaceWar_NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition)
+               
+		virtual bool NotifyUtilPlayerDead ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyUtilPlayerDead bool NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyUtilPlayerDead(DerivedClass) bool DerivedClass::NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+#define CALL_SpaceWar_NotifyUtilPlayerDead NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+#define PARAM_SpaceWar_NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+               
+		virtual bool RequestUtilMeteorCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestUtilMeteorCreate bool RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestUtilMeteorCreate(DerivedClass) bool DerivedClass::RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+#define CALL_SpaceWar_RequestUtilMeteorCreate RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+#define PARAM_SpaceWar_RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
  
 		virtual bool ProcessReceivedMessage(::Proud::CReceivedMessage &pa, void* hostTag) PN_OVERRIDE;
 		static const PNTCHAR* RmiName_RequestServerConnect;
@@ -956,6 +986,9 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
 		static const PNTCHAR* RmiName_NotifyGameResultInfoOther;
 		static const PNTCHAR* RmiName_NotifyGameResultShow;
+		static const PNTCHAR* RmiName_NotifyUtilPlayerRebirth;
+		static const PNTCHAR* RmiName_NotifyUtilPlayerDead;
+		static const PNTCHAR* RmiName_RequestUtilMeteorCreate;
 		static const PNTCHAR* RmiName_First;
 		virtual ::Proud::RmiID* GetRmiIDList() PN_OVERRIDE { return g_RmiIDList; }
 		virtual int GetRmiIDListCount() PN_OVERRIDE { return g_RmiIDListCount; }
@@ -1729,6 +1762,33 @@ namespace SpaceWar
 			if (NotifyGameResultShow_Function==nullptr) 
 				return true; 
 			return NotifyGameResultShow_Function(remote,rmiContext); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & ) > NotifyUtilPlayerRebirth_Function;
+		virtual bool NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition) 
+		{ 
+			if (NotifyUtilPlayerRebirth_Function==nullptr) 
+				return true; 
+			return NotifyUtilPlayerRebirth_Function(remote,rmiContext, targetHostID, otherPosition); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > NotifyUtilPlayerDead_Function;
+		virtual bool NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) 
+		{ 
+			if (NotifyUtilPlayerDead_Function==nullptr) 
+				return true; 
+			return NotifyUtilPlayerDead_Function(remote,rmiContext, targetHostID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestUtilMeteorCreate_Function;
+		virtual bool RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) 
+		{ 
+			if (RequestUtilMeteorCreate_Function==nullptr) 
+				return true; 
+			return RequestUtilMeteorCreate_Function(remote,rmiContext, targetHostID); 
 		}
 
 	};

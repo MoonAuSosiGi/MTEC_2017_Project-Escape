@@ -2617,6 +2617,92 @@ __msg.Write(__msgid);
 		return RmiSend(remotes,remoteCount,rmiContext,__msg,
 			RmiName_NotifyGameResultShow, (::Proud::RmiID)Rmi_NotifyGameResultShow);
 	}
+        
+	bool Proxy::NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyUtilPlayerRebirth;
+__msg.Write(__msgid); 
+	
+__msg << targetHostID;
+__msg << otherPosition;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyUtilPlayerRebirth, (::Proud::RmiID)Rmi_NotifyUtilPlayerRebirth);
+	}
+
+	bool Proxy::NotifyUtilPlayerRebirth ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & targetHostID,  const bool & otherPosition)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyUtilPlayerRebirth;
+__msg.Write(__msgid); 
+	
+__msg << targetHostID;
+__msg << otherPosition;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyUtilPlayerRebirth, (::Proud::RmiID)Rmi_NotifyUtilPlayerRebirth);
+	}
+        
+	bool Proxy::NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyUtilPlayerDead;
+__msg.Write(__msgid); 
+	
+__msg << targetHostID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_NotifyUtilPlayerDead, (::Proud::RmiID)Rmi_NotifyUtilPlayerDead);
+	}
+
+	bool Proxy::NotifyUtilPlayerDead ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & targetHostID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_NotifyUtilPlayerDead;
+__msg.Write(__msgid); 
+	
+__msg << targetHostID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_NotifyUtilPlayerDead, (::Proud::RmiID)Rmi_NotifyUtilPlayerDead);
+	}
+        
+	bool Proxy::RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestUtilMeteorCreate;
+__msg.Write(__msgid); 
+	
+__msg << targetHostID;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestUtilMeteorCreate, (::Proud::RmiID)Rmi_RequestUtilMeteorCreate);
+	}
+
+	bool Proxy::RequestUtilMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const int & targetHostID)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestUtilMeteorCreate;
+__msg.Write(__msgid); 
+	
+__msg << targetHostID;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestUtilMeteorCreate, (::Proud::RmiID)Rmi_RequestUtilMeteorCreate);
+	}
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_RequestServerConnect =_PNT("RequestServerConnect");
 #else
@@ -3041,6 +3127,21 @@ const PNTCHAR* Proxy::RmiName_NotifyGameResultInfoOther =_PNT("");
 const PNTCHAR* Proxy::RmiName_NotifyGameResultShow =_PNT("NotifyGameResultShow");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyGameResultShow =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyUtilPlayerRebirth =_PNT("NotifyUtilPlayerRebirth");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyUtilPlayerRebirth =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_NotifyUtilPlayerDead =_PNT("NotifyUtilPlayerDead");
+#else
+const PNTCHAR* Proxy::RmiName_NotifyUtilPlayerDead =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestUtilMeteorCreate =_PNT("RequestUtilMeteorCreate");
+#else
+const PNTCHAR* Proxy::RmiName_RequestUtilMeteorCreate =_PNT("");
 #endif
 const PNTCHAR* Proxy::RmiName_First = RmiName_RequestServerConnect;
 }
