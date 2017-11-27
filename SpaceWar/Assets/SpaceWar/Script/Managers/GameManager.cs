@@ -5,6 +5,12 @@ using UnityEngine;
 public class GameManager : Singletone<GameManager> {
 
     #region GameManager_INFO
+    
+    public enum GameMode
+    {
+        DEATH_MATCH = 100,
+        SURVIVAL
+    }
 
     #region Table
     [SerializeField] GameTable m_gameTable = null;
@@ -60,6 +66,13 @@ public class GameManager : Singletone<GameManager> {
     {
         get { return m_playerInfo; }
         set { m_playerInfo = value; }
+    }
+    // 게임모드
+    private static GameMode m_curGameMode = GameMode.SURVIVAL;
+    public static GameMode CURRENT_GAMEMODE
+    {
+        get { return m_curGameMode; }
+        set { m_curGameMode = value; }
     }
     
     #endregion

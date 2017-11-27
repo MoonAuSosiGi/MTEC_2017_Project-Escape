@@ -100,6 +100,9 @@ namespace SpaceWar
 			public const Nettention.Proud.RmiID NotifyGameResultInfoMe = (Nettention.Proud.RmiID)3141+83;
 			public const Nettention.Proud.RmiID NotifyGameResultInfoOther = (Nettention.Proud.RmiID)3141+84;
 			public const Nettention.Proud.RmiID NotifyGameResultShow = (Nettention.Proud.RmiID)3141+85;
+			public const Nettention.Proud.RmiID NotifyUtilPlayerRebirth = (Nettention.Proud.RmiID)3141+86;
+			public const Nettention.Proud.RmiID NotifyUtilPlayerDead = (Nettention.Proud.RmiID)3141+87;
+			public const Nettention.Proud.RmiID RequestUtilMeteorCreate = (Nettention.Proud.RmiID)3141+88;
 		// List that has RMI ID.
 		public static Nettention.Proud.RmiID[] RmiIDList = new Nettention.Proud.RmiID[] {
 			RequestServerConnect,
@@ -187,6 +190,9 @@ namespace SpaceWar
 			NotifyGameResultInfoMe,
 			NotifyGameResultInfoOther,
 			NotifyGameResultShow,
+			NotifyUtilPlayerRebirth,
+			NotifyUtilPlayerDead,
+			RequestUtilMeteorCreate,
 		};
 	}
 }

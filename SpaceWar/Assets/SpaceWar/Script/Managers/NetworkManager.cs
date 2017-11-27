@@ -1012,6 +1012,45 @@ public class NetworkManager : Singletone<NetworkManager>
 
         #endregion
 
+        #region Game Mode / UTIL / CHEAT
+        // 부활
+        m_s2cStub.NotifyUtilPlayerRebirth = (HostID remote , RmiContext rmiContext , 
+            int targetHostID , bool otherPosition) =>
+        {
+            // 나자신이 부활하는지?
+            if(m_hostID == (HostID)targetHostID)
+            {
+                var p = GameManager.Instance().PLAYER;
+                p.HP = p.m_fullHp;
+                p.OXY = p.m_fullOxy;
+                p.m_player.AnimationPlay("Idle");
+                GameManager.Instance().m_inGameUI.PlayerHPUpdate(p.HP , 0.0f , p.m_fullHp);
+                CameraManager.Instance().HideDeadCameraEffect();
+
+                if (otherPosition == false)
+                    return true;
+
+                float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 20.8f;
+                var pos = GravityManager.Instance().GetPlanetPosition(planetScale , 
+                    UnityEngine.Random.Range(-360.0f , 360.0f) , UnityEngine.Random.Range(-360.0f , 360.0f));
+
+                p.m_player.transform.position = pos;
+            }
+            else
+            {
+                for(int i = 0; i < m_players.Count; i++)
+                {
+                    if(m_players[i].HOST_ID == (HostID)targetHostID)
+                    {
+                        m_players[i].IS_DEATH = false;
+                        break;
+                    }
+                }
+            }
+            return true;
+        };
+        #endregion
+
         #endregion
 
         //   ServerConnect();
@@ -1650,6 +1689,14 @@ public class NetworkManager : Singletone<NetworkManager>
     }
     #endregion ---------------------------------------------------------------------------------
 
+    #endregion
+
+    #region GameMode / UTIL / CHEAT
+    // 부활 요청
+    public void RequestRebirth(int hostID,bool randomPosition)
+    {
+        m_c2sProxy.NotifyUtilPlayerRebirth(m_p2pID , RmiContext.ReliableSend , hostID , randomPosition);
+    }
     #endregion
 
     // 게임이 끝났음을 알림

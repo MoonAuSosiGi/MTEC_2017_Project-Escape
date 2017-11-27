@@ -2451,6 +2451,86 @@ __msg.Write(__msgid);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyGameResultShow, Common.NotifyGameResultShow);
 }
+public bool NotifyUtilPlayerRebirth(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID, bool otherPosition)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.NotifyUtilPlayerRebirth;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, targetHostID);
+		SP_Marshaler.Write(__msg, otherPosition);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_NotifyUtilPlayerRebirth, Common.NotifyUtilPlayerRebirth);
+}
+
+public bool NotifyUtilPlayerRebirth(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int targetHostID, bool otherPosition)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.NotifyUtilPlayerRebirth;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, targetHostID);
+SP_Marshaler.Write(__msg, otherPosition);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_NotifyUtilPlayerRebirth, Common.NotifyUtilPlayerRebirth);
+}
+public bool NotifyUtilPlayerDead(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.NotifyUtilPlayerDead;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, targetHostID);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_NotifyUtilPlayerDead, Common.NotifyUtilPlayerDead);
+}
+
+public bool NotifyUtilPlayerDead(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int targetHostID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.NotifyUtilPlayerDead;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, targetHostID);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_NotifyUtilPlayerDead, Common.NotifyUtilPlayerDead);
+}
+public bool RequestUtilMeteorCreate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.RequestUtilMeteorCreate;
+		__msg.Write(__msgid);
+		SP_Marshaler.Write(__msg, targetHostID);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_RequestUtilMeteorCreate, Common.RequestUtilMeteorCreate);
+}
+
+public bool RequestUtilMeteorCreate(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, int targetHostID)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.RequestUtilMeteorCreate;
+__msg.Write(__msgid);
+SP_Marshaler.Write(__msg, targetHostID);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_RequestUtilMeteorCreate, Common.RequestUtilMeteorCreate);
+}
 #if USE_RMI_NAME_STRING
 // RMI name declaration.
 // It is the unique pointer that indicates RMI name such as RMI profiler.
@@ -2539,6 +2619,9 @@ const string RmiName_NotifyKillInfo="NotifyKillInfo";
 const string RmiName_NotifyGameResultInfoMe="NotifyGameResultInfoMe";
 const string RmiName_NotifyGameResultInfoOther="NotifyGameResultInfoOther";
 const string RmiName_NotifyGameResultShow="NotifyGameResultShow";
+const string RmiName_NotifyUtilPlayerRebirth="NotifyUtilPlayerRebirth";
+const string RmiName_NotifyUtilPlayerDead="NotifyUtilPlayerDead";
+const string RmiName_RequestUtilMeteorCreate="RequestUtilMeteorCreate";
        
 const string RmiName_First = RmiName_RequestServerConnect;
 #else
@@ -2629,6 +2712,9 @@ const string RmiName_NotifyKillInfo="";
 const string RmiName_NotifyGameResultInfoMe="";
 const string RmiName_NotifyGameResultInfoOther="";
 const string RmiName_NotifyGameResultShow="";
+const string RmiName_NotifyUtilPlayerRebirth="";
+const string RmiName_NotifyUtilPlayerDead="";
+const string RmiName_RequestUtilMeteorCreate="";
        
 const string RmiName_First = "";
 #endif

@@ -443,6 +443,21 @@ public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Pro
 		{ 
 			return false;
 		};
+		public delegate bool NotifyUtilPlayerRebirthDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID, bool otherPosition);  
+		public NotifyUtilPlayerRebirthDelegate NotifyUtilPlayerRebirth = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID, bool otherPosition)
+		{ 
+			return false;
+		};
+		public delegate bool NotifyUtilPlayerDeadDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID);  
+		public NotifyUtilPlayerDeadDelegate NotifyUtilPlayerDead = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID)
+		{ 
+			return false;
+		};
+		public delegate bool RequestUtilMeteorCreateDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID);  
+		public RequestUtilMeteorCreateDelegate RequestUtilMeteorCreate = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, int targetHostID)
+		{ 
+			return false;
+		};
 	public override bool ProcessReceivedMessage(Nettention.Proud.ReceivedMessage pa, Object hostTag) 
 	{
 		Nettention.Proud.HostID remote=pa.RemoteHostID;
@@ -5020,6 +5035,161 @@ case Common.NotifyGameResultShow:
 		}
 	}
 	break;
+case Common.NotifyUtilPlayerRebirth:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int targetHostID; SP_Marshaler.Read(__msg,out targetHostID);	
+bool otherPosition; SP_Marshaler.Read(__msg,out otherPosition);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyUtilPlayerRebirth);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=targetHostID.ToString()+",";
+parameterString+=otherPosition.ToString()+",";
+			NotifyCallFromStub(Common.NotifyUtilPlayerRebirth, RmiName_NotifyUtilPlayerRebirth,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyUtilPlayerRebirth;
+			summary.rmiName = RmiName_NotifyUtilPlayerRebirth;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyUtilPlayerRebirth (remote,ctx , targetHostID, otherPosition );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyUtilPlayerRebirth);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyUtilPlayerRebirth;
+			summary.rmiName = RmiName_NotifyUtilPlayerRebirth;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.NotifyUtilPlayerDead:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int targetHostID; SP_Marshaler.Read(__msg,out targetHostID);	
+core.PostCheckReadMessage(__msg, RmiName_NotifyUtilPlayerDead);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=targetHostID.ToString()+",";
+			NotifyCallFromStub(Common.NotifyUtilPlayerDead, RmiName_NotifyUtilPlayerDead,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.NotifyUtilPlayerDead;
+			summary.rmiName = RmiName_NotifyUtilPlayerDead;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=NotifyUtilPlayerDead (remote,ctx , targetHostID );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_NotifyUtilPlayerDead);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.NotifyUtilPlayerDead;
+			summary.rmiName = RmiName_NotifyUtilPlayerDead;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
+case Common.RequestUtilMeteorCreate:
+	{
+		Nettention.Proud.RmiContext ctx=new Nettention.Proud.RmiContext();
+		ctx.sentFrom=pa.RemoteHostID;
+		ctx.relayed=pa.IsRelayed;
+		ctx.hostTag=hostTag;
+		ctx.encryptMode = pa.EncryptMode;
+		ctx.compressMode = pa.CompressMode;
+			
+		int targetHostID; SP_Marshaler.Read(__msg,out targetHostID);	
+core.PostCheckReadMessage(__msg, RmiName_RequestUtilMeteorCreate);
+		if(enableNotifyCallFromStub==true)
+		{
+			string parameterString="";
+			parameterString+=targetHostID.ToString()+",";
+			NotifyCallFromStub(Common.RequestUtilMeteorCreate, RmiName_RequestUtilMeteorCreate,parameterString);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.BeforeRmiSummary summary = new Nettention.Proud.BeforeRmiSummary();
+			summary.rmiID = Common.RequestUtilMeteorCreate;
+			summary.rmiName = RmiName_RequestUtilMeteorCreate;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			BeforeRmiInvocation(summary);
+		}
+			
+		long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
+			
+		// Call this method.
+		bool __ret=RequestUtilMeteorCreate (remote,ctx , targetHostID );
+			
+		if(__ret==false)
+		{
+			// Error: RMI function that a user did not create has been called. 
+			core.ShowNotImplementedRmiWarning(RmiName_RequestUtilMeteorCreate);
+		}
+			
+		if(enableStubProfiling)
+		{
+			Nettention.Proud.AfterRmiSummary summary = new Nettention.Proud.AfterRmiSummary();
+			summary.rmiID = Common.RequestUtilMeteorCreate;
+			summary.rmiName = RmiName_RequestUtilMeteorCreate;
+			summary.hostID = remote;
+			summary.hostTag = hostTag;
+			summary.elapsedTime = Nettention.Proud.PreciseCurrentTime.GetTimeMs()-t0;
+			AfterRmiInvocation(summary);
+		}
+	}
+	break;
 		default:
 			 goto __fail;
 		}
@@ -5118,6 +5288,9 @@ const string RmiName_NotifyKillInfo="NotifyKillInfo";
 const string RmiName_NotifyGameResultInfoMe="NotifyGameResultInfoMe";
 const string RmiName_NotifyGameResultInfoOther="NotifyGameResultInfoOther";
 const string RmiName_NotifyGameResultShow="NotifyGameResultShow";
+const string RmiName_NotifyUtilPlayerRebirth="NotifyUtilPlayerRebirth";
+const string RmiName_NotifyUtilPlayerDead="NotifyUtilPlayerDead";
+const string RmiName_RequestUtilMeteorCreate="RequestUtilMeteorCreate";
        
 const string RmiName_First = RmiName_RequestServerConnect;
 #else
@@ -5208,6 +5381,9 @@ const string RmiName_NotifyKillInfo="";
 const string RmiName_NotifyGameResultInfoMe="";
 const string RmiName_NotifyGameResultInfoOther="";
 const string RmiName_NotifyGameResultShow="";
+const string RmiName_NotifyUtilPlayerRebirth="";
+const string RmiName_NotifyUtilPlayerDead="";
+const string RmiName_RequestUtilMeteorCreate="";
        
 const string RmiName_First = "";
 #endif

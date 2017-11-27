@@ -551,6 +551,10 @@ public class PlayerController : MonoBehaviour {
                 Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
                 CameraManager.Instance().HideDeadCameraEffect();
             }
+            else if(Input.GetKey(KeyCode.T) && GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH)
+            {
+                NetworkManager.Instance().RequestRebirth((int)NetworkManager.Instance().HOST_ID , true);
+            }
             
             
            

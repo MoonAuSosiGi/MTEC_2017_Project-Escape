@@ -107,6 +107,11 @@ public:
 	DECRMI_SpaceWar_RequestDrawGameResult; ///< 드로우 게임시 정보 요청
 	DECRMI_SpaceWar_RequestGameEnd; ///< 결과를 받아오는 것
 #pragma endregion
+
+#pragma region 게임 모드 :: 유틸 :: 치트 -----------
+	DECRMI_SpaceWar_NotifyUtilPlayerRebirth; ///< 플레이어 다시 살아나기 
+#pragma endregion
+
 #pragma endregion
 
 private:
