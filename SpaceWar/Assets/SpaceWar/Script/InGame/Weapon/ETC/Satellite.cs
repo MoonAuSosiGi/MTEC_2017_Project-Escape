@@ -124,10 +124,9 @@ namespace TimeForEscape.Object.Weapon
                 // 네트워크 상의 총알에서만 판단
                 if (p != null && p.IS_SHELTER == false && np == null && m_isNetwork == true)
                 {
-                    NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().HOST_ID ,
+                    NetworkManager.Instance().C2SRequestPlayerDamage(m_createHostID,(int)NetworkManager.Instance().HOST_ID ,
                         NetworkManager.Instance().USER_NAME , "SATELLITE" , m_damage , transform.position);
-                    //NetworkManager.Instance().C2SRequestPlayerDamage((int)np.HOST_ID ,
-                    //    np.m_userName , "SATELLITE" , m_damage , transform.position);
+
                 }
             }
         }

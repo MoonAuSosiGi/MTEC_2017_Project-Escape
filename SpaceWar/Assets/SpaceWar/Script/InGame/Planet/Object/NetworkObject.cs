@@ -22,6 +22,7 @@ namespace TimeForEscape.Object
         protected float m_speed = 0.0f; ///< 이동 속도
 
         #region NetworkObject Network INFO ----------------------------------------------------------
+        protected int m_createHostID = -1; ///< 이걸 만든 타겟 호스트 아이디
         protected string m_networkID = null; ///< 네트워크 식별 아이디
         protected bool m_isNetwork = false; ///< 다른 사람이 만든 오브젝트인지
         protected bool m_isNetworkMoving = true; ///< 동기화 오브젝트인 경우 계속 좌표 동기화를 할건지
@@ -39,6 +40,15 @@ namespace TimeForEscape.Object
         {
             get { return m_networkID; }
             set { m_networkID = value; }
+        }
+
+        /**
+         * @brief   이걸 만든 호스트 아이디
+         */
+         public int CREATE_HOST_ID
+        {
+            get { return m_createHostID; }
+            set { m_createHostID = value; }
         }
 
         /**

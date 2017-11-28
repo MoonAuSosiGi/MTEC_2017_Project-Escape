@@ -822,7 +822,7 @@ public class NetworkManager : Singletone<NetworkManager>
         m_s2cStub.NotifyNetworkObjectCreate = (HostID remote , RmiContext rmiContext ,
             string networkID , int type , UnityEngine.Vector3 pos , UnityEngine.Vector3 rot) =>
         {
-            WeaponManager.Instance().RequestNetworkObjectCreate((WeaponManager.NetworkObjectType)type ,
+            WeaponManager.Instance().RequestNetworkObjectCreate((int)remote,(WeaponManager.NetworkObjectType)type ,
                 networkID , pos , rot);
 
             return true;
@@ -1505,7 +1505,12 @@ public class NetworkManager : Singletone<NetworkManager>
         m_c2sProxy.RequestPlayerDamage(HostID.HostID_Server , RmiContext.ReliableSend , (int)m_hostID ,
             targetHostID , name , weaponName , damage , dir);
     }
-
+    // damage
+    public void C2SRequestPlayerDamage(int damageHostID,int targetHostID , string name , string weaponName , float damage , UnityEngine.Vector3 dir)
+    {
+        m_c2sProxy.RequestPlayerDamage(HostID.HostID_Server , RmiContext.ReliableSend , damageHostID ,
+            targetHostID , name , weaponName , damage , dir);
+    }
     // use Oxy
     public void C2SRequestPlayerUseOxy(string name , float useOxy)
     {

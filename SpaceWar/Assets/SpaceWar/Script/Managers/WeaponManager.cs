@@ -333,7 +333,7 @@ public class WeaponManager : Singletone<WeaponManager> {
      * @param   pos 어디에 생성할 것인지에 대한 위치 정보
      * @param   rot 회전값
      */
-     public void RequestNetworkObjectCreate(NetworkObjectType type,string networkID,Vector3 pos,Vector3 rot)
+     public void RequestNetworkObjectCreate(int targetHostID,NetworkObjectType type,string networkID,Vector3 pos,Vector3 rot)
     {
         Debug.Log("Network 생성! " + networkID);
         var obj = CreateNetworkObject(type,pos);
@@ -341,6 +341,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         obj.transform.localEulerAngles = rot;
 
         var network = obj.GetComponent<NetworkObject>();
+        network.CREATE_HOST_ID = targetHostID;
         network.IS_NETWORK = true;
         network.DIR_ROT = Quaternion.Euler(rot);
         network.IS_NETWORK_MOVING = true;
