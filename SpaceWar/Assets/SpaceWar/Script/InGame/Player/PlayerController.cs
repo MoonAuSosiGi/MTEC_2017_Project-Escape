@@ -1072,10 +1072,14 @@ public class PlayerController : MonoBehaviour {
     void HideUseEffect(Collider col)
     {
         LoopAudioStop();
+
+        GameManager.Instance().m_inGameUI.HideObjectUI();
+
+        if (col == null)
+            return;
+
         if (col.CompareTag("Weapon"))
         {
-            GameManager.Instance().m_inGameUI.HideObjectUI();
-
             //  MeshRenderer renderer = m_nearItem.GetComponentInChildren<MeshRenderer>();
             if(m_nearItem != null)
                 m_nearItem.GetComponent<Item>().OutLineHide();
@@ -1087,17 +1091,14 @@ public class PlayerController : MonoBehaviour {
                 OxyChargerControlCancle();
             }
             m_nearOxyCharger = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("ItemBox"))
         {
             m_nearItemBox = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("ShelterDoor"))
         {
             m_nearShelter = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("SpaceShipControlPanel"))
         {
@@ -1105,14 +1106,12 @@ public class PlayerController : MonoBehaviour {
             if (m_nearSpaceShip != null)
                 m_nearSpaceShip.StopSpaceShipEngineCharge();
             m_nearSpaceShip = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("Recoverykit"))
         {
             m_nearItem = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
+            
         }
-
     }
 
     void RotateUseEffect()
@@ -1676,6 +1675,12 @@ public class PlayerController : MonoBehaviour {
 
         m_nearSpaceShip.StopSpaceShipEngineCharge();
         AudioPlay(m_spaceShipChargeFail);
+    }
+
+    // 우주선 작동 시작시 우주선 측에서 호출함
+    public void SpaceShipChargeEnd()
+    {
+        HideUseEffect(null);
     }
     #endregion
 

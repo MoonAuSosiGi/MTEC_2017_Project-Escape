@@ -160,6 +160,9 @@ namespace TimeForEscape.Object
                     CameraManager.Instance().HideNotEnoughHpEffect();
                     CameraManager.Instance().HideNotEnoughOxyEffect();
                     CameraManager.Instance().EffectHitExit();
+
+                    // 플레이어에서 수행할 일 처리
+                    GameManager.Instance().PLAYER.m_player.SpaceShipChargeEnd();
                     // 플레이어도 숨긴다.
                     GameManager.Instance().PLAYER.m_player.gameObject.SetActive(false);
 
