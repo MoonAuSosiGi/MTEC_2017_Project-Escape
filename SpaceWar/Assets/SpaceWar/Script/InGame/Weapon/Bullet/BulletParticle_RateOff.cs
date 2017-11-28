@@ -29,6 +29,11 @@ public class BulletParticle_RateOff : MonoBehaviour
 
     public void Reset()
     {
+        if (m_targetParticleSystem == null)
+        {
+            m_targetParticleSystem = this.GetComponent<ParticleSystem>();
+            m_startValue = m_targetParticleSystem.emission.rateOverTime.constant;
+        }
         var em = m_targetParticleSystem.emission;
         em.enabled = true;
         em.rateOverTime = m_startValue;

@@ -389,7 +389,7 @@ public class WeaponManager : Singletone<WeaponManager> {
     // 랜덤으로 무기 ID 뽑기
     public string GetRandomWeaponID()
     {
-        return m_weaponTable.dataArray[m_weaponTable.dataArray.Length - 1].Id;//Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
+        return m_weaponTable.dataArray[Random.Range(0 , m_weaponTable.dataArray.Length)].Id;
     }
 
     // 총알 만들기
@@ -478,14 +478,18 @@ public class WeaponManager : Singletone<WeaponManager> {
                             col.center = new Vector3(data.Boomeffectcollidercenter_x ,
                                 data.Boomeffectcollidercenter_y ,
                                 data.Boomeffectcollidercenter_z);
-                            r.BULLET_HIT_EFFECT.AddComponent<RocketBulletExplosion>().ROCKET = item;
+                            var explosion = r.BULLET_HIT_EFFECT.AddComponent<RocketBulletExplosion>();
+                            explosion.tag = "Bullet_Explosion";
+                            explosion.ROCKET = item;
                         }
                         
                         if(r.BULLET_OTHER_HIT_EFFECT != null)
                         {
                             col = r.BULLET_OTHER_HIT_EFFECT.AddComponent<SphereCollider>();
                             col.radius = data.Boomeffectcolliderradius;
-                            r.BULLET_OTHER_HIT_EFFECT.AddComponent<RocketBulletExplosion>().ROCKET = item;
+                            var explosion = r.BULLET_HIT_EFFECT.AddComponent<RocketBulletExplosion>();
+                            explosion.tag = "Bullet_Explosion";
+                            explosion.ROCKET = item;
                         }
                         
                         col.isTrigger = true;

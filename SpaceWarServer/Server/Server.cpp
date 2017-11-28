@@ -50,8 +50,8 @@ void ServerThreadLoop(void*)
 		if (s_meteorCommingTime[i] > 0)
 		{
 			s_meteorCommingTime[i] -= 1;
-			if(s_meteorCommingTime[i] % 5)
-				cout << "메테오 "<< i << "번 " << s_meteorCommingTime[i] << " 초 남음 " << server.GetServer()->GetTimeMs() << endl;
+		/*	if(s_meteorCommingTime[i] % 5)
+				cout << "메테오 "<< i << "번 " << s_meteorCommingTime[i] << " 초 남음 " << server.GetServer()->GetTimeMs() << endl;*/
 			if (s_meteorCommingTime[i] <= 0.0f)
 			{
 				float anglex = RandomRange(-360.0f, 360.0f);
@@ -60,7 +60,7 @@ void ServerThreadLoop(void*)
 				
 				meteorID += to_string(server.GetMeteorID());
 				server.SetMeteorID(server.GetMeteorID() + 1);
-				cout << "anglex " << anglex << " anglez " << anglez;
+				//cout << "anglex " << anglex << " anglez " << anglez;
 
 				server.GetProxy()->NotifyMeteorCreate(server.GetP2PID(), 
 					RmiContext::ReliableSend, anglex, anglez, meteorID);
@@ -89,6 +89,7 @@ void ServerThreadLoop(void*)
 		string deathZoneID = "deathZone";
 		deathZoneID += to_string(server.GetDeathZoneID());
 		server.SetDeathZoneID(server.GetDeathZoneID() + 1);
+		cout << "Death Zone Create !" << endl;
 		// 생성
 		server.GetProxy()->NotifyDeathZoneCreate(server.GetP2PID(), 
 			RmiContext::ReliableSend, index, deathZoneID);

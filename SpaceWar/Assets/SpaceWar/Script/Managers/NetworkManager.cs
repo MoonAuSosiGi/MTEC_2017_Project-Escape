@@ -577,15 +577,15 @@ public class NetworkManager : Singletone<NetworkManager>
                 // 10% 체크
                 if (hp <= maxhp * 0.1f)
               {
-                    // 산소 부족이 띄워져있을 경우 숨김
-                    CameraManager.Instance().HideNotEnoughOxyEffect();
+                  // 산소 부족이 띄워져있을 경우 숨김
+                  CameraManager.Instance().HideNotEnoughOxyEffect();
                   CameraManager.Instance().ShowNotEnoughHPEffect();
                   GameManager.Instance().PLAYER.m_player.NotEnoughHp();
               }
               else if (prevhp <= maxhp * 0.1f && hp > maxhp * 0.1f)
               {
-                    // 막 회복되었을때
-                    GameManager.Instance().PLAYER.m_player.HealHPAndOxy();
+                  // 막 회복되었을때
+                  GameManager.Instance().PLAYER.m_player.HealHPAndOxy();
                   CameraManager.Instance().HideNotEnoughHpEffect();
               }
 
@@ -969,12 +969,18 @@ public class NetworkManager : Singletone<NetworkManager>
         // 데스존 생성 명령
         m_s2cStub.NotifyDeathZoneCreate = (HostID remote , RmiContext rmiContext , int spaceShipIndex , string deathZoneID) =>
         {
-            if (SceneManager.GetActiveScene().buildIndex != 2)
+            if (GameManager.Instance() == null)
                 return true;
 
             if (m_deathZone == null)
             {
-                m_deathZone = GameObject.Instantiate(Resources.Load("DeathZone/DeathZone") , null) as GameObject;
+                string path = "DeathZone/DeathZone";
+                // todo change
+                if(GravityManager.Instance().PLANET_NAME.Equals("Kepler"))
+                {
+                    path = "DeathZone/DeathZone_2";
+                }
+                m_deathZone = GameObject.Instantiate(Resources.Load(path) , null) as GameObject;
                 m_deathZone.transform.position = UnityEngine.Vector3.zero;
                 DeathZone deathZone = m_deathZone.GetComponent<DeathZone>();
                 deathZone.DEATH_LINE_INDEX = spaceShipIndex;
@@ -1035,13 +1041,33 @@ public class NetworkManager : Singletone<NetworkManager>
                 p.m_player.AnimationPlay("Idle");
                 GameManager.Instance().m_inGameUI.PlayerHPUpdate(p.HP , 0.0f , p.m_fullHp);
                 CameraManager.Instance().HideDeadCameraEffect();
-
+                IS_LOSE = false;
                 if (otherPosition == false)
                     return true;
 
-                float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 20.8f;
-                var pos = GravityManager.Instance().GetPlanetPosition(planetScale , 
-                    UnityEngine.Random.Range(-360.0f , 360.0f) , UnityEngine.Random.Range(-360.0f , 360.0f));
+                var pos = new UnityEngine.Vector3(-71.64739f,-38.75056f,46.31332f);
+
+                //var pos = GravityManager.Instance().GetPlanetPosition( 
+                //    UnityEngine.Random.Range(-360.0f , 360.0f) , UnityEngine.Random.Range(-360.0f , 360.0f));
+
+                bool checker = true;
+                while(checker)
+                {
+                    Collider[] colls = Physics.OverlapSphere(pos , 1.0f);
+
+                    checker = false;
+                    for (int i = 0; i < colls.Length; i++)
+                    {
+                        if(colls[i].CompareTag("DeathZone"))
+                        {
+                            checker = true;
+                            pos = GravityManager.Instance().GetPlanetPosition(
+                                     UnityEngine.Random.Range(-360.0f , 360.0f) , 
+                                     UnityEngine.Random.Range(-360.0f , 360.0f));
+                            Debug.Log("DEATH ZONE REBIRTH !! ");
+                        }
+                    }
+                }
 
                 // 카메라 되돌림
                 p.m_player.SetCameraThirdPosition();

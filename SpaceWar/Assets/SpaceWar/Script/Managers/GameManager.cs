@@ -271,8 +271,7 @@ public class GameManager : Singletone<GameManager> {
     // 메테오 생성
     public void CreateMeteor(float anglex,float anglez,string meteorID)
     {
-        float offset = 12.3f;
-        Vector3 pos =  GravityManager.Instance().GetPlanetPosition(offset , anglex , anglez);
+        Vector3 pos =  GravityManager.Instance().GetPlanetPosition(anglex , anglez);
 
         Debug.Log("METEOR " + pos + " ax " + anglex + " az " + anglez);
 
@@ -333,6 +332,10 @@ public class GameManager : Singletone<GameManager> {
             m_playerInfo.m_player.IS_MOVE_ABLE = false;
             m_playerInfo.m_player.AnimationPlay("Dead");
             m_playerInfo.m_player.Dead();
+            if(reason.Equals("DeathZone"))
+            {
+                m_playerInfo.m_player.IS_DEATHZONE_DEAD = true;
+            }
             CameraManager.Instance().ShowDeadCameraEffect();
 
         }

@@ -21,6 +21,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Animator m_animator = null;
     public Animator ANIMATOR { get { return m_animator; } }
 
+    // 데스존 사망했을 때 더이상 살아나지 못함
+    private bool m_deathZoneDead = false;
+    public bool IS_DEATHZONE_DEAD
+    {
+        get { return m_deathZoneDead; }
+        set { m_deathZoneDead = value; }
+    }
 
     #region HIT EFFECT ------------------------------------------------------------------------------------
     // Hit Effect 전용 렌더러 받기
@@ -541,9 +548,12 @@ public class PlayerController : MonoBehaviour {
         {
             ObserverControl();
 
-            if(Input.GetKeyDown(KeyCode.T) && GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH && CameraManager.Instance().DEAD_EFFECT_SHOW)
+            if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH 
+                && CameraManager.Instance().DEAD_EFFECT_SHOW
+                && IsInvoking("DeathMatchRebirth") == false
+                && m_deathZoneDead == false)
             {
-                NetworkManager.Instance().RequestRebirth((int)NetworkManager.Instance().HOST_ID , true);
+                Invoke("DeathMatchRebirth" , 3.0f);
             }
 
             return;
@@ -800,7 +810,7 @@ public class PlayerController : MonoBehaviour {
         float startTime = Time.time;
 
         //중력 적용 안함
-        GravityManager.Instance().GRAVITY_POWER = 0.0f;
+        GravityManager.Instance().SetGravityEnable(false);
         //JumpAnimation(1);
 
         JUMP_ANI_VALUE = 1;
@@ -813,7 +823,7 @@ public class PlayerController : MonoBehaviour {
         }
         //JumpAnimation(2);
         JUMP_ANI_VALUE = 2;
-        GravityManager.Instance().GRAVITY_POWER = 100.0f;
+        GravityManager.Instance().SetGravityEnable(true);
         m_isJumpAble = true;
 
     }
@@ -1496,6 +1506,12 @@ public class PlayerController : MonoBehaviour {
     public bool IS_DEATH()
     {
         return GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f;
+    }
+
+    // 데스매치 부활
+    void DeathMatchRebirth()
+    {
+        NetworkManager.Instance().RequestRebirth((int)NetworkManager.Instance().HOST_ID , true);
     }
     #endregion -----------------------------------------------------------------------------------------------
 
