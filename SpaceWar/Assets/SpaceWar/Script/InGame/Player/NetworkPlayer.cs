@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Nettention.Proud;
+using TimeForEscape.Object;
 
 public class NetworkPlayer : MonoBehaviour {
 
@@ -88,6 +89,14 @@ public class NetworkPlayer : MonoBehaviour {
     AngleFollower m_playerSeeZ = new AngleFollower();
 
     public HostID HOST_ID { get { return m_hostID; } }
+
+    // 우주선에 얘가 탔을경우
+    private SpaceShip m_targetSpaceShip = null;
+    public SpaceShip TARGET_SPACESHIP
+    {
+        get { return m_targetSpaceShip; }
+        set { m_targetSpaceShip = value; }
+    }
     #endregion
     #endregion
 

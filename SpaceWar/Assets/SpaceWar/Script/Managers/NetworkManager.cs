@@ -789,6 +789,7 @@ public class NetworkManager : Singletone<NetworkManager>
                     if (m_players[i].HOST_ID == remote)
                     {
                         m_players[i].gameObject.SetActive(false);
+                        m_players[i].TARGET_SPACESHIP = spaceShip;
                         m_isLose = true;
                         return true;
                     }

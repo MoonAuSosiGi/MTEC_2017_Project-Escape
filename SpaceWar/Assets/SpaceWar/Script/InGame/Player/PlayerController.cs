@@ -1420,23 +1420,75 @@ public class PlayerController : MonoBehaviour {
             //옵저버 조작
             var list = NetworkManager.Instance().NETWORK_PLAYERS;
             m_observerIndex++;
+
             if (m_observerIndex == -1)
                 m_observerIndex = 0;
             if (m_observerIndex >= list.Count)
             {
                 Camera.main.transform.parent = m_camAnchor3;
-                m_observerIndex = 0;
+                m_observerIndex = -1;
                 CameraManager.Instance().ShowDeadCameraEffect_NoEffect();
+                Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
+                Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
             }
             else
             {
-                Camera.main.transform.parent = list[m_observerIndex].GetComponent<PlayerController>().m_camAnchor3;
+
                 CameraManager.Instance().HideDeadCameraEffect();
+                // 우주선에 탄 놈일 경우 다르게 처리
+                if (list[m_observerIndex].TARGET_SPACESHIP != null)
+                {
+                    var np = list[m_observerIndex].GetComponent<PlayerController>();
+                    if (np.m_camAnchor3.childCount > 0)
+                    {
+                        var cam = np.m_camAnchor3.GetChild(0);
+                        cam.parent = null;
+                        cam.gameObject.SetActive(true);
+                    }
+                    list[m_observerIndex].TARGET_SPACESHIP.SpaceShipCameraEndSetup();
+                }
+                else
+                {
+                    var np = list[m_observerIndex].GetComponent<PlayerController>();
+                    var target = np.m_camAnchor3;
+                    
+                    Camera.main.transform.parent = target;
+                    Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
+                    Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
+                }
             }
-        
-            Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
-            Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
-           
+            Debug.Log("Ob " + m_observerIndex);
+
+        }
+        else if(m_observerIndex != -1)
+        {
+            var list = NetworkManager.Instance().NETWORK_PLAYERS;
+
+            if (m_observerIndex >= list.Count)
+                return;
+
+
+            CameraManager.Instance().HideDeadCameraEffect();
+            // 우주선에 탄 놈일 경우 다르게 처리
+            if (list[m_observerIndex].TARGET_SPACESHIP != null)
+            {
+                var np = list[m_observerIndex].GetComponent<PlayerController>();
+
+                if(np.m_camAnchor3.childCount > 0)
+                {
+                    var cam = np.m_camAnchor3.GetChild(0);
+                    cam.parent = null;
+                    cam.gameObject.SetActive(true);
+                }
+                list[m_observerIndex].TARGET_SPACESHIP.SpaceShipCameraEndSetup();
+            }
+            else
+            {
+                //var np = list[m_observerIndex].GetComponent<PlayerController>();
+                //var target = np.m_camAnchor3;
+
+                //Camera.main.transform.parent = target;
+            }
         }
     }
 
@@ -1698,7 +1750,7 @@ public class PlayerController : MonoBehaviour {
         AudioPlay(m_spaceShipChargeFail);
     }
 
-    // 우주선 작동 시작시 우주선 측에서 호출함
+    // 우주선 작동 시작시 우주선 측에서 호출함 
     public void SpaceShipChargeEnd()
     {
         HideUseEffect(null);

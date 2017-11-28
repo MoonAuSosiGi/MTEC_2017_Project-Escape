@@ -111,7 +111,7 @@ namespace TimeForEscape.Object
          * @param   t 더할 연료량
          * @param   me true일 경우 로컬 플레이어가 호출. 그게 아닌경우 서버측이 호출
          */
-        public void SpaceShipEngineCharge(float t , bool me)
+        public void SpaceShipEngineCharge(float t , bool me,int targetHostID = -1)
         {
             // 끝났으면 수행하지 않음
             if (m_isEnd)
@@ -145,16 +145,9 @@ namespace TimeForEscape.Object
                     GameManager.Instance().WINNER = true;
                     // 게이지 UI는 감춘다.
                     GameManager.Instance().m_inGameUI.StopSpaceShipUI();
-                    // 카메라 제어도 필요없다.
-                    CameraManager.Instance().enabled = false;
 
-                    // 카메라 시야를 넓게 함
-                    Camera.main.fieldOfView = 70.0f;
-                    // 카메라는 더이상 플레이어에게 붙지 않고 우주선에 붙는다.
-                    Camera.main.transform.SetParent(transform.GetChild(0).GetChild(0) , false);
-                    // 회전값 / 포지션값 초기화
-                    Camera.main.transform.localEulerAngles = new Vector3(0.0f , 0.0f , 0.0f);
-                    Camera.main.transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
+                    // 카메라 세팅
+                    SpaceShipCameraEndSetup();
 
                     // 기타 이펙트들을 감춘다.
                     CameraManager.Instance().HideNotEnoughHpEffect();
@@ -169,11 +162,32 @@ namespace TimeForEscape.Object
                     // 플레이어에 붙어있는 리스너를 더이상 못쓰므로 여기에 추가
                     this.gameObject.AddComponent<AudioListener>();
                 }
+                else
+                {
+
+                }
                 // 우주선 사운드 재생
                 m_spaceShipSource.Play();
                 // 끝
                 m_isEnd = true;
             }
+        }
+
+        /**
+         * @brief   우주선 발진시 카메라 세팅 로직
+         */
+        public void SpaceShipCameraEndSetup()
+        {
+            // 카메라 제어도 필요없다.
+            CameraManager.Instance().enabled = false;
+
+            // 카메라 시야를 넓게 함
+            Camera.main.fieldOfView = 70.0f;
+            // 카메라는 더이상 플레이어에게 붙지 않고 우주선에 붙는다.
+            Camera.main.transform.SetParent(transform.GetChild(0).GetChild(0) , false);
+            // 회전값 / 포지션값 초기화
+            Camera.main.transform.localEulerAngles = new Vector3(0.0f , 0.0f , 0.0f);
+            Camera.main.transform.localPosition = new Vector3(0.0f , 0.0f , 0.0f);
         }
 
         /**
