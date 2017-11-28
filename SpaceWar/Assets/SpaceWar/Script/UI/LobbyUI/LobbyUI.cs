@@ -612,6 +612,7 @@ public class LobbyUI : MonoBehaviour {
             case GameManager.GameMode.SURVIVAL:
                 m_gameModeText.text = "SURVIVAL"; break;
         }
+        GameManager.CURRENT_GAMEMODE = (GameManager.GameMode)m_gameMode;
         NetworkManager.Instance().RequestNetworkGameModeChange(m_gameMode , m_teamMode);
     }
 

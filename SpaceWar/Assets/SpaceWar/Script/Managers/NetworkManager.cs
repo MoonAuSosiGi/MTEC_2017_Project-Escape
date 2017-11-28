@@ -1034,6 +1034,9 @@ public class NetworkManager : Singletone<NetworkManager>
                 var pos = GravityManager.Instance().GetPlanetPosition(planetScale , 
                     UnityEngine.Random.Range(-360.0f , 360.0f) , UnityEngine.Random.Range(-360.0f , 360.0f));
 
+                // 카메라 되돌림
+                p.m_player.SetCameraThirdPosition();
+
                 p.m_player.transform.position = pos;
             }
             else

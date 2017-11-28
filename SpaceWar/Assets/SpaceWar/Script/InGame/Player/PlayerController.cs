@@ -537,27 +537,15 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f)
+        if (IS_DEATH())
         {
-            if(Input.GetKey(KeyCode.Space) && CameraManager.Instance().DEAD_EFFECT_SHOW)
-            {
-                // 임시 옵저버 조작
-                var list = NetworkManager.Instance().NETWORK_PLAYERS;
-                m_observerIndex++;
-                if (m_observerIndex == -1 || m_observerIndex >= list.Count)
-                    m_observerIndex = 0;
-                Camera.main.transform.parent = list[m_observerIndex].GetComponent<PlayerController>().m_camAnchor3;
-                Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
-                Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
-                CameraManager.Instance().HideDeadCameraEffect();
-            }
-            else if(Input.GetKey(KeyCode.T) && GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH)
+            ObserverControl();
+
+            if(Input.GetKeyDown(KeyCode.T) && GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH && CameraManager.Instance().DEAD_EFFECT_SHOW)
             {
                 NetworkManager.Instance().RequestRebirth((int)NetworkManager.Instance().HOST_ID , true);
             }
-            
-            
-           
+
             return;
         }
 
@@ -1340,7 +1328,7 @@ public class PlayerController : MonoBehaviour {
 
     #endregion -----------------------------------------------------------------------------------------------
 
-    #region Player Damage And Dead ---------------------------------------------------------------------------
+    #region Player Damage And Dead Observer ------------------------------------------------------------------
 
     #region Damage Effect ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1424,6 +1412,39 @@ public class PlayerController : MonoBehaviour {
         NetworkManager.Instance().IS_LOSE = true;
     }
 
+    // 옵저버 조작
+    void ObserverControl()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && CameraManager.Instance().DEAD_EFFECT_SHOW)
+        {
+            //옵저버 조작
+            var list = NetworkManager.Instance().NETWORK_PLAYERS;
+            m_observerIndex++;
+            if (m_observerIndex == -1)
+                m_observerIndex = 0;
+            if (m_observerIndex >= list.Count)
+            {
+                Camera.main.transform.parent = m_camAnchor3;
+                m_observerIndex = 0;
+                CameraManager.Instance().ShowDeadCameraEffect_NoEffect();
+            }
+            else
+            {
+                Camera.main.transform.parent = list[m_observerIndex].GetComponent<PlayerController>().m_camAnchor3;
+                CameraManager.Instance().HideDeadCameraEffect();
+            }
+        
+            Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
+            Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
+           
+        }
+    }
+
+    // 죽었는지 체크
+    public bool IS_DEATH()
+    {
+        return GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f;
+    }
     #endregion -----------------------------------------------------------------------------------------------
 
     #region Player Object Interaction ------------------------------------------------------------------------

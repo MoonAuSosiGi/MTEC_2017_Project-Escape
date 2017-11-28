@@ -246,6 +246,13 @@ public class CameraManager : Singletone<CameraManager>
         curver.enabled = false;
     }
 
+    public void ShowDeadCameraEffect_NoEffect()
+    {
+        var curver = this.GetComponent<ColorCorrectionCurves>();
+        curver.enabled = true;
+        curver.saturation = 0.0f;
+    }
+
     void DeadCameraEffect()
     {
         var curver = this.GetComponent<ColorCorrectionCurves>();
