@@ -396,9 +396,17 @@ public class NetworkManager : Singletone<NetworkManager>
             if (m_hostID == (HostID)hostID)
                 return true;
 
+            // 중복 비허용
+            for(int i = 0; i < m_players.Count; i++)
+            {
+                if (m_players[i].HOST_ID == (HostID)hostID)
+                    return true;
+            }
+
             GameObject MP = GameManager.Instance().OnJoinedRoom(name , false ,
                  new UnityEngine.Vector3(0.0f , 80.0f , 0.0f));
             MP.GetComponent<NetworkPlayer>().NetworkPlayerSetup((HostID)hostID , name);
+            MP.name += "_" + hostID.ToString();
             return true;
         };
 
