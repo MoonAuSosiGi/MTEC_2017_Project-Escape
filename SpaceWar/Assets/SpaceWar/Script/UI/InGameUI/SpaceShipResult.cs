@@ -18,7 +18,8 @@ public class SpaceShipResult : MonoBehaviour {
             gameObject.SetActive(false);
         }else if (NetworkManager.Instance().IS_LOSE)
         {
-            ResultAnimationStart();
+            if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.SURVIVAL)
+             ResultAnimationStart();
             ResultUIAlready();
             m_camera.gameObject.SetActive(true);
             gameObject.SetActive(false);

@@ -341,10 +341,16 @@ void RoomClient::DamageClient(int hostID, float time)
  * @detail	플레이어가 죽었을 경우 결과창 보여주기 관련 처리 ( 어시스트 등 )
  * @todo	어시스트 허용시간 테이블 값으로 가져오기 / 어시스트 로직 점검
 */
-void RoomClient::PlayerDead(float deadTime)
+void RoomClient::PlayerDead(float deadTime,string reason)
 {
 	cout << "Player Dead : " << (int)m_hostID << " Dead Time : " << deadTime << endl;
-	m_state = DEATH;
+	if (reason == "DeathZone")
+	{
+		cout << "DeathZone Dead" << endl;
+		m_state = DEATH_ZONE_DEAD;
+	}
+	else
+		m_state = DEATH;
 	m_deathCount++;
 	// 어시스트의 목록을 만들어야 함
 	auto iter = m_assistCheck.begin();

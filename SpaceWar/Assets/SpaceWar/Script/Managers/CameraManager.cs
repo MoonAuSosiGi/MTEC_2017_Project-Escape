@@ -71,7 +71,12 @@ public class CameraManager : Singletone<CameraManager>
 
     // 이펙트 체크
     private bool m_deadEffectShow = false;
-    public bool DEAD_EFFECT_SHOW { get { return m_deadEffectShow; } set { m_deadEffectShow = value; } }
+    public bool DEAD_EFFECT_SHOW {
+        get { return m_deadEffectShow; }
+        set {
+            m_deadEffectShow = value;
+        }
+    }
 
     #endregion
 

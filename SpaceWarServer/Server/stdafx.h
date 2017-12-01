@@ -5,11 +5,6 @@
 
 #pragma once
 
-#include "targetver.h"
-
-#include <stdio.h>
-#include <tchar.h>
-#include <memory>
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
@@ -40,6 +35,7 @@ typedef enum PlayerState
 {
 	ALIVE = 0,
 	DEATH,
+	DEATH_ZONE_DEAD,
 	SPACESHIP
 }PLAYER_STATE;
 

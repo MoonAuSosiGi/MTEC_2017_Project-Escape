@@ -81,7 +81,7 @@ public:
 #pragma region InGame Method ========================================================================================
 	void GameReset(); ///< 게임 리셋시 호출
 	void DamageClient(int hostID, float time); ///< 어시스트 계산을 위해 때린 녀석 기록
-	void PlayerDead(float deadTime); ///< 플레이어가 죽었을 때의 처리
+	void PlayerDead(float deadTime,string reason); ///< 플레이어가 죽었을 때의 처리
 	void PlayerWin(); ///< 이 플레이어가 승리했을 경우에 대한 처리
 	forward_list<int> GetAssistClientList(); ///< 이 클라이언트가 죽었을때, 어시스트한 클라이언트 리스트
 #pragma endregion

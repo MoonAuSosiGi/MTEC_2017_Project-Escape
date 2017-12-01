@@ -555,6 +555,27 @@ public class PlayerController : MonoBehaviour {
             {
                 Invoke("DeathMatchRebirth" , 3.0f);
             }
+            else if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH
+                && CameraManager.Instance().DEAD_EFFECT_SHOW
+                && m_deathZoneDead == true)
+            {
+                // 여기서 데스매치 끝났는지 체크
+                var list = NetworkManager.Instance().NETWORK_PLAYERS;
+
+                int checker = 0;
+                for(int i = 0; i < list.Count; i ++)
+                {
+                    if(list[i].IS_DEATHZONE_DEATH == true)
+                    {
+                        checker++;
+                    }
+                }
+                if(checker == list.Count)
+                {
+                    //끝
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Space_1Result");
+                }
+            }
 
             return;
         }
@@ -600,6 +621,7 @@ public class PlayerController : MonoBehaviour {
         Vector3 dir = m_forward.position - transform.GetChild(0).position;
         dir.Normalize();
         Debug.DrawLine(transform.position , dir , Color.red);
+
 
     }
 
@@ -991,20 +1013,7 @@ public class PlayerController : MonoBehaviour {
         ATTACK_ANI_VALUE = 0;
     }
 
-    public void AttackAnimationEnd()
-    {
-        //ATTACK_ANI_VALUE = 0;
-        if (enabled == false || m_equipItems[m_curEquipItem] == null)
-            return;
 
-        if (m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_GRENADE)
-        {
-            m_equipItems[m_curEquipItem] = null;
-            SetAnimation(AnimationType.ANI_BAREHAND);
-        }
-
-
-    }
     #endregion -----------------------------------------------------------------------------------------------
 
     #region Show UI Logic ------------------------------------------------------------------------------------
@@ -1064,6 +1073,7 @@ public class PlayerController : MonoBehaviour {
             
             string text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<Item>().ITEM_ID).Name_kr;
             GameManager.Instance().m_inGameUI.ShowObjectUI(text);
+            m_nearItem.GetComponent<Item>().OutLineShow();
         }
     }
 
@@ -1107,6 +1117,8 @@ public class PlayerController : MonoBehaviour {
         }
         else if (col.CompareTag("Recoverykit"))
         {
+            if (m_nearItem != null)
+                m_nearItem.GetComponent<Item>().OutLineHide();
             m_nearItem = null;
             
         }
@@ -1289,8 +1301,8 @@ public class PlayerController : MonoBehaviour {
     {
         item.transform.parent = null;
         if (GameManager.Instance() != null)
-            GameManager.Instance().UnEquipWeapon(m_curEquipItem);
-        WeaponAnimationChange(null);
+            GameManager.Instance().UnEquipWeapon(m_curEquipItem,true);
+        //WeaponAnimationChange(null);
     }
     // 버리는 로직 FixedUpdate 에서 부름
     void ControlWeaponObjectThrowProcess()
@@ -1382,7 +1394,11 @@ public class PlayerController : MonoBehaviour {
     // 데미지를 입을때
     public void Damage(Vector3 dir , string reason = null)
     {
-        DamageEffect(true , !reason.Equals("DeathZone") && !reason.Equals("Meteor") && !reason.Equals("oxy"));
+        DamageEffect(true , 
+            !reason.Equals("DeathZone") 
+            && !reason.Equals("Meteor") 
+            && !reason.Equals("oxy")
+            && !reason.Equals("Gas"));
 
         AudioPlay(m_damageHit);
         // 우주선 생성 도중 데미지를 입었을 경우 캔슬됨
@@ -1419,7 +1435,8 @@ public class PlayerController : MonoBehaviour {
     public void DeadAnimationEnd()
     {
         Debug.Log("Dead Animation End");
-        NetworkManager.Instance().IS_LOSE = true;
+        if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.SURVIVAL)
+            NetworkManager.Instance().IS_LOSE = true;
     }
 
     // 옵저버 조작
@@ -1792,7 +1809,21 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+    
+    public void AttackAnimationEnd()
+    {
+        // 네트워크 플레이어는 수행되면 안됨
+        if (enabled == false)
+            return;
+        // 원래 수류탄 전용 
+        if (m_equipItems[m_curEquipItem] == null)
+        {
+            ATTACK_ANI_VALUE = 0;
+            SetAnimation(AnimationType.ANI_BAREHAND);
+        }
 
+
+    }
     void WalkAnimation(int value)
     {
         m_animator.SetInteger("WALK" , value);

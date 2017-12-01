@@ -24,8 +24,9 @@ public class MainLobbyUI : MonoBehaviour {
 
     void Start()
     {
+        iTween.Stop();
         // 게임 설정 --
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         Screen.SetResolution(1920 , 1080 , false);
         Application.runInBackground = true;
     }
@@ -61,7 +62,7 @@ public class MainLobbyUI : MonoBehaviour {
         if (m_loginUI.activeSelf)
             return;
         //TODO 재생중일때 다른거 누르면 닫히게 할 것
-        if (iTween.Count() == 0 && m_mainButtonList.Contains(bt))
+        if (iTween.Count(bt.gameObject) == 0 && m_mainButtonList.Contains(bt))
         {
             int index = m_mainButtonList.IndexOf(bt);
 
@@ -176,7 +177,7 @@ public class MainLobbyUI : MonoBehaviour {
     // 다른 버튼을 클릭하거나 하면 닫게 함
     void HideButton()
     {
-        if (iTween.Count() > 0 || m_currentHideAniPlay == true)
+        if (iTween.Count(m_mainButtonList[m_currentOpenButton].gameObject) > 0 || m_currentHideAniPlay == true)
             return;
         m_currentHideAniPlay = true;
         // 서브메뉴가 있는지 체크

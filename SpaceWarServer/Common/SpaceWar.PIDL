@@ -123,6 +123,8 @@ global SpaceWar 3141
 	NotifyPlayerLost([in]int hostID);
 	// 서버에게 - 체력 회복용
 	RequestHpUpdate([in]float hp);
+	// 서버에게 - 산소 회복용
+	RequestOxyUpdate([in]float oxy);
 
 	// 체력 변동 이벤트 (데미지는 여기서 처리되지 않는다.)
 	NotifyPlayerChangeHP([in]int sendHostID,[in]string name,[in]float hp,[in]float prevhp,[in]float maxhp,[in]Proud::Vector3 dir);
@@ -246,6 +248,8 @@ global SpaceWar 3141
 	NotifyNetworkObjectDelete([in]string networkID);
 // ===============================================================================================================================================
 // [인게임 - 메테오 ] ============================================================================================================================
+	// 메테오 생성해줘 
+	RequestMeteorCreate([in]Proud::Vector3 pos);
 
 	// 메테오 생성까지 남은 시간
 	NotifyMeteorCreateTime([in]int time);

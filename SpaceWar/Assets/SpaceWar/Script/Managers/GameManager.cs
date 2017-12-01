@@ -293,6 +293,25 @@ public class GameManager : Singletone<GameManager> {
             InvokeRepeating("MeteorTimer" , Time.deltaTime , Time.deltaTime);
     }
 
+    public void CreateMeteor(Vector3 pos, string id)
+    {
+        m_meteorList.Add(id , 30.0f);
+
+        GameObject obj = Instantiate(m_meteorPrefab , new Vector3(pos.x , pos.y +1.5f , pos.z) , Quaternion.Euler(0.0f , 0.0f , 0.0f));
+
+        obj.transform.rotation = Quaternion.LookRotation((pos - Vector3.zero).normalized);
+        Vector3 r = obj.transform.eulerAngles;
+        obj.transform.eulerAngles = new Vector3(r.x + 90.0f , r.y , r.z);
+
+        //obj.transform.SetParent(m_meteorParent.transform,false);
+
+        m_alertUI.AlertShow(AlertUI.AlertType.METEOR_ATTACK , id , m_meteorTime , "Meteor Attack");
+        //m_inGameUI.RecvMeteorInfo(m_meteorTime);
+        //m_inGameUI.StartMeteor();
+
+        if (IsInvoking("MeteorTimer") == false)
+            InvokeRepeating("MeteorTimer" , Time.deltaTime , Time.deltaTime);
+    }
     void MeteorTimer()
     {
         for(int i = 0; i < m_meteorList.Keys.Count; i++)
@@ -362,11 +381,11 @@ public class GameManager : Singletone<GameManager> {
         m_inGameUI.UpdateWeapon(cur , max);
     }
 
-    public void UnEquipWeapon(int index)
+    public void UnEquipWeapon(int index,bool iconHide=false)
     {
         if (m_inGameUI == null)
             return;
-        m_inGameUI.UnEquipWeapon(index);
+        m_inGameUI.UnEquipWeapon(index,iconHide);
     }
     #endregion
 

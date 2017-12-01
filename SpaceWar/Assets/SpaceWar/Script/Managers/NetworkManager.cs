@@ -57,7 +57,7 @@ public class NetworkManager : Singletone<NetworkManager>
     }
 
     // 서버 아이피
-    private string m_serverIP = "localhost";
+    private string m_serverIP = "211.201.94.196";
 
     public string SERVER_IP
     {
@@ -607,6 +607,8 @@ public class NetworkManager : Singletone<NetworkManager>
                       if (hp <= 0.0f)
                       {
                           m_players[i].IS_DEATH = true;
+                          if (!string.IsNullOrEmpty(name) && name.Equals("DeathZone"))
+                              m_players[i].IS_DEATHZONE_DEATH = true;
                       }
                       m_players[i].HPUpdate(hp , maxhp);
                       return true;
@@ -872,6 +874,13 @@ public class NetworkManager : Singletone<NetworkManager>
         #endregion
 
         #region Meteor , Death Zone
+        // 메테오 생성 요청
+        m_s2cStub.RequestMeteorCreate = (HostID remote , 
+            RmiContext rmiContext , UnityEngine.Vector3 pos) =>
+        {
+            GameManager.Instance().CreateMeteor(pos , (int)HOST_ID + "_" + UnityEngine.Random.Range(0 , 365));
+            return true;
+        };
         // 메테오 시간
         m_s2cStub.NotifyMeteorCreateTime = (HostID remote , RmiContext rmiContext , int time) =>
         {
@@ -932,6 +941,7 @@ public class NetworkManager : Singletone<NetworkManager>
             string name , int state) =>
         {
             Debug.Log("Result 적들 " + (gameResultInfoToOther == null));
+            Debug.Log("딴사람들 정보 " + name + " state " + state + " remote " + remote);
             //GameManager.Instance().AddResultOtherProfileInfo(name , state);
 
             if (gameResultInfoToOther != null)
@@ -944,7 +954,7 @@ public class NetworkManager : Singletone<NetworkManager>
         m_s2cStub.NotifyGameResultShow = (HostID remote , RmiContext rmiContext) =>
         {
             //GameManager.Instance().GameResultShow();
-
+            Debug.Log("결과를 띄워라!!");
             if (gameResultShow != null)
                 gameResultShow();
 
@@ -1039,6 +1049,9 @@ public class NetworkManager : Singletone<NetworkManager>
                 p.HP = p.m_fullHp;
                 p.OXY = p.m_fullOxy;
                 p.m_player.AnimationPlay("Idle");
+                p.m_player.IS_MOVE_ABLE = true;
+                p.m_player.IS_JUMP_ABLE = true;
+                p.m_player.IS_ATTACK_ABLE = true;
                 GameManager.Instance().m_inGameUI.PlayerHPUpdate(p.HP , 0.0f , p.m_fullHp);
                 CameraManager.Instance().HideDeadCameraEffect();
                 IS_LOSE = false;
@@ -1051,6 +1064,7 @@ public class NetworkManager : Singletone<NetworkManager>
                 //    UnityEngine.Random.Range(-360.0f , 360.0f) , UnityEngine.Random.Range(-360.0f , 360.0f));
 
                 bool checker = true;
+                int count = 5;
                 while(checker)
                 {
                     Collider[] colls = Physics.OverlapSphere(pos , 1.0f);
@@ -1058,12 +1072,15 @@ public class NetworkManager : Singletone<NetworkManager>
                     checker = false;
                     for (int i = 0; i < colls.Length; i++)
                     {
-                        if(colls[i].CompareTag("DeathZone"))
+                        if(colls[i].CompareTag("DeathZone") && colls[i].CompareTag("Gas") 
+                        && colls[i].CompareTag("NoneSpone")
+                        && count > 0)
                         {
                             checker = true;
                             pos = GravityManager.Instance().GetPlanetPosition(
                                      UnityEngine.Random.Range(-360.0f , 360.0f) , 
                                      UnityEngine.Random.Range(-360.0f , 360.0f));
+                            count--;
                             Debug.Log("DEATH ZONE REBIRTH !! ");
                         }
                     }
@@ -1560,7 +1577,14 @@ public class NetworkManager : Singletone<NetworkManager>
     {
         m_c2sProxy.RequestHpUpdate(HostID.HostID_Server , RmiContext.ReliableSend , hp);
     }
+
+    // oxy update request
+    public void RequestOxyUpdate(float oxy)
+    {
+        m_c2sProxy.RequestOxyUpdate(HostID.HostID_Server , RmiContext.ReliableSend , oxy);
+    }
     #endregion
+
 
     #region Death Zone Move 
 
@@ -1735,6 +1759,14 @@ public class NetworkManager : Singletone<NetworkManager>
     #endregion
 
     #region GameMode / UTIL / CHEAT
+
+    // 메테오
+    public void CreateMeteor(UnityEngine.Vector3 pos)
+    {
+        // 임시로직
+        m_c2sProxy.RequestMeteorCreate(m_p2pID , RmiContext.ReliableSend , pos);
+    }
+
     // 부활 요청
     public void RequestRebirth(int hostID,bool randomPosition)
     {

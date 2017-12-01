@@ -857,6 +857,37 @@ DEFRMI_SpaceWar_RequestHpUpdate(Server)
 }
 
 /**
+ * @brief	산소 변경 요청
+ * @detail	산소 소모가 아닌 산소 변경 요청
+*/
+DEFRMI_SpaceWar_RequestOxyUpdate(Server)
+{
+	cout << "Oxy Update 요청 " << endl;
+	auto clientMap = GetGameRoom()->GetClientMap();
+	auto iter = clientMap.begin();
+
+	float prevOxy = 0.0f;
+	while (iter != clientMap.end())
+	{
+		if (iter->second->GetHostID() == remote)
+		{
+			prevOxy = iter->second->GetHp();
+			iter->second->SetOxy(oxy);
+			break;
+		}
+		iter++;
+	}
+
+	iter = clientMap.begin();
+	while (iter != clientMap.end())
+	{
+		m_proxy.NotifyPlayerChangeOxygen(iter->second->GetHostID(), RmiContext::ReliableSend, (int)remote, "OxyUpdate", oxy, prevOxy, MAX_OXY);
+		iter++;
+	}
+	return true;
+}
+
+/**
  * @brief	데미지를 입었다.
  * @detail	죽음 / 어시스트 등에 대한 처리
 */
@@ -866,7 +897,7 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 	cout << "Request Player Damage 때린놈 " << sendHostID << " 맞은놈 " << targetHostID << " 데미지 " << damage << " 무기 이름 " << weaponName << endl;
 	cout << "현재 총인원 " << clientMap.size() << endl;
 
-	if (clientMap[(HostID)targetHostID]->GetState() == DEATH)
+	if (clientMap[(HostID)targetHostID]->GetState() == DEATH || clientMap[(HostID)targetHostID]->GetState() == DEATH_ZONE_DEAD)
 		return true;
 
 	// 쿨타임 체크
@@ -889,9 +920,9 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 
 	if (clientMap[(HostID)targetHostID]->GetHp() <= 0.0f)
 	{
-		cout << " 죽었다 " + targetHostID << endl;
+		cout << " 죽었다 " << targetHostID << endl;
 		clientMap[(HostID)targetHostID]->SetHp(0.0f);
-		clientMap[(HostID)targetHostID]->PlayerDead(m_netServer->GetTimeMs());
+		clientMap[(HostID)targetHostID]->PlayerDead(m_netServer->GetTimeMs(),weaponName);
 
 		// 죽은 후에 어시스트 목록 갱신
 		forward_list<int> list = clientMap[(HostID)targetHostID]->GetAssistClientList();
@@ -916,17 +947,20 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 			clientMap[(HostID)sendHostID]->GetKillCount(),
 			clientMap[(HostID)sendHostID]->GetAssistCount());
 
+
 		// 이 부분에서 다 죽었는지 체크
 		int deadCheck = 0;
+		int deathZoneCheck = 0;
 		auto iter = clientMap.begin();
 		while (iter != clientMap.end())
 		{
 			deadCheck += (iter->second->GetState() == DEATH) ? 0 : 1;
+			deathZoneCheck += (iter->second->GetState() == DEATH_ZONE_DEAD) ? 0 : 1;
 			iter++;
 		}
 
 		// 다죽음 - 즉 드로우 게임 
-		if (deadCheck == 0)
+		if (deadCheck == 0 && GetGameRoom()->GetGameMode() == SURVIVAL)
 		{
 			iter = clientMap.begin();
 			while (iter != clientMap.end())
@@ -935,6 +969,12 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 				m_proxy.NotifyDrawGame(iter->second->GetHostID(), RmiContext::ReliableSend);
 				iter++;
 			}
+		}
+		else if (deathZoneCheck == 0 && GetGameRoom()->GetGameMode() == DEATH_MATCH)
+		{
+			// 데스매치는 여기서 끝난 것이다
+			//cout << "DeathMatch End " << endl;
+			//DeathMatchEnd();
 		}
 	}
 	else
@@ -1423,6 +1463,11 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 {
 	cout << "RequestGameEnd -- 게임 종료  - " << endl;
 	s_GameRunning = false;
+	if (GetGameRoom()->GetGameMode() == DEATH_MATCH)
+	{
+		DeathMatchEnd((int)remote);
+		return true;
+	}
 
 	auto clientMap = GetGameRoom()->GetClientMap();
 	// 여기서 문제 생겼었음
@@ -1443,33 +1488,101 @@ DEFRMI_SpaceWar_RequestGameEnd(Server)
 		int winState = (clientMap[targetID]->GetState() == SPACESHIP) ? 1 : 0;
 
 		m_proxy.NotifyGameResultInfoMe(targetID, 
-			RmiContext::ReliableSend, "test", winState,
+			RmiContext::ReliableSend, "SURVIVAL", winState,
 			playTime, iter->second->GetKillCount(), 
 			iter->second->GetAssistCount() , 
 			iter->second->GetDeathCount(), 100);
 
-		auto resultIter = clientMap.begin();
-		while (resultIter != clientMap.end())
-		{
-			//	if (resultIter->first != iter->first)
-			{
-				cout << " 정보 보내기 " << endl;
-				m_proxy.NotifyGameResultInfoOther(targetID, 
-					RmiContext::ReliableSend,
-					resultIter->second->GetName(), 
-					resultIter->second->GetState());
-			}
-
-			resultIter++;
-		}
 		m_proxy.NotifyGameResultShow(targetID, RmiContext::ReliableSend);
 
 		iter++;
 	}
+	auto resultIter = clientMap.begin();
+	while (resultIter != clientMap.end())
+	{
+		m_proxy.NotifyGameResultInfoOther(remote,
+			RmiContext::ReliableSend,
+			resultIter->second->GetName(),
+			resultIter->second->GetState());
 
+		resultIter++;
+	}
 
 
 	return true;
+}
+
+/**
+ * @brief	데스매치 끝났을 때 결과창 전송하기
+*/
+void Server::DeathMatchEnd(int targetHostID)
+{
+	cout << "Death Match Mode End " << endl;
+	auto clientMap = GetGameRoom()->GetClientMap();
+	auto iter = clientMap.begin();
+
+	float playTime = m_netServer->GetTimeMs() - m_gameStartTime;
+
+	int winnerHostID = 0;
+	int maxKDA = 0;
+
+	// 최고 kda 찾기 
+	while (iter != clientMap.end())
+	{
+		HostID targetID = iter->first;
+		auto  cur = clientMap[targetID];
+		int death = (cur->GetDeathCount()-1 == 0) ? 1 : cur->GetDeathCount()-1;
+		int kda =(int)roundf((cur->GetKillCount() + cur->GetAssistCount()) / death);
+
+		if (kda > maxKDA)
+		{	
+			maxKDA = kda;
+		}
+		iter++;
+	}
+	iter = clientMap.begin();
+	// 이놈들은 이긴 놈들 
+	while (iter != clientMap.end())
+	{
+		HostID targetID = iter->first;
+		auto  cur = clientMap[targetID];
+		int death = (cur->GetDeathCount()-1 == 0) ? 1 : cur->GetDeathCount()-1;
+		int kda = (int)roundf((cur->GetKillCount() + cur->GetAssistCount()) / death);
+		
+		int winState = 0;
+		if (kda == maxKDA)
+		{
+			winState = 1;
+			if(targetHostID == (int)targetID)
+				m_proxy.NotifyGameResultInfoMe(targetID,
+					RmiContext::ReliableSend, "DEATH MATCH", winState,
+					playTime, iter->second->GetKillCount(),
+					iter->second->GetAssistCount(),
+					iter->second->GetDeathCount(), 100);
+		}
+		else
+		{
+			if (targetHostID == (int)targetID)
+				m_proxy.NotifyGameResultInfoMe(targetID,
+					RmiContext::ReliableSend, "DEATH MATCH", winState,
+					playTime, iter->second->GetKillCount(),
+					iter->second->GetAssistCount(),
+					iter->second->GetDeathCount(), 100);
+		}
+		iter++;
+	}
+	auto resultIter = clientMap.begin();
+	while (resultIter != clientMap.end())
+	{
+		cout << " 정보 보내기 " << (int)resultIter->first << " " << targetHostID << "<-받는놈 " << endl;
+		m_proxy.NotifyGameResultInfoOther((HostID)targetHostID,
+			RmiContext::ReliableSend,
+			resultIter->second->GetName(),
+			resultIter->second->GetState());
+
+		resultIter++;
+	}
+	m_proxy.NotifyGameResultShow((HostID)targetHostID, RmiContext::ReliableSend);
 }
 #pragma endregion
 

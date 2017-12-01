@@ -764,6 +764,34 @@ __msg << hp;
 			RmiName_RequestHpUpdate, (::Proud::RmiID)Rmi_RequestHpUpdate);
 	}
         
+	bool Proxy::RequestOxyUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & oxy)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestOxyUpdate;
+__msg.Write(__msgid); 
+	
+__msg << oxy;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestOxyUpdate, (::Proud::RmiID)Rmi_RequestOxyUpdate);
+	}
+
+	bool Proxy::RequestOxyUpdate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const float & oxy)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestOxyUpdate;
+__msg.Write(__msgid); 
+	
+__msg << oxy;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestOxyUpdate, (::Proud::RmiID)Rmi_RequestOxyUpdate);
+	}
+        
 	bool Proxy::NotifyPlayerChangeHP ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & sendHostID,  const string & name,  const float & hp,  const float & prevhp,  const float & maxhp,  const Proud::Vector3 & dir)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -1946,6 +1974,34 @@ __msg << networkID;
 			RmiName_NotifyNetworkObjectDelete, (::Proud::RmiID)Rmi_NotifyNetworkObjectDelete);
 	}
         
+	bool Proxy::RequestMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos)	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestMeteorCreate;
+__msg.Write(__msgid); 
+	
+__msg << pos;
+		
+		return RmiSend(&remote,1,rmiContext,__msg,
+			RmiName_RequestMeteorCreate, (::Proud::RmiID)Rmi_RequestMeteorCreate);
+	}
+
+	bool Proxy::RequestMeteorCreate ( ::Proud::HostID *remotes, int remoteCount, ::Proud::RmiContext &rmiContext,  const Proud::Vector3 & pos)  	{
+		::Proud::CMessage __msg;
+__msg.UseInternalBuffer();
+__msg.SetSimplePacketMode(m_core->IsSimplePacketMode());
+
+::Proud::RmiID __msgid=(::Proud::RmiID)Rmi_RequestMeteorCreate;
+__msg.Write(__msgid); 
+	
+__msg << pos;
+		
+		return RmiSend(remotes,remoteCount,rmiContext,__msg,
+			RmiName_RequestMeteorCreate, (::Proud::RmiID)Rmi_RequestMeteorCreate);
+	}
+        
 	bool Proxy::NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time)	{
 		::Proud::CMessage __msg;
 __msg.UseInternalBuffer();
@@ -2834,6 +2890,11 @@ const PNTCHAR* Proxy::RmiName_RequestHpUpdate =_PNT("RequestHpUpdate");
 const PNTCHAR* Proxy::RmiName_RequestHpUpdate =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestOxyUpdate =_PNT("RequestOxyUpdate");
+#else
+const PNTCHAR* Proxy::RmiName_RequestOxyUpdate =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyPlayerChangeHP =_PNT("NotifyPlayerChangeHP");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyPlayerChangeHP =_PNT("");
@@ -3012,6 +3073,11 @@ const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectMove =_PNT("");
 const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectDelete =_PNT("NotifyNetworkObjectDelete");
 #else
 const PNTCHAR* Proxy::RmiName_NotifyNetworkObjectDelete =_PNT("");
+#endif
+#ifdef USE_RMI_NAME_STRING
+const PNTCHAR* Proxy::RmiName_RequestMeteorCreate =_PNT("RequestMeteorCreate");
+#else
+const PNTCHAR* Proxy::RmiName_RequestMeteorCreate =_PNT("");
 #endif
 #ifdef USE_RMI_NAME_STRING
 const PNTCHAR* Proxy::RmiName_NotifyMeteorCreateTime =_PNT("NotifyMeteorCreateTime");

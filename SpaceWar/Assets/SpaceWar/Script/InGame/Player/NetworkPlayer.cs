@@ -21,11 +21,17 @@ public class NetworkPlayer : MonoBehaviour {
     [SerializeField] private TextMesh m_userNameUI = null;
 
     private bool m_isDeath = false;
+    private bool m_isDeathZoneDeath = false;
     public bool IS_DEATH { get { return m_isDeath; }
         set {
             m_isDeath = value;
             ShowPlayerName(m_isDeath) ;
         }
+    }
+    public bool IS_DEATHZONE_DEATH
+    {
+        get { return m_isDeathZoneDeath; }
+        set { m_isDeathZoneDeath = value; }
     }
 
     public void HPUpdate(float cur,float max)

@@ -159,12 +159,16 @@ public class InGameUI : MonoBehaviour
         m_curAmmo.text = curCount.ToString();
     }
 
-    public void UnEquipWeapon(int index)
+    public void UnEquipWeapon(int index,bool iconHide =false)
     {
         //아이템 이름 세팅
-        //m_curWeaponName.text = "";
-        //GetWeaponName(m_InvenIconList[index]).text = "";
-        //GetWeaponIcon(m_InvenIconList[index]).gameObject.SetActive(false);
+        if(iconHide)
+        {
+            m_curWeaponName.text = "";
+            GetWeaponName(m_InvenIconList[index]).text = "";
+            GetWeaponIcon(m_InvenIconList[index]).gameObject.SetActive(false);
+        }
+        
         m_equipInfo.SetActive(false);
     }
 
