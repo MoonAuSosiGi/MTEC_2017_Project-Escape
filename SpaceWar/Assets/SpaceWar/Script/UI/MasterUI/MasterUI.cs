@@ -162,7 +162,17 @@ namespace TimeForEscape.UI
             {
                 NetworkManager.Instance().CreateMeteor(
                     GameManager.Instance().PLAYER.m_player.transform.position);
+                m_meteorCreateLimit = 30;
+                Invoke("MeteorClear" , 30.0f);
             }
+        }
+
+        /**
+         * @brief   메테오 초기화 
+         */
+        void MeteorClear()
+        {
+            m_meteorCreateLimit = 0;
         }
         #endregion ========================================================================================
     }

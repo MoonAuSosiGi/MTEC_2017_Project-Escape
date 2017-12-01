@@ -1054,6 +1054,11 @@ public class PlayerController : MonoBehaviour {
         }
         else if (col.CompareTag("SpaceShipControlPanel"))
         {
+            if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH)
+            {
+                return;
+            }
+
             if (NetworkManager.Instance().SPACE_SHIP_ENABLE == false)
             {
                 GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 최초 잠김 상태");
@@ -1110,6 +1115,10 @@ public class PlayerController : MonoBehaviour {
         }
         else if (col.CompareTag("SpaceShipControlPanel"))
         {
+            if (GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH)
+            {
+                return;
+            }
             //  우주선 연료창 닫기
             if (m_nearSpaceShip != null)
                 m_nearSpaceShip.StopSpaceShipEngineCharge();

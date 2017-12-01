@@ -38,7 +38,8 @@ void ServerThreadLoop(void*)
 		return;
 	// 우주선 잠금 해제 시간
 
-	if (server.GetSpaceShipLockTime() > 0 )
+	if (server.GetSpaceShipLockTime() > 0  && 
+		server.GetGameRoom()->GetGameMode() == SURVIVAL)
 	{
 		server.SetSpaceShipLockTime(server.GetSpaceShipLockTime() - 1);
 		server.GetProxy()->NotifySpaceShipLockTime(server.GetP2PID(), 
