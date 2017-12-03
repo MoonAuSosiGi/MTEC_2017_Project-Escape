@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour {
     #region PlayerController_INFO ---------------------------------------------------------------------------
     //싱글 모드일때 처리 -- 171029 기준으로 아직 미동작 따로 처리 해야함
     [SerializeField]  private bool m_signleMode = false;
-
+    [SerializeField]
+    private PlayerControlAttackTiming m_animationEvent = null;
     // 현재 보고 있는 옵저버 인덱스
     private int m_observerIndex = -1;
 
@@ -444,7 +445,7 @@ public class PlayerController : MonoBehaviour {
     public AudioSource m_playerLoopSource = null;
     public AudioClip m_oxyChargerUseSound = null;
     public AudioClip m_shelterUseSound = null;
-    public AudioClip m_weaponUseSound = null;
+    public AudioClip m_itemGetSound = null;
 
     // 줍는 사운드
     public AudioClip m_pickSound = null;
@@ -546,6 +547,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (IS_DEATH())
         {
+            LoopAudioStop();
             ObserverControl();
 
             if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH 
@@ -597,20 +599,6 @@ public class PlayerController : MonoBehaviour {
         }
 
         RaderProcess();
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            DamageEffect();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , GameManager.Instance().PLAYER.m_name , "test" , 5.0f , Vector3.zero);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , 10.0f);
-        }
-
         RotatePlayerName();
         HealPackProcess();
         GetItemProcess();
@@ -914,7 +902,6 @@ public class PlayerController : MonoBehaviour {
         ShowUseEffect(col);
 
 
-
     }
 
     void OnTriggerStay(Collider col)
@@ -924,6 +911,9 @@ public class PlayerController : MonoBehaviour {
         RotateUseEffect();
         ShowUseEffect(col);
         MeteorDamage(col);
+
+        if (col.CompareTag("WATER"))
+            m_animationEvent.WaterSoundChange(true);
     }
 
     void OnTriggerExit(Collider col)
@@ -936,7 +926,8 @@ public class PlayerController : MonoBehaviour {
         if (m_nearItem != null)
             m_nearItem.GetComponent<Item>().OutLineHide();
         m_nearItem = null;
-
+        if (col.CompareTag("WATER"))
+            m_animationEvent.WaterSoundChange(false);
     }
 
     #endregion -----------------------------------------------------------------------------------------------
@@ -1177,6 +1168,7 @@ public class PlayerController : MonoBehaviour {
             // 주울 때 알아서 index 를 결정한다.
             Item nearItem = m_nearItem.GetComponent<Item>();
             int index = GetEquipItemIndex(nearItem.ITEM_TYPE);
+            AudioPlay(m_itemGetSound);
 
             // 다만 item 의 type 이 원거리 무기 일 경우엔 
             // 1번 ,2번 인덱스에 나눠서 넣어야 한다.
@@ -1531,7 +1523,7 @@ public class PlayerController : MonoBehaviour {
     // 죽었는지 체크
     public bool IS_DEATH()
     {
-        return GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f;
+        return GameManager.Instance() != null && GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f;
     }
 
     // 데스매치 부활
@@ -1708,7 +1700,7 @@ public class PlayerController : MonoBehaviour {
     // 메테오 데미지
     void MeteorDamage(Collider col)
     {
-        if (col.CompareTag("Meteor") && IS_SHELTER == false)
+        if (col.CompareTag("Meteor") && IS_SHELTER == false && IS_DEATH() == false)
         {
             AudioPlay(m_damageHit);
             if (m_meteorCoolTime > 0.0f)
@@ -1921,10 +1913,11 @@ public class PlayerController : MonoBehaviour {
 
     void AudioPlay(AudioClip clip)
     {
-        if (m_playerSoundSource.clip != null && m_playerSoundSource.isPlaying == true)
+        if (m_playerSoundSource.clip != clip && m_playerSoundSource.isPlaying == true)
             m_playerSoundSource.Stop();
         m_playerSoundSource.clip = clip;
-        m_playerSoundSource.Play();
+        if(m_playerSoundSource.isPlaying == false)
+            m_playerSoundSource.Play();
     }
 
     void LoopAudioPlay(AudioClip clip)

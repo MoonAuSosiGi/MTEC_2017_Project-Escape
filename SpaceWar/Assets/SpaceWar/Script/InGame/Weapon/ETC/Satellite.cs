@@ -20,6 +20,14 @@ namespace TimeForEscape.Object.Weapon
         GameObject m_hitBottom = null; ///< 밑바닥에 닿는 부분
         [SerializeField]
         GameObject m_hitCenter = null; ///< 센터에 닿는 부분
+        [SerializeField]
+        AudioSource m_moveSource = null; ///< 이동 사운드
+        [SerializeField]
+        AudioSource m_LaserSource = null; ///< 레이져 사운드
+        [SerializeField]
+        AudioSource m_hitSource = null; ///< 피격 사운드
+        [SerializeField]
+        AudioSource m_endSource = null; ///< 부서질 때 사운드
         private float m_damage = 0.0f; ///< 데미지
         private float m_distance = 0.0f; ///< 위성 포 거리 조절용 변수
         private UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero; ///< 처음  좌표
@@ -53,7 +61,7 @@ namespace TimeForEscape.Object.Weapon
             Quaternion rot = Quaternion.FromToRotation(transform.up , pup) * transform.rotation;
             transform.rotation = rot;
 
-            m_distance = UnityEngine.Vector3.Distance(transform.GetChild(0).position, m_hitCenter.transform.parent.position);
+            m_distance = UnityEngine.Vector3.Distance(transform.GetChild(0).position , m_hitCenter.transform.parent.position);
             m_startPos = m_hitCenter.transform.parent.position;
             // temp
             Invoke("SatelliteEnd" , 10.0f);
@@ -76,9 +84,9 @@ namespace TimeForEscape.Object.Weapon
                 var up = transform.up;
                 up.Normalize();
                 m_hitCenter.transform.parent.position = hit[i].point + up;// * 0.025f;
-                float dis = UnityEngine.Vector3.Distance(m_hitCenter.transform.parent.position, transform.GetChild(0).position);
+                float dis = UnityEngine.Vector3.Distance(m_hitCenter.transform.parent.position , transform.GetChild(0).position);
                 float value = dis / m_distance;
-                
+
                 m_hitCenter.transform.localScale = new UnityEngine.Vector3(1.0f , value , 1.0f);
                 break;
             }
@@ -120,16 +128,37 @@ namespace TimeForEscape.Object.Weapon
             {
                 var p = col.GetComponent<PlayerController>();
                 var np = col.GetComponent<NetworkPlayer>();
-
+                if(m_hitSource.isPlaying == false)
+                    m_hitSource.Play();
                 // 네트워크 상의 총알에서만 판단
                 if (p != null && p.IS_SHELTER == false && np == null && m_isNetwork == true)
                 {
-                    NetworkManager.Instance().C2SRequestPlayerDamage(m_createHostID,(int)NetworkManager.Instance().HOST_ID ,
+                    NetworkManager.Instance().C2SRequestPlayerDamage(m_createHostID , (int)NetworkManager.Instance().HOST_ID ,
                         NetworkManager.Instance().USER_NAME , "SATELLITE" , m_damage , transform.position);
 
                 }
             }
         }
+
+        #region Sound --------------------------------------------------------------------------------------
+        /**
+         * @brief   사운드 재생 시작
+         */
+        public void SoundPlay()
+        {
+            m_moveSource.Play();
+            m_LaserSource.Play();
+        }
+
+        /**
+         * @brief   폭파 사운드 재생
+         */
+        public void EndSoundPlay()
+        {
+            m_endSource.Play();
+        }
+
+        #endregion -----------------------------------------------------------------------------------------
         #endregion -----------------------------------------------------------------------------------------
     }
 }

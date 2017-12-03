@@ -22,11 +22,13 @@ namespace TimeForEscape.Object
         private bool m_lightState = false; ///< 조명 상태
 
         [SerializeField] private AudioSource m_shelterSoundSource = null; ///< 쉘터 사운드 재생용
-        [SerializeField] private AudioSource m_shelterInOutSource = null; ///< ? 체크필 
+        [SerializeField] private AudioSource m_shelterInOutSource = null; ///< 쉘터 inIdle, outIdle
+        [SerializeField] private AudioSource m_shelterIdleSource = null; ///< 쉘터 평상시 소리
         [SerializeField] private AudioClip m_openSound = null;  ///< 쉘터 열릴때 소리
         [SerializeField] private AudioClip m_closeSound = null; ///< 쉘터 닫힐때 소리
         [SerializeField] private AudioClip m_inIdleSound = null; ///< 쉘터 안에서 움직일때 소리
         [SerializeField] private AudioClip m_outIdleSound = null; ///< 쉘터 밖에서 움직일 때 소리
+        [SerializeField] private AudioClip m_shelterIdleSound = null; ///< 쉘터 안 소리 
 
         #region Shelter_Property -----------------------------------------------------------------------
         /**
@@ -67,6 +69,8 @@ namespace TimeForEscape.Object
 
             // 사람이 들어왔음을 알림
             NetworkManager.Instance().C2SRequestShelterEnter(m_shelterID , true);
+            m_shelterIdleSource.clip = m_shelterIdleSound;
+            m_shelterIdleSource.Play();
         }
 
         /**
@@ -83,6 +87,8 @@ namespace TimeForEscape.Object
             
             // 사람이 나갔음을 알림
             NetworkManager.Instance().C2SRequestShelterEnter(m_shelterID , false);
+            //m_shelterIdleSource.clip = m_shelterIdleSound;
+            m_shelterIdleSource.Stop();
         }
 
         /**
@@ -162,13 +168,13 @@ namespace TimeForEscape.Object
             // 쉘터 안에 있을 때 / 밖일 때 걷고 뛰는 소리 수정
             if (GameManager.Instance().PLAYER.m_player.IS_SHELTER)
             {
-                m_shelterSoundSource.clip = m_inIdleSound;
-                m_shelterSoundSource.Play();
+                m_shelterInOutSource.clip = m_inIdleSound;
+                m_shelterInOutSource.Play();
             }
             else
             {
-                m_shelterSoundSource.clip = m_outIdleSound;
-                m_shelterSoundSource.Play();
+                m_shelterInOutSource.clip = m_outIdleSound;
+                m_shelterInOutSource.Play();
             }
         }
 
@@ -184,8 +190,8 @@ namespace TimeForEscape.Object
             GetComponent<Animator>().SetInteger("LIGHT_STATE" , 2);
 
             // 쉘터 소리 끔
-            m_shelterSoundSource.clip = null;
-            m_shelterSoundSource.Stop();
+            m_shelterInOutSource.clip = null;
+            m_shelterInOutSource.Stop();
         }
 
         #endregion -------------------------------------------------------------------------------------

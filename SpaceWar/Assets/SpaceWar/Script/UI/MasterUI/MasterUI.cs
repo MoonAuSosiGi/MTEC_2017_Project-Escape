@@ -101,6 +101,8 @@ namespace TimeForEscape.UI
         {
             if(NetworkManager.Instance() != null)
             {
+                if (GameManager.Instance().PLAYER.HP + hp > 100.0f)
+                    return;
                 NetworkManager.Instance().RequestHpUpdate(GameManager.Instance().PLAYER.HP + hp);
             }
         }
@@ -113,6 +115,8 @@ namespace TimeForEscape.UI
         {
             if(NetworkManager.Instance() != null)
             {
+                if (GameManager.Instance().PLAYER.OXY + oxy > 100.0f)
+                    return;
                 NetworkManager.Instance().RequestOxyUpdate(GameManager.Instance().PLAYER.OXY + oxy);
             }
         }

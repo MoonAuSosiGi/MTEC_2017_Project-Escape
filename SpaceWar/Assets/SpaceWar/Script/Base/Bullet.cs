@@ -9,19 +9,20 @@ public class Bullet : MonoBehaviour
     #region Bullet_INFO
 
     #region Bullet Setting
+    [SerializeField]
     protected string m_weaponID = null;
     public string WEAPON_ID { get { return m_weaponID; } set { m_weaponID = value; } }
 
     protected float m_damage = 0.0f;
     public float DAMAGE { get { return m_damage; } set { m_damage = value; } }
 
-    private bool m_alive = false;
+    [SerializeField] private bool m_alive = false;
     public bool IS_ALIVE { get { return m_alive; } set { m_alive = value; } }
     #endregion
 
     #region Network
     // 네트워크의 접속을 받는 놈인가
-    protected bool m_isRemote = false;
+    [SerializeField] protected bool m_isRemote = false;
     // 네트워크 식별 아이디
     protected string m_networkID = "";
     // 어떤놈의 총알인가
@@ -105,8 +106,12 @@ public class Bullet : MonoBehaviour
         m_angleFollowerZ = new AngleFollower();
 
         //this.GetComponent<SphereCollider>().enabled = false;
-
-        if (m_bulletTrailEffect != null)
+        var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
+        if (destroyTime != null)
+        {
+            destroyTime.TARGET_BULLET = this;
+        }
+            if (m_bulletTrailEffect != null)
             m_bulletTrailEffect.SetActive(true);
         if (m_shotOtherObjectEffect != null)
             m_shotOtherObjectEffect.SetActive(false);
@@ -219,7 +224,10 @@ public class Bullet : MonoBehaviour
         this.GetComponent<SphereCollider>().enabled = true;
         var destroyTime = transform.GetComponentInChildren<Bullet_DestroyTime>();
         if (destroyTime != null)
+        {
+            destroyTime.TARGET_BULLET = this;
             destroyTime.CancelInvoke("HideBullet");
+        }
 
         m_shotRot = GravityManager.Instance().GRAVITY_TARGET.transform.GetChild(0).rotation;
         m_startPos = GravityManager.Instance().GRAVITY_TARGET.transform.position;
@@ -272,6 +280,7 @@ public class Bullet : MonoBehaviour
         if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
              && !other.CompareTag("Bullet_Explosion"))
         {
+            m_isNetworkMoving = false;
             //Debug.Log("other " + other.name + " tag " + other.tag);
             m_hitEnemy = true;
             MainHitEffect();

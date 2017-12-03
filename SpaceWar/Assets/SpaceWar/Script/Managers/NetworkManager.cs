@@ -1046,6 +1046,10 @@ public class NetworkManager : Singletone<NetworkManager>
             if(m_hostID == (HostID)targetHostID)
             {
                 var p = GameManager.Instance().PLAYER;
+
+                if (p.HP >= p.m_fullHp)
+                    return true;
+
                 p.HP = p.m_fullHp;
                 p.OXY = p.m_fullOxy;
                 p.m_player.AnimationPlay("Idle");
@@ -1058,13 +1062,13 @@ public class NetworkManager : Singletone<NetworkManager>
                 if (otherPosition == false)
                     return true;
 
-                var pos = new UnityEngine.Vector3(-71.64739f,-38.75056f,46.31332f);
+                //var pos = new UnityEngine.Vector3(-71.64739f,-38.75056f,46.31332f);
 
-                //var pos = GravityManager.Instance().GetPlanetPosition( 
-                //    UnityEngine.Random.Range(-360.0f , 360.0f) , UnityEngine.Random.Range(-360.0f , 360.0f));
+                var pos = GravityManager.Instance().GetPlanetPosition(
+                    UnityEngine.Random.Range(-360.0f , 360.0f) , UnityEngine.Random.Range(-360.0f , 360.0f));
 
                 bool checker = true;
-                int count = 5;
+                int count = 15;
                 while(checker)
                 {
                     Collider[] colls = Physics.OverlapSphere(pos , 1.0f);

@@ -17,6 +17,10 @@ namespace TimeForEscape.Object.Weapon
         #region Bullet Plasma --------------------------------------------------
         [SerializeField]
         private GameObject m_plasmaHitEffect = null; ///< 플레이어가 맞았을 때
+        [SerializeField]
+        private AudioClip m_plasmaHitSound = null; ///< 플라즈마 히트 사운드
+        [SerializeField] private AudioSource m_hitSource = null;
+        
         private float m_effectCoolTime = 0.0f; ///< 이펙트 띄울 쿨타임
         private WeaponItem m_targetWeapon = null; ///< 타겟 무기
 
@@ -103,6 +107,9 @@ namespace TimeForEscape.Object.Weapon
             effect.EFFECT_TYPE = Util.Effect.OneHitEffect.EffectDeleteType.TIME_EVENT;
             effect.EFFECT_DELETE_TIME = 2.0f;
             m_effectCoolTime = 2.0f;
+
+            m_hitSource.clip = m_plasmaHitSound;
+            m_hitSource.Play();
         }
 
         /**

@@ -70,7 +70,7 @@ namespace TimeForEscape.Util.Scene
 
             while (m_asyncOperation.isDone == false)
             {
-                m_percentLabel.text = Mathf.Round(m_asyncOperation.progress * 100.0f).ToString() + "%";
+                m_percentLabel.text = Mathf.Round(m_asyncOperation.progress * 100.0f).ToString();
                 yield return null;
             }
         }
@@ -86,7 +86,7 @@ namespace TimeForEscape.Util.Scene
             // 로드가 다 되었다면 씬 체인지
             if (m_asyncOperation.progress >= 0.9f)
             {
-                m_percentLabel.text = "100%";
+                m_percentLabel.text = "100";
 
                 Invoke("LoadScene" , 1.0f);
             }

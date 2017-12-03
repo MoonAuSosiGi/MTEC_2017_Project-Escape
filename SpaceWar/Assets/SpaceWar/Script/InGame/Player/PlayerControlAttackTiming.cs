@@ -8,8 +8,11 @@ public class PlayerControlAttackTiming : MonoBehaviour {
     [SerializeField] private PlayerController m_player = null;
     [SerializeField] private AudioSource m_walkSource = null;
     [SerializeField] private AudioClip m_walkSound_land = null;
+    [SerializeField] private AudioClip m_walkSound_land2 = null;
     [SerializeField] private AudioClip m_walkSound_shelter = null;
-    
+    [SerializeField] private AudioClip m_walkSound_water = null;
+    [SerializeField] private AudioClip m_walkSound_water2 = null;
+    private bool m_isWater = false;
     #endregion
 
     public void ItsAttackTime()
@@ -38,18 +41,22 @@ public class PlayerControlAttackTiming : MonoBehaviour {
             if (m_player.IS_SHELTER)
                 clip = m_walkSound_shelter;
             else
-                clip = m_walkSound_land;
+            {
+                if (m_isWater == false)
+                    clip = (Random.Range(0 , 2) == 0) ? m_walkSound_land : m_walkSound_land2;
+                else
+                    clip = (Random.Range(0 , 2) == 0) ? m_walkSound_water : m_walkSound_water2;
+            }
         }
-        else
-        {
-            // loading 임시
-            clip = m_walkSound_shelter;
-        }
-      
 
         m_walkSource.clip = clip;
         m_walkSource.Play();
 
+    }
+
+    public void WaterSoundChange(bool b)
+    {
+        m_isWater = b;
     }
 
     public void DashAnimationEnd()

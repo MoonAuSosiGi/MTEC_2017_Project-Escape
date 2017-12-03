@@ -156,6 +156,8 @@ public class WeaponManager : Singletone<WeaponManager> {
             // 네트워크 기본 셋업을 진행
             bullet.NetworkBulletEnable();
         }
+        else
+            m_networkDeadBulletList.RemoveAt(index);
 
         var renderer = bullet.BULLET_TRAIL_EFFECT.GetComponentInChildren<TrailRenderer>();
         if (renderer != null)
@@ -241,7 +243,7 @@ public class WeaponManager : Singletone<WeaponManager> {
 
         // 생성하는 부분을 넣읍시다 TODO
         Bullet bullet = null;
-
+        int index = -1;
         //재사용 가능한게 있는지 체크
         for (int i = 0; i < m_myDeadBulletList.Count; i++)
         {
@@ -250,7 +252,7 @@ public class WeaponManager : Singletone<WeaponManager> {
                 continue;
             }
             bullet = m_myDeadBulletList[i];
-
+            index = i;
             break;
         }
 
@@ -267,6 +269,8 @@ public class WeaponManager : Singletone<WeaponManager> {
             // 프리팹에서 사용할 Bullet Component 를 꺼냄
             bullet = prefab.GetComponent<Bullet>();
         }
+        else
+            m_myDeadBulletList.RemoveAt(index);
         var renderer = bullet.BULLET_TRAIL_EFFECT.GetComponentInChildren<TrailRenderer>();
         if (renderer != null)
             renderer.Clear();
@@ -295,6 +299,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         if(NetworkManager.Instance() != null)
           NetworkManager.Instance().C2SRequestBulletRemove(b.NETWORK_ID);
 
+        b.IS_ALIVE = false;
         // 실 삭제하는 부분
         m_myAlivebulletList.Remove(b);
         m_myDeadBulletList.Add(b);
@@ -508,6 +513,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         bb.AUDIO_SOURCE = bullet.AddComponent<AudioSource>();
         bb.AUDIO_SOURCE.playOnAwake = false;
         bb.AUDIO_SOURCE.loop = false;
+        bb.AUDIO_SOURCE.spatialBlend = 1.0f;
         bb.AUDIO_SOURCE.rolloffMode = AudioRolloffMode.Logarithmic;
         bb.AUDIO_SOURCE.minDistance = 1.0f;
         bb.AUDIO_SOURCE.maxDistance = 10.0f;
@@ -752,6 +758,7 @@ public class WeaponManager : Singletone<WeaponManager> {
         w.AUDIO_SOURCE = w.gameObject.AddComponent<AudioSource>();
         w.AUDIO_SOURCE.playOnAwake = false;
         w.AUDIO_SOURCE.loop = false;
+        w.AUDIO_SOURCE.spatialBlend = 1.0f;
         w.AUDIO_SOURCE.rolloffMode = AudioRolloffMode.Logarithmic;
         w.AUDIO_SOURCE.minDistance = 1.0f;
         w.AUDIO_SOURCE.maxDistance = 10.0f;
