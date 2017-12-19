@@ -328,7 +328,7 @@ namespace TimeForEscape.Player
             float startTime = Time.time;
 
             //중력 적용 안함
-            GravityManager.Instance().GRAVITY_POWER = 0.0f;
+            GravityManager.Instance().SetGravityEnable(false);
 
             float jumpTick = GameManager.Instance().GetGameTableValue(GameManager.JUMP_TICK);
             float jumpPower = GameManager.Instance().GetGameTableValue(GameManager.JUMP_POWER);
@@ -345,12 +345,12 @@ namespace TimeForEscape.Player
                     (jumpPower * (m_jumpCurve.Evaluate(nowTick + Time.fixedDeltaTime) - m_jumpCurve.Evaluate(nowTick))));
                 yield return new WaitForFixedUpdate();
             }
-            
+
             // 이부분 점프 애니메이션 종료
             //
 
             // 나중에 수정할것
-            GravityManager.Instance().GRAVITY_POWER = 100.0f;
+            GravityManager.Instance().SetGravityEnable(true);
             m_isJumpAble = true;
             // 점프 종료
             m_isJumping = false;

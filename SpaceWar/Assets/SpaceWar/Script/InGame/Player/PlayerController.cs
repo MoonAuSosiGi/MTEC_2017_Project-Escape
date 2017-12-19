@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour {
     private PlayerControlAttackTiming m_animationEvent = null;
     // 현재 보고 있는 옵저버 인덱스
     private int m_observerIndex = -1;
+    public int OBSERVER_INDEX
+    {
+        get { return m_observerIndex; }
+        set { m_observerIndex = value; }
+    }
 
     // 중력 처리를 받기 위한 리지드바디
     private Rigidbody m_rigidBody = null;
@@ -1449,6 +1454,19 @@ public class PlayerController : MonoBehaviour {
             var list = NetworkManager.Instance().NETWORK_PLAYERS;
             m_observerIndex++;
 
+            if(m_observerIndex >= 0 && m_observerIndex < list.Count)
+            {
+                var remove = list[m_observerIndex].GetComponent<AudioListener>();
+
+                if (remove != null)
+                    GameObject.Destroy(remove);
+               
+            }
+            var listener = transform.GetComponent<AudioListener>();
+
+            if (listener != null)
+                GameObject.Destroy(listener);
+
             if (m_observerIndex == -1)
                 m_observerIndex = 0;
             if (m_observerIndex >= list.Count)
@@ -1473,13 +1491,20 @@ public class PlayerController : MonoBehaviour {
                         cam.parent = null;
                         cam.gameObject.SetActive(true);
                     }
+
+                    if (list[m_observerIndex].TARGET_SPACESHIP.GetComponent<AudioListener>() == null)
+                        list[m_observerIndex].TARGET_SPACESHIP.gameObject.AddComponent<AudioListener>();
+
                     list[m_observerIndex].TARGET_SPACESHIP.SpaceShipCameraEndSetup();
                 }
                 else
                 {
                     var np = list[m_observerIndex].GetComponent<PlayerController>();
                     var target = np.m_camAnchor3;
-                    
+
+                    if (list[m_observerIndex].GetComponent<AudioListener>() == null)
+                        list[m_observerIndex].gameObject.AddComponent<AudioListener>();
+
                     Camera.main.transform.parent = target;
                     Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
                     Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
@@ -1545,12 +1570,7 @@ public class PlayerController : MonoBehaviour {
                 AudioPlay(m_pickSound);
                 m_nearItemBox.UseItemBox();
             }
-            if (m_nearShelter != null)
-            {
-                AudioPlay(m_shelterUseSound);
-                m_nearShelter.DOOR_STATE = !m_nearShelter.DOOR_STATE;
-                m_nearShelter.DoorControl();
-            }
+
 
             if (m_nearSpaceShip != null)
             {
@@ -1560,6 +1580,16 @@ public class PlayerController : MonoBehaviour {
                 IS_MOVE_ABLE = false;
             }
 
+        }
+        if(Input.GetKeyUp(m_Get))
+        {
+            if (m_nearShelter != null)
+            {
+                AudioPlay(m_shelterUseSound);
+                //m_nearShelter.DOOR_STATE = !m_nearShelter.DOOR_STATE;
+                Debug.Log("DOOR CONTROL ---- playercontroller");
+                m_nearShelter.DoorControl();
+            }
         }
         // 우주선 상호작용
         SpaceShipInteraction();
@@ -1688,9 +1718,21 @@ public class PlayerController : MonoBehaviour {
 
     void OxyChargerControlCancle()
     {
-        
+        LoopAudioStop();
         m_isMoveAble = true;
         m_oxyChargeRequest = false;
+        INTERACTION_ANI_VALUE = 0;
+        m_targetOxy = 0.0f;
+        GameManager.Instance().SLIDER_UI.HideSlider();
+
+        if (m_equipItems[m_curEquipItem] != null)
+        {
+            m_equipItems[m_curEquipItem].gameObject.SetActive(true);
+            WeaponAnimationChange(m_equipItems[m_curEquipItem]);
+        }
+        else
+            WeaponAnimationChange(null);
+
         if (m_nearOxyCharger != null)
             NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
     }
