@@ -22,7 +22,6 @@ namespace TimeForEscape.Object.Weapon
         [SerializeField] private AudioSource m_hitSource = null;
         
         private float m_effectCoolTime = 0.0f; ///< 이펙트 띄울 쿨타임
-        private WeaponItem m_targetWeapon = null; ///< 타겟 무기
 
         #region Bullet Plasma Property -----------------------------------------
 
@@ -34,6 +33,7 @@ namespace TimeForEscape.Object.Weapon
             get { return m_plasmaHitEffect; }
             set { m_plasmaHitEffect = value; }
         }
+
         #endregion -------------------------------------------------------------
         #endregion -------------------------------------------------------------
         #region Unity Mehtod ---------------------------------------------------
@@ -43,9 +43,7 @@ namespace TimeForEscape.Object.Weapon
         void Start()
         {
             var rocket = GetComponent<RocketBulletExplosion>();
-
-            // 타겟 무기 넣기
-            m_targetWeapon = rocket.ROCKET;
+            
             GameObject.Destroy(rocket);
         }
         /**
@@ -126,21 +124,23 @@ namespace TimeForEscape.Object.Weapon
             // 내가 맞는다.
             if (p != null && np == null)
             {
+                Bullet b = transform.parent.GetComponent<Bullet>();
                 NetworkManager.Instance().C2SRequestPlayerDamage(
                    (int)NetworkManager.Instance().HOST_ID ,
                    GameManager.Instance().PLAYER.NAME ,
-                   m_targetWeapon.ITEM_NAME ,
-                   m_targetWeapon.DAMAGE ,
+                   b.WEAPON_ID ,
+                   b.DAMAGE ,
                    transform.position);
             }
             // 다른 플레이어가 맞는다
             else if(np != null)
             {
+                Bullet b = transform.parent.GetComponent<Bullet>();
                 NetworkManager.Instance().C2SRequestPlayerDamage(
                    (int)np.HOST_ID,
                    np.m_userName ,
-                   m_targetWeapon.ITEM_NAME ,
-                   m_targetWeapon.DAMAGE ,
+                   b.WEAPON_ID ,
+                   b.DAMAGE ,
                    transform.position);
             }
                 
