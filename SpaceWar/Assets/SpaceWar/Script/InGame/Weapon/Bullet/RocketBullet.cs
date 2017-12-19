@@ -38,7 +38,8 @@ public class RocketBullet : Bullet {
         if (m_hitEnemy == true)
             return;
         if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
-            && !other.CompareTag("Bullet_Explosion"))
+             && !other.CompareTag("Bullet_Explosion") && !other.CompareTag("WATER") && !other.CompareTag("Meteor")
+             && !other.CompareTag("NoCameraCollider"))
         {
             Debug.Log("로케케에에에엣 " + other.name);
             m_hitEnemy = true;
