@@ -18,6 +18,15 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] private bool m_alive = false;
     public bool IS_ALIVE { get { return m_alive; } set { m_alive = value; } }
+
+    [SerializeField]
+    WeaponItem m_targetWeapon = null;
+
+    public WeaponItem TARGET_WEAPON
+    {
+        get { return m_targetWeapon; }
+        set { m_targetWeapon = value; }
+    }
     #endregion
 
     #region Network
@@ -275,15 +284,21 @@ public class Bullet : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+        
+
+    }
+    protected virtual void OnTriggerStay(Collider other)
+    {
         if (m_hitEnemy == true)
             return;
         if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
-             && !other.CompareTag("Bullet_Explosion"))
+             && !other.CompareTag("Bullet_Explosion") && !other.CompareTag("WATER") && !other.CompareTag("Meteor")
+             && !other.CompareTag("NoCameraCollider"))
         {
             m_isNetworkMoving = false;
-            //Debug.Log("other " + other.name + " tag " + other.tag);
+            Debug.Log("other " + other.name + " tag " + other.tag);
             m_hitEnemy = true;
-            MainHitEffect();
+
             if (other.CompareTag("PlayerCharacter"))
             {
                 NetworkPlayer p = other.transform.GetComponent<NetworkPlayer>();
@@ -293,7 +308,7 @@ public class Bullet : MonoBehaviour
                     if (IS_REMOTE == true && TARGET_ID == (int)p.HOST_ID)
                         return;
 
-
+                    MainHitEffect();
                     SoundPlay(m_hitMain);
                     if (IS_REMOTE == false)
                         NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weaponID , m_damage , m_startPos);
@@ -321,13 +336,11 @@ public class Bullet : MonoBehaviour
                     SoundPlay(m_hitShelter);
             }
 
-
+            MainHitEffect();
             this.GetComponent<SphereCollider>().enabled = false;
             BulletHitEvent();
         }
-
     }
-
     // 메인 폭발 이펙트 
     protected void MainHitEffect()
     {
@@ -344,6 +357,7 @@ public class Bullet : MonoBehaviour
 
     void SoundPlay(AudioClip clip)
     {
+        Debug.Log(" null ? " + (m_hitShelter == null));
         if (clip != null)
         {
             m_bulletAudioSource.clip = clip;
