@@ -44,7 +44,7 @@ public class WeaponItem : Item {
     public Transform FIRE_POS { get { return m_firePoint; } set { m_firePoint = value; } }
 
     // 무기 발사 소리
-    private AudioSource m_source = null;
+    protected AudioSource m_source = null;
     public AudioSource AUDIO_SOURCE { get { return m_source; } set { m_source = value; } }
     [SerializeField] private AudioClip m_weaponShootSound = null;
     public AudioClip SHOT_SOUND { get { return m_weaponShootSound; } set { m_weaponShootSound = value; } }
@@ -162,7 +162,7 @@ public class WeaponItem : Item {
         string hostID = (NetworkManager.Instance() != null) ?  NetworkManager.Instance().m_hostID.ToString() : "1";
         string networkID = hostID + "_" + m_itemID + "_" + m_currentBulletIndex;
         
-        WeaponManager.Instance().RequestBulletCreate(networkID ,m_itemID, m_firePoint.position ,
+        WeaponManager.Instance().RequestBulletCreate(this,networkID ,m_itemID, m_firePoint.position ,
             character.localEulerAngles);
         m_currentBulletIndex++;
         Invoke("ShotEffectEnd" , m_coolTime - 0.1f);
@@ -195,7 +195,7 @@ public class WeaponItem : Item {
         string hostID = (NetworkManager.Instance() != null) ? NetworkManager.Instance().m_hostID.ToString() : "1";
         string networkID = hostID + "_" + m_itemID + "_" + m_currentBulletIndex;
         Quaternion rot = character.rotation;
-        WeaponManager.Instance().RequestBulletCreate(networkID , m_itemID , 
+        WeaponManager.Instance().RequestBulletCreate(this,networkID , m_itemID , 
             m_firePoint.position , rot.eulerAngles);
         m_currentBulletIndex++;
         Invoke("ShotEffectEnd" , m_coolTime - 0.1f);
