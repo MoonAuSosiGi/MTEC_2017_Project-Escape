@@ -904,7 +904,7 @@ DEFRMI_SpaceWar_RequestPlayerDamage(Server)
 	// ÄðÅ¸ÀÓ Ã¼Å©
 	int timeCheck = m_netServer->GetTimeMs() - clientMap[(HostID)targetHostID]->GetDamageCooltime();
 
-	if (timeCheck < 500 && weaponName == "DeathZone" && weaponName == "SATELLITE")
+	if (timeCheck < 500 && (weaponName == "DeathZone" || weaponName == "SATELLITE"))
 	{
 		cout << "ÄðÅ¸ÀÓÁß " << endl;
 		return true;
