@@ -5,8 +5,6 @@ using UnityEngine;
 public class RocketBulletExplosion : MonoBehaviour {
 
     #region Rocket Bullet Explosion
-    [SerializeField] private WeaponItem m_weapon = null;
-    public WeaponItem ROCKET { get { return m_weapon; } set { m_weapon = value; } }
 
     public void AnimationEnd()
     {
@@ -22,7 +20,10 @@ public class RocketBulletExplosion : MonoBehaviour {
 
             if(p!= null)
             {
-                NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName , m_weapon.ITEM_ID.ToString() ,m_weapon.DAMAGE , transform.position);
+                var b = transform.parent.GetComponent<Bullet>();
+                NetworkManager.Instance().C2SRequestPlayerDamage((int)p.m_hostID , p.m_userName ,
+                    b.TARGET_WEAPON.ITEM_ID.ToString() ,
+                    b.TARGET_WEAPON.DAMAGE , transform.position);
             }
 
         }
