@@ -728,8 +728,10 @@ public class NetworkManager : Singletone<NetworkManager>
             int sendHostID , int shelterID , bool doorState ,
             bool lightState) =>
         {
+            if (remote == m_hostID)
+                return true;
             Debug.Log("shelterinfo " + lightState + " id " + shelterID);
-            m_shelterList[shelterID].DOOR_STATE = doorState;
+            //m_shelterList[shelterID].DOOR_STATE = doorState;
 
             if (lightState)
                 m_shelterList[shelterID].LightOn();
