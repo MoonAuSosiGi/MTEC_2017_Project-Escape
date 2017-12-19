@@ -17,7 +17,6 @@ namespace TimeForEscape.Object
         #region Shelter_INFO ----------------------------------------------------------------------------
         private bool m_hasPlayer = false; ///< 쉘터안에 사람이 있는지에 대한 정보
         private int m_shelterID = 0;    ///< 쉘터 인덱스 (네트워크 식별용)
-        private bool m_curState = false; ///< 현재 상태...약간 이거 중복되는 코드 같은 냄새
         private bool m_doorState = false; ///< 문 상태 
         private bool m_lightState = false; ///< 조명 상태
 
@@ -97,10 +96,12 @@ namespace TimeForEscape.Object
          */
         public void DoorControl()
         {
-            if (!m_curState)
+            //Debug.Log("SHELTER _ DOOR " + m_curState);
+            if (!m_doorState)
                 OpenDoor();
             else
                 CloseDoor();
+
         }
 
         /**
@@ -111,10 +112,10 @@ namespace TimeForEscape.Object
          */
         public void OpenDoor(bool networkOrder = false)
         {
-            if (m_curState)
+            if (m_doorState)
                 return;
-
-            m_curState = true;
+            Debug.Log("SHELTER _ OPEN DOOR " + networkOrder);
+            m_doorState = true;
 
             // 쉘터 여는 소리 재생
             m_shelterSoundSource.clip = m_openSound;
@@ -136,10 +137,10 @@ namespace TimeForEscape.Object
          */
         public void CloseDoor(bool networkOrder = false)
         {
-            if (!m_curState)
+            if (!m_doorState)
                 return;
-
-            m_curState = false;
+            Debug.Log("SHELTER _ CLOSE DOOR " + networkOrder);
+            m_doorState = false;
 
             // 쉘터 닫는 소리 재생
             m_shelterSoundSource.clip = m_closeSound;
