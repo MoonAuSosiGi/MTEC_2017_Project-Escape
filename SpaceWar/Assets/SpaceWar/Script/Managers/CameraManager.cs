@@ -219,6 +219,7 @@ public class CameraManager : Singletone<CameraManager>
         //Debug.DrawRay(CamAnchor[1].position, CamAnchor[2].rotation * Vector3.back * Vector3.Distance(CamAnchor[1].position, Vector3.Lerp(CamAnchor[1].position, CamAnchor[2].position, CamDis[2])), Color.red, 0.1f);
         if (Hitinfo.transform != null &&
             (Hitinfo.transform.CompareTag("NoCameraCollider")
+            || Hitinfo.transform.CompareTag("Shelter")
             || Hitinfo.transform.CompareTag("DeathZone")
             || Hitinfo.transform.CompareTag("WATER")
             || Hitinfo.transform.CompareTag("ShelterDoor")
