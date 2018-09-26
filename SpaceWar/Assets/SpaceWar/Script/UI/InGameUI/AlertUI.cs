@@ -68,7 +68,7 @@ public class AlertUI : MonoBehaviour {
         AlertData data = new AlertData(type, id , tick , alert);
 
         alert.transform.parent = transform;
-        alert.transform.localScale = new Vector3(1.0f , 1.0f , 1.0f);
+        alert.transform.localScale = m_DefaultAlertObj.transform.localScale;
         alert.transform.position = m_StartPosition.transform.position;
 
         string iconName = null;

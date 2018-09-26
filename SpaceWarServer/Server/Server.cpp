@@ -704,7 +704,7 @@ DEFRMI_SpaceWar_RequestGameSceneJoin(Server)
 */
 DEFRMI_SpaceWar_RequestNetworkChangeMap(Server)
 {
-	cout << " Map Change :: " << endl;
+	cout << " Map Change :: " << mapName << endl;
 
 	forward_list<HostID> list = m_gameRoom->GetOtherClients(remote);
 

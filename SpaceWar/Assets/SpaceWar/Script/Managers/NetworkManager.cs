@@ -57,7 +57,7 @@ public class NetworkManager : Singletone<NetworkManager>
     }
 
     // 서버 아이피
-    private string m_serverIP = "211.201.94.196";
+    private string m_serverIP = "localhost";//"211.201.94.196";
 
     public string SERVER_IP
     {
@@ -98,6 +98,14 @@ public class NetworkManager : Singletone<NetworkManager>
     #region Network 에서 동기화 되어야 하는 오브젝트들
     #region Network Item 행성 랜덤 배치 , 아이템 박스 열어서 획득 등
 
+    private string m_currentMapName = "space";
+    /// <summary>
+    /// 맵 이름
+    /// </summary>
+    public string CURRENT_MAP
+    {
+        get { return m_currentMapName; }
+    }
     #endregion
 
     #region 모든 행성에 떨어져있는 아이템들
@@ -322,6 +330,15 @@ public class NetworkManager : Singletone<NetworkManager>
         {
             if (gameModeChange != null)
                 gameModeChange(gameMode , teamMode);
+            return true;
+        };
+
+        // 맵이 변경
+        m_s2cStub.NotifyNetworkGameChangeMap = (HostID remote, RmiContext rmiContext, string map) =>
+        {
+            if (mapChange != null)
+                mapChange(map);
+            m_currentMapName = map;
             return true;
         };
 

@@ -60,6 +60,8 @@ public class GravityManager : Singletone<GravityManager> {
 
     void Start()
     {
+        if (m_planetTable == null)
+            return;
         WeatherController.PLANET_NAME = "Kepler";
         StartCoroutine(SetupTable());
     }
@@ -130,7 +132,7 @@ public class GravityManager : Singletone<GravityManager> {
 
     public Vector3 GetPlanetPosition(float anglex , float anglez)
     {
-        float scale = CurrentPlanet.transform.localScale.x + m_weatherController.GetMeteorOffset();
+        float scale = CurrentPlanet.transform.localScale.x + ((m_weatherController != null) ?  m_weatherController.GetMeteorOffset() : 0.0f);
         float x = scale * Mathf.Sin(anglex * Mathf.Deg2Rad) * Mathf.Cos(anglez * Mathf.Deg2Rad);
         float y = scale * Mathf.Sin(anglex * Mathf.Deg2Rad) * Mathf.Sin(anglez * Mathf.Deg2Rad);
         float z = scale * Mathf.Cos(anglex * Mathf.Deg2Rad);

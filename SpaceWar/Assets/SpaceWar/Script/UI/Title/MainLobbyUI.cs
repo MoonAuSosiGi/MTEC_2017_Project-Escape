@@ -27,7 +27,15 @@ public class MainLobbyUI : MonoBehaviour {
         iTween.Stop();
         // 게임 설정 --
         //Application.targetFrameRate = 60;
-        Screen.SetResolution(1920 , 1080 , false);
+        //Screen.SetResolution(1920 , 1080 , false);
+
+        string[] randomName =
+        {
+            "Molang","Switch","C++","C#","VertexShader","PixelShader"
+        };
+        m_userName.text = randomName[Random.Range(0, randomName.Length)];
+
+        OnChangeUserName(m_userName.text);
         Application.runInBackground = true;
     }
     #endregion

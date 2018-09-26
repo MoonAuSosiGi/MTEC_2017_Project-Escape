@@ -46,6 +46,9 @@ public class LobbyUI : MonoBehaviour {
 
     // 에러 로그용
     public UILabel m_errorLog = null;
+
+    // 테스트 맵 체인지용
+    public string m_currentMap_test = "space";
     #endregion
 
     // 팀 관련 표시 UI ( 우측메뉴 - 팀만)
@@ -218,7 +221,8 @@ public class LobbyUI : MonoBehaviour {
     private void LobbyUI_gameStart()
     {
         EventHandlerAllRemove();
-        TimeForEscape.Util.Scene.LoadingScene.LOAD_SCENE_NAME = "Map_2_Kepler"; //"Space_1";
+        string mapName = (m_currentMap_test.Equals("space")) ? "Space_1" : "Map_2_Kepler"; //"Space_1";
+        TimeForEscape.Util.Scene.LoadingScene.LOAD_SCENE_NAME = mapName;
         SceneManager.LoadScene("Space_LoadingScene");
     }
 
@@ -578,12 +582,29 @@ public class LobbyUI : MonoBehaviour {
         Debug.Log("MapSelectButton " + arrow.name);
         if(arrow.name.Equals("LeftArrow"))
         {
-
+            if(m_currentMap_test.Equals("space"))
+            {
+                m_currentMap_test = "kepler";
+            }
+            else if(m_currentMap_test.Equals("kepler"))
+            {
+                m_currentMap_test = "space";
+            }
         }
         else
         {
-
+            if (m_currentMap_test.Equals("space"))
+            {
+                m_currentMap_test = "kepler";
+            }
+            else if (m_currentMap_test.Equals("kepler"))
+            {
+                m_currentMap_test = "space";
+            }
         }
+        LobbyUI_mapChange(m_currentMap_test);
+
+        NetworkManager.Instance().RequestNetworkChangeMap(m_currentMap_test);
     }
 
     // 모드 변경
