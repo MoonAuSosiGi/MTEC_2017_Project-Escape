@@ -69,6 +69,15 @@ public class CameraManager : Singletone<CameraManager>
     private GameObject m_notEnoughHpEffect = null;
     private GameObject m_notEnoughOxyEffect = null;
 
+    // 이펙트 체크
+    private bool m_deadEffectShow = false;
+    public bool DEAD_EFFECT_SHOW {
+        get { return m_deadEffectShow; }
+        set {
+            m_deadEffectShow = value;
+        }
+    }
+
     #endregion
 
     #region Rader
@@ -210,10 +219,14 @@ public class CameraManager : Singletone<CameraManager>
         //Debug.DrawRay(CamAnchor[1].position, CamAnchor[2].rotation * Vector3.back * Vector3.Distance(CamAnchor[1].position, Vector3.Lerp(CamAnchor[1].position, CamAnchor[2].position, CamDis[2])), Color.red, 0.1f);
         if (Hitinfo.transform != null &&
             (Hitinfo.transform.CompareTag("NoCameraCollider")
+            || Hitinfo.transform.CompareTag("Shelter")
+            || Hitinfo.transform.CompareTag("DeathZone")
+            || Hitinfo.transform.CompareTag("WATER")
             || Hitinfo.transform.CompareTag("ShelterDoor")
             || Hitinfo.transform.CompareTag("Weapon")
             || Hitinfo.transform.CompareTag("ItemBox")
-            || Hitinfo.transform.CompareTag("PlayerCharacter")))
+            || Hitinfo.transform.CompareTag("PlayerCharacter")
+            || Hitinfo.transform.CompareTag("Satellite")))
         {
             this.transform.position = Vector3.Lerp(CamAnchor[1].position , CamAnchor[2].position , CamDis[2]);
             return;
@@ -230,6 +243,47 @@ public class CameraManager : Singletone<CameraManager>
     #endregion
 
     #region Camera Effect Method
+
+    public void ShowDeadCameraEffect()
+    {
+        Invoke("DeadCameraEffect" , 3.0f);
+    }
+    public void HideDeadCameraEffect()
+    {
+        var curver = this.GetComponent<ColorCorrectionCurves>();
+        curver.enabled = false;
+    }
+
+    public void ShowDeadCameraEffect_NoEffect()
+    {
+        var curver = this.GetComponent<ColorCorrectionCurves>();
+        curver.enabled = true;
+        curver.saturation = 0.0f;
+    }
+
+    void DeadCameraEffect()
+    {
+        var curver = this.GetComponent<ColorCorrectionCurves>();
+        curver.enabled = true;
+
+        iTween.ValueTo(gameObject , iTween.Hash(
+            "from" , 1.0f , "to" , 0.0f ,
+            "time" , 3.0f , "onupdatetarget" , gameObject ,
+            "onupdate" , "DeadCameraEffectUpdate",
+            "oncompletetarget",gameObject,
+            "oncomplete","DeadCameraEffectEnd"));
+    }
+
+    void DeadCameraEffectEnd()
+    {
+        DEAD_EFFECT_SHOW = true;
+    }
+
+    void DeadCameraEffectUpdate(float v)
+    {
+        var curver = this.GetComponent<ColorCorrectionCurves>();
+        curver.saturation = v;
+    }
 
     public void ShowMeteorCameraEffect(float distance)
     {

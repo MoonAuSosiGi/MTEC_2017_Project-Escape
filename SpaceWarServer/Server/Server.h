@@ -60,6 +60,7 @@ public:
 #pragma region 인게임 :: 플레이어 메시지 --------
 #pragma region [플레이어 상태 관련 정보]
 	DECRMI_SpaceWar_RequestHpUpdate; ///< 체력 회복 메시지
+	DECRMI_SpaceWar_RequestOxyUpdate; ///< 산소 회복 메시지
 	DECRMI_SpaceWar_RequestPlayerDamage; ///< 플레이어가 맞았다.
 	DECRMI_SpaceWar_RequestPlayerUseOxy; ///< 플레이어가 숨을 쉬었다.
 	DECRMI_SpaceWar_NotifyPlayerMove; ///< 플레이어 움직임 처리 
@@ -106,7 +107,13 @@ public:
 #pragma region 결과창 ==========================
 	DECRMI_SpaceWar_RequestDrawGameResult; ///< 드로우 게임시 정보 요청
 	DECRMI_SpaceWar_RequestGameEnd; ///< 결과를 받아오는 것
+	void DeathMatchEnd(int targetHostID); ///< 데스매치 끝났을 때 호출하기
 #pragma endregion
+
+#pragma region 게임 모드 :: 유틸 :: 치트 -----------
+	DECRMI_SpaceWar_NotifyUtilPlayerRebirth; ///< 플레이어 다시 살아나기 
+#pragma endregion
+
 #pragma endregion
 
 private:

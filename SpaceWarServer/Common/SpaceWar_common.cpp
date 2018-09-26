@@ -60,6 +60,8 @@ namespace SpaceWar
                
 		Rmi_RequestHpUpdate,
                
+		Rmi_RequestOxyUpdate,
+               
 		Rmi_NotifyPlayerChangeHP,
                
 		Rmi_NotifyPlayerChangeOxygen,
@@ -126,6 +128,14 @@ namespace SpaceWar
                
 		Rmi_NotifyDeleteItem,
                
+		Rmi_NotifyNetworkObjectCreate,
+               
+		Rmi_NotifyNetworkObjectMove,
+               
+		Rmi_NotifyNetworkObjectDelete,
+               
+		Rmi_RequestMeteorCreate,
+               
 		Rmi_NotifyMeteorCreateTime,
                
 		Rmi_NotifyMeteorCreate,
@@ -171,7 +181,13 @@ namespace SpaceWar
 		Rmi_NotifyGameResultInfoOther,
                
 		Rmi_NotifyGameResultShow,
+               
+		Rmi_NotifyUtilPlayerRebirth,
+               
+		Rmi_NotifyUtilPlayerDead,
+               
+		Rmi_RequestUtilMeteorCreate,
 	};
 
-	int g_RmiIDListCount = 82;
+	int g_RmiIDListCount = 90;
 }

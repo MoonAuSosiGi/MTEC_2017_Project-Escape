@@ -20,6 +20,7 @@
 /SpaceWarServer/Server/Debug
 /SpaceWarServer/Server/Release
 /SpaceWarServer/Server/Debug/Release
+/Build
 # Visual Studio 2015 cache directory
 /.vs/
 

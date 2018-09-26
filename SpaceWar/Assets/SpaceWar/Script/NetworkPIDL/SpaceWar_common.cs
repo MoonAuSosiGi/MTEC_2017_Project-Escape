@@ -41,62 +41,70 @@ namespace SpaceWar
 			public const Nettention.Proud.RmiID NotifyOtherClientJoin = (Nettention.Proud.RmiID)3141+24;
 			public const Nettention.Proud.RmiID NotifyPlayerLost = (Nettention.Proud.RmiID)3141+25;
 			public const Nettention.Proud.RmiID RequestHpUpdate = (Nettention.Proud.RmiID)3141+26;
-			public const Nettention.Proud.RmiID NotifyPlayerChangeHP = (Nettention.Proud.RmiID)3141+27;
-			public const Nettention.Proud.RmiID NotifyPlayerChangeOxygen = (Nettention.Proud.RmiID)3141+28;
-			public const Nettention.Proud.RmiID RequestPlayerDamage = (Nettention.Proud.RmiID)3141+29;
-			public const Nettention.Proud.RmiID RequestPlayerUseOxy = (Nettention.Proud.RmiID)3141+30;
-			public const Nettention.Proud.RmiID NotifyPlayerMove = (Nettention.Proud.RmiID)3141+31;
-			public const Nettention.Proud.RmiID NotifyPlayerEquipItem = (Nettention.Proud.RmiID)3141+32;
-			public const Nettention.Proud.RmiID NotifyPlayerUnEquipItem = (Nettention.Proud.RmiID)3141+33;
-			public const Nettention.Proud.RmiID NotifyPlayerBulletCreate = (Nettention.Proud.RmiID)3141+34;
-			public const Nettention.Proud.RmiID NotifyPlayerBulletMove = (Nettention.Proud.RmiID)3141+35;
-			public const Nettention.Proud.RmiID NotifyPlayerBulletDelete = (Nettention.Proud.RmiID)3141+36;
-			public const Nettention.Proud.RmiID NotifyPlayerAnimation = (Nettention.Proud.RmiID)3141+37;
-			public const Nettention.Proud.RmiID NotifyGrenadeCreate = (Nettention.Proud.RmiID)3141+38;
-			public const Nettention.Proud.RmiID NotifyGrenadeMove = (Nettention.Proud.RmiID)3141+39;
-			public const Nettention.Proud.RmiID NotifyGrenadeBoom = (Nettention.Proud.RmiID)3141+40;
-			public const Nettention.Proud.RmiID NotifyGrenadeRemove = (Nettention.Proud.RmiID)3141+41;
-			public const Nettention.Proud.RmiID RequestOxyChargerStartSetup = (Nettention.Proud.RmiID)3141+42;
-			public const Nettention.Proud.RmiID RequestUseOxyChargerStart = (Nettention.Proud.RmiID)3141+43;
-			public const Nettention.Proud.RmiID RequestUseOxyCharger = (Nettention.Proud.RmiID)3141+44;
-			public const Nettention.Proud.RmiID RequestUseOxyChargerEnd = (Nettention.Proud.RmiID)3141+45;
-			public const Nettention.Proud.RmiID NotifyUseOxyCharger = (Nettention.Proud.RmiID)3141+46;
-			public const Nettention.Proud.RmiID NotifyUseSuccessedOxyCharger = (Nettention.Proud.RmiID)3141+47;
-			public const Nettention.Proud.RmiID NotifyUseFailedOxyCharger = (Nettention.Proud.RmiID)3141+48;
-			public const Nettention.Proud.RmiID RequestUseItemBox = (Nettention.Proud.RmiID)3141+49;
-			public const Nettention.Proud.RmiID NotifyStartItemBoxState = (Nettention.Proud.RmiID)3141+50;
-			public const Nettention.Proud.RmiID NotifyUseItemBox = (Nettention.Proud.RmiID)3141+51;
-			public const Nettention.Proud.RmiID RequestShelterStartSetup = (Nettention.Proud.RmiID)3141+52;
-			public const Nettention.Proud.RmiID RequestShelterDoorControl = (Nettention.Proud.RmiID)3141+53;
-			public const Nettention.Proud.RmiID RequestShelterEnter = (Nettention.Proud.RmiID)3141+54;
-			public const Nettention.Proud.RmiID NotifyShelterInfo = (Nettention.Proud.RmiID)3141+55;
-			public const Nettention.Proud.RmiID RequestWorldCreateItem = (Nettention.Proud.RmiID)3141+56;
-			public const Nettention.Proud.RmiID NotifyCreateItem = (Nettention.Proud.RmiID)3141+57;
-			public const Nettention.Proud.RmiID RequestItemDelete = (Nettention.Proud.RmiID)3141+58;
-			public const Nettention.Proud.RmiID NotifyDeleteItem = (Nettention.Proud.RmiID)3141+59;
-			public const Nettention.Proud.RmiID NotifyMeteorCreateTime = (Nettention.Proud.RmiID)3141+60;
-			public const Nettention.Proud.RmiID NotifyMeteorCreate = (Nettention.Proud.RmiID)3141+61;
-			public const Nettention.Proud.RmiID RequestSpaceShipSetup = (Nettention.Proud.RmiID)3141+62;
-			public const Nettention.Proud.RmiID RequestSpaceShip = (Nettention.Proud.RmiID)3141+63;
-			public const Nettention.Proud.RmiID RequestUseSpaceShip = (Nettention.Proud.RmiID)3141+64;
-			public const Nettention.Proud.RmiID RequestUseSpaceShipCancel = (Nettention.Proud.RmiID)3141+65;
-			public const Nettention.Proud.RmiID NotifyUseSpaceShipSuccess = (Nettention.Proud.RmiID)3141+66;
-			public const Nettention.Proud.RmiID NotifyUseSpaceShipFailed = (Nettention.Proud.RmiID)3141+67;
-			public const Nettention.Proud.RmiID NotifySpaceShipLockTime = (Nettention.Proud.RmiID)3141+68;
-			public const Nettention.Proud.RmiID NotifySpaceShipEngineChargeFailed = (Nettention.Proud.RmiID)3141+69;
-			public const Nettention.Proud.RmiID NotifySpaceShipEngineCharge = (Nettention.Proud.RmiID)3141+70;
-			public const Nettention.Proud.RmiID NotifyDeathZoneCommingTime = (Nettention.Proud.RmiID)3141+71;
-			public const Nettention.Proud.RmiID NotifyDeathZoneCreate = (Nettention.Proud.RmiID)3141+72;
-			public const Nettention.Proud.RmiID RequestDeathZoneMoveIndex = (Nettention.Proud.RmiID)3141+73;
-			public const Nettention.Proud.RmiID NotifyDeathZoneMoveHostAndIndexSetup = (Nettention.Proud.RmiID)3141+74;
-			public const Nettention.Proud.RmiID NotifyDeathZoneMove = (Nettention.Proud.RmiID)3141+75;
-			public const Nettention.Proud.RmiID NotifyDrawGame = (Nettention.Proud.RmiID)3141+76;
-			public const Nettention.Proud.RmiID RequestDrawGameResult = (Nettention.Proud.RmiID)3141+77;
-			public const Nettention.Proud.RmiID RequestGameEnd = (Nettention.Proud.RmiID)3141+78;
-			public const Nettention.Proud.RmiID NotifyKillInfo = (Nettention.Proud.RmiID)3141+79;
-			public const Nettention.Proud.RmiID NotifyGameResultInfoMe = (Nettention.Proud.RmiID)3141+80;
-			public const Nettention.Proud.RmiID NotifyGameResultInfoOther = (Nettention.Proud.RmiID)3141+81;
-			public const Nettention.Proud.RmiID NotifyGameResultShow = (Nettention.Proud.RmiID)3141+82;
+			public const Nettention.Proud.RmiID RequestOxyUpdate = (Nettention.Proud.RmiID)3141+27;
+			public const Nettention.Proud.RmiID NotifyPlayerChangeHP = (Nettention.Proud.RmiID)3141+28;
+			public const Nettention.Proud.RmiID NotifyPlayerChangeOxygen = (Nettention.Proud.RmiID)3141+29;
+			public const Nettention.Proud.RmiID RequestPlayerDamage = (Nettention.Proud.RmiID)3141+30;
+			public const Nettention.Proud.RmiID RequestPlayerUseOxy = (Nettention.Proud.RmiID)3141+31;
+			public const Nettention.Proud.RmiID NotifyPlayerMove = (Nettention.Proud.RmiID)3141+32;
+			public const Nettention.Proud.RmiID NotifyPlayerEquipItem = (Nettention.Proud.RmiID)3141+33;
+			public const Nettention.Proud.RmiID NotifyPlayerUnEquipItem = (Nettention.Proud.RmiID)3141+34;
+			public const Nettention.Proud.RmiID NotifyPlayerBulletCreate = (Nettention.Proud.RmiID)3141+35;
+			public const Nettention.Proud.RmiID NotifyPlayerBulletMove = (Nettention.Proud.RmiID)3141+36;
+			public const Nettention.Proud.RmiID NotifyPlayerBulletDelete = (Nettention.Proud.RmiID)3141+37;
+			public const Nettention.Proud.RmiID NotifyPlayerAnimation = (Nettention.Proud.RmiID)3141+38;
+			public const Nettention.Proud.RmiID NotifyGrenadeCreate = (Nettention.Proud.RmiID)3141+39;
+			public const Nettention.Proud.RmiID NotifyGrenadeMove = (Nettention.Proud.RmiID)3141+40;
+			public const Nettention.Proud.RmiID NotifyGrenadeBoom = (Nettention.Proud.RmiID)3141+41;
+			public const Nettention.Proud.RmiID NotifyGrenadeRemove = (Nettention.Proud.RmiID)3141+42;
+			public const Nettention.Proud.RmiID RequestOxyChargerStartSetup = (Nettention.Proud.RmiID)3141+43;
+			public const Nettention.Proud.RmiID RequestUseOxyChargerStart = (Nettention.Proud.RmiID)3141+44;
+			public const Nettention.Proud.RmiID RequestUseOxyCharger = (Nettention.Proud.RmiID)3141+45;
+			public const Nettention.Proud.RmiID RequestUseOxyChargerEnd = (Nettention.Proud.RmiID)3141+46;
+			public const Nettention.Proud.RmiID NotifyUseOxyCharger = (Nettention.Proud.RmiID)3141+47;
+			public const Nettention.Proud.RmiID NotifyUseSuccessedOxyCharger = (Nettention.Proud.RmiID)3141+48;
+			public const Nettention.Proud.RmiID NotifyUseFailedOxyCharger = (Nettention.Proud.RmiID)3141+49;
+			public const Nettention.Proud.RmiID RequestUseItemBox = (Nettention.Proud.RmiID)3141+50;
+			public const Nettention.Proud.RmiID NotifyStartItemBoxState = (Nettention.Proud.RmiID)3141+51;
+			public const Nettention.Proud.RmiID NotifyUseItemBox = (Nettention.Proud.RmiID)3141+52;
+			public const Nettention.Proud.RmiID RequestShelterStartSetup = (Nettention.Proud.RmiID)3141+53;
+			public const Nettention.Proud.RmiID RequestShelterDoorControl = (Nettention.Proud.RmiID)3141+54;
+			public const Nettention.Proud.RmiID RequestShelterEnter = (Nettention.Proud.RmiID)3141+55;
+			public const Nettention.Proud.RmiID NotifyShelterInfo = (Nettention.Proud.RmiID)3141+56;
+			public const Nettention.Proud.RmiID RequestWorldCreateItem = (Nettention.Proud.RmiID)3141+57;
+			public const Nettention.Proud.RmiID NotifyCreateItem = (Nettention.Proud.RmiID)3141+58;
+			public const Nettention.Proud.RmiID RequestItemDelete = (Nettention.Proud.RmiID)3141+59;
+			public const Nettention.Proud.RmiID NotifyDeleteItem = (Nettention.Proud.RmiID)3141+60;
+			public const Nettention.Proud.RmiID NotifyNetworkObjectCreate = (Nettention.Proud.RmiID)3141+61;
+			public const Nettention.Proud.RmiID NotifyNetworkObjectMove = (Nettention.Proud.RmiID)3141+62;
+			public const Nettention.Proud.RmiID NotifyNetworkObjectDelete = (Nettention.Proud.RmiID)3141+63;
+			public const Nettention.Proud.RmiID RequestMeteorCreate = (Nettention.Proud.RmiID)3141+64;
+			public const Nettention.Proud.RmiID NotifyMeteorCreateTime = (Nettention.Proud.RmiID)3141+65;
+			public const Nettention.Proud.RmiID NotifyMeteorCreate = (Nettention.Proud.RmiID)3141+66;
+			public const Nettention.Proud.RmiID RequestSpaceShipSetup = (Nettention.Proud.RmiID)3141+67;
+			public const Nettention.Proud.RmiID RequestSpaceShip = (Nettention.Proud.RmiID)3141+68;
+			public const Nettention.Proud.RmiID RequestUseSpaceShip = (Nettention.Proud.RmiID)3141+69;
+			public const Nettention.Proud.RmiID RequestUseSpaceShipCancel = (Nettention.Proud.RmiID)3141+70;
+			public const Nettention.Proud.RmiID NotifyUseSpaceShipSuccess = (Nettention.Proud.RmiID)3141+71;
+			public const Nettention.Proud.RmiID NotifyUseSpaceShipFailed = (Nettention.Proud.RmiID)3141+72;
+			public const Nettention.Proud.RmiID NotifySpaceShipLockTime = (Nettention.Proud.RmiID)3141+73;
+			public const Nettention.Proud.RmiID NotifySpaceShipEngineChargeFailed = (Nettention.Proud.RmiID)3141+74;
+			public const Nettention.Proud.RmiID NotifySpaceShipEngineCharge = (Nettention.Proud.RmiID)3141+75;
+			public const Nettention.Proud.RmiID NotifyDeathZoneCommingTime = (Nettention.Proud.RmiID)3141+76;
+			public const Nettention.Proud.RmiID NotifyDeathZoneCreate = (Nettention.Proud.RmiID)3141+77;
+			public const Nettention.Proud.RmiID RequestDeathZoneMoveIndex = (Nettention.Proud.RmiID)3141+78;
+			public const Nettention.Proud.RmiID NotifyDeathZoneMoveHostAndIndexSetup = (Nettention.Proud.RmiID)3141+79;
+			public const Nettention.Proud.RmiID NotifyDeathZoneMove = (Nettention.Proud.RmiID)3141+80;
+			public const Nettention.Proud.RmiID NotifyDrawGame = (Nettention.Proud.RmiID)3141+81;
+			public const Nettention.Proud.RmiID RequestDrawGameResult = (Nettention.Proud.RmiID)3141+82;
+			public const Nettention.Proud.RmiID RequestGameEnd = (Nettention.Proud.RmiID)3141+83;
+			public const Nettention.Proud.RmiID NotifyKillInfo = (Nettention.Proud.RmiID)3141+84;
+			public const Nettention.Proud.RmiID NotifyGameResultInfoMe = (Nettention.Proud.RmiID)3141+85;
+			public const Nettention.Proud.RmiID NotifyGameResultInfoOther = (Nettention.Proud.RmiID)3141+86;
+			public const Nettention.Proud.RmiID NotifyGameResultShow = (Nettention.Proud.RmiID)3141+87;
+			public const Nettention.Proud.RmiID NotifyUtilPlayerRebirth = (Nettention.Proud.RmiID)3141+88;
+			public const Nettention.Proud.RmiID NotifyUtilPlayerDead = (Nettention.Proud.RmiID)3141+89;
+			public const Nettention.Proud.RmiID RequestUtilMeteorCreate = (Nettention.Proud.RmiID)3141+90;
 		// List that has RMI ID.
 		public static Nettention.Proud.RmiID[] RmiIDList = new Nettention.Proud.RmiID[] {
 			RequestServerConnect,
@@ -125,6 +133,7 @@ namespace SpaceWar
 			NotifyOtherClientJoin,
 			NotifyPlayerLost,
 			RequestHpUpdate,
+			RequestOxyUpdate,
 			NotifyPlayerChangeHP,
 			NotifyPlayerChangeOxygen,
 			RequestPlayerDamage,
@@ -158,6 +167,10 @@ namespace SpaceWar
 			NotifyCreateItem,
 			RequestItemDelete,
 			NotifyDeleteItem,
+			NotifyNetworkObjectCreate,
+			NotifyNetworkObjectMove,
+			NotifyNetworkObjectDelete,
+			RequestMeteorCreate,
 			NotifyMeteorCreateTime,
 			NotifyMeteorCreate,
 			RequestSpaceShipSetup,
@@ -181,6 +194,9 @@ namespace SpaceWar
 			NotifyGameResultInfoMe,
 			NotifyGameResultInfoOther,
 			NotifyGameResultShow,
+			NotifyUtilPlayerRebirth,
+			NotifyUtilPlayerDead,
+			RequestUtilMeteorCreate,
 		};
 	}
 }

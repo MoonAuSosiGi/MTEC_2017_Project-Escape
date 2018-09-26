@@ -25,6 +25,7 @@ private:
 	Vector3 m_pos;		///< 현재 위치
 	float m_hp;			///< 현재 클라이언트의 체력		
 	float m_oxy;		///< 현재 클라이언트의 산소량
+	int m_damageCoolTime; ///< 데미지 쿨타임
 
 	int m_state;		///< 살아있는지 죽어있는지 우주선인지 등에 대한 PlayerState
 	int m_deathCount;	///< 죽은 횟수 
@@ -66,6 +67,9 @@ public:
 	void HpUpdate(float val); ///< 더해질 hp
 	float GetHp(); ///< hp 리턴
 
+	void SetDamageCooltime(int value); ///< 데미지 쿨타임 세팅
+	int GetDamageCooltime(); ///< 데미지 쿨타임 리턴
+
 	void SetOxy(float newOxy); ///< Oxy 값 세팅
 	void OxyUpdate(float val); ///< 더해질 oxy
 	float GetOxy(); ///< Oxy 리턴
@@ -77,7 +81,7 @@ public:
 #pragma region InGame Method ========================================================================================
 	void GameReset(); ///< 게임 리셋시 호출
 	void DamageClient(int hostID, float time); ///< 어시스트 계산을 위해 때린 녀석 기록
-	void PlayerDead(float deadTime); ///< 플레이어가 죽었을 때의 처리
+	void PlayerDead(float deadTime,string reason); ///< 플레이어가 죽었을 때의 처리
 	void PlayerWin(); ///< 이 플레이어가 승리했을 경우에 대한 처리
 	forward_list<int> GetAssistClientList(); ///< 이 클라이언트가 죽었을때, 어시스트한 클라이언트 리스트
 #pragma endregion

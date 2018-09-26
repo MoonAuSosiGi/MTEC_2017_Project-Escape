@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Nettention.Proud;
+using TimeForEscape.Object;
 
 public class NetworkPlayer : MonoBehaviour {
 
@@ -20,11 +21,26 @@ public class NetworkPlayer : MonoBehaviour {
     [SerializeField] private TextMesh m_userNameUI = null;
 
     private bool m_isDeath = false;
+    private bool m_isDeathZoneDeath = false;
     public bool IS_DEATH { get { return m_isDeath; }
         set {
             m_isDeath = value;
+            var colls = transform.GetComponents<SphereCollider>();
+
+            for(int i = 0; i < colls.Length; i++)
+            {
+                if (m_isDeath == true)
+                    colls[i].enabled = false;
+                else
+                    colls[i].enabled = true;
+            }
             ShowPlayerName(m_isDeath) ;
         }
+    }
+    public bool IS_DEATHZONE_DEATH
+    {
+        get { return m_isDeathZoneDeath; }
+        set { m_isDeathZoneDeath = value; }
     }
 
     public void HPUpdate(float cur,float max)
@@ -88,6 +104,14 @@ public class NetworkPlayer : MonoBehaviour {
     AngleFollower m_playerSeeZ = new AngleFollower();
 
     public HostID HOST_ID { get { return m_hostID; } }
+
+    // 우주선에 얘가 탔을경우
+    private SpaceShip m_targetSpaceShip = null;
+    public SpaceShip TARGET_SPACESHIP
+    {
+        get { return m_targetSpaceShip; }
+        set { m_targetSpaceShip = value; }
+    }
     #endregion
     #endregion
 
@@ -98,7 +122,7 @@ public class NetworkPlayer : MonoBehaviour {
 
     public void ChangeRaderMode()
     {
-        m_playerController.RENDERER.material = WeaponManager.Instance().ITEM_OUTLINE_MAT;
+        m_playerController.RENDERER.material = m_playerController.RADER_MATERIAL;
     }
 
     public void ChangeOriginalMode()
@@ -134,6 +158,9 @@ public class NetworkPlayer : MonoBehaviour {
         UnityEngine.Vector3 velocity, UnityEngine.Vector3 charrot, 
         UnityEngine.Vector3 rot)
     {
+        if (IS_DEATH)
+            return;
+
         var npos = new Nettention.Proud.Vector3();
         npos.x = pos.x;
         npos.y = pos.y;
@@ -189,7 +216,8 @@ public class NetworkPlayer : MonoBehaviour {
         {
             if(animationName.Equals("Damage"))
             {
-                GetComponent<PlayerController>().DamageEffect(false,false);
+                if(CameraManager.Instance().RADER.IS_SHOW == false)
+                    GetComponent<PlayerController>().DamageEffect(false,false);
             }
             Debug.Log("DD " + animationName);
             PlayerAnim.Play(animationName);
@@ -295,7 +323,8 @@ public class NetworkPlayer : MonoBehaviour {
 
     void FixedUpdate()
     {
-        NetworkMoveUpdate();
+        if(IS_DEATH == false)
+            NetworkMoveUpdate();
 
         if(m_userNameUI.gameObject.activeSelf)
         {

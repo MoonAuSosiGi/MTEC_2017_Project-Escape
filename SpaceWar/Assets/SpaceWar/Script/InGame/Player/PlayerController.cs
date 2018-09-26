@@ -10,6 +10,15 @@ public class PlayerController : MonoBehaviour {
     #region PlayerController_INFO ---------------------------------------------------------------------------
     //싱글 모드일때 처리 -- 171029 기준으로 아직 미동작 따로 처리 해야함
     [SerializeField]  private bool m_signleMode = false;
+    [SerializeField]
+    private PlayerControlAttackTiming m_animationEvent = null;
+    // 현재 보고 있는 옵저버 인덱스
+    private int m_observerIndex = -1;
+    public int OBSERVER_INDEX
+    {
+        get { return m_observerIndex; }
+        set { m_observerIndex = value; }
+    }
 
     // 중력 처리를 받기 위한 리지드바디
     private Rigidbody m_rigidBody = null;
@@ -18,6 +27,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private Animator m_animator = null;
     public Animator ANIMATOR { get { return m_animator; } }
 
+    // 데스존 사망했을 때 더이상 살아나지 못함
+    private bool m_deathZoneDead = false;
+    public bool IS_DEATHZONE_DEAD
+    {
+        get { return m_deathZoneDead; }
+        set { m_deathZoneDead = value; }
+    }
 
     #region HIT EFFECT ------------------------------------------------------------------------------------
     // Hit Effect 전용 렌더러 받기
@@ -26,10 +42,12 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private Material m_hitMaterial = null;
     [SerializeField] private Material m_originMaterial = null;
+    [SerializeField] private Material m_raderMaterial = null;
 
     public SkinnedMeshRenderer RENDERER { get { return m_renderer; } }
     public Material HIT_MATERIAL { get { return m_hitMaterial; } }
     public Material ORIGIN_MATERIAL { get { return m_originMaterial; } }
+    public Material RADER_MATERIAL {  get { return m_raderMaterial; } }
     #endregion -------------------------------------------------------------------------------------------
 
     #region Equip Inven System ----------------------------------------------------------------------------
@@ -432,7 +450,7 @@ public class PlayerController : MonoBehaviour {
     public AudioSource m_playerLoopSource = null;
     public AudioClip m_oxyChargerUseSound = null;
     public AudioClip m_shelterUseSound = null;
-    public AudioClip m_weaponUseSound = null;
+    public AudioClip m_itemGetSound = null;
 
     // 줍는 사운드
     public AudioClip m_pickSound = null;
@@ -532,9 +550,42 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f)
-            return;
+        if (IS_DEATH())
+        {
+            LoopAudioStop();
+            ObserverControl();
 
+            if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH 
+                && CameraManager.Instance().DEAD_EFFECT_SHOW
+                && IsInvoking("DeathMatchRebirth") == false
+                && m_deathZoneDead == false)
+            {
+                Invoke("DeathMatchRebirth" , 3.0f);
+            }
+            else if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH
+                && CameraManager.Instance().DEAD_EFFECT_SHOW
+                && m_deathZoneDead == true)
+            {
+                // 여기서 데스매치 끝났는지 체크
+                var list = NetworkManager.Instance().NETWORK_PLAYERS;
+
+                int checker = 0;
+                for(int i = 0; i < list.Count; i ++)
+                {
+                    if(list[i].IS_DEATHZONE_DEATH == true)
+                    {
+                        checker++;
+                    }
+                }
+                if(checker == list.Count)
+                {
+                    //끝
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Space_1Result");
+                }
+            }
+
+            return;
+        }
 
         if (IS_MOVE_ABLE)
         {
@@ -553,20 +604,6 @@ public class PlayerController : MonoBehaviour {
         }
 
         RaderProcess();
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            DamageEffect();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            NetworkManager.Instance().C2SRequestPlayerDamage((int)NetworkManager.Instance().m_hostID , GameManager.Instance().PLAYER.m_name , "test" , 5.0f , Vector3.zero);
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            NetworkManager.Instance().C2SRequestPlayerUseOxy(GameManager.Instance().PLAYER.m_name , 10.0f);
-        }
-
         RotatePlayerName();
         HealPackProcess();
         GetItemProcess();
@@ -578,6 +615,7 @@ public class PlayerController : MonoBehaviour {
         dir.Normalize();
         Debug.DrawLine(transform.position , dir , Color.red);
 
+
     }
 
     #endregion ##############################################################################################
@@ -585,7 +623,7 @@ public class PlayerController : MonoBehaviour {
     #region Player Rader ------------------------------------------------------------------------------------
     void RaderProcess()
     {
-        if(Input.GetKeyDown(m_Rader))
+        if(Input.GetKey(m_Rader))
         {
             if (CameraManager.Instance().RADER.IS_SHOW == false)
                 CameraManager.Instance().RADER.ShowRader();
@@ -787,7 +825,7 @@ public class PlayerController : MonoBehaviour {
         float startTime = Time.time;
 
         //중력 적용 안함
-        GravityManager.Instance().GRAVITY_POWER = 0.0f;
+        GravityManager.Instance().SetGravityEnable(false);
         //JumpAnimation(1);
 
         JUMP_ANI_VALUE = 1;
@@ -800,7 +838,7 @@ public class PlayerController : MonoBehaviour {
         }
         //JumpAnimation(2);
         JUMP_ANI_VALUE = 2;
-        GravityManager.Instance().GRAVITY_POWER = 100.0f;
+        GravityManager.Instance().SetGravityEnable(true);
         m_isJumpAble = true;
 
     }
@@ -869,7 +907,6 @@ public class PlayerController : MonoBehaviour {
         ShowUseEffect(col);
 
 
-
     }
 
     void OnTriggerStay(Collider col)
@@ -879,6 +916,9 @@ public class PlayerController : MonoBehaviour {
         RotateUseEffect();
         ShowUseEffect(col);
         MeteorDamage(col);
+
+        if (col.CompareTag("WATER"))
+            m_animationEvent.WaterSoundChange(true);
     }
 
     void OnTriggerExit(Collider col)
@@ -891,7 +931,8 @@ public class PlayerController : MonoBehaviour {
         if (m_nearItem != null)
             m_nearItem.GetComponent<Item>().OutLineHide();
         m_nearItem = null;
-
+        if (col.CompareTag("WATER"))
+            m_animationEvent.WaterSoundChange(false);
     }
 
     #endregion -----------------------------------------------------------------------------------------------
@@ -968,20 +1009,7 @@ public class PlayerController : MonoBehaviour {
         ATTACK_ANI_VALUE = 0;
     }
 
-    public void AttackAnimationEnd()
-    {
-        //ATTACK_ANI_VALUE = 0;
-        if (enabled == false || m_equipItems[m_curEquipItem] == null)
-            return;
 
-        if (m_equipItems[m_curEquipItem].ITEM_TYPE == Item.ItemType.ETC_GRENADE)
-        {
-            m_equipItems[m_curEquipItem] = null;
-            SetAnimation(AnimationType.ANI_BAREHAND);
-        }
-
-
-    }
     #endregion -----------------------------------------------------------------------------------------------
 
     #region Show UI Logic ------------------------------------------------------------------------------------
@@ -1022,6 +1050,11 @@ public class PlayerController : MonoBehaviour {
         }
         else if (col.CompareTag("SpaceShipControlPanel"))
         {
+            if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH)
+            {
+                return;
+            }
+
             if (NetworkManager.Instance().SPACE_SHIP_ENABLE == false)
             {
                 GameManager.Instance().m_inGameUI.ShowDebugLabel("우주선 최초 잠김 상태");
@@ -1041,16 +1074,21 @@ public class PlayerController : MonoBehaviour {
             
             string text = WeaponManager.Instance().GetWeaponData(m_nearItem.GetComponent<Item>().ITEM_ID).Name_kr;
             GameManager.Instance().m_inGameUI.ShowObjectUI(text);
+            m_nearItem.GetComponent<Item>().OutLineShow();
         }
     }
 
     void HideUseEffect(Collider col)
     {
         LoopAudioStop();
+
+        GameManager.Instance().m_inGameUI.HideObjectUI();
+
+        if (col == null)
+            return;
+
         if (col.CompareTag("Weapon"))
         {
-            GameManager.Instance().m_inGameUI.HideObjectUI();
-
             //  MeshRenderer renderer = m_nearItem.GetComponentInChildren<MeshRenderer>();
             if(m_nearItem != null)
                 m_nearItem.GetComponent<Item>().OutLineHide();
@@ -1062,32 +1100,33 @@ public class PlayerController : MonoBehaviour {
                 OxyChargerControlCancle();
             }
             m_nearOxyCharger = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("ItemBox"))
         {
             m_nearItemBox = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("ShelterDoor"))
         {
             m_nearShelter = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("SpaceShipControlPanel"))
         {
+            if (GameManager.CURRENT_GAMEMODE == GameManager.GameMode.DEATH_MATCH)
+            {
+                return;
+            }
             //  우주선 연료창 닫기
             if (m_nearSpaceShip != null)
                 m_nearSpaceShip.StopSpaceShipEngineCharge();
             m_nearSpaceShip = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
         }
         else if (col.CompareTag("Recoverykit"))
         {
+            if (m_nearItem != null)
+                m_nearItem.GetComponent<Item>().OutLineHide();
             m_nearItem = null;
-            GameManager.Instance().m_inGameUI.HideObjectUI();
+            
         }
-
     }
 
     void RotateUseEffect()
@@ -1134,6 +1173,7 @@ public class PlayerController : MonoBehaviour {
             // 주울 때 알아서 index 를 결정한다.
             Item nearItem = m_nearItem.GetComponent<Item>();
             int index = GetEquipItemIndex(nearItem.ITEM_TYPE);
+            AudioPlay(m_itemGetSound);
 
             // 다만 item 의 type 이 원거리 무기 일 경우엔 
             // 1번 ,2번 인덱스에 나눠서 넣어야 한다.
@@ -1267,8 +1307,8 @@ public class PlayerController : MonoBehaviour {
     {
         item.transform.parent = null;
         if (GameManager.Instance() != null)
-            GameManager.Instance().UnEquipWeapon(m_curEquipItem);
-        WeaponAnimationChange(null);
+            GameManager.Instance().UnEquipWeapon(m_curEquipItem,true);
+        //WeaponAnimationChange(null);
     }
     // 버리는 로직 FixedUpdate 에서 부름
     void ControlWeaponObjectThrowProcess()
@@ -1316,7 +1356,7 @@ public class PlayerController : MonoBehaviour {
 
     #endregion -----------------------------------------------------------------------------------------------
 
-    #region Player Damage And Dead ---------------------------------------------------------------------------
+    #region Player Damage And Dead Observer ------------------------------------------------------------------
 
     #region Damage Effect ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -1360,7 +1400,11 @@ public class PlayerController : MonoBehaviour {
     // 데미지를 입을때
     public void Damage(Vector3 dir , string reason = null)
     {
-        DamageEffect(true , !reason.Equals("DeathZone") && !reason.Equals("Meteor") && !reason.Equals("oxy"));
+        DamageEffect(true , 
+            !reason.Equals("DeathZone") 
+            && !reason.Equals("Meteor") 
+            && !reason.Equals("oxy")
+            && !reason.Equals("Gas"));
 
         AudioPlay(m_damageHit);
         // 우주선 생성 도중 데미지를 입었을 경우 캔슬됨
@@ -1393,6 +1437,125 @@ public class PlayerController : MonoBehaviour {
         AudioPlay(m_deadSound);
     }
 
+    // 사망 애니메이션 끝
+    public void DeadAnimationEnd()
+    {
+        Debug.Log("Dead Animation End");
+        if(GameManager.CURRENT_GAMEMODE == GameManager.GameMode.SURVIVAL)
+            NetworkManager.Instance().IS_LOSE = true;
+    }
+
+    // 옵저버 조작
+    void ObserverControl()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && CameraManager.Instance().DEAD_EFFECT_SHOW)
+        {
+            //옵저버 조작
+            var list = NetworkManager.Instance().NETWORK_PLAYERS;
+            m_observerIndex++;
+
+            if(m_observerIndex >= 0 && m_observerIndex < list.Count)
+            {
+                var remove = list[m_observerIndex].GetComponent<AudioListener>();
+
+                if (remove != null)
+                    GameObject.Destroy(remove);
+               
+            }
+            var listener = transform.GetComponent<AudioListener>();
+
+            if (listener != null)
+                GameObject.Destroy(listener);
+
+            if (m_observerIndex == -1)
+                m_observerIndex = 0;
+            if (m_observerIndex >= list.Count)
+            {
+                Camera.main.transform.parent = m_camAnchor3;
+                m_observerIndex = -1;
+                CameraManager.Instance().ShowDeadCameraEffect_NoEffect();
+                Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
+                Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
+            }
+            else
+            {
+
+                CameraManager.Instance().HideDeadCameraEffect();
+                // 우주선에 탄 놈일 경우 다르게 처리
+                if (list[m_observerIndex].TARGET_SPACESHIP != null)
+                {
+                    var np = list[m_observerIndex].GetComponent<PlayerController>();
+                    if (np.m_camAnchor3.childCount > 0)
+                    {
+                        var cam = np.m_camAnchor3.GetChild(0);
+                        cam.parent = null;
+                        cam.gameObject.SetActive(true);
+                    }
+
+                    if (list[m_observerIndex].TARGET_SPACESHIP.GetComponent<AudioListener>() == null)
+                        list[m_observerIndex].TARGET_SPACESHIP.gameObject.AddComponent<AudioListener>();
+
+                    list[m_observerIndex].TARGET_SPACESHIP.SpaceShipCameraEndSetup();
+                }
+                else
+                {
+                    var np = list[m_observerIndex].GetComponent<PlayerController>();
+                    var target = np.m_camAnchor3;
+
+                    if (list[m_observerIndex].GetComponent<AudioListener>() == null)
+                        list[m_observerIndex].gameObject.AddComponent<AudioListener>();
+
+                    Camera.main.transform.parent = target;
+                    Camera.main.transform.localPosition = Vector3.zero; // 위치 설정
+                    Camera.main.transform.localRotation = Quaternion.Euler(Vector3.zero); // 각도 설정
+                }
+            }
+            Debug.Log("Ob " + m_observerIndex);
+
+        }
+        else if(m_observerIndex != -1)
+        {
+            var list = NetworkManager.Instance().NETWORK_PLAYERS;
+
+            if (m_observerIndex >= list.Count)
+                return;
+
+
+            CameraManager.Instance().HideDeadCameraEffect();
+            // 우주선에 탄 놈일 경우 다르게 처리
+            if (list[m_observerIndex].TARGET_SPACESHIP != null)
+            {
+                var np = list[m_observerIndex].GetComponent<PlayerController>();
+
+                if(np.m_camAnchor3.childCount > 0)
+                {
+                    var cam = np.m_camAnchor3.GetChild(0);
+                    cam.parent = null;
+                    cam.gameObject.SetActive(true);
+                }
+                list[m_observerIndex].TARGET_SPACESHIP.SpaceShipCameraEndSetup();
+            }
+            else
+            {
+                //var np = list[m_observerIndex].GetComponent<PlayerController>();
+                //var target = np.m_camAnchor3;
+
+                //Camera.main.transform.parent = target;
+            }
+        }
+    }
+
+    // 죽었는지 체크
+    public bool IS_DEATH()
+    {
+        return GameManager.Instance() != null && GameManager.Instance().PLAYER != null && GameManager.Instance().PLAYER.m_hp <= 0.0f;
+    }
+
+    // 데스매치 부활
+    void DeathMatchRebirth()
+    {
+        NetworkManager.Instance().RequestRebirth((int)NetworkManager.Instance().HOST_ID , true);
+    }
     #endregion -----------------------------------------------------------------------------------------------
 
     #region Player Object Interaction ------------------------------------------------------------------------
@@ -1407,12 +1570,7 @@ public class PlayerController : MonoBehaviour {
                 AudioPlay(m_pickSound);
                 m_nearItemBox.UseItemBox();
             }
-            if (m_nearShelter != null)
-            {
-                AudioPlay(m_shelterUseSound);
-                m_nearShelter.DOOR_STATE = !m_nearShelter.DOOR_STATE;
-                m_nearShelter.DoorControl();
-            }
+
 
             if (m_nearSpaceShip != null)
             {
@@ -1422,6 +1580,16 @@ public class PlayerController : MonoBehaviour {
                 IS_MOVE_ABLE = false;
             }
 
+        }
+        if(Input.GetKeyUp(m_Get))
+        {
+            if (m_nearShelter != null)
+            {
+                AudioPlay(m_shelterUseSound);
+                //m_nearShelter.DOOR_STATE = !m_nearShelter.DOOR_STATE;
+                Debug.Log("DOOR CONTROL ---- playercontroller");
+                m_nearShelter.DoorControl();
+            }
         }
         // 우주선 상호작용
         SpaceShipInteraction();
@@ -1550,9 +1718,21 @@ public class PlayerController : MonoBehaviour {
 
     void OxyChargerControlCancle()
     {
-        
+        LoopAudioStop();
         m_isMoveAble = true;
         m_oxyChargeRequest = false;
+        INTERACTION_ANI_VALUE = 0;
+        m_targetOxy = 0.0f;
+        GameManager.Instance().SLIDER_UI.HideSlider();
+
+        if (m_equipItems[m_curEquipItem] != null)
+        {
+            m_equipItems[m_curEquipItem].gameObject.SetActive(true);
+            WeaponAnimationChange(m_equipItems[m_curEquipItem]);
+        }
+        else
+            WeaponAnimationChange(null);
+
         if (m_nearOxyCharger != null)
             NetworkManager.Instance().C2SRequestPlayerUseEndOxyCharger(m_nearOxyCharger);
     }
@@ -1562,7 +1742,7 @@ public class PlayerController : MonoBehaviour {
     // 메테오 데미지
     void MeteorDamage(Collider col)
     {
-        if (col.CompareTag("Meteor") && IS_SHELTER == false)
+        if (col.CompareTag("Meteor") && IS_SHELTER == false && IS_DEATH() == false)
         {
             AudioPlay(m_damageHit);
             if (m_meteorCoolTime > 0.0f)
@@ -1645,6 +1825,12 @@ public class PlayerController : MonoBehaviour {
         m_nearSpaceShip.StopSpaceShipEngineCharge();
         AudioPlay(m_spaceShipChargeFail);
     }
+
+    // 우주선 작동 시작시 우주선 측에서 호출함 
+    public void SpaceShipChargeEnd()
+    {
+        HideUseEffect(null);
+    }
     #endregion
 
     #endregion -----------------------------------------------------------------------------------------------
@@ -1666,7 +1852,21 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+    
+    public void AttackAnimationEnd()
+    {
+        // 네트워크 플레이어는 수행되면 안됨
+        if (enabled == false)
+            return;
+        // 원래 수류탄 전용 
+        if (m_equipItems[m_curEquipItem] == null)
+        {
+            ATTACK_ANI_VALUE = 0;
+            SetAnimation(AnimationType.ANI_BAREHAND);
+        }
 
+
+    }
     void WalkAnimation(int value)
     {
         m_animator.SetInteger("WALK" , value);
@@ -1755,10 +1955,11 @@ public class PlayerController : MonoBehaviour {
 
     void AudioPlay(AudioClip clip)
     {
-        if (m_playerSoundSource.clip != null && m_playerSoundSource.isPlaying == true)
+        if (m_playerSoundSource.clip != clip && m_playerSoundSource.isPlaying == true)
             m_playerSoundSource.Stop();
         m_playerSoundSource.clip = clip;
-        m_playerSoundSource.Play();
+        if(m_playerSoundSource.isPlaying == false)
+            m_playerSoundSource.Play();
     }
 
     void LoopAudioPlay(AudioClip clip)

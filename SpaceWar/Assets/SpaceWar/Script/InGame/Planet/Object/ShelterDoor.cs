@@ -36,7 +36,13 @@ namespace TimeForEscape.Object
             PlayerController p = other.GetComponent<PlayerController>();
 
             // 정상적으로 얻어온게 아니라면 패스
-            if (p == null || !p.enabled)
+            if (p == null)
+                return;
+
+            var np = other.GetComponent<NetworkPlayer>();
+
+            if (np != null && NetworkManager.Instance().NETWORK_PLAYERS.IndexOf(np) !=
+                GameManager.Instance().PLAYER.m_player.OBSERVER_INDEX)
                 return;
 
             // 들어오는 문일 때의 처리

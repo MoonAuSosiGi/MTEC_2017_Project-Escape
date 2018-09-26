@@ -280,6 +280,16 @@ namespace SpaceWar
 #define CALL_SpaceWar_RequestHpUpdate RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp)
 #define PARAM_SpaceWar_RequestHpUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & hp)
                
+		virtual bool RequestOxyUpdate ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestOxyUpdate bool RequestOxyUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & oxy) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestOxyUpdate(DerivedClass) bool DerivedClass::RequestOxyUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & oxy)
+#define CALL_SpaceWar_RequestOxyUpdate RequestOxyUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & oxy)
+#define PARAM_SpaceWar_RequestOxyUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & oxy)
+               
 		virtual bool NotifyPlayerChangeHP ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const string & ,  const float & ,  const float & ,  const float & ,  const Proud::Vector3 & )		{ 
 			return false;
 		} 
@@ -610,6 +620,46 @@ namespace SpaceWar
 #define CALL_SpaceWar_NotifyDeleteItem NotifyDeleteItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
 #define PARAM_SpaceWar_NotifyDeleteItem ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
                
+		virtual bool NotifyNetworkObjectCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const int & ,  const Proud::Vector3 & ,  const Proud::Vector3 & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkObjectCreate bool NotifyNetworkObjectCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const int & type,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkObjectCreate(DerivedClass) bool DerivedClass::NotifyNetworkObjectCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const int & type,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
+#define CALL_SpaceWar_NotifyNetworkObjectCreate NotifyNetworkObjectCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const int & type,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
+#define PARAM_SpaceWar_NotifyNetworkObjectCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const int & type,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot)
+               
+		virtual bool NotifyNetworkObjectMove ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ,  const Proud::Vector3 & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkObjectMove bool NotifyNetworkObjectMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkObjectMove(DerivedClass) bool DerivedClass::NotifyNetworkObjectMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)
+#define CALL_SpaceWar_NotifyNetworkObjectMove NotifyNetworkObjectMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)
+#define PARAM_SpaceWar_NotifyNetworkObjectMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot)
+               
+		virtual bool NotifyNetworkObjectDelete ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyNetworkObjectDelete bool NotifyNetworkObjectDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyNetworkObjectDelete(DerivedClass) bool DerivedClass::NotifyNetworkObjectDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
+#define CALL_SpaceWar_NotifyNetworkObjectDelete NotifyNetworkObjectDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
+#define PARAM_SpaceWar_NotifyNetworkObjectDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID)
+               
+		virtual bool RequestMeteorCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const Proud::Vector3 & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestMeteorCreate bool RequestMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestMeteorCreate(DerivedClass) bool DerivedClass::RequestMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos)
+#define CALL_SpaceWar_RequestMeteorCreate RequestMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos)
+#define PARAM_SpaceWar_RequestMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos)
+               
 		virtual bool NotifyMeteorCreateTime ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
 			return false;
 		} 
@@ -839,6 +889,36 @@ namespace SpaceWar
 #define DEFRMI_SpaceWar_NotifyGameResultShow(DerivedClass) bool DerivedClass::NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
 #define CALL_SpaceWar_NotifyGameResultShow NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
 #define PARAM_SpaceWar_NotifyGameResultShow ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext )
+               
+		virtual bool NotifyUtilPlayerRebirth ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyUtilPlayerRebirth bool NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyUtilPlayerRebirth(DerivedClass) bool DerivedClass::NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition)
+#define CALL_SpaceWar_NotifyUtilPlayerRebirth NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition)
+#define PARAM_SpaceWar_NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition)
+               
+		virtual bool NotifyUtilPlayerDead ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_NotifyUtilPlayerDead bool NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_NotifyUtilPlayerDead(DerivedClass) bool DerivedClass::NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+#define CALL_SpaceWar_NotifyUtilPlayerDead NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+#define PARAM_SpaceWar_NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+               
+		virtual bool RequestUtilMeteorCreate ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & )		{ 
+			return false;
+		} 
+
+#define DECRMI_SpaceWar_RequestUtilMeteorCreate bool RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) PN_OVERRIDE
+
+#define DEFRMI_SpaceWar_RequestUtilMeteorCreate(DerivedClass) bool DerivedClass::RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+#define CALL_SpaceWar_RequestUtilMeteorCreate RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
+#define PARAM_SpaceWar_RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID)
  
 		virtual bool ProcessReceivedMessage(::Proud::CReceivedMessage &pa, void* hostTag) PN_OVERRIDE;
 		static const PNTCHAR* RmiName_RequestServerConnect;
@@ -867,6 +947,7 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyOtherClientJoin;
 		static const PNTCHAR* RmiName_NotifyPlayerLost;
 		static const PNTCHAR* RmiName_RequestHpUpdate;
+		static const PNTCHAR* RmiName_RequestOxyUpdate;
 		static const PNTCHAR* RmiName_NotifyPlayerChangeHP;
 		static const PNTCHAR* RmiName_NotifyPlayerChangeOxygen;
 		static const PNTCHAR* RmiName_RequestPlayerDamage;
@@ -900,6 +981,10 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyCreateItem;
 		static const PNTCHAR* RmiName_RequestItemDelete;
 		static const PNTCHAR* RmiName_NotifyDeleteItem;
+		static const PNTCHAR* RmiName_NotifyNetworkObjectCreate;
+		static const PNTCHAR* RmiName_NotifyNetworkObjectMove;
+		static const PNTCHAR* RmiName_NotifyNetworkObjectDelete;
+		static const PNTCHAR* RmiName_RequestMeteorCreate;
 		static const PNTCHAR* RmiName_NotifyMeteorCreateTime;
 		static const PNTCHAR* RmiName_NotifyMeteorCreate;
 		static const PNTCHAR* RmiName_RequestSpaceShipSetup;
@@ -923,6 +1008,9 @@ namespace SpaceWar
 		static const PNTCHAR* RmiName_NotifyGameResultInfoMe;
 		static const PNTCHAR* RmiName_NotifyGameResultInfoOther;
 		static const PNTCHAR* RmiName_NotifyGameResultShow;
+		static const PNTCHAR* RmiName_NotifyUtilPlayerRebirth;
+		static const PNTCHAR* RmiName_NotifyUtilPlayerDead;
+		static const PNTCHAR* RmiName_RequestUtilMeteorCreate;
 		static const PNTCHAR* RmiName_First;
 		virtual ::Proud::RmiID* GetRmiIDList() PN_OVERRIDE { return g_RmiIDList; }
 		virtual int GetRmiIDListCount() PN_OVERRIDE { return g_RmiIDListCount; }
@@ -1165,6 +1253,15 @@ namespace SpaceWar
 			if (RequestHpUpdate_Function==nullptr) 
 				return true; 
 			return RequestHpUpdate_Function(remote,rmiContext, hp); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const float & ) > RequestOxyUpdate_Function;
+		virtual bool RequestOxyUpdate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const float & oxy) 
+		{ 
+			if (RequestOxyUpdate_Function==nullptr) 
+				return true; 
+			return RequestOxyUpdate_Function(remote,rmiContext, oxy); 
 		}
 
                
@@ -1465,6 +1562,42 @@ namespace SpaceWar
 		}
 
                
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const int & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ) > NotifyNetworkObjectCreate_Function;
+		virtual bool NotifyNetworkObjectCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const int & type,  const Proud::Vector3 & pos,  const Proud::Vector3 & rot) 
+		{ 
+			if (NotifyNetworkObjectCreate_Function==nullptr) 
+				return true; 
+			return NotifyNetworkObjectCreate_Function(remote,rmiContext, networkID, type, pos, rot); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ,  const Proud::Vector3 & ) > NotifyNetworkObjectMove_Function;
+		virtual bool NotifyNetworkObjectMove ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID,  const Proud::Vector3 & pos,  const Proud::Vector3 & velocity,  const Proud::Vector3 & rot) 
+		{ 
+			if (NotifyNetworkObjectMove_Function==nullptr) 
+				return true; 
+			return NotifyNetworkObjectMove_Function(remote,rmiContext, networkID, pos, velocity, rot); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const string & ) > NotifyNetworkObjectDelete_Function;
+		virtual bool NotifyNetworkObjectDelete ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const string & networkID) 
+		{ 
+			if (NotifyNetworkObjectDelete_Function==nullptr) 
+				return true; 
+			return NotifyNetworkObjectDelete_Function(remote,rmiContext, networkID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const Proud::Vector3 & ) > RequestMeteorCreate_Function;
+		virtual bool RequestMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const Proud::Vector3 & pos) 
+		{ 
+			if (RequestMeteorCreate_Function==nullptr) 
+				return true; 
+			return RequestMeteorCreate_Function(remote,rmiContext, pos); 
+		}
+
+               
 		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > NotifyMeteorCreateTime_Function;
 		virtual bool NotifyMeteorCreateTime ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & time) 
 		{ 
@@ -1669,6 +1802,33 @@ namespace SpaceWar
 			if (NotifyGameResultShow_Function==nullptr) 
 				return true; 
 			return NotifyGameResultShow_Function(remote,rmiContext); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ,  const bool & ) > NotifyUtilPlayerRebirth_Function;
+		virtual bool NotifyUtilPlayerRebirth ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID,  const bool & otherPosition) 
+		{ 
+			if (NotifyUtilPlayerRebirth_Function==nullptr) 
+				return true; 
+			return NotifyUtilPlayerRebirth_Function(remote,rmiContext, targetHostID, otherPosition); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > NotifyUtilPlayerDead_Function;
+		virtual bool NotifyUtilPlayerDead ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) 
+		{ 
+			if (NotifyUtilPlayerDead_Function==nullptr) 
+				return true; 
+			return NotifyUtilPlayerDead_Function(remote,rmiContext, targetHostID); 
+		}
+
+               
+		std::function< bool ( ::Proud::HostID, ::Proud::RmiContext& ,  const int & ) > RequestUtilMeteorCreate_Function;
+		virtual bool RequestUtilMeteorCreate ( ::Proud::HostID remote, ::Proud::RmiContext& rmiContext ,  const int & targetHostID) 
+		{ 
+			if (RequestUtilMeteorCreate_Function==nullptr) 
+				return true; 
+			return RequestUtilMeteorCreate_Function(remote,rmiContext, targetHostID); 
 		}
 
 	};

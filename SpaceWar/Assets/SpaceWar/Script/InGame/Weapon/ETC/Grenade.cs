@@ -20,6 +20,13 @@ public class Grenade : WeaponItem {
     private UnityEngine.Vector3 m_startPos = UnityEngine.Vector3.zero;
     #endregion
 
+    private AudioClip m_hitSound = null;
+    public AudioClip HIT_SOUND
+    {
+        get { return m_hitSound; }
+        set { m_hitSound = value; }
+    }
+
     #region Effect Setting
     private GameObject m_grenadeBaseHitEffect = null;
     private GameObject m_grenadeOtherHitEffect = null;
@@ -210,10 +217,13 @@ public class Grenade : WeaponItem {
         // 콜라이더들 얻기
         SphereCollider[] colls = this.GetComponents<SphereCollider>();
 
-        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone"))
+        if (!other.CompareTag("Weapon") && !other.CompareTag("Bullet") && !other.CompareTag("DeathZone")
+             && !other.CompareTag("Bullet_Explosion") && !other.CompareTag("WATER") && !other.CompareTag("Meteor")
+             && !other.CompareTag("NoCameraCollider"))
         {
             m_isShot = true;
             Debug.Log("other " + other.name + " tag " + other.tag);
+            HitSoundPlay();
 
             if (other.CompareTag("PlayerCharacter"))
             {
@@ -250,6 +260,15 @@ public class Grenade : WeaponItem {
             colls[0].enabled = false;
             colls[1].enabled = false;
             Invoke("GrenadeDelete" , 1.5f);
+        }
+    }
+
+    void HitSoundPlay()
+    {
+        if(m_hitSound != null)
+        {
+            m_source.clip = m_hitSound;
+            m_source.Play();
         }
     }
 

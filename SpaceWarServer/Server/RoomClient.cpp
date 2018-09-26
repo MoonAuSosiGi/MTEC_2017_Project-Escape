@@ -18,6 +18,10 @@ RoomClient::RoomClient(HostID hostID, string userName, bool host)
 	m_state = ALIVE;
 	m_hp = MAX_HP;
 	m_oxy = MAX_OXY;
+	m_damageCoolTime = 0;
+	m_killCount = 0;
+	m_assistCount = 0;
+	m_deathCount = 0;
 }
 
 #pragma region Get / Set Method Waiting Room =========================================================================
@@ -232,6 +236,24 @@ float RoomClient::GetHp()
 }
 
 /**
+ * @brief	데미지 쿨타임 세팅
+ * @param	value 세팅할 쿨타임
+*/
+void RoomClient::SetDamageCooltime(int value)
+{
+	m_damageCoolTime = value;
+}
+
+/**
+ * @brief	데미지 쿨타임 얻기
+ * @return	데미지 쿨타임 리턴
+*/
+int RoomClient::GetDamageCooltime()
+{
+	return m_damageCoolTime;
+}
+
+/**
  * @brief	산소 세팅
  * @detail	산소값 강제 변경
  * @param	newOxy 
@@ -319,10 +341,16 @@ void RoomClient::DamageClient(int hostID, float time)
  * @detail	플레이어가 죽었을 경우 결과창 보여주기 관련 처리 ( 어시스트 등 )
  * @todo	어시스트 허용시간 테이블 값으로 가져오기 / 어시스트 로직 점검
 */
-void RoomClient::PlayerDead(float deadTime)
+void RoomClient::PlayerDead(float deadTime,string reason)
 {
 	cout << "Player Dead : " << (int)m_hostID << " Dead Time : " << deadTime << endl;
-	m_state = DEATH;
+	if (reason == "DeathZone")
+	{
+		cout << "DeathZone Dead" << endl;
+		m_state = DEATH_ZONE_DEAD;
+	}
+	else
+		m_state = DEATH;
 	m_deathCount++;
 	// 어시스트의 목록을 만들어야 함
 	auto iter = m_assistCheck.begin();

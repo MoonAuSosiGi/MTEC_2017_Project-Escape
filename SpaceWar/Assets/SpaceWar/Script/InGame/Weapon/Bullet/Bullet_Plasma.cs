@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TimeForEscape.Object.Weapon.Bullet
+namespace TimeForEscape.Object.Weapon
 {
     /**
     * @brief		Bullet_Plasma :: 플라즈마탄
@@ -17,8 +17,11 @@ namespace TimeForEscape.Object.Weapon.Bullet
         #region Bullet Plasma --------------------------------------------------
         [SerializeField]
         private GameObject m_plasmaHitEffect = null; ///< 플레이어가 맞았을 때
+        [SerializeField]
+        private AudioClip m_plasmaHitSound = null; ///< 플라즈마 히트 사운드
+        [SerializeField] private AudioSource m_hitSource = null;
+        
         private float m_effectCoolTime = 0.0f; ///< 이펙트 띄울 쿨타임
-        private WeaponItem m_targetWeapon = null; ///< 타겟 무기
 
         #region Bullet Plasma Property -----------------------------------------
 
@@ -30,6 +33,7 @@ namespace TimeForEscape.Object.Weapon.Bullet
             get { return m_plasmaHitEffect; }
             set { m_plasmaHitEffect = value; }
         }
+
         #endregion -------------------------------------------------------------
         #endregion -------------------------------------------------------------
         #region Unity Mehtod ---------------------------------------------------
@@ -39,9 +43,7 @@ namespace TimeForEscape.Object.Weapon.Bullet
         void Start()
         {
             var rocket = GetComponent<RocketBulletExplosion>();
-
-            // 타겟 무기 넣기
-            m_targetWeapon = rocket.ROCKET;
+            
             GameObject.Destroy(rocket);
         }
         /**
@@ -103,6 +105,9 @@ namespace TimeForEscape.Object.Weapon.Bullet
             effect.EFFECT_TYPE = Util.Effect.OneHitEffect.EffectDeleteType.TIME_EVENT;
             effect.EFFECT_DELETE_TIME = 2.0f;
             m_effectCoolTime = 2.0f;
+
+            m_hitSource.clip = m_plasmaHitSound;
+            m_hitSource.Play();
         }
 
         /**
@@ -119,21 +124,23 @@ namespace TimeForEscape.Object.Weapon.Bullet
             // 내가 맞는다.
             if (p != null && np == null)
             {
+                Bullet b = transform.parent.GetComponent<Bullet>();
                 NetworkManager.Instance().C2SRequestPlayerDamage(
                    (int)NetworkManager.Instance().HOST_ID ,
                    GameManager.Instance().PLAYER.NAME ,
-                   m_targetWeapon.ITEM_NAME ,
-                   m_targetWeapon.DAMAGE ,
+                   b.WEAPON_ID ,
+                   b.DAMAGE ,
                    transform.position);
             }
             // 다른 플레이어가 맞는다
             else if(np != null)
             {
+                Bullet b = transform.parent.GetComponent<Bullet>();
                 NetworkManager.Instance().C2SRequestPlayerDamage(
                    (int)np.HOST_ID,
                    np.m_userName ,
-                   m_targetWeapon.ITEM_NAME ,
-                   m_targetWeapon.DAMAGE ,
+                   b.WEAPON_ID ,
+                   b.DAMAGE ,
                    transform.position);
             }
                 

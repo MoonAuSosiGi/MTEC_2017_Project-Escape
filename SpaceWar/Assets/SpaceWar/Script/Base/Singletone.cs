@@ -6,7 +6,7 @@ using System;
 public class Singletone<T> : MonoBehaviour where T : MonoBehaviour{
 
     private static T m_instance = default(T);
-
+   
     public static T Instance()
     {
         if (m_instance == null)

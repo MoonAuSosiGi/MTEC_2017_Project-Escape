@@ -68,7 +68,7 @@ public class AlertUI : MonoBehaviour {
         AlertData data = new AlertData(type, id , tick , alert);
 
         alert.transform.parent = transform;
-        alert.transform.localScale = new Vector3(1.0f , 1.0f , 1.0f);
+        alert.transform.localScale = m_DefaultAlertObj.transform.localScale;
         alert.transform.position = m_StartPosition.transform.position;
 
         string iconName = null;
@@ -97,7 +97,7 @@ public class AlertUI : MonoBehaviour {
             AlertData d = m_alertList[i];
 
             // 내가 이친구보다 위로 올라가야함
-            Debug.Log("tick " + d.tick + " data  " + data.tick + " d.id " + d.id + " data.id " + data.id);
+            //Debug.Log("tick " + d.tick + " data  " + data.tick + " d.id " + d.id + " data.id " + data.id);
             if (d.tick > data.tick)
             {
                 alert.transform.position = new Vector3(
@@ -125,7 +125,6 @@ public class AlertUI : MonoBehaviour {
         }
         else if(m_alertList.Count >= 1)
         {
-            Debug.Log("내가 맨 마지막이야 ");
             // 내가 맨 마지막이야
             data.target.transform.position = new Vector3(
                 data.target.transform.position.x ,

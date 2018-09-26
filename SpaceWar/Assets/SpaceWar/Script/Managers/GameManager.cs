@@ -5,6 +5,12 @@ using UnityEngine;
 public class GameManager : Singletone<GameManager> {
 
     #region GameManager_INFO
+    
+    public enum GameMode
+    {
+        DEATH_MATCH = 100,
+        SURVIVAL
+    }
 
     #region Table
     [SerializeField] GameTable m_gameTable = null;
@@ -60,6 +66,13 @@ public class GameManager : Singletone<GameManager> {
     {
         get { return m_playerInfo; }
         set { m_playerInfo = value; }
+    }
+    // 게임모드
+    private static GameMode m_curGameMode = GameMode.SURVIVAL;
+    public static GameMode CURRENT_GAMEMODE
+    {
+        get { return m_curGameMode; }
+        set { m_curGameMode = value; }
     }
     
     #endregion
@@ -165,10 +178,26 @@ public class GameManager : Singletone<GameManager> {
             m_meteorEffectDistance[i] = float.Parse(split[i]);
         }
 
-        float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 20.8f;
+        if(NetworkManager.Instance().CURRENT_MAP.Equals("space"))
+        {
+            OnJoinedRoom(m_playerInfo.m_name, true, //new Vector3(9.123454f , 48.63797f , -32.4867f));
+           GravityManager.Instance().GetPlanetPosition(Random.Range(-360.0f, 360.0f), Random.Range(-360.0f, 360.0f)));
+            return;
+        }
+        
+        Vector3[] position = { new Vector3(9.123454f , 48.63797f , -32.4867f),
+                               new Vector3(-67.94f , -10.48f , 55.184f),
+                               new Vector3(-8.093f,87.593f,-11.192f),
+                               new Vector3(-29.04f , 124.773f , -8.01f),
+                               new Vector3(-21.51f , 22.6f , 84.32f)};
 
-        OnJoinedRoom(m_playerInfo.m_name , true , new Vector3(9.123454f , 48.63797f , -32.4867f));
-            //GetPlanetPosition(planetScale , Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        int index = Random.Range(0 , position.Length + 1);
+        if (index == position.Length)
+            OnJoinedRoom(m_playerInfo.m_name , true , //new Vector3(9.123454f , 48.63797f , -32.4867f));
+            GravityManager.Instance().GetPlanetPosition(Random.Range(-360.0f , 360.0f) , Random.Range(-360.0f , 360.0f)));
+        else
+            OnJoinedRoom(m_playerInfo.m_name , true , position[index]);
+
     }
 
     public float PLANET_XANGLE = 0.0f;
@@ -224,16 +253,15 @@ public class GameManager : Singletone<GameManager> {
             player.TableSetup();
             player.SetUserName(NetworkManager.Instance().USER_NAME);
 
-            //Plant.GetComponent<Gravity>().TargetObject = MP.GetComponent<Rigidbody>();
-
-            //AnchorPlanet.PlayerCharacter = MP.transform;
             GameManager.Instance().PLAYER.m_player = player;
-
-            //NetworkManager.Instance().C2SRequestClientJoin(
-            //    GameManager.Instance().PLAYER.m_name , MP.transform.position);
 
             NetworkManager.Instance().RequestGameSceneJoin(startPos);
 
+            // --- 옵저버용 카메라 세팅 ----
+            var observer = Camera.main.GetComponent<TimeForEscape.Object.NetworkObject>();
+            WeaponManager.Instance().AddObserverCamera(
+                (int)NetworkManager.Instance().HOST_ID , observer);
+            // -----------------------------
             m_inGameUI.gameObject.SetActive(true);
         }
         else
@@ -259,10 +287,9 @@ public class GameManager : Singletone<GameManager> {
     // 메테오 생성
     public void CreateMeteor(float anglex,float anglez,string meteorID)
     {
-        float planetScale = GravityManager.Instance().CurrentPlanet.transform.localScale.x + 12.3f;
+        Vector3 pos =  GravityManager.Instance().GetPlanetPosition(anglex , anglez);
 
-        Vector3 pos =  GravityManager.Instance().GetPlanetPosition(planetScale , anglex , anglez);
- 
+        Debug.Log("METEOR " + pos + " ax " + anglex + " az " + anglez);
 
         m_meteorList.Add(meteorID , 30.0f);
         
@@ -272,31 +299,50 @@ public class GameManager : Singletone<GameManager> {
         Vector3 r = obj.transform.eulerAngles;
         obj.transform.eulerAngles =new Vector3( r.x + 90.0f,r.y,r.z);
 
-        obj.transform.parent = m_meteorParent.transform;
+        //obj.transform.SetParent(m_meteorParent.transform,false);
 
         m_alertUI.AlertShow(AlertUI.AlertType.METEOR_ATTACK , meteorID , m_meteorTime , "Meteor Attack");
         //m_inGameUI.RecvMeteorInfo(m_meteorTime);
         //m_inGameUI.StartMeteor();
 
         if(IsInvoking("MeteorTimer") == false)
-            InvokeRepeating("MeteorTimer" , Time.deltaTime , Time.deltaTime);
+            InvokeRepeating("MeteorTimer" , 1.0f , 1.0f);
+    }
+
+    public void CreateMeteor(Vector3 pos, string id)
+    {
+        m_meteorList.Add(id , 30.0f);
+
+        GameObject obj = Instantiate(m_meteorPrefab , new Vector3(pos.x , pos.y +1.5f , pos.z) , Quaternion.Euler(0.0f , 0.0f , 0.0f));
+
+        obj.transform.rotation = Quaternion.LookRotation((pos - Vector3.zero).normalized);
+        Vector3 r = obj.transform.eulerAngles;
+        obj.transform.eulerAngles = new Vector3(r.x + 90.0f , r.y , r.z);
+
+
+        m_alertUI.AlertShow(AlertUI.AlertType.METEOR_ATTACK , id , m_meteorTime , "Meteor Attack");
+
+        //StartCoroutine(MeteorTimer(id));
+
+        if (IsInvoking("MeteorTimer") == false)
+            InvokeRepeating("MeteorTimer" , 1.0f , 1.0f);
     }
 
     void MeteorTimer()
     {
-        for(int i = 0; i < m_meteorList.Keys.Count; i++)
+        for (int i = 0; i < m_meteorList.Keys.Count; i++)
         {
             string id = m_meteorList.Keys[i];
-            m_meteorList[id] -= Time.deltaTime;
+            m_meteorList[id] -= 1.0f;// Time.deltaTime;
             float time = m_meteorList[id];
             m_alertUI.AlertShow(AlertUI.AlertType.METEOR_ATTACK , id , Mathf.RoundToInt(time) , "Meteor Attack");
 
-            if (time < 0.0f )
+            if (time < 0.0f)
             {
                 m_meteorList.Remove(id);
                 m_alertUI.AlertHide(id);
-                
-                if(m_meteorList.Keys.Count <= 0)
+
+                if (m_meteorList.Keys.Count <= 0)
                 {
                     CancelInvoke("MeteorTimer");
                 }
@@ -321,6 +367,11 @@ public class GameManager : Singletone<GameManager> {
             m_playerInfo.m_player.IS_MOVE_ABLE = false;
             m_playerInfo.m_player.AnimationPlay("Dead");
             m_playerInfo.m_player.Dead();
+            if(reason.Equals("DeathZone"))
+            {
+                m_playerInfo.m_player.IS_DEATHZONE_DEAD = true;
+            }
+            CameraManager.Instance().ShowDeadCameraEffect();
 
         }
        
@@ -346,11 +397,11 @@ public class GameManager : Singletone<GameManager> {
         m_inGameUI.UpdateWeapon(cur , max);
     }
 
-    public void UnEquipWeapon(int index)
+    public void UnEquipWeapon(int index,bool iconHide=false)
     {
         if (m_inGameUI == null)
             return;
-        m_inGameUI.UnEquipWeapon(index);
+        m_inGameUI.UnEquipWeapon(index,iconHide);
     }
     #endregion
 

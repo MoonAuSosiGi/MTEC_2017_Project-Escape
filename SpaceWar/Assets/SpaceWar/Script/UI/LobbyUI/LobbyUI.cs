@@ -21,7 +21,7 @@ public class LobbyUI : MonoBehaviour {
     private int m_playerCount = 10;
     private int m_curPlayer = 1;
     private bool m_teamMode = false;
-    private int m_gameMode = 1;
+    private int m_gameMode = (int)GameManager.GameMode.SURVIVAL;
     public UILabel m_gameSettingPlayerCount = null;
 
     // 내부에서 바뀌어야할 내용들
@@ -42,9 +42,13 @@ public class LobbyUI : MonoBehaviour {
     // 게임 세팅 
     public UISprite m_individualSpr = null;
     public UISprite m_teamSpr = null;
+    public UILabel m_gameModeText = null;
 
     // 에러 로그용
     public UILabel m_errorLog = null;
+
+    // 테스트 맵 체인지용
+    public string m_currentMap_test = "space";
     #endregion
 
     // 팀 관련 표시 UI ( 우측메뉴 - 팀만)
@@ -217,7 +221,8 @@ public class LobbyUI : MonoBehaviour {
     private void LobbyUI_gameStart()
     {
         EventHandlerAllRemove();
-        TimeForEscape.Util.Scene.LoadingScene.LOAD_SCENE_NAME = "Space_1";
+        string mapName = (m_currentMap_test.Equals("space")) ? "Space_1" : "Map_2_Kepler"; //"Space_1";
+        TimeForEscape.Util.Scene.LoadingScene.LOAD_SCENE_NAME = mapName;
         SceneManager.LoadScene("Space_LoadingScene");
     }
 
@@ -237,9 +242,16 @@ public class LobbyUI : MonoBehaviour {
         }
         m_gameMode = gameMode;
         m_teamMode = teamMode;
-
+        GameManager.CURRENT_GAMEMODE = (GameManager.GameMode)gameMode;
         NetworkManager.Instance().IS_TEAMMODE = teamMode;
 
+        switch ((GameManager.GameMode)m_gameMode)
+        {
+            case GameManager.GameMode.DEATH_MATCH:
+                m_gameModeText.text = "DEATH MATCH"; break;
+            case GameManager.GameMode.SURVIVAL:
+                m_gameModeText.text = "SURVIVAL"; break;
+        }
         if (m_teamMode)
             TeamModeSetup();
         else
@@ -570,12 +582,29 @@ public class LobbyUI : MonoBehaviour {
         Debug.Log("MapSelectButton " + arrow.name);
         if(arrow.name.Equals("LeftArrow"))
         {
-
+            if(m_currentMap_test.Equals("space"))
+            {
+                m_currentMap_test = "kepler";
+            }
+            else if(m_currentMap_test.Equals("kepler"))
+            {
+                m_currentMap_test = "space";
+            }
         }
         else
         {
-
+            if (m_currentMap_test.Equals("space"))
+            {
+                m_currentMap_test = "kepler";
+            }
+            else if (m_currentMap_test.Equals("kepler"))
+            {
+                m_currentMap_test = "space";
+            }
         }
+        LobbyUI_mapChange(m_currentMap_test);
+
+        NetworkManager.Instance().RequestNetworkChangeMap(m_currentMap_test);
     }
 
     // 모드 변경
@@ -584,11 +613,28 @@ public class LobbyUI : MonoBehaviour {
         Debug.Log("GameModeChangeButton " + arrow.name);
         if (arrow.name.Equals("LeftArrow"))
         {
-        }
+            if (m_gameMode == (int)GameManager.GameMode.DEATH_MATCH)
+                m_gameMode = (int)GameManager.GameMode.SURVIVAL;
+            else
+                m_gameMode = (int)GameManager.GameMode.DEATH_MATCH;
+        }  
         else
         {
-
+            if (m_gameMode == (int)GameManager.GameMode.DEATH_MATCH)
+                m_gameMode = (int)GameManager.GameMode.SURVIVAL;
+            else
+                m_gameMode = (int)GameManager.GameMode.DEATH_MATCH;
         }
+        
+        switch((GameManager.GameMode) m_gameMode)
+        {
+            case GameManager.GameMode.DEATH_MATCH:
+                m_gameModeText.text = "DEATH MATCH"; break;
+            case GameManager.GameMode.SURVIVAL:
+                m_gameModeText.text = "SURVIVAL"; break;
+        }
+        GameManager.CURRENT_GAMEMODE = (GameManager.GameMode)m_gameMode;
+        NetworkManager.Instance().RequestNetworkGameModeChange(m_gameMode , m_teamMode);
     }
 
     // 인원 수 변경

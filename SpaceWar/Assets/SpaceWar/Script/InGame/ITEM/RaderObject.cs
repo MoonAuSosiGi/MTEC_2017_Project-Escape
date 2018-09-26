@@ -19,25 +19,27 @@ public class RaderObject : MonoBehaviour {
     {
         gameObject.SetActive(true);
         m_animator.SetInteger("RADER" , 1);
-        m_isShow = true;
+        
     }
 
     // 레이더 감추기
     public void HideRader()
     {
-        m_isShow = false;
+        
         m_animator.SetInteger("RADER" , 2);
     }
 
     // 레이더 실 기능 작동 타이밍
     public void RaderStart()
     {
+        m_isShow = true;
         ShowUsers();
     }
 
    // 레이더 실 끄는 타이밍
     public void RaderEnd()
     {
+        m_isShow = false;
         HideUsers();
     }
 

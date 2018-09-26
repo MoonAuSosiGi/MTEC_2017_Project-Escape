@@ -45,7 +45,7 @@ public class DeathZoneCollider : MonoBehaviour {
             }
             else
             {
-                if (NetworkManager.Instance().IS_LOSE)
+                if (GameManager.Instance().PLAYER.m_player.IS_DEATH())
                     return;
             }
 

@@ -78,7 +78,7 @@ public class HealPackItem : Item {
             player.RecoveryItemUseEnd();
             
             GameManager.Instance().SLIDER_UI.HideSlider();
-
+            GameManager.Instance().m_inGameUI.HideObjectUI();
             if (NetworkManager.Instance() != null)
             {
                 NetworkManager.Instance().RequestHpUpdate(GameManager.Instance().PLAYER.m_hp + HEAL);
