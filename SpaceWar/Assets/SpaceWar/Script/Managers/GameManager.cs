@@ -178,6 +178,12 @@ public class GameManager : Singletone<GameManager> {
             m_meteorEffectDistance[i] = float.Parse(split[i]);
         }
 
+        if(NetworkManager.Instance().CURRENT_MAP.Equals("space"))
+        {
+            OnJoinedRoom(m_playerInfo.m_name, true, //new Vector3(9.123454f , 48.63797f , -32.4867f));
+           GravityManager.Instance().GetPlanetPosition(Random.Range(-360.0f, 360.0f), Random.Range(-360.0f, 360.0f)));
+            return;
+        }
         
         Vector3[] position = { new Vector3(9.123454f , 48.63797f , -32.4867f),
                                new Vector3(-67.94f , -10.48f , 55.184f),
