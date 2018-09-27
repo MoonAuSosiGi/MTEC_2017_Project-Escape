@@ -17,9 +17,20 @@
 /SpaceWar/Assets/OBJExport
 /SpaceWar/Assets/Plugins
 /SpaceWar/Assets/UBER
+/SpaceWar/.vs/
 /SpaceWarServer/Server/Debug
 /SpaceWarServer/Server/Release
 /SpaceWarServer/Server/Debug/Release
+/ProjectEscapeConsoleClient/.vs/
+/ProjectEscapeConsoleClient/Debug
+/ProjectEscapeConsoleClient/Release
+/ProjectEscapeConsoleClient/ProjectEscapeConsoleClient/Debug
+/ProjectEscapeConsoleClient/ProjectEscapeConsoleClient/Release
+/ProjectEscapeServer/.vs/
+/ProjectEscapeServer/Debug
+/ProjectEscapeServer/Release
+/ProjectEscapeServer/ProjectEscapeServer/Debug
+/ProjectEscapeServer/ProjectEscapeServer/Release
 /Build
 # Visual Studio 2015 cache directory
 /.vs/
